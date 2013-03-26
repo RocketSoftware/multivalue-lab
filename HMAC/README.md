@@ -38,15 +38,15 @@ Where:
 * ipad is inner padding string 0x3636...  
 
 Two different ways of doing XOR are implemented by the HMAC() function below.
-The first (by $DEFINE MYXOR) is to convert all pads/keys to literal binary strings
-then perform XOR "bit by bit". The second (by $UNDEFINE MYXOR) is to convert all
+The first (by $DEFINE USE_BITXOR) is to convert all pads/keys to literal binary strings
+then perform XOR "bit by bit". The second (by $UNDEFINE USE_BITXOR) is to convert all
 pads/key into literal hex strings, then convert 8 hex chars into one integer and
 perform 32-bit integer XOR by calling BITXOR(), finally convert each partial result
-back into literal hex strings. The second approach appeasrs more convulved but much
+back into literal hex strings. The second approach appeasrs more convoluted but much
 more efficient.
-
-There should be other ways to implement HMAC(). implementations shown here are just
-for examples.
 
 A more elegant implementation shown below (HMAC_DAN) was written by Dan McGrath.
 Benchmark shows that it is a little slower than HMAC() with BITXOR.
+
+There should be other ways to implement HMAC(). implementations shown here are just
+for examples.
