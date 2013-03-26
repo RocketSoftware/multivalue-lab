@@ -38,7 +38,7 @@ The first (by $DEFINE MYXOR) is to convert all pads/keys to literal binary strin
 then perform XOR "bit by bit". The second (by $UNDEFINE MYXOR) is to convert all
 pads/key into literal hex strings, then convert 8 hex chars into one integer and
 perform 32-bit integer XOR by calling BITXOR(), finally convert each partial result
-back into literal hex strings. The second approach appeasrs more convulved but much
+back into literal hex strings. The second approach appeasrs more convoluted but much
 more efficient.
 
 There should be other ways to implement HMAC(). implementations shown here are just
