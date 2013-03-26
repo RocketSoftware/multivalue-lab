@@ -87,7 +87,10 @@ PROGRAM ExportHelp
 * Serialize all the help help in the UDO to a JSON string so we can write it to disk.
    ret = UDOWrite(KeywordTallyHandle, UDOFORMAT_JSON, outputKeywords)
    ret = UDOWrite(HelpExportHandle, UDOFORMAT_JSON, output)
-   
+
+* Free the memory of the root UDO handle
+   ret = UDOFree(HelpExportHandle)
+
 * Write both a raw JSON file as well as a JavaScript version
    
    WRITE outputKeywords ON EXPORT_FILES, "Keywords.json"
