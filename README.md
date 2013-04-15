@@ -5,6 +5,7 @@ Demo code from Rocket's U2 Servers Lab for UniData/UniVerse and associated clien
 
 **Security-Demos** - Contains examples for security-related features
 **UDO-Demos** - Contains examples for U2 Dynamic Objects
+**UOJ-Demos** - Contains examples for UniObjects for Java
 
 ### License
 
