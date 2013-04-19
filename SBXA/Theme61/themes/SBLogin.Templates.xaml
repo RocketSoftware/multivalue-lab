@@ -1,0 +1,594 @@
+﻿<!--
+
+       Name    : SBLogin.Templates.xaml
+       Author  : Kendrew Peacey
+
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/ConfigurationTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <!-- ****************************** -->
+    <!-- ApplicationListVisibleTemplate -->
+    <!-- ****************************** -->
+    <ControlTemplate x:Key="ApplicationListVisibleTemplate" TargetType="{x:Type sbc:SBLogin}" >
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+
+            <Grid x:Name="PART_SBLogOnGrid" Margin="10" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="AppNamePmpt" Style="{DynamicResource SBLocalPromptStyle}"  />
+
+                <sbc:SBComboBox x:Name="PART_SBAvailableApplications"
+                                ItemsSource="{Binding Path=SBPlus.AvailableApplications, RelativeSource={RelativeSource TemplatedParent}}"
+                                SBValue="{Binding Path=SBPlus.ApplicationDefinition.LastApplicationSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                Margin="5,0,0,0"
+                                Grid.Row="0" Grid.Column="1"
+                                Width="200"
+                                IsSynchronizedWithCurrentItem="False"
+                                ShouldSendSBCommands="False"
+                                TabIndex="0"
+                                />
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,10,2,0" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Connect"
+                                  Grid.Row="0" Grid.Column="0"
+                                  IsDefault="true"
+                                  Command="sbc:SBCommands.LoginCommand"
+                                  sbc:SBControl.SetKeyboardFocus="true"
+                                  TabIndex="1"/>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Exit"
+                                  TabIndex="2"
+                                  Grid.Row="0" Grid.Column="1"
+                                  Command="sbc:SBCommands.CloseMainWindowCommand"
+                                  />
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                  sbc:SBGUIAttribute.SBString="DefaultHelpMenuItemText"
+                                  TabIndex="3"
+                                  Grid.Row="0" Grid.Column="2"
+                                  />
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                  sbc:SBGUIAttribute.SBString="OpenLogOnOptions"
+                                  TabIndex="4"
+                                  Grid.Row="0" Grid.Column="3"
+                                  Command="sbc:SBLogin.OpenLogonOptionsCommand"
+                                  />
+
+                </Grid>
+
+            </Grid>
+        </ContentControl>
+    </ControlTemplate>
+
+
+    <!-- ****************************** -->
+    <!-- OsAndSBVisibleTemplate         -->
+    <!-- ****************************** -->
+    <ControlTemplate TargetType="{x:Type sbc:SBLogin}" x:Key="OsAndSBVisibleTemplate">
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+            <Grid x:Name="PART_SBLogOnGrid" Margin="2,2,2,2" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="UserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=UserName, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                             Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBUserName"
+                             Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="0"/>
+
+                <sbc:SBField Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBPassword"
+                             SBValue="{Binding Path=Password, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" TabIndex="1"
+                             Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                    />
+
+                <!-- SB+ credentials for the case where we need both. -->
+
+                <sbc:SBPrompt Grid.Row="2" sbc:SBGUIAttribute.SBString="SBUserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBUserName, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                             Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBSBUserName"
+                             Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="2"/>
+
+                <sbc:SBPrompt Grid.Row="3" sbc:SBGUIAttribute.SBString="SBPasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBSBPassword"
+                             TabIndex="3" SBValue="{Binding Path=SBPassword, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                             Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                             />
+
+
+                <Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,2,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Connect"
+                                  Grid.Row="0" Grid.Column="0"
+                                  IsDefault="true"
+                                  Command="sbc:SBCommands.LoginCommand"
+                                  sbc:SBControl.SetKeyboardFocus="true"
+                                  TabIndex="1"/>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Exit"
+                                  TabIndex="2"
+                                  Grid.Row="0" Grid.Column="1"
+                                  Command="sbc:SBCommands.CloseMainWindowCommand"
+                                  />
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                  sbc:SBGUIAttribute.SBString="DefaultHelpMenuItemText"
+                                  TabIndex="3"
+                                  Grid.Row="0" Grid.Column="2"
+                                  />
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                  sbc:SBGUIAttribute.SBString="OpenLogOnOptions"
+                                  TabIndex="4"
+                                  Grid.Row="0" Grid.Column="3"
+                                  Command="sbc:SBLogin.OpenLogonOptionsCommand"
+                                  />
+
+                </Grid>
+
+            </Grid>
+        </ContentControl>
+    </ControlTemplate>
+
+    <!-- ****************************** -->
+    <!-- OsVisibleTemplate              -->
+    <!-- ****************************** -->
+    <ControlTemplate TargetType="{x:Type sbc:SBLogin}" x:Key="OsVisibleTemplate">
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+
+            <Viewbox Margin="5">
+                <Grid x:Name="PART_SBLogOnGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="UserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                    <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                    <sbc:SBField SBValue="{Binding Path=UserName, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBUserName"
+                                 Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="0" IsTabStop="True"/>
+
+                    <sbc:SBField Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBPassword"
+                                 SBValue="{Binding Path=Password, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" TabIndex="1"
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                 IsTabStop="True"
+                                 />
+
+                    <sbc:SBToggle x:Name="SaveCredentialsToggle"
+                                  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"
+                                  Style="{DynamicResource SBToggleFieldStyle}"
+                                  SBValue="{Binding Path=SaveCredentials, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                  TabIndex="1"
+                                  IsTabStop="True"
+                                  Label="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=SaveCredentials}"
+                                  Visibility="Collapsed"
+                                  />
+
+                    <Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,2,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Connect"
+                                      Grid.Row="0" Grid.Column="0"
+                                      IsDefault="true"
+                                      Command="sbc:SBCommands.LoginCommand"
+                                      sbc:SBControl.SetKeyboardFocus="true"
+                                      TabIndex="1"/>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Exit"
+                                      TabIndex="2"
+                                      Grid.Row="0" Grid.Column="1"
+                                      Command="sbc:SBCommands.CloseMainWindowCommand"
+                                      />
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                      sbc:SBGUIAttribute.SBString="DefaultHelpMenuItemText"
+                                      TabIndex="3"
+                                      Grid.Row="0" Grid.Column="2"
+                                      />
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                      sbc:SBGUIAttribute.SBString="OpenLogOnOptions"
+                                      TabIndex="4"
+                                      Grid.Row="0" Grid.Column="3"
+                                      Command="sbc:SBLogin.OpenLogonOptionsCommand"
+                                      />
+
+                    </Grid>
+
+                </Grid>
+            </Viewbox>
+        </ContentControl>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.SavedIds, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.CredentialsRequiredFor, Source={x:Static sbc:SBPlus.Current}}" Value="0"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="SaveCredentialsToggle" Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- ****************************** -->
+    <!-- SBVisibleTemplate              -->
+    <!-- ****************************** -->
+    <ControlTemplate TargetType="{x:Type sbc:SBLogin}" x:Key="SBVisibleTemplate">
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+            <Viewbox Margin="5">
+                <Grid x:Name="PART_SBLogOnGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="UserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                    <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                    <sbc:SBField SBValue="{Binding Path=SBUserName, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBUserName"
+                                 Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="0" IsTabStop="True"/>
+
+                    <sbc:SBField Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBPassword"
+                                 SBValue="{Binding Path=SBPassword, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 TabIndex="1"
+                                 IsTabStop="True"
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                 />
+
+                    <sbc:SBToggle x:Name="SaveCredentialsToggle"
+                                  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"
+                                  Style="{DynamicResource SBToggleFieldStyle}"
+                                  SBValue="{Binding Path=SaveCredentials, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                  TabIndex="1"
+                                  IsTabStop="True" 
+                                  Label="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=SaveCredentials}"
+                                  Visibility="Collapsed"
+                                  />
+                    
+                    <Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,2,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Connect"
+                                      Grid.Row="0" Grid.Column="0"
+                                      IsDefault="true"
+                                      Command="sbc:SBCommands.LoginCommand"
+                                      sbc:SBControl.SetKeyboardFocus="true"
+                                      TabIndex="1"/>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Exit"
+                                      TabIndex="2"
+                                      Grid.Row="0" Grid.Column="1"
+                                      Command="sbc:SBCommands.CloseMainWindowCommand"
+                                      />
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                      sbc:SBGUIAttribute.SBString="DefaultHelpMenuItemText"
+                                      TabIndex="3"
+                                      Grid.Row="0" Grid.Column="2"
+                                      />
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                      sbc:SBGUIAttribute.SBString="OpenLogOnOptions"
+                                      TabIndex="4"
+                                      Grid.Row="0" Grid.Column="3"
+                                      Command="sbc:SBLogin.OpenLogonOptionsCommand"
+                                      />
+
+                    </Grid>
+
+
+                </Grid>
+            </Viewbox>
+        </ContentControl>
+        
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.SavedIds, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.CredentialsRequiredFor, Source={x:Static sbc:SBPlus.Current}}" Value="0"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="SaveCredentialsToggle" Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
+        
+    </ControlTemplate>
+
+    <!-- ****************************** -->
+    <!-- NewSBPasswordTemplate          -->
+    <!-- ****************************** -->
+    <ControlTemplate TargetType="{x:Type sbc:SBLogin}" x:Key="NewSBPasswordTemplate">
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+            <Viewbox Margin="5">
+                <Grid x:Name="PART_SBLogOnGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                    <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="ValidatePasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+
+                    <sbc:SBField Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBPassword"
+                                 SBValue="{Binding Path=SBPassword, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 TabIndex="0"
+                                 IsTabStop="True"
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                 />
+
+                    <sbc:SBField Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBValidationPassword"
+                                 SBValue="{Binding Path=ValidationPassword, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}" TabIndex="1" IsTabStop="True"/>
+
+                    <Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,2,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Connect"
+                                      Grid.Row="0" Grid.Column="0"
+                                      Command="sbc:SBCommands.SBChangePasswordCommand"
+                                      TabIndex="1"/>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Exit"
+                                      TabIndex="2"
+                                      Grid.Row="0" Grid.Column="1"
+                                      Command="sbc:SBCommands.CloseMainWindowCommand"
+                                      />
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                      sbc:SBGUIAttribute.SBString="DefaultHelpMenuItemText"
+                                      TabIndex="3"
+                                      Grid.Row="0" Grid.Column="2"
+                                      />
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}" 
+                                      sbc:SBGUIAttribute.SBString="OpenLogOnOptions"
+                                      TabIndex="4"
+                                      Grid.Row="0" Grid.Column="3"
+                                      Command="sbc:SBLogin.OpenLogonOptionsCommand"
+                                      />
+
+                    </Grid>
+
+
+                </Grid>
+            </Viewbox>
+        </ContentControl>
+    </ControlTemplate>
+
+    <!-- ********************** -->
+    <!-- OptionsVisibleTemplate -->
+    <!-- ********************** -->
+    <ControlTemplate TargetType="{x:Type ContentControl}" x:Key="OptionsVisibleTemplate">
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+            <Viewbox>
+
+                <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" LastChildFill="True">
+
+                    <Grid DockPanel.Dock="Bottom" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      Grid.Row="0" Grid.Column="0"
+                                      IsDefault="true"
+                                      Command="sbc:SBCommands.LoginCommand"
+                                      sbc:SBGUIAttribute.SBString="Connect"/>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      Grid.Row="0" Grid.Column="1"
+                                      Command="sbc:SBCommands.CloseMainWindowCommand"
+                                      sbc:SBGUIAttribute.SBString="Exit"/>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      Grid.Row="0" Grid.Column="2"
+                                      sbc:SBGUIAttribute.SBString="DefaultHelpMenuItemText"/>
+
+                        <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      Grid.Row="0" Grid.Column="3"
+                                      Command="sbc:SBLogin.CloseLogonOptionsCommand"
+                                      sbc:SBGUIAttribute.SBString="CloseLogOnOptions"/>
+                    </Grid>
+
+                    <TabControl DockPanel.Dock="Top" Width="404" Height="327">
+                        <TabItem Header="General">
+                            <Viewbox>
+                                <ContentControl IsTabStop="False" Template="{DynamicResource AllCredentialsVisibleTemplate}" />
+                            </Viewbox>
+                        </TabItem>
+                        <TabItem Header="Communications Server">
+                            <Viewbox Margin="0,0,0,0">
+                                <ContentControl IsTabStop="False" Template="{DynamicResource CommunicationServerConnectionTemplate}" />
+                            </Viewbox>
+                        </TabItem>
+                        <TabItem Header="Administration Server">
+                            <Viewbox Margin="0,0,0,0">
+                                <ContentControl IsTabStop="False" Template="{DynamicResource AdministrationServerConnectionTemplate}" />
+                            </Viewbox>
+                        </TabItem>
+                    </TabControl>
+                </DockPanel>
+            </Viewbox>
+        </ContentControl>
+    </ControlTemplate>
+
+    <!-- ****************************** -->
+    <!-- SessionListTemplate -->
+    <!-- ****************************** -->
+    <ControlTemplate x:Key="SessionListTemplate" TargetType="{x:Type sbc:SBLogin}" >
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+
+            <Grid x:Name="PART_SBLogOnGrid" Margin="10" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="AvailableSessionsPmpt" Style="{DynamicResource SBLocalPromptStyle}"  />
+
+                <sbc:SBComboBox x:Name="PART_SBAvailableSessions"
+                                ItemsSource="{Binding Path=SBPlus.ApplicationDefinition.AvailableProfileCollection, RelativeSource={RelativeSource TemplatedParent}}"
+                                SBValue="{Binding Path=SelectedSession, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                Margin="5,0,0,0"
+                                Grid.Row="0" Grid.Column="1"
+                                Width="200"
+                                IsSynchronizedWithCurrentItem="False"
+                                ShouldSendSBCommands="False"
+                                TabIndex="0"
+                                />
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="0,10,2,0" HorizontalAlignment="Right">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Apply"
+                                  Grid.Row="0" Grid.Column="0"
+                                  IsDefault="true"
+                                  Command="sbc:SBLogin.SelectSessionCommand"
+                                  sbc:SBControl.SetKeyboardFocus="true"
+                                  TabIndex="1"/>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Exit"
+                                  TabIndex="2"
+                                  Grid.Row="0" Grid.Column="1"
+                                  Command="sbc:SBCommands.CloseMainWindowCommand"
+                                  />
+
+                </Grid>
+
+            </Grid>
+        </ContentControl>
+    </ControlTemplate>
+
+</ResourceDictionary>

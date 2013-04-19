@@ -1,0 +1,67 @@
+﻿<!--
+
+       Name    : SBHelpForm.xaml
+       Author  : Alan Buckley
+       
+-->
+<ResourceDictionary 
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:sbs="http://schemas.sbxa.com/Shared"
+            xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+            xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <Style TargetType="{x:Type sbc:SBHelpForm}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="Generic - SBHelpForm" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="False" />
+        <Setter Property="sbc:SBForm.FormBorderWidth" Value="{x:Static sbs:GenericConstants.DEFAULT_FORM_BORDER_WIDTH}" />
+        <Setter Property="sbc:SBForm.CanHostStatusBar" Value="False" />
+        <Setter Property="Template" Value="{DynamicResource SBHelpFormTemplate}" />
+        <!-- Top/Left in WPF pixels from left of screen.
+             NB: Unlike other forms pixel position in Margin is already in screen coordinates
+        -->       
+        <Setter Property="SBTop"
+                Value ="{Binding Path=GuiObjectDefinition.Margin.Top, 
+                                 RelativeSource={RelativeSource Mode=Self},
+                                 Mode=OneWay}" />
+        <Setter Property="SBLeft"
+                Value ="{Binding Path=GuiObjectDefinition.Margin.Left,
+                        RelativeSource={RelativeSource Mode=Self},
+                   Mode=OneWay}"
+                />
+        <Setter Property="sbc:SBForm.FormWidth" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="sbc:SBForm.FormHeight" Value="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+
+        <Setter Property="sbc:SBForm.FormBorderColor">
+            <Setter.Value>
+                <PriorityBinding >
+                    <PriorityBinding.FallbackValue>
+                        <LinearGradientBrush EndPoint="0.738,0.989" StartPoint="0.279,0.018">
+                            <GradientStop Color="#FF3B9DD1" Offset="1"/>
+                            <GradientStop Color="#FF73C5F0" Offset="0"/>
+                        </LinearGradientBrush>
+                    </PriorityBinding.FallbackValue>
+                    <Binding Path="(sbc:SBGUIAttribute.SBBorderColor)"
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"
+                             />
+                    <Binding Path="GuiObjectDefinition.SBBorderColor" 
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Resources>
+            <Thickness x:Key="SBHelpFormMargin" Left="10" Right="10" />
+        </Style.Resources>
+    </Style>
+
+</ResourceDictionary>

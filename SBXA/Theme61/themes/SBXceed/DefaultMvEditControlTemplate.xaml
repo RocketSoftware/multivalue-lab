@@ -1,0 +1,718 @@
+<!--
+
+       Name    : SBXceedMvEditControlTemplate.xaml
+       Author  : Kendrew Peacey
+ 
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    
+Date            Name    Tracking #      Resource                             Description
+Sept 20, 2011   SCW     SBXA-4746       SBXceedDataGridTemplate              Remove empty TableView.FixedFooters markup.
+                                        SBXceedCharDataGridTemplate
+                                        SBXceedInterleavedDataGridTemplate
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+    xmlns:sbxt="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXGridView/TableView.SBXGridView.xaml"/>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBMvEditControlStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- This Cell Template is very simple. It only shows the Cell's value, without its
+        parent column's Title.-->
+    <!-- SBtitleLessCell -->
+    <ControlTemplate x:Key="SBTitleLessCell" TargetType="xcdg:DataCell">
+        <!-- When defining the Template of a Cell, we usually want to make sure that
+           all its potential Content sources are working : Content, ContentTemplate
+           and ContentTemplateSelector. -->
+        <xcdg:CellContentPresenter />
+    </ControlTemplate>
+
+
+    <!-- *************************************************************************** -->
+    <!-- StackedDataRowStyle, custom data row style for a vertical layout.          -->
+    <!-- *************************************************************************** -->
+    <Style x:Key="StackedDataRowStyle"  TargetType="{x:Type xcdg:DataRow}">
+        <Setter Property="Template" Value="{StaticResource StackedDataRowTemplate}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="sbc:SBUISupport.StyleName" Value="StackedDataRowStyle" />
+
+        <Setter Property="Width">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource SBExpressionConverter}">
+                    <Binding Path="GridWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}" Mode="OneWay"/>
+                    <Binding Path="Margin.Left" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}" Mode="OneWay"/>
+                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="17" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- *************************************************************************** -->
+    <!-- VerticalWithImageDataRowStyle                                               -->
+    <!-- custom data row style for a vertical layout with an image.                  -->
+    <!-- *************************************************************************** -->
+    <Style x:Key="VerticalWithImageDataRowStyle"  TargetType="{x:Type xcdg:DataRow}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template" Value="{StaticResource VerticalWithImageDataRowTemplate}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="sbc:SBUISupport.StyleName" Value="VerticalWithImageDataRowStyle" />
+    </Style>
+
+
+    <!-- ***************************************** -->
+    <!-- cardViewColumnManagerRowAndGroupByControl -->
+    <!-- ***************************************** -->
+    <DataTemplate x:Key="cardViewColumnManagerRowAndGroupByControl">
+        <DockPanel MinHeight="60">
+            <Border DockPanel.Dock="Right"
+                    Height="{Binding ElementName=groupByControl, Path=ActualHeight, Mode=OneWay, FallbackValue=60}">
+                <xcdg:ColumnManagerRow x:Name="columnManagerRow" />
+            </Border>
+            <xcdg:GroupByControl x:Name="groupByControl" />
+        </DockPanel>
+    </DataTemplate>
+
+    <!--**************************
+    * InterleavedDataRowTemplate 
+    * Template used for the data rows of an interleaved grid.
+    ************************** -->
+    <ControlTemplate x:Key="InterleavedDataRowTemplate" TargetType="{x:Type xcdg:DataRow}">
+
+        <!-- This Grid is used to layout the GroupLevelIndicatorPane placeholder and the CellsHost panel. -->
+        <Grid x:Name="rootGrid">
+            <Grid.ColumnDefinitions>
+                <!-- GroupLevelIndicatorPane -->
+                <ColumnDefinition Width="Auto" />
+
+                <!-- CellsHost panel -->
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <!-- CellsHost panel (auto generated cells) -->
+                <RowDefinition Height="*"/>
+                <!-- The Notes cell explicitely added -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- The border responsible for the visual outline of the row (gridlines and background)
+              spans the GroupLevelIndicatorPane and CellsHost Panel. Those 2 elements are not children of
+              the Border because we don't want the border to be displayed in the GroupLevelIndicatorPane. -->
+            <!--Background="{TemplateBinding Background}"-->
+            <!--Background="Transparent"-->
+            <Border x:Name="PART_InterleavedDataRowRootBorder"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 Grid.ColumnSpan="2"
+                 Grid.RowSpan="2"
+                 BorderBrush="{TemplateBinding BorderBrush}"
+                 BorderThickness="{TemplateBinding BorderThickness}"
+                 Padding="{TemplateBinding Padding}" />
+
+            <!-- GroupLevelIndicatorPane is a placeholder for individual GroupLevelIndicator elements that are added
+              whenever this DataRow is part of a group. -->
+            <xcdg:GroupLevelIndicatorPane x:Name="groupLevelIndicatorPane"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"/>
+
+            <!-- The PART_CellsHost part designates the Panel to which this DataRow's Cells should be added. 
+              You usually want to use a FixedCellPanel to enable the FixedColumn feature. But here, this
+              feature would not be visually compatible with our "preview row". -->
+
+            <sbc:SBInterleavedGridLayout x:Name="PART_CellsHost"
+                                         Margin="{TemplateBinding BorderThickness}"
+                                         Grid.Column="1"
+                                         Grid.Row="0"
+                                         ShowGridLines="False"
+                                         sbc:SBCharacterLayout.ColumnWidth="{Binding Path=(sbc:SBCharacterLayout.ColumnWidth), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+                                         sbc:SBCharacterLayout.RowHeight="{Binding Path=(sbc:SBCharacterLayout.RowHeight), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+                                         >
+
+
+            </sbc:SBInterleavedGridLayout>
+
+        </Grid>
+
+        <ControlTemplate.Triggers>
+
+            <!-- When changing the appearance (e.g. background/foreground) of the DataRow to reflect specific
+              states (e.g. IsSelected), it is recommended to apply the changes directly to the template
+              elements because we want those modifications to be effective even when a value has been
+              explicitely set to these properties on the TemplatedParent. Also, when someone queries
+              the value of these properties on the TemplatedParent, we don't want to return the
+              intermediate, state-specific values. -->
+
+            <!-- When the DataRow is Selected, we want to change its background/foreground to the appropriate brushes. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=IsSelected}"
+                          Value="True"/>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=xcdg:DataGridControl},Path=IsKeyboardFocusWithin}"
+                          Value="True"/>
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="PART_InterleavedDataRowRootBorder"
+                    Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=SelectionBackground}" />
+
+                <Setter TargetName="PART_InterleavedDataRowRootBorder"
+                    Property="TextElement.Foreground"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=SelectionForeground}" />
+
+            </MultiDataTrigger>
+
+            <!-- When the DataRow is Selected but the parent DataGridControl is not focused, we want to change
+              the DataRow's background/foreground to the appropriate brushes. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=IsSelected}"
+                          Value="True"/>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=xcdg:DataGridControl},Path=IsKeyboardFocusWithin}"
+                          Value="False"/>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=xcdg:DataGridControl},Path=HideSelection}"
+                          Value="False" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="PART_InterleavedDataRowRootBorder"
+                    Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=InactiveSelectionBackground}" />
+
+                <Setter TargetName="PART_InterleavedDataRowRootBorder"
+                    Property="TextElement.Foreground"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=InactiveSelectionForeground}" />
+
+            </MultiDataTrigger>
+
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <!--**************************
+    * InterleavedColumnManagerRowTemplate 
+    * Template used for the column headers of an interleaved grid.
+    ************************** -->
+    <ControlTemplate x:Key="InterleavedColumnManagerRowTemplate"
+                    TargetType="xcdg:ColumnManagerRow">
+
+        <!-- A basic Row Template requires at least a Panel named "PART_CellsHost" to which the Row's cells will be added.
+           This Panel is usually placed inside a Border who is responsible for painting the gridlines. -->
+
+        <ControlTemplate.Resources>
+            <xcdg:ThicknessConverter x:Key="thicknessConverter"
+                                  InverseValue="True" />
+        </ControlTemplate.Resources>
+
+        <!-- This Grid is used to layout the GroupLevelIndicatorPane placeholder and the CellsHost panel. -->
+        <Grid x:Name="rootGrid">
+            <Grid.ColumnDefinitions>
+                <!-- HierarchicalGroupLevelIndicatorPane -->
+                <ColumnDefinition Width="Auto" />
+                <!-- GroupLevelIndicatorPane -->
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+
+                <!-- CellsHost panel -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- The border responsible for the visual outline of the row (gridlines and background)
+                       spans the GroupLevelIndicatorPane and CellsHost Panel. Those 2 elements are not children of
+                       the Border because we don't want the border to be displayed in the GroupLevelIndicatorPane. -->
+            <Border x:Name="rootBorder"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 xcdg:TableView.CanScrollHorizontally="False"
+                 Background="{TemplateBinding Background}"
+                 BorderBrush="{TemplateBinding BorderBrush}"
+                 BorderThickness="{TemplateBinding BorderThickness}"
+                 Padding="{TemplateBinding Padding}" />
+
+            <!-- GroupLevelIndicatorPane is a placeholder for individual GroupLevelIndicator elements that are added
+                       whenever this Row is part of a group. -->
+            <xcdg:HierarchicalGroupLevelIndicatorPane xcdg:TableView.CanScrollHorizontally="False"
+                                                    Grid.Column="0"
+                                                    Background="{TemplateBinding Background}" />
+            <xcdg:GroupLevelIndicatorPane x:Name="groupLevelIndicatorPane"
+                                        xcdg:TableView.CanScrollHorizontally="False"
+                                        Grid.Column="1"
+                                        Background="{TemplateBinding Background}" />
+
+            <!-- ToggleButton that is used to expand/collapse the group. -->
+            <Button x:Name="detailsToggle"
+                 Template="{StaticResource detailsExpanderButtonTemplate}"
+                 VerticalAlignment="Top"
+                 Grid.Column="2"
+                 Margin="2,4,2,0"
+                 Command="{x:Static xcdg:DataGridCommands.ToggleDetailExpansion}"
+                 OverridesDefaultStyle="True"
+                 Focusable="False"
+                 Visibility="Collapsed"
+                 xcdg:TableView.CanScrollHorizontally="False" />
+
+            <Decorator x:Name="indentationDecorator"
+                    Grid.Column="3">
+
+                <!-- The PART_CellsHost part designates the Panel to which this Row's Cells should be added.-->
+
+                <sbc:SBInterleavedGridLayout x:Name="PART_CellsHost"
+                                         Margin="{TemplateBinding BorderThickness}"
+                                         Grid.Column="1"
+                                         Grid.Row="0"
+                                         ShowGridLines="False"
+                                         sbc:SBInterleavedGridLayout.IsGridHeading="True">
+
+                    <sbc:SBCharacterLayout.ColumnWidth>
+
+                        <Binding Path="(sbc:SBCharacterLayout.ColumnWidth)" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}" />
+
+                    </sbc:SBCharacterLayout.ColumnWidth>
+
+                    <!-- Fallback to determine the height of each column -->
+                    <sbc:SBCharacterLayout.RowHeight>
+                        <PriorityBinding FallbackValue="{x:Static sbp:GenericConstants.DEFAULT_CELL_HEIGHT}">
+                            <Binding Path="GuiObjectDefinition.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                            <Binding Path="SBPlus.SBUserPreferences.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                        </PriorityBinding>
+                    </sbc:SBCharacterLayout.RowHeight>
+
+                </sbc:SBInterleavedGridLayout>
+
+            </Decorator>
+
+
+        </Grid>
+
+        <ControlTemplate.Triggers>
+
+            <!-- This trigger ensures that if the FixedColumnCount is 0 and we are Grouped, the PART_CellsHost gets indented so the FixedColumnSplitter gets in the margin
+              ( in the GroupLevelIndicator region )-->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).FixedColumnCount}"
+                          Value="0" />
+
+                    <Condition Value="True">
+                        <Condition.Binding>
+                            <Binding RelativeSource="{RelativeSource Self}"
+                              Path="(xcdg:DataGridControl.DataGridContext).GroupLevelDescriptions.Count">
+                                <Binding.Converter>
+                                    <xcdg:GreaterThanZeroConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </Condition.Binding>
+                    </Condition>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ShowFixedColumnSplitter}"
+                          Value="True" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="indentationDecorator"
+                    Property="Margin"
+                    Value="{Binding ElementName=PART_CellsHost, Path=SplitterWidth, Converter={StaticResource thicknessConverter}, ConverterParameter='Left'}">
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- This trigger ensures that if the FixedColumnCount is 0 and we there are details, the PART_CellsHost gets indented so the FixedColumnSplitter gets in the margin
+              ( in the region where the Toggle button would be)-->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).FixedColumnCount}"
+                          Value="0" />
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).HasDetails}"
+                          Value="True" />
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).AllowDetailToggle}"
+                          Value="True" />
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ShowFixedColumnSplitter}"
+                          Value="True" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="indentationDecorator"
+                    Property="Margin"
+                    Value="{Binding ElementName=PART_CellsHost, Path=SplitterWidth, Converter={StaticResource thicknessConverter}, ConverterParameter='Left'}">
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- When there are details, display the Toggle button for the expansion, collapsing of the details -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).HasDetails}"
+                          Value="True" />
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).AllowDetailToggle}"
+                          Value="True" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="detailsToggle"
+                    Property="Visibility"
+                    Value="Hidden" />
+
+            </MultiDataTrigger>
+
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <!-- ***************************************************************** -->
+    <!-- SBXceedDataGridTemplate. Control template for a multi-value grid. -->
+    <!-- ***************************************************************** -->
+    <ControlTemplate TargetType="{x:Type sbc:SBMvEditControl}" x:Key="SBXceedDataGridTemplate">
+
+        <!-- If I move the SBDataSource binding into a style it does not happen, therefore it must be left here or tested very well. -->
+        <sbx:SBXGridControl x:Name="PART_SBGridControl"
+                            Style="{DynamicResource SBXGridControlStyle}"
+                            SBColumnDefinitions="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            SBDataSource="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }"
+                            >
+
+            <sbx:SBXGridControl.InputBindings>
+                <KeyBinding Key="Tab" Command="sbc:SBCommands.SBTabCommand" />
+                <KeyBinding Key="Enter" Command="sbc:SBCommands.SBEnterCommand" />
+            </sbx:SBXGridControl.InputBindings>
+
+            <xcdg:DataGridControl.View>
+
+                <sbx:SBXGridView Style="{DynamicResource SBXTableViewStyle}" 
+                                 UseDefaultHeadersFooters="False" 
+                                 ShowFixedColumnSplitter="False"
+                                 HasFooters="{Binding Path=TemplatedParent.GuiObjectDefinition.HasColumnFooters, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }"
+                                 >
+                    <sbx:SBXGridView.Theme>
+                        <sbx:SBXGridViewTheme/>
+                    </sbx:SBXGridView.Theme>
+
+                    <!-- 
+                        Anything can be added to the various DataGridControl collections (FixedHeaders,
+                         Headers, Items, Footers and FixedFooters). But it has to be wrapped in a DataTemplate.
+                    -->
+                    <!--
+                    <xcdg:TableView.FixedFooters>
+                        <DataTemplate>...</DataTemplate>
+                    </xcdg:TableView.FixedFooters>
+                    -->
+
+                </sbx:SBXGridView>
+
+            </xcdg:DataGridControl.View>
+
+
+        </sbx:SBXGridControl>
+
+    </ControlTemplate>
+
+    <!-- ***************************************************************** -->
+    <!-- SBXceedCharDataGridTemplate. Control template for a multi-value grid. -->
+    <!-- ***************************************************************** -->
+    <ControlTemplate x:Key="SBXceedCharDataGridTemplate" TargetType="{x:Type sbc:SBMvEditControl}" >
+
+        <!-- If I move the SBDataSource binding into a style it does not happen, therefore it must be left here or tested very well. -->
+        <sbx:SBXGridControl x:Name="PART_SBGridControl"
+                            Style="{DynamicResource SBXCharGridControlStyle}"
+                            SBColumnDefinitions="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            SBDataSource="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }"
+                            >
+
+            <sbx:SBXGridControl.InputBindings>
+                <KeyBinding Key="Tab" Command="sbc:SBCommands.SBTabCommand" />
+                <KeyBinding Key="Enter" Command="sbc:SBCommands.SBEnterCommand" />
+            </sbx:SBXGridControl.InputBindings>
+
+            <xcdg:DataGridControl.View>
+
+                <sbx:SBXGridView Style="{DynamicResource SBXTableViewStyle}" 
+                                 UseDefaultHeadersFooters="False" 
+                                 ShowFixedColumnSplitter="False"
+                                 VerticalGridLineThickness="0"
+                                 HasFooters="{Binding Path=TemplatedParent.GuiObjectDefinition.HasColumnFooters, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }"
+                                 >
+
+                    <sbx:SBXGridView.Theme>
+                        <sbx:SBXGridViewTheme/>
+                    </sbx:SBXGridView.Theme>
+
+                    <!-- 
+                        Anything can be added to the various DataGridControl collections (FixedHeaders,
+                         Headers, Items, Footers and FixedFooters). But it has to be wrapped in a DataTemplate.
+                    -->
+                    <!--
+                    <xcdg:TableView.FixedFooters>
+                        <DataTemplate>...</DataTemplate>
+                    </xcdg:TableView.FixedFooters>
+                    -->
+
+                </sbx:SBXGridView>
+
+            </xcdg:DataGridControl.View>
+
+
+        </sbx:SBXGridControl>
+
+    </ControlTemplate>
+
+    <!-- ***************************************************************** -->
+    <!-- SBXceedInterleavedDataGridTemplate. Control template for a multi-value grid. -->
+    <!-- ***************************************************************** -->
+    <ControlTemplate x:Key="SBXceedInterleavedDataGridTemplate" TargetType="{x:Type sbc:SBMvEditControl}" >
+
+        <!-- If I move the SBDataSource binding into a style it does not happen, therefore it must be left here or tested very well. -->
+        <sbx:SBXGridControl x:Name="PART_SBGridControl"
+                            Style="{DynamicResource SBXInterleavedGridControlStyle}"
+                            SBColumnDefinitions="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            SBDataSource="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }"
+                            >
+
+            <sbx:SBXGridControl.InputBindings>
+                <KeyBinding Key="Tab" Command="sbc:SBCommands.SBTabCommand" />
+                <KeyBinding Key="Enter" Command="sbc:SBCommands.SBEnterCommand" />
+            </sbx:SBXGridControl.InputBindings>
+
+            <xcdg:DataGridControl.View>
+
+                <sbx:SBXGridView Style="{DynamicResource SBXTableViewStyle}" 
+                                 UseDefaultHeadersFooters="False" 
+                                 ShowFixedColumnSplitter="False"
+                                 VerticalGridLineThickness="0"
+                                 HasFooters="{Binding Path=TemplatedParent.GuiObjectDefinition.HasColumnFooters, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }"
+                                 >
+
+                    <sbx:SBXGridView.Theme>
+                        <sbx:SBXGridViewTheme/>
+                    </sbx:SBXGridView.Theme>
+
+                    <!-- 
+                        Anything can be added to the various DataGridControl collections (FixedHeaders,
+                         Headers, Items, Footers and FixedFooters). But it has to be wrapped in a DataTemplate.
+                    -->
+                    <!--
+                    <xcdg:TableView.FixedFooters>
+                        <DataTemplate>...</DataTemplate>
+                    </xcdg:TableView.FixedFooters>
+                    -->
+
+                </sbx:SBXGridView>
+
+            </xcdg:DataGridControl.View>
+
+
+        </sbx:SBXGridControl>
+
+    </ControlTemplate>
+
+    
+    <!-- ************************************************************************ -->
+    <!-- SBXceedCompactCardViewTemplate. Control template for a multi-value grid. -->
+    <!-- This template uses a CompactCardView as the view.                        -->
+    <!-- ************************************************************************ -->
+    <ControlTemplate x:Key="SBXceedCompactCardViewTemplate" TargetType="{x:Type sbc:SBMvEditControl}" >
+
+        <!-- If I move the SBDataSource binding into a style it does not happen, therefore it must be left here or tested very well. -->
+        <sbx:SBXGridControl x:Name="PART_SBGridControl"
+                            Style="{DynamicResource SBXCardViewControlStyle}"
+                            SBColumnDefinitions="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            SBDataSource="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }"
+                            >
+
+
+            <sbx:SBXGridControl.InputBindings>
+                <KeyBinding Key="Tab" Command="sbc:SBCommands.SBTabCommand" />
+                <KeyBinding Key="Enter" Command="sbc:SBCommands.SBEnterCommand" />
+            </sbx:SBXGridControl.InputBindings>
+
+
+            <xcdg:DataGridControl.View>
+
+                <xcdg:CompactCardView UseDefaultHeadersFooters="False">
+                    <xcdg:CompactCardView.Theme>
+                        <sbx:SBXGridViewTheme/>
+                    </xcdg:CompactCardView.Theme>
+                </xcdg:CompactCardView>
+
+            </xcdg:DataGridControl.View>
+
+        </sbx:SBXGridControl>
+
+        <ControlTemplate.Triggers>
+            <!-- Trigger to check if the GridLayoutTemplate has been chanced on SBMvEditControl, only if it is not null do I
+                 set it, otherwise the Xceed default is used. If I always set it and it is null then nothing is displayed. -->
+            <DataTrigger Binding="{Binding  Path=GridLayoutTemplate, 
+                                            RelativeSource={RelativeSource Mode=Self}, 
+                                            Converter={StaticResource SBIsNullConverter},
+                                            Mode=OneWay}" Value="false">
+                <Setter Property="Template" 
+                        Value="{Binding Path=GridLayoutTemplate, 
+                                        RelativeSource={RelativeSource TemplatedParent}, 
+                                        Mode=OneWay}" 
+                        TargetName="PART_SBGridControl" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- ***************************************************************** -->
+    <!-- SBXceed3DViewTemplate. Control template for a multi-vaule grid.   -->
+    <!-- ***************************************************************** -->
+    <ControlTemplate x:Key="SBXceed3DViewTemplate" TargetType="{x:Type sbc:SBMvEditControl}" >
+
+        <!-- If I move the SBDataSource binding into a style it does not happen, therefore it must be left here or tested very well. -->
+        <sbx:SBXGridControl x:Name="PART_SBGridControl"
+                            SBColumnDefinitions="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            SBDataSource="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }"
+                            ActiveRow="{Binding Path=SelectedRow, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay }"
+                            ActiveColumn="{Binding Path=SelectedColumn, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay }"
+                            CursorPosition="{Binding Path=CursorPosition, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay }"
+                            ActivateSelectedCell="{Binding Path=IsSelectedCellInEditMode, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=OneWay }"
+                            sbc:SBContentControl.HasSBFocus="{Binding Path=IsSBFocused, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"
+                            SortColumn ="@CNT"
+                            sbc:SBMvEditControl.ParentSBMvEditControl="{Binding Path=TemplatedParent, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }"
+                            BorderThickness="0"
+                            Height="{Binding Path=Height, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay }"
+                            Width="{Binding Path=GridWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay }"
+                            
+                            CellEditorTemplate="{StaticResource SBX3DViewTextclassCellEditorTemplate}"
+                            CellContentTemplate="{StaticResource SBX3DViewTextclassCellContentTemplate}"
+
+                            TextclassCellEditorTemplate="{StaticResource SBX3DViewTextclassCellContentTemplate}"
+                            TextclassCellContentTemplate="{StaticResource SBX3DViewTextclassCellContentTemplate}"
+                            
+                            ToggleCellEditorTemplate="{StaticResource SBX3DViewToggleCellEditorTemplate}"
+                            ToggleCellContentTemplate="{StaticResource SBX3DViewToggleCellContentTemplate}"
+                            
+                            ComboBoxCellEditorTemplate="{StaticResource SBX3DViewComboBoxCellEditorTemplate}"
+                            ComboBoxCellContentTemplate="{StaticResource SBX3DViewComboBoxCellContentTemplate}"
+                            
+                            >
+
+            <sbx:SBXGridControl.InputBindings>
+                <KeyBinding Key="Tab" Command="sbc:SBCommands.SBTabCommand" />
+                <KeyBinding Key="Enter" Command="sbc:SBCommands.SBEnterCommand" />
+            </sbx:SBXGridControl.InputBindings>
+
+            <xcdg:DataGridControl.View>
+                <xcdg:CardflowView3D x:Name="PART_CardFlowView">
+                    <xcdg:CardflowView3D.Theme>
+                        <sbxt:SBX3DViewTheme>
+                            <sbxt:SBX3DViewTheme.SurfaceConfigurations>
+                                <xcdg:ImageAndTitleSurfaceConfiguration xcdg:CardflowView3D.Surfaces="Left,Center,Right"/>
+                            </sbxt:SBX3DViewTheme.SurfaceConfigurations>
+                        </sbxt:SBX3DViewTheme>
+                    </xcdg:CardflowView3D.Theme>
+                </xcdg:CardflowView3D>
+            </xcdg:DataGridControl.View>
+
+        </sbx:SBXGridControl>
+
+    </ControlTemplate>
+
+    <!-- ******************************** -->
+    <!-- DefaultSBXGridCardViewImageStyle -->
+    <!-- ******************************** -->
+    <Style x:Key="DefaultSBXGridCardViewImageStyle" BasedOn="{StaticResource BaseSBMvEditControlStyle}" TargetType="{x:Type sbc:SBMvEditControl}">
+        <Setter Property="InterleavedGridTemplate" Value="{DynamicResource DefaultSBXGridCardViewImageStyle}" />
+        <Setter Property="DataRowStyle" Value="{DynamicResource VerticalWithImageDataRowStyle}" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBTextBoxStyle" />
+    </Style>
+
+    <!-- ******************************** -->
+    <!-- DefaultSBX3DViewStyle            -->
+    <!-- ******************************** -->
+    <Style x:Key="DefaultSBX3DViewStyle" BasedOn="{StaticResource BaseSBMvEditControlStyle}" TargetType="{x:Type sbc:SBMvEditControl}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBX3DViewStyle" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true">
+                <Setter Property="InterleavedGridTemplate" Value="{DynamicResource SBXceed3DViewTemplate}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- *********************************** -->
+    <!-- DefaultStackedSBMvEditControlStyle  -->
+    <!-- *********************************** -->
+    <Style x:Key="DefaultStackedSBMvEditControlStyle" BasedOn="{StaticResource BaseSBMvEditControlStyle}" TargetType="{x:Type sbc:SBMvEditControl}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultStackedSBMvEditControlStyle" />
+        <Setter Property="DataRowStyle" Value="{DynamicResource StackedDataRowStyle}" />
+    </Style>
+
+    <!-- *********************************** -->
+    <!-- DefaultSBXInterleavedGridViewStyle  -->
+    <!-- *********************************** -->
+    <Style x:Key="DefaultSBXInterleavedGridViewStyle" BasedOn="{StaticResource BaseSBMvEditControlStyle}" TargetType="{x:Type sbc:SBMvEditControl}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXInterleavedGridViewStyle" />
+        <Setter Property="InterleavedGridTemplate" Value="{Binding Path=GridTemplate, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+    </Style>
+
+    <!-- ******************************************** -->
+    <!-- DefaultSBXGuiGridViewStyle                   -->
+    <!-- ******************************************** -->
+    <Style x:Key="DefaultSBXGuiGridViewStyle" BasedOn="{StaticResource BaseSBMvEditControlStyle}" TargetType="{x:Type sbc:SBMvEditControl}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXGuiGridViewStyle" />
+        <Style.Triggers>
+
+            <!-- We are using character column and row to position the grid. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Mode=OneWay }" Value="false">
+                <Setter Property="Margin"       Value="0" />
+                <Setter Property="Width"        Value="NaN"/>
+                <Setter Property="Height"       Value="NaN"/>
+                <Setter Property="GridWidth"    Value="NaN"/>
+                <Setter Property="GridHeight"   Value="NaN"/>
+                <Setter Property="HorizontalAlignment"      Value="Stretch" />
+                <Setter Property="VerticalAlignment"        Value="Stretch" />
+                <Setter Property="InterleavedGridTemplate" Value="{DynamicResource SBXceedCompactCardViewTemplate}" />
+                <Setter Property="sbx:SBXGridControl.DataRowTemplate" Value="{DynamicResource tableViewRowTemplate}" />
+                <Setter Property="sbx:SBXGridControl.ColumnManagerRowTemplate" Value="{DynamicResource tableViewColumnManagerRowTemplate}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ********************************************************** -->
+    <!-- DefaultSBXCharLayoutGridViewStyle                          -->
+    <!-- This style will force the grid to use the character layout -->
+    <!-- regardless of what the form is using if the grid is        -->
+    <!-- interleaved. (eCase 12755*USA)                             -->
+    <!-- ********************************************************** -->
+    <Style x:Key="DefaultSBXCharLayoutGridViewStyle" BasedOn="{StaticResource BaseSBMvEditControlStyle}" TargetType="{x:Type sbc:SBMvEditControl}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCharLayoutGridViewStyle" />
+
+        <Style.Triggers>
+            <!-- if I am using pixel layout and the grid is interleaved -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="True"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="sbc:SBInterleavedGridLayout.ColumnCount" Value="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBColumnCounterConverter}}" />
+                <Setter Property="InterleavedGridTemplate"  Value="{DynamicResource SBXceedInterleavedDataGridTemplate}" />
+                <Setter Property="sbx:SBXGridControl.DataRowTemplate" Value="{DynamicResource InterleavedDataRowTemplate}" />
+
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+</ResourceDictionary>

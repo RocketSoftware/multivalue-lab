@@ -1,0 +1,193 @@
+<!--
+
+       Name    : BaseSBButtonStyle.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    
+Date            Name    Tracking #      Style               Description
+July 25, 2011   AKP     SBXA-4377       BaseSBButtonStyle   Added a trigger to manage if the button is enabled if it is a Int. Help button.
+July 25, 2011   AKP     SBXA-4377       BaseSBButtonStyle   Changed the binding for IsEnabled in the template to bind to the TemplatedParent IsEnabled. 
+May 26, 2011    AKP     SBXA-3626       BaseSBButtonStyle   Changed the Width and Height for character layout forms.                
+    
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls" 
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+<!--        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />-->
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="BaseSBButtonStyle" BasedOn="{StaticResource BaseSBControlStyle}" TargetType="{x:Type sbc:SBButton}" >
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBButtonStyle}" />
+        <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{DynamicResource SBButtonStyle}" />
+        <Setter Property="Control.VerticalAlignment" Value="Top"/>
+        <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+        <!-- Use ISSButtonEnabled instead of SBEmphasized as it takes into account the command status -->
+        <Setter Property="IsEnabled" Value="{Binding Path=IsSBButtonEnabled,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="sbc:SBUISupport.TemplateName" Value="Inline - BaseSBButtonStyle" />
+        <Setter Property="AccessKey" Value="{Binding Path=(sbc:SBGUIAttribute.SBString), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBButtonTextToAccessKeyConverter}}"/>
+
+            <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sbc:SBButton}">
+                    <Button x:Name="PART_FocusSite" 
+                            Style="{Binding Path=(sbc:SBControl.SBControlStyle), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                            Command="{Binding Path=Command, RelativeSource={RelativeSource TemplatedParent}}"
+                            CommandParameter="{Binding Path=CommandParameter, RelativeSource={RelativeSource TemplatedParent}}"
+                            CommandTarget="{Binding Path=CommandTarget, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsEnabled="{Binding Path=IsEnabled, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsDefault="{Binding Path=IsDefault, RelativeSource={RelativeSource TemplatedParent}}"                                                                                                            
+                            Padding="{Binding Path=Padding, RelativeSource={RelativeSource TemplatedParent}}"                                                                                                            
+                        >
+                        
+                        <!--sbc:SBControl.SBFocusControlStyle="{Binding Path=(sbc:SBControl.SBFocusControlStyle), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"-->
+
+                        <Button.InputBindings>
+                            <KeyBinding Key="Return" Command="sbc:SBCommands.ClickCommand"  />
+                        </Button.InputBindings>
+                    </Button>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <!-- Check to see if there is a return value in the definition and that the command parameter has not already been set, it which case
+               is overrides the return value. -->
+                                <Condition Binding="{Binding Path=ButtonDefinition, 
+                                    RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="false"/>
+                                <Condition Binding="{Binding Path=ButtonDefinition.ReturnValue, 
+                                    RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="false"/>
+                                <Condition Binding="{Binding Path=CommandParameter, 
+                                    RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_FocusSite" Property="CommandParameter" Value="{Binding Path=ButtonDefinition.ReturnValue, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding Path=ButtonDefinition, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="false">
+                            <Setter TargetName="PART_FocusSite" Property="sbc:SBControl.SetKeyboardFocus" Value="{Binding Path=ButtonDefinition.IsDefault, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                        </DataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>  
+                                <Condition Binding="{Binding SBPlus.SBUserPreferences.IsFuncKeyRefDisplayed, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                <Condition Binding="{Binding Path=FuncKeyRef, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}, RelativeSource={RelativeSource Mode=Self}}" Value="false"/>
+                            </MultiDataTrigger.Conditions>                            
+                            <!--Setter TargetName="PART_FocusSite" Property="Content" Value="{sbe:SimpleExpression Expression='[FuncKeyRef];[:];[FuncKeySep];[=];[:];[SBValue]', RelativeSource={RelativeSource TemplatedParent}}"/-->
+                            <Setter TargetName="PART_FocusSite" Property="Content">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource SBButtonTextToRichContentConverter}" ConverterParameter="*">                                        
+                                        <Binding Path="(sbc:SBGUIAttribute.SBString)" RelativeSource="{RelativeSource TemplatedParent}" Mode="TwoWay" Converter="{StaticResource SBLanguageConverter}"/>                                        
+                                        <Binding Path="FuncKeyRef" RelativeSource="{RelativeSource TemplatedParent}" FallbackValue="" />                                        
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SBPlus.SBUserPreferences.IsFuncKeyRefDisplayed, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                                <Condition Binding="{Binding Path=FuncKeyRef, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_FocusSite" Property="Content">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource SBButtonTextToRichContentConverter}" ConverterParameter="*">
+                                    <Binding Path="(sbc:SBGUIAttribute.SBString)" RelativeSource="{RelativeSource TemplatedParent}" Mode="TwoWay" Converter="{StaticResource SBLanguageConverter}"/>
+                                    <Binding Path="FuncKeyRef" RelativeSource="{RelativeSource TemplatedParent}" FallbackValue="" />
+                                </MultiBinding>
+                            </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding SBPlus.SBUserPreferences.IsFuncKeyRefDisplayed, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" Value="false">                            
+                            <Setter TargetName="PART_FocusSite" Property="Content">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource SBButtonTextToRichContentConverter}" ConverterParameter="*">
+                                    <Binding Path="(sbc:SBGUIAttribute.SBString)" RelativeSource="{RelativeSource TemplatedParent}" Mode="TwoWay" Converter="{StaticResource SBLanguageConverter}"/>
+                                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="" />
+                                </MultiBinding>
+                            </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding Path=CommandParameter, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="true">
+                            <Setter TargetName="PART_SBButton" Property="IsEnabled" Value="{Binding Path=SBEmphasized, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBConverter}, Mode=OneWay}" />
+                        </DataTrigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <!-- If we are using character coloumn and row positioning, I need to set the margin to 0, so as to allow the grid row and column to position the field -->
+            <!-- NB: FindAncestor throws an exception because it cannot locate ISBForm or SBForm when the ancestor is derrived from SBForm. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Mode=OneWay }" Value="false">
+                <Setter Property="Control.Margin"       Value="1" />
+                <!-- SBXA-3626, So that the buttons are correctly sized in character layout forms. -->
+                <Setter Property="Control.Width">
+                    <Setter.Value>
+                        <PriorityBinding>
+                            <Binding Path="(sbc:SBGUIAttribute.SBDimensions)" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBDimensionsConverter}"
+                             ConverterParameter="width" />
+                            <Binding Path="GuiObjectDefinition.Width" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Control.Height">
+                    <Setter.Value>
+                        <PriorityBinding>
+                            <Binding Path="(sbc:SBGUIAttribute.SBDimensions)" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBDimensionsConverter}"
+                             ConverterParameter="height" />
+                            <Binding Path="GuiObjectDefinition.Height" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+                
+            </DataTrigger>
+            
+            <!-- Trigger that checks to see if this button is the Int Help button and if the current control has int help. If not the button is disabled. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsIntuitiveHelpButton, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                    <Condition Binding="{Binding Path=SBCommon.FocusedControl.GuiObjectDefinition.FieldDefinition.HasIntuitiveHelp, Source={x:Static sbc:SBPlus.Current}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="IsEnabled" Value="False" />
+            </MultiDataTrigger>
+
+            <!-- Trigger that checks to see if this button is the Int Help button and if the current control has int help. If not the button is disabled. -->
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsIntuitiveHelpButton, RelativeSource={RelativeSource Mode=Self}}" Value="True" />                   
+                    <Condition Binding="{Binding Path=SBCommon.FocusedControl.GuiObjectDefinition.FieldDefinition.HasIntuitiveHelp, Source={x:Static sbc:SBPlus.Current}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="IsEnabled" Value="True" />
+            </MultiDataTrigger>
+            
+            <!-- if the button is the int help button set it to false and only set it to true if the form is in focus and the field has int help. -->
+<!--
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsIntuitiveHelpButton, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="IsEnabled" Value="False" />
+            </MultiDataTrigger>
+-->
+
+        </Style.Triggers>
+    </Style>
+
+    <!--CommandParameter="{Binding Path=CommandParameter, RelativeSource={RelativeSource TemplatedParent}}"-->
+
+
+</ResourceDictionary>

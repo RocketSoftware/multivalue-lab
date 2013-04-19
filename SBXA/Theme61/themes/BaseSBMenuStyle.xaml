@@ -1,0 +1,204 @@
+﻿<!--
+
+       Name    : BaseSBMenuStyle.xaml
+       Author  : Kendrew Peacey
+    
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+Date            Name    Tracking #      Style                       Description
+March 5, 2012   AKP     SBXA-8077       BaseMenuItemStyle    Moved the binding to SBMenu.HighlightedOption to SBVerticalMenuTemplate and SBHorizontalMenuTemplate
+March 5, 2012   AKP     SBXA-8077       BaseMenuItemStyle    Changed the bindings to FontFamily, FontSize and FontWeight to use a static SBPlus resource as this menu
+                                                             item does not always have SBMenu in the VisualTree.
+    
+                                        
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SystemColors.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- BaseMenuItemStyle -->
+    <Style x:Key="BaseMenuItemStyle" TargetType="{x:Type MenuItem}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseMenuItemStyle" />
+
+        <Setter Property="Control.FontFamily" Value ="{Binding Path=DefaultFontFamily, Mode=OneWay, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="Control.FontWeight" Value ="{Binding Path=DefaultFontWeight, Mode=OneWay, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBUnsetValueConverter}}" />
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Path=DefaultFontSize, Mode=OneWay, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                <Setter Property="Control.FontSize" Value ="{Binding Path=DefaultFontSize, Mode=OneWay, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBUnsetValueConverter}}" />
+            </DataTrigger>
+            
+            <DataTrigger Binding="{Binding IsSeparator}" Value="False">
+                <Setter Property="sbc:SBMenu.SelectLetter" Value="{Binding SelectLetter}" />
+            </DataTrigger>
+            
+            <!-- if no command specified in the MenuOption use the standard SB/XA menu option execute command -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSeparator}" Value="False" />
+                    <Condition Binding="{Binding Command, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Command" Value="sbc:SBCommands.SBExecuteMenuOptionCommand"/>
+                <Setter Property="CommandParameter" Value="{Binding}"/>
+            </MultiDataTrigger>
+
+            <!-- A command is specified in the MenuOption so bind it and the other parameters. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsSeparator}" Value="False" />
+                    <Condition Binding="{Binding Command, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Command" Value="{Binding Command}"/>
+                <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
+                <Setter Property="CommandTarget" Value="{Binding CommandTarget}"/>
+            </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding IsSeparator}" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type MenuItem}">
+                            <Separator MinWidth="30" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <!-- Although you can never run a command from a separator, it needs to be defined as
+                     a command so it can be disabled to ensure it doesn't get keyboard input -->
+                <Setter Property="Command" Value="sbc:SBCommands.SBExecuteMenuOptionCommand"/>
+                <Setter Property="CommandParameter" Value="{Binding}"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+
+            <!-- Set SBIsHighlighted property so the current menu can track the
+                 highlighted menu option -->
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="sbc:SBMenu.SBIsHighlighted" Value="True" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- BaseSBMenuStyle -->
+    <Style x:Key="BaseSBMenuStyle" TargetType="{x:Type sbc:SBMenu}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseSBMenuStyle" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="VerticalMenuTemplate" Value="{DynamicResource SBVerticalMenuTemplate}" />
+        <Setter Property="HorizontalMenuTemplate" Value="{DynamicResource SBHorizontalMenuTemplate}" />
+        <Setter Property="NestedMenuTemplate" Value="{DynamicResource SBHorizontalMenuTemplate}" />
+        <Setter Property="sbc:SBGUIAttribute.SBDrawable" Value="1" />
+        <Setter Property="Visibility" Value="{Binding Path=(sbc:SBGUIAttribute.SBDrawable), RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay, Converter={StaticResource SBDrawableConverter}}"/>
+        <Setter Property="IsEnabled" Value="{Binding Path=(sbc:SBGUIAttribute.SBEmphasized), RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBConverter}, Mode=TwoWay}" />
+        <Setter Property="sbc:SBGUIAttribute.SBStyleName" Value="{Binding Path=MenuDefinition.Definition.StyleName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+
+        <!-- Mapping from server attribute names to XUI properties -->
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="Control.Background" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="Control.Foreground" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <!-- ************************************ -->
+        <!--             Background               -->
+        <!-- ************************************ -->
+        <Setter Property="Background">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{StaticResource MenuBarColor}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="TwoWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- ************************************ -->
+        <!--             Foreground               -->
+        <!-- ************************************ -->
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{StaticResource MenuTextColor}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBForeground)" Mode="TwoWay" RelativeSource="{RelativeSource Mode=Self}"  Converter="{StaticResource SBColorConverter}" />
+                    <Binding Path="GuiObjectDefinition.Foreground" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <!-- *********************************** -->
+            <!--        Horizontal Menu type 2       -->
+            <!-- *********************************** -->
+
+            <DataTrigger Binding="{Binding Path=MenuDefinition.MenuType, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBMenuTypeConverter}}" 
+                         Value="Horizontal">
+                <Setter Property="Template"  Value="{Binding Path=HorizontalMenuTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+            </DataTrigger>
+
+            <!-- *********************************** -->
+            <!--        Vertical Menu type 1         -->
+            <!-- *********************************** -->
+
+            <!-- Vertical Menu shown in a seperate SBWindow or above the current form -->
+            <!-- In this case the menu position is set in code -->
+            <DataTrigger Binding="{Binding Path=MenuDefinition.MenuType, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBMenuTypeConverter}}" 
+                         Value="Vertical">
+                <Setter Property="Template"  Value="{Binding Path=VerticalMenuTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+            </DataTrigger>
+
+
+            <!-- *********************************** -->
+            <!--        Windows Menu type 5          -->
+            <!-- *********************************** -->
+            <DataTrigger Binding="{Binding Path=MenuDefinition.MenuType, 
+                              RelativeSource={RelativeSource Mode=Self}, 
+                              Converter={StaticResource SBMenuTypeConverter}}"
+                Value="HorizontalWithLinkedSubMenus">
+                <Setter Property="Template"  Value="{Binding Path=HorizontalMenuTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+            </DataTrigger>
+
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

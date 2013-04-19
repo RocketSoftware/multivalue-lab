@@ -1,0 +1,2006 @@
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <!-- ******************* -->
+    <!-- BRUSH: SBGlyphBrush -->
+    <!-- ******************* -->
+    <SolidColorBrush x:Key="SBGlyphBrush" Color="#444" />
+
+    <!-- ***************************** -->
+    <!-- BRUSH: SBCheckRadioFillNormal -->
+    <!-- ***************************** -->
+    <LinearGradientBrush x:Key="SBCheckRadioFillNormal">
+        <GradientStop Color="#FFD2D4D2" Offset="0"/>
+        <GradientStop Color="#FFFFFFFF" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- ******************************* -->
+    <!-- BRUSH: SBCheckRadioStrokeNormal -->
+    <!-- ******************************* -->
+    <LinearGradientBrush x:Key="SBCheckRadioStrokeNormal">
+        <GradientStop Color="#FF004C94" Offset="0"/>
+        <GradientStop Color="#FF003C74" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- ****************************************** -->
+    <!-- BRUSH: Resources needed for text box style -->
+    <!-- ****************************************** -->
+    <LinearGradientBrush x:Key="SBTextBoxBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFE0E0E0" Offset="0"/>
+        <GradientStop Color="#FFFFFFFF" Offset="1"/>
+    </LinearGradientBrush>
+
+    <DrawingBrush x:Key="SBButtonUpOutside" Viewbox="0,0,104,24" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+        <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+        <!--<DrawingGroup.BitmapEffect>
+          <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+        </DrawingGroup.BitmapEffect>-->
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+              <GradientStop Color="#FFA5CBD3" Offset="0"/>
+              <GradientStop Color="#FF528EBB" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="4.181" RadiusY="4.181" Rect="0.5,0.5,103,23"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+              <Pen.Brush>
+                <LinearGradientBrush EndPoint="0.476,1.125" StartPoint="0.472,-0.076">
+                  <GradientStop Color="#FF46A4D3" Offset="0"/>
+                  <GradientStop Color="#FF3481A8" Offset="1"/>
+                </LinearGradientBrush>
+              </Pen.Brush>
+            </Pen>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <DrawingBrush x:Key="SBButtonUpInside" Viewbox="0,0,98.998,16" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup Opacity="0.38">
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+              <GradientStop Color="#FFFFFFFF" Offset="0"/>
+              <GradientStop Color="#002C7FBF" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="3.088" RadiusY="3.088" Rect="0.5,0.5,97.998,15"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen Brush="#002A63A2" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <DrawingBrush x:Key="SBButtonHoverOutside" Viewbox="0,0,104,24" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+        <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+        <!--<DrawingGroup.BitmapEffect>
+          <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+        </DrawingGroup.BitmapEffect>-->
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+              <GradientStop Color="#FF5DC6DD" Offset="0"/>
+              <GradientStop Color="#FF4297D7" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="4.181" RadiusY="4.181" Rect="0.5,0.5,103,23"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+              <Pen.Brush>
+                <LinearGradientBrush EndPoint="0.476,1.125" StartPoint="0.472,-0.076">
+                  <GradientStop Color="#FF46A4D3" Offset="0"/>
+                  <GradientStop Color="#FF3481A8" Offset="1"/>
+                </LinearGradientBrush>
+              </Pen.Brush>
+            </Pen>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <DrawingBrush x:Key="SBButtonHoverInside" Viewbox="0,0,98.998,16" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup Opacity="0.38">
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+              <GradientStop Color="#FFFFFFFF" Offset="0"/>
+              <GradientStop Color="#002C7FBF" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="3.088" RadiusY="3.088" Rect="0.5,0.5,97.998,15"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen Brush="#002A63A2" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+  
+  <DrawingBrush x:Key="SBButtonDownOutside" Viewbox="0,0,104,24" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+        <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+        <!--<DrawingGroup.BitmapEffect>
+          <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+        </DrawingGroup.BitmapEffect>-->
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+              <GradientStop Color="#FF75B1BD" Offset="0"/>
+              <GradientStop Color="#FF215882" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="4.181" RadiusY="4.181" Rect="0.5,0.5,103,23"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+              <Pen.Brush>
+                <LinearGradientBrush EndPoint="0.476,1.125" StartPoint="0.472,-0.076">
+                  <GradientStop Color="#FF3983A8" Offset="0"/>
+                  <GradientStop Color="#FF1E6182" Offset="1"/>
+                </LinearGradientBrush>
+              </Pen.Brush>
+            </Pen>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+  
+  <DrawingBrush x:Key="SBButtonDownInside" Viewbox="0,0,98.998,16" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup Opacity="0.215">
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+              <GradientStop Color="#FFA9D2F2" Offset="0"/>
+              <GradientStop Color="#002C7FBF" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="3.088" RadiusY="3.088" Rect="0.5,0.5,97.998,15"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen Brush="#002A63A2" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <DrawingBrush x:Key="SBMainWindowBackground" Viewbox="0,0,1016,743" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.494,0.993" StartPoint="0.488,0.016">
+              <GradientStop Color="#FF80ADD1" Offset="1"/>
+              <GradientStop Color="#FF8AB2D5" Offset="0"/>
+              <GradientStop Color="#FFB3C8E2" Offset="0.514"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+        <DrawingGroup Opacity="0.48">
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <RadialGradientBrush>
+                <GradientStop Color="#D32F5A98" Offset="1"/>
+                <GradientStop Color="#00FFFFFF" Offset="0"/>
+              </RadialGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.775">
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.281,0.543" StartPoint="-0.069,0.541">
+                <GradientStop Color="#FF2F4869" Offset="0"/>
+                <GradientStop Color="#005685D3" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.1">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,0,476"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FFFFFFFF" Geometry="M6.0782113E-10,1.4201071E-06 C122.12008,130.37563 320,236 496,236 624,236 832,220 1013.0245,135.99842 L1016,265.99999 6.0782113E-10,264.99999 z"/>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.07">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="0.0067718257400305,0.999977070925202,-0.999977070925202,0.0067718257400305,408.974368966747,-2.82150184883005"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FFFFFFFF" Geometry="M1.693246,175.45645 C89.006451,265.5465 296.33272,279.87953 441.21612,251.93055 561.41322,228.74372 698.15683,125.66707 747.02501,1.0626543E-05 L744.22084,413.99398 7.1724E-06,408.95522 z"/>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,-0.5,-0.5"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#26BEFAFE" Geometry="M0.5,32.5 C0.5,32.5 128.5,120.5 304.5,120.5 504.5,120.5 600.80371,34.835076 776.5,24.5 912.5,16.5 984.5,104.5 1016.5,128.5 L1017,1 0.5,0.5">
+            <GeometryDrawing.Pen>
+              <Pen Brush="#00000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,-1,330.5"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#16BEFAFE" Geometry="M0.5,0.5 L0.5,413 216.232,413.5 C216.232,413.5 208.44511,330.07868 153.16418,213.5 81.086664,61.5 0.5,0.5 0.5,0.5 z">
+            <GeometryDrawing.Pen>
+              <Pen Brush="#00000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.15">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="0.0067718257400305,0.999977070925202,0.999977070925202,-0.0067718257400305,819.901599973015,-1.06555277040536"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Geometry="M1.6927201,82.999308 C88.978808,125.61622 145.21498,163.11877 330.16926,161.86626 562.16393,160.2952 697.94001,59.446546 746.79301,5.0268642E-06 L743.98971,195.83899 7.1701725E-06,193.45541 z">
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="1.255,-1.038" StartPoint="0,0.5">
+                <GradientStop Color="#FFFFFFFF" Offset="0.322"/>
+                <GradientStop Color="#00FFFFFF" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.44">
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <RadialGradientBrush>
+                <RadialGradientBrush.RelativeTransform>
+                  <TransformGroup>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.77" ScaleY="1"/>
+                    <SkewTransform AngleX="0" AngleY="0" CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform X="0.115" Y="0"/>
+                  </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>
+                <GradientStop Color="#FCFFFFFF" Offset="0"/>
+                <GradientStop Color="#0056BAD3" Offset="1"/>
+              </RadialGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+    <!-- Rocket Logo -->
+    <DrawingBrush x:Key="RocketSBMainWindowBackground" Viewbox="0,0,632,446" ViewboxUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing>
+                    <GeometryDrawing.Brush>
+                        <DrawingBrush>
+                            <DrawingBrush.Drawing>
+                                <DrawingGroup>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Brush>
+                                            <LinearGradientBrush EndPoint="0.494,0.993" StartPoint="0.488,0.016">
+                                                <GradientStop Color="#FF80ADD1" Offset="1"/>
+                                                <GradientStop Color="#FF8AB2D5" Offset="0"/>
+                                                <GradientStop Color="#FFB3C8E2" Offset="0.514"/>
+                                            </LinearGradientBrush>
+                                        </GeometryDrawing.Brush>
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+                                        </GeometryDrawing.Geometry>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <DrawingGroup Opacity="0.48">
+                                        <GeometryDrawing>
+                                            <GeometryDrawing.Brush>
+                                                <RadialGradientBrush>
+                                                    <GradientStop Color="#D32F5A98" Offset="1"/>
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                </RadialGradientBrush>
+                                            </GeometryDrawing.Brush>
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+                                            </GeometryDrawing.Geometry>
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                    <DrawingGroup Opacity="0.775">
+                                        <GeometryDrawing>
+                                            <GeometryDrawing.Brush>
+                                                <LinearGradientBrush EndPoint="0.281,0.543" StartPoint="-0.069,0.541">
+                                                    <GradientStop Color="#FF2F4869" Offset="0"/>
+                                                    <GradientStop Color="#005685D3" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </GeometryDrawing.Brush>
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+                                            </GeometryDrawing.Geometry>
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                    <DrawingGroup Opacity="0.1">
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1,0,476"/>
+                                        </DrawingGroup.Transform>
+                                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="M6.0782113E-10,1.4201071E-06C122.12008,130.37563 320,236 496,236 624,236 832,220 1013.0245,135.99842L1016,265.99999 6.0782113E-10,264.99999z"/>
+                                    </DrawingGroup>
+                                    <DrawingGroup Opacity="0.07">
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="0.0067718257400305,0.999977070925202,-0.999977070925202,0.0067718257400305,408.974368966747,-2.82150184883005"/>
+                                        </DrawingGroup.Transform>
+                                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="M1.693246,175.45645C89.006451,265.5465 296.33272,279.87953 441.21612,251.93055 561.41322,228.74372 698.15683,125.66707 747.02501,1.0626543E-05L744.22084,413.99398 7.1724E-06,408.95522z"/>
+                                    </DrawingGroup>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1,-0.5,-0.5"/>
+                                        </DrawingGroup.Transform>
+                                        <GeometryDrawing Brush="#26BEFAFE" Geometry="M0.5,32.5C0.5,32.5 128.5,120.5 304.5,120.5 504.5,120.5 600.80371,34.835076 776.5,24.5 912.5,16.5 984.5,104.5 1016.5,128.5L1017,1 0.5,0.5">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#00000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1,-1,330.5"/>
+                                        </DrawingGroup.Transform>
+                                        <GeometryDrawing Brush="#16BEFAFE" Geometry="M0.5,0.5L0.5,413 216.232,413.5C216.232,413.5 208.44511,330.07868 153.16418,213.5 81.086664,61.5 0.5,0.5 0.5,0.5z">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#00000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                    <DrawingGroup Opacity="0.15">
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="0.0067718257400305,0.999977070925202,0.999977070925202,-0.0067718257400305,819.901599973015,-1.06555277040536"/>
+                                        </DrawingGroup.Transform>
+                                        <GeometryDrawing Geometry="M1.6927201,82.999308C88.978808,125.61622 145.21498,163.11877 330.16926,161.86626 562.16393,160.2952 697.94001,59.446546 746.79301,5.0268642E-06L743.98971,195.83899 7.1701725E-06,193.45541z">
+                                            <GeometryDrawing.Brush>
+                                                <LinearGradientBrush EndPoint="1.255,-1.038" StartPoint="0,0.5">
+                                                    <GradientStop Color="#FFFFFFFF" Offset="0.322"/>
+                                                    <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </GeometryDrawing.Brush>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                    <DrawingGroup Opacity="0.44">
+                                        <GeometryDrawing>
+                                            <GeometryDrawing.Brush>
+                                                <RadialGradientBrush>
+                                                    <RadialGradientBrush.RelativeTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.77" ScaleY="1"/>
+                                                            <SkewTransform AngleX="0" AngleY="0" CenterX="0.5" CenterY="0.5"/>
+                                                            <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5"/>
+                                                            <TranslateTransform X="0.115" Y="0"/>
+                                                        </TransformGroup>
+                                                    </RadialGradientBrush.RelativeTransform>
+                                                    <GradientStop Color="#FCFFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#0056BAD3" Offset="1"/>
+                                                </RadialGradientBrush>
+                                            </GeometryDrawing.Brush>
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,1015,742"/>
+                                            </GeometryDrawing.Geometry>
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </GeometryDrawing.Brush>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,632,446"/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <DrawingGroup>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,479,216"/>
+                    </DrawingGroup.Transform>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,0,23.875"/>
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FF040404">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,107,121.125"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Pen>
+                                <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,0,150"/>
+                        </DrawingGroup.Transform>
+                        <DrawingGroup>
+                            <DrawingGroup>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry Rect="0.5,0.5,107,34"/>
+                                    </GeometryDrawing.Geometry>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF7F9DB9" Thickness="1"/>
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing Brush="#FF000000">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry Rect="1,1,106,33"/>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="1,0,0,1,1,1"/>
+                                </DrawingGroup.Transform>
+                                <DrawingGroup>
+                                    <GeometryDrawing Brush="#00FFFFFF">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="0,0,106,33"/>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1,106,33"/>
+                                        </DrawingGroup.Transform>
+                                        <GeometryDrawing Brush="#FFECE9D8">
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,0,0"/>
+                                            </GeometryDrawing.Geometry>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                    <DrawingGroup>
+                                        <DrawingGroup.ClipGeometry>
+                                            <RectangleGeometry Rect="0,0,102,29"/>
+                                        </DrawingGroup.ClipGeometry>
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1,2,2"/>
+                                        </DrawingGroup.Transform>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Transform>
+                                                <MatrixTransform Matrix="1,0,0,1,2,0"/>
+                                            </DrawingGroup.Transform>
+                                            <GeometryDrawing Brush="#00000000">
+                                                <GeometryDrawing.Geometry>
+                                                    <RectangleGeometry Rect="0,0,98,29"/>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                            <GeometryDrawing Brush="#FFFFFFFF">
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup FillRule="Nonzero">
+                                                        <PathGeometry Figures="M16.34539,8.9582424 L16.34539,13.26586 17.494804,13.26586 C18.053398,13.26586 18.527845,13.231843 18.918144,13.163809 19.308445,13.095775 19.63966,12.950755 19.911797,12.72875 20.169609,12.52823 20.361179,12.288321 20.486504,12.009024 20.611828,11.729727 20.674492,11.364492 20.674492,10.913321 20.674492,10.512279 20.597507,10.166739 20.443535,9.8766994 20.289562,9.5866604 20.033543,9.3628645 19.675468,9.2053127 19.424816,9.0978909 19.145519,9.0298567 18.837578,9.0012112 18.529634,8.9725657 18.146498,8.9582424&#xd;&#xa;17.688164,8.9582424 L16.34539,8.9582424 z M12.349297,6.014883 L18.783867,6.014883 C19.671886,6.014883 20.445324,6.070384 21.104179,6.1813869 21.763035,6.2923899 22.371758,6.5233469 22.930351,6.874258 23.503269,7.2394924 23.958019,7.7031965 24.294609,8.2653713 24.631199,8.8275461 24.799492,9.5419016 24.799492,10.408438 24.799492,11.633047 24.523777,12.626699 23.972343,13.389395 23.42091,14.15209 22.683281,14.759024 21.759453,15.210196 L27.141289,22.01 22.242851,22.01 17.784843,16.144766 16.34539,16.144766 16.34539,22.01 12.349297,22.01 12.349297,6.014883 z" FillRule="Nonzero"/>
+                                                        <PathGeometry Figures="M33.456062,12.266836 C33.119473,12.266836 32.815113,12.318757 32.542976,12.422598 32.27084,12.526439 32.020191,12.725169 31.791023,13.018789 31.57618,13.298086 31.404305,13.681224 31.275398,14.168203 31.146492,14.655182 31.082039,15.267487 31.082039,16.005117 31.082039,16.742748 31.142912,17.33894 31.264656,17.793692 31.3864,18.248444 31.543953,18.611889 31.737312,18.884024 31.937834,19.163321 32.188484,19.367422 32.489265,19.496328 32.790047,19.625235 33.123055,19.689688&#xd;&#xa;33.488289,19.689688 33.78907,19.689688 34.095222,19.625235 34.406746,19.496328 34.718269,19.367422 34.967129,19.174063 35.153328,18.91625 35.375332,18.608307 35.543629,18.237701 35.658211,17.804434 35.772793,17.371166 35.830086,16.771393 35.830086,16.005117 35.830086,15.288971 35.771004,14.69278 35.65284,14.216543 35.534676,13.740306 35.371754,13.358958 35.16407,13.0725 34.942066,12.771719 34.691414,12.562246 34.412117,12.444082 34.13282,12.325918&#xd;&#xa;33.814137,12.266836 33.456062,12.266836 z M33.456062,9.5705471 C35.432625,9.5705471 36.965176,10.141673 38.053719,11.283926 39.142262,12.426179 39.686531,13.992747 39.686531,15.983633 39.686531,17.967358 39.144051,19.530346 38.05909,20.672598 36.974129,21.81485 35.439785,22.385977 33.456062,22.385977 31.486662,22.385977 29.9559,21.81485 28.863777,20.672598 27.771654,19.530346 27.225594,17.967358 27.225594,15.983633 27.225594,13.978425 27.771654,12.408275 28.863777,11.273184 29.9559,10.138093 31.486662,9.5705471&#xd;&#xa;33.456062,9.5705471 z" FillRule="Nonzero"/>
+                                                        <PathGeometry Figures="M47.491978,9.6135159 C48.157993,9.6135159 48.824009,9.6905012 49.490025,9.8444729 50.15604,9.9984446 50.825638,10.243724 51.498814,10.580313 L51.498814,13.802969 51.015415,13.802969 C50.865025,13.659739 50.680618,13.502188 50.462193,13.330313 50.243767,13.158438 50.00565,13.000886 49.747837,12.857656 49.4757,12.707266 49.167759,12.58015 48.824009,12.476309 48.480259,12.372468 48.097122,12.320547 47.674595,12.320547 46.714958,12.320547 45.971958,12.655345 45.445591,13.324942 44.919224,13.994538 44.65604,14.895092 44.65604,16.026602 44.65604,17.236889 44.937126,18.139233 45.499302,18.733633 46.061478,19.328033 46.80806,19.625235&#xd;&#xa;47.739048,19.625235 48.211704,19.625235 48.627068,19.571524 48.985142,19.464102 49.343216,19.35668 49.651157,19.227774 49.90897,19.077383 50.159622,18.926992 50.374466,18.771231 50.553501,18.610098 50.732536,18.448965 50.886509,18.303946 51.015415,18.175039 L51.498814,18.175039 51.498814,21.397696 C51.28397,21.490795 51.03511,21.598217 50.752232,21.719961 50.469353,21.841705 50.181107,21.941967 49.887486,22.020742 49.522251,22.121002 49.18029,22.197989 48.861607,22.251699 48.542923,22.30541 48.122185,22.332266 47.5994,22.332266 46.603958,22.332266 45.692661,22.20694 44.865513,21.956289 44.038364,21.705639 43.320427,21.31892 42.711704,20.796133 42.110142,20.273346 41.641068,19.616283 41.304478,18.824942 40.967888,18.0336 40.799595,17.100821&#xd;&#xa;40.799595,16.026602 40.799595,14.873608 40.982212,13.892488 41.347446,13.083242 41.712681,12.273997 42.206821,11.607982 42.829868,11.085196 43.431431,10.583894 44.138626,10.213288 44.95145,9.9733791 45.764275,9.73347 46.611118,9.6135159 47.491978,9.6135159 z" FillRule="Nonzero"/>
+                                                        <PathGeometry Figures="M53.274452,5.2951565 L57.034218,5.2951565 57.034218,14.662344 60.600624,9.9465237 65.037148,9.9465237 60.815468,15.145742 65.348671,22.01 60.879921,22.01 57.614296,16.757071 57.034218,17.54125 57.034218,22.01 53.274452,22.01 53.274452,5.2951565 z" FillRule="Nonzero"/>
+                                                        <PathGeometry Figures="M71.814865,11.987539 C71.084396,11.987539 70.513268,12.205964 70.101486,12.642813 69.689705,13.079661 69.462326,13.674063 69.419357,14.426016 L73.963303,14.426016 C73.941818,13.631094 73.757408,13.02595 73.41008,12.610586 73.062752,12.195222 72.531013,11.987539 71.814865,11.987539 z M72.104904,9.5705471 C73.95256,9.5705471 75.341881,10.068269 76.272873,11.063711 77.203865,12.059154 77.669357,13.484284 77.669357,15.339102 L77.669357,16.692617 69.430099,16.692617 C69.465904,17.251211 69.584068,17.718496 69.784592,18.094473 69.985115,18.470449 70.250084,18.76944 70.579514,18.991446 70.901779,19.213451 71.277756,19.372793 71.707443,19.469473 72.137131,19.566153 72.606209,19.614492 73.11467,19.614492 73.551521,19.614492 73.981209,19.566153 74.403732,19.469473 74.826256,19.372793 75.212975,19.245678 75.563889,19.088125 75.871834,18.952057 76.156502,18.805248 76.417892,18.647696 76.679283,18.490143 76.892342,18.350494&#xd;&#xa;77.057053,18.22875 L77.454514,18.22875 77.454514,21.333242 C77.146568,21.454987 76.865486,21.56778 76.611252,21.671621 76.357018,21.775463 76.007896,21.881094 75.563889,21.988516 75.155685,22.095938 74.734947,22.180084 74.301682,22.240957 73.868416,22.30183 73.340256,22.332266 72.717209,22.332266 70.439865,22.332266 68.69426,21.787994 67.480392,20.699453 66.266525,19.610912 65.659592,18.060455 65.659592,16.048086 65.659592,14.078686 66.225349,12.506745 67.356857,11.332266 68.488365,10.157786 70.071053,9.5705471&#xd;&#xa;72.104904,9.5705471 z" FillRule="Nonzero"/>
+                                                        <PathGeometry Figures="M79.834038,6.4982815 L83.593803,6.4982815 83.593803,9.9465237 87.213921,9.9465237 87.213921,12.567617 83.593803,12.567617 83.593803,16.843008 C83.593803,17.265533 83.597382,17.63435 83.604546,17.949453 83.61171,18.264557 83.668999,18.547436 83.776421,18.798086 83.876678,19.048737 84.053925,19.247467 84.308159,19.394278 84.562393,19.541088 84.932999,19.614492 85.419975,19.614492 85.620499,19.614492 85.883682,19.571524 86.209526,19.485586 86.53537,19.399649 86.762749,19.320873 86.891655,19.249258 L87.213921,19.249258 87.213921,21.902578 C86.805717,22.01 86.372452,22.094147 85.914116,22.15502 85.45578,22.215893 84.893608,22.246328 84.227592,22.246328 82.695038,22.246328 81.579643,21.931225 80.881401,21.301016 80.183159,20.670807 79.834038,19.639557 79.834038,18.207266 L79.834038,12.567617 78.394585,12.567617 78.394585,9.9465237 79.834038,9.9465237 79.834038,6.4982815 z" FillRule="Nonzero"/>
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,23.125,0"/>
+                        </DrawingGroup.Transform>
+                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="M34,0.5 L25.895161,88.875 0.5,80.840909 z">
+                            <GeometryDrawing.Pen>
+                                <Pen Brush="#FFF9F4F4" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,27.25,0"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Brush="#FF3F5897" Geometry="M6.75,0.5 L5.2379032,14.375 0.5,13.113636 z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF3F5897" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!-- This is the gray main window border from Jin Leem in SVL -->
+  <DrawingBrush x:Key="GrayMainWindowBorder" Viewbox="0,0,640,480" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.492,0.044" StartPoint="0.492,0.002">
+              <GradientStop Color="#FFBBB5B5" Offset="0.822"/>
+              <GradientStop Color="#FFC1BEBE" Offset="0"/>
+              <GradientStop Color="#FF928F8F" Offset="0.197"/>
+              <GradientStop Color="#FFB5AEAE" Offset="0.995"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="4.833" RadiusY="4.833" Rect="0.5,0.5,639,479"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+              <Pen.Brush>
+                <LinearGradientBrush EndPoint="0.487,1.166" StartPoint="0.513,-0.166">
+                  <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                  <GradientStop Color="#FF4F4F4F" Offset="1"/>
+                </LinearGradientBrush>
+              </Pen.Brush>
+            </Pen>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,-1,3.142,476.914"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.562,1.492" StartPoint="0.562,-0.2">
+                <GradientStop Color="#00FFFFFF" Offset="1"/>
+                <GradientStop Color="#A64A4A4A" Offset="0"/>
+                <GradientStop Color="#855D5E5F" Offset="0.226"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,633.858,141.334"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+    <!-- SBFormBackground -->
+    <LinearGradientBrush x:Key="SBFormBackground" EndPoint="0.508,1" StartPoint="0.508,0.011">
+        <GradientStop Color="#FFFFFFFF" Offset="1"/>
+        <GradientStop Color="#FFE7E7E7" Offset="0.058"/>
+        <GradientStop Color="#FFDBDBDB" Offset="0.01"/>
+    </LinearGradientBrush>
+    
+    <!-- *********************************** -->
+    <!-- BRUSH: SBFormBorderColor            -->
+    <!-- *********************************** -->
+    <LinearGradientBrush x:Key="SBFormBorderColor" EndPoint="0.738,0.989" StartPoint="0.279,0.018">
+        <GradientStop Color="#FF3B9DD1" Offset="1"/>
+        <GradientStop Color="#FF73C5F0" Offset="0"/>
+    </LinearGradientBrush>
+
+    <!-- SBFormBorderBackground -->
+    <DrawingBrush x:Key="SBFormBorderBackground" Viewbox="0,0,640,480" ViewboxUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="{DynamicResource SBFormBackground}">
+                <GeometryDrawing.Geometry>
+                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,639,479"/>
+                </GeometryDrawing.Geometry>
+                <GeometryDrawing.Pen>
+                    <Pen Brush="#FF519CEE" DashCap="Flat" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                </GeometryDrawing.Pen>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!-- This is the yellowish close button from Jin Leem in SVL. -->
+  <DrawingBrush x:Key="CloseButtonBorder" Viewbox="0,0,26.062,26.062" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFEF3C9" Offset="0"/>
+                <GradientStop Color="#FFF5B125" Offset="0.99"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,25.062,25.062"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFF5C775" Offset="0"/>
+                    <GradientStop Color="#FFDA943E" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+          </DrawingGroup.BitmapEffect>-->
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,2.903,2.664"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                <GradientStop Color="#00FFFFFF" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,20.315,19.343"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,6.865,7.667"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Geometry="M-8.4565738E-06,2.9340206E-06 L2.8620715,8.5132909E-06 6.2122714,4.2224326 9.3181712,2.9340206E-06 12.355109,2.9340206E-06 7.7304915,5.8988963 12.492998,12.428003 9.6873361,12.339771 6.2812945,7.8398519 2.9312779,12.339569 0.00029707125,12.339569 4.4867288,5.9104978 z">
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.708,0.957" StartPoint="0.292,0.043">
+                <GradientStop Color="#FFCF881C" Offset="0"/>
+                <GradientStop Color="#FFCF881C" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the down state for the yellowish close button from Jin Leem in SVL -->
+  <DrawingBrush x:Key="CloseButtonDown" Viewbox="0,0,26.062,26.062" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup Opacity="0.4">
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFE9EAEC" Offset="0"/>
+                <GradientStop Color="#FF99999A" Offset="0.99"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,25.062,25.062"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                    <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+          </DrawingGroup.BitmapEffect>-->
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,2.903,2.664"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                <GradientStop Color="#0099999A" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,20.315,19.343"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,6.865,7.667"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Geometry="M-8.4565738E-06,2.9340206E-06 L2.8620715,8.5132909E-06 6.2122714,4.2224326 9.3181712,2.9340206E-06 12.355109,2.9340206E-06 7.7304915,5.8988963 12.492998,12.428003 9.6873361,12.339771 6.2812945,7.8398519 2.9312779,12.339569 0.00029707125,12.339569 4.4867288,5.9104978 z">
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.708,0.957" StartPoint="0.292,0.043">
+                <GradientStop Color="#FF909090" Offset="0"/>
+                <GradientStop Color="#FF6D6D6D" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the mouse over state for the yellowish close button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="CloseButtonMouseOver" Viewbox="0,0,26.062,26.062" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFE9EAEC" Offset="1"/>
+                <GradientStop Color="#FF99999A" Offset="0"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,25.062,25.062"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                    <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,6.865,7.667"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Geometry="M-8.4565738E-06,2.9340206E-06 L2.8620715,8.5132909E-06 6.2122714,4.2224326 9.3181712,2.9340206E-06 12.355109,2.9340206E-06 7.7304915,5.8988963 12.492998,12.428003 9.6873361,12.339771 6.2812945,7.8398519 2.9312779,12.339569 0.00029707125,12.339569 4.4867288,5.9104978 z">
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.708,0.957" StartPoint="0.292,0.043">
+                <GradientStop Color="#FF909090" Offset="0"/>
+                <GradientStop Color="#FF6D6D6D" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the border brush for the yellowish maximize button button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="MaximizeButtonBorder" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+  <DrawingBrush.Drawing>
+    <DrawingGroup>
+      <DrawingGroup>
+        <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+        <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+        <!--<DrawingGroup.BitmapEffect>
+          <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+        </DrawingGroup.BitmapEffect>-->
+        <DrawingGroup.Transform>
+          <MatrixTransform Matrix="1,0,0,1,1.77635683940025E-15,1.77635683940025E-15"/>
+        </DrawingGroup.Transform>
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+              <GradientStop Color="#FFFEF6D0" Offset="0"/>
+              <GradientStop Color="#FFF5AD1C" Offset="0.99"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+              <Pen.Brush>
+                <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                  <GradientStop Color="#FFF6CA78" Offset="0"/>
+                  <GradientStop Color="#FFDA933D" Offset="1"/>
+                </LinearGradientBrush>
+              </Pen.Brush>
+            </Pen>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+      <DrawingGroup>
+        <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+        <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+        <!--<DrawingGroup.BitmapEffect>
+          <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+        </DrawingGroup.BitmapEffect>-->
+        <DrawingGroup.Transform>
+          <MatrixTransform Matrix="1,0,0,1,3.164,2.664"/>
+        </DrawingGroup.Transform>
+        <GeometryDrawing>
+          <GeometryDrawing.Brush>
+            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+              <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+              <GradientStop Color="#00FFFFFF" Offset="1"/>
+            </LinearGradientBrush>
+          </GeometryDrawing.Brush>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,19.715,18.772"/>
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+      <DrawingGroup>
+        <DrawingGroup.Transform>
+          <MatrixTransform Matrix="1,0,0,1,5.457,6.701"/>
+        </DrawingGroup.Transform>
+        <GeometryDrawing Brush="#FFCF881C">
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,14.502,2.544"/>
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+      <DrawingGroup>
+        <DrawingGroup.Transform>
+          <MatrixTransform Matrix="1,0,0,1,5.455,8.825"/>
+        </DrawingGroup.Transform>
+        <GeometryDrawing>
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,13.502,10.087"/>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen Brush="#FFCF881C" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingGroup>
+  </DrawingBrush.Drawing>
+</DrawingBrush>
+
+<!-- This is the mouse over state for the yellowish maximize button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="MaximizeButtonMouseOver" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFE9EAEC" Offset="1"/>
+                <GradientStop Color="#FF99999A" Offset="0"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                    <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.457,6.701"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FF868686">
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,14.502,2.544"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.455,8.825"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,13.502,10.087"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the border brush for the yellowish maximize button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="MaximizeButtonDown" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup Opacity="0.4">
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFE9EAEC" Offset="0"/>
+                <GradientStop Color="#FF99999A" Offset="0.99"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                    <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+          </DrawingGroup.BitmapEffect>-->
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,3.164,2.664"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                <GradientStop Color="#0099999A" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,19.715,18.772"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.457,6.701"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FF868686">
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,14.502,2.544"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.455,8.825"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,13.502,10.087"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the down state for the yellowish minimize button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="MinimizeButtonBorder" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,0,1.77635683940025E-15"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFFFADA" Offset="0"/>
+                <GradientStop Color="#FFF4A912" Offset="0.99"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFF6CB79" Offset="0"/>
+                    <GradientStop Color="#FFD9923C" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+          </DrawingGroup.BitmapEffect>-->
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,2.903,2.664"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                <GradientStop Color="#00FFFFFF" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,19.715,18.772"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.586,16.917"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FFCF881C">
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,10.308,3.383"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the mouse over state for the yellowish minimize button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="MinimizeButtonMouseOver" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup>
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFE9EAEC" Offset="1"/>
+                <GradientStop Color="#FF99999A" Offset="0"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                    <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup>
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.586,16.917"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FF7F7F7F">
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,10.308,3.383"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is the down state for the yellowish minimize button from Ji Leem in SVL -->
+  <DrawingBrush x:Key="MinimizeButtonDown" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup Opacity="0.4">
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+          </DrawingGroup.BitmapEffect>-->
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFE9EAEC" Offset="0"/>
+                <GradientStop Color="#FF99999A" Offset="0.99"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                <Pen.Brush>
+                  <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                    <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                    <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                  </LinearGradientBrush>
+                </Pen.Brush>
+              </Pen>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <!-- Bitmap effects cause the CPU to go through the roof when the cursor is blinking. A case has been logged with Microsoft SRX071108600306 by KP on Nov , 2007-->
+          <!-- This was confirmed to be a bug and there is a possibility that it will be fixed in .Net 3.5, but currently has not been (Nov 17, 2007) -->
+          <!--<DrawingGroup.BitmapEffect>
+            <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+          </DrawingGroup.BitmapEffect>-->
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,2.903,2.664"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                <GradientStop Color="#0099999A" Offset="1"/>
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,19.715,18.772"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+        <DrawingGroup Opacity="0.5">
+          <DrawingGroup.Transform>
+            <MatrixTransform Matrix="1,0,0,1,5.586,16.917"/>
+          </DrawingGroup.Transform>
+          <GeometryDrawing Brush="#FF7F7F7F">
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,10.308,3.383"/>
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- This is an IBM logo produce by Jin Leem in SVL. -->
+  <DrawingBrush x:Key="IBMLogoBrush" Viewbox="0,0,56.488,20.7004300451322" ViewboxUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.Transform>
+          <MatrixTransform Matrix="0.413867885821464,0,0,0.413867885821464,0,0"/>
+        </DrawingGroup.Transform>
+        <DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,0,0.017"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.033142648,2.4709201E-10 L0,3.3799999 24.261001,3.3799999 24.257701,2.4709201E-10 0.033142648,2.4709201E-10 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,0.065,6.611"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.033126066,-1.6967122E-07 L3.6993157E-09,3.38 24.260001,3.38 24.256801,-1.6967122E-07 0.033126066,-1.6967122E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,6.957,13.371"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.01444043,2.5633253E-07 L8.6977161E-08,3.3800008 10.573001,3.3800008 10.571601,2.5633253E-07 0.01444043,2.5633253E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,6.842,19.933"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.01445047,7.9646135E-07 L1.1612223E-07,3.3799995 10.572999,3.3799995 10.571599,7.9646135E-07 0.01445047,7.9646135E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,6.909,26.693"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.01442919,-7.9343394E-07 L2.1437077E-07,3.3800009 10.572,3.3800009 10.5706,-7.9343394E-07 0.01442919,-7.9343394E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,6.909,33.321"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.014449189,1.3976636E-06 L2.1437077E-07,3.3800011 10.572,3.3800011 10.5706,1.3976636E-06 0.014449189,1.3976636E-06 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,0.131,39.882"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.033127604,8.4836351E-07 L-3.1662564E-10,3.3800006 24.261,3.3800006 24.257699,8.4836351E-07 0.033127604,8.4836351E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,0.065,46.576"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.033141366,-2.1361672E-07 L3.6993157E-09,3.3799995 24.260001,3.3799995 24.256801,-2.1361672E-07 0.033141366,-2.1361672E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,69.524,46.526"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.024202005,1.477007E-06 L2.2826886E-06,3.3800012 17.712999,3.3800012 17.710699,1.477007E-06 0.024202005,1.477007E-06 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,69.483,39.816"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.024102372,2.8685673E-07 L2.6488954E-06,3.38 17.712999,3.38 17.710599,2.8685673E-07 0.024102372,2.8685673E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,108.056,46.576"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.024000248,-2.1361672E-07 L2.4414065E-07,3.3799995 17.713003,3.3799995 17.711003,-2.1361672E-07 0.024000248,-2.1361672E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,107.857,39.816"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.023997745,2.8685673E-07 L-2.2583011E-06,3.38 17.713,3.38 17.711,2.8685673E-07 0.023997745,2.8685673E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,76.633,33.254"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M1.123036E-06,8.361323E-07 L1.123036E-06,3.3800014 10.373001,3.3800014 10.371601,0.00010083023 1.123036E-06,8.361323E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,76.566,26.594"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M5.6155572E-07,-1.3732503E-07 L5.6155572E-07,3.3799996 10.440001,3.3799996 10.438601,9.9859709E-05 5.6155572E-07,-1.3732503E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,107.848,33.254"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.01500043,1.654493E-06 L4.2724618E-07,3.3810014 10.573002,3.3810014 10.571002,1.654493E-06 0.01500043,1.654493E-06 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,107.898,26.643"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.013997378,7.9341024E-08 L-2.6245122E-06,3.3800006 10.572999,3.3800006 10.570999,7.9341024E-08 0.013997378,7.9341024E-08 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,34.678,33.254"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.014499146,1.654493E-06 L-1.1291718E-06,3.3810014 10.572999,3.3810014 10.571599,1.654493E-06 0.014499146,1.654493E-06 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,34.778,13.272"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.014499579,-1.7700199E-07 L-6.9581397E-07,3.4630005 10.573,3.4630005 10.5716,-1.7700199E-07 0.014499579,-1.7700199E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,93.944,39.915"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M3.0275109E-06,7.2019348E-07 L1.0468608,3.3800005 6.2159463,3.3800005 7.2110012,7.2019348E-07 3.0275109E-06,7.2019348E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,69.673,0.05"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.014400953,1.4388972E-09 L1.0253855E-06,3.38 20.712997,3.38 19.518603,1.4388972E-09 0.014400953,1.4388972E-09 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,69.665,6.611"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.014500593,-1.6967122E-07 L7.202085E-07,3.38 23.006999,3.38 21.812609,-1.6967122E-07 0.014500593,-1.6967122E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,76.674,13.222"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.014396792,-3.9366508E-07 L-3.6011725E-06,3.3799994 18.488001,3.3799994 17.293568,-3.9366508E-07 0.014396792,-3.9366508E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,104.403,0"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M20.994997,0 L21.008997,3.3799999 1.220703E-07,3.3799999 1.212,0 20.994997,0 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,102.232,6.611"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M23.165997,-1.6967122E-07 L23.179997,3.38 -2.2583008E-06,3.38 1.2119977,-1.6967122E-07 23.165997,-1.6967122E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,99.954,13.172"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M18.400004,0.099414605 L18.400004,3.4799996 -3.198226E-06,3.3805853 1.2110907,3.4337201E-07 18.400004,0.099414605 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,91.611,33.354"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M7.5677822E-07,-1.7272456E-06 L1.0467209,3.3800018 10.63709,3.3800018 11.829999,-1.7272456E-06 7.5677822E-07,-1.7272456E-06 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,89.374,26.594"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M1.904331E-06,6.8054177E-07 L1.0468207,3.3799996 15.360977,3.2801996 16.453997,6.8054177E-07 1.904331E-06,6.8054177E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,96.208,46.576"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M-3.4544719E-06,-2.1361672E-07 L1.0467608,3.3799995 1.7637363,3.3799995 2.7590023,-2.1361672E-07 -3.4544719E-06,-2.1361672E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,76.599,19.933"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M-3.38138E-06,3.2807004 L-3.38138E-06,0.097900784 19.784086,0.097900784 20.976797,2.7837004 22.169809,7.9650868E-07 41.853997,7.9650868E-07 41.853997,3.4810003 31.415897,3.4810003 31.415897,0.79530069 30.420888,3.2807004 11.432906,3.5790003 10.438696,0.79530069 10.538097,3.3802003 -3.38138E-06,3.2807004 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,27.787,39.814"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M-1.1291532E-07,0.0020944352 L0.099400138,3.382 37.620395,3.2826058 C37.620395,3.2826058 38.070996,2.5703467 38.349497,1.7913915 38.665098,0.90874229 38.771998,-0.050802522 38.771998,0.0020944352 38.771998,0.10148872 -1.1291532E-07,0.10148872 -1.1291532E-07,0.0020944352 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,27.836,46.475"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.024800531,0.100912 L1.0376156E-07,3.4310012 27.712478,3.2819151 C27.712478,3.2819151 29.465508,3.0913329 31.970751,2.0062342 33.64358,1.2816018 34.829,-0.051273798 34.829,0.0015212753 34.829,0.100912 0.024800531,0.20030272 0.024800531,0.100912 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,55.73,33.271"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M7.324762E-07,3.2309284 L7.324762E-07,-7.2627996E-07 10.704495,-7.2627996E-07 C10.704495,-7.2627996E-07 11.003317,1.1652377 11.085623,1.9881941 11.18503,2.9823416 11.31244,3.2805258 11.259636,3.2805258 11.085623,3.2805258 7.324762E-07,3.3799205 7.324762E-07,3.2309284 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,27.952,0.008"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.024900421,3.4513214 L6.4087832E-08,-3.1870255E-10 27.712397,0.1544924 C27.712397,0.1544924 30.181333,0.6009386 31.970758,1.4766757 33.619282,2.2833793 34.828999,3.6090538 34.828999,3.5543595 34.828999,3.4513214 0.024900421,3.3482832 0.024900421,3.4513214 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,27.845,6.644"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.024798878,3.5786821 L-6.7747808E-07,1.9255257E-07 37.478827,0.0994133 C37.478827,0.0994133 37.945919,0.85302105 38.224414,1.689943 38.540008,2.6384873 38.796004,3.6354781 38.796004,3.5786821 38.796004,3.4718895 0.024798878,3.4718895 0.024798878,3.5786821 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,55.688,13.264"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.01439917,-3.4942624E-07 L-1.0864452E-06,3.4629994 10.572987,3.4629994 C10.71089,2.8995994 10.907793,2.3016995 11.002895,1.7562995 11.098097,1.2108995 11.133397,0.52609961 11.167998,-3.4942624E-07 L0.01439917,-3.4942624E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,34.779,19.891"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.049697873,-2.0146169E-07 L-9.643329E-07,3.4802889 26.940869,3.5300002 C26.940869,3.5300002 28.034443,2.8339424 28.780025,1.8893282 29.525608,0.94461398 29.972998,0.099422342 29.972998,0.099422342 L0.049697873,-2.0146169E-07 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,34.779,26.627"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000" Geometry="M0.049697873,3.4539993 L-9.6433291E-07,0.04868986 26.940869,-2.654491E-07 C26.940869,-2.654491E-07 28.034443,0.6811616 28.780025,1.6053742 29.525608,2.5297867 29.972998,3.356719 29.972998,3.356719 L0.049697873,3.4539993 z"/>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.ClipGeometry>
+              <RectangleGeometry Rect="0,0,2.698,5.184"/>
+            </DrawingGroup.ClipGeometry>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1.33333,0,0,1.33333,130.992,42.2325"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Brush="#FF000000">
+              <GeometryDrawing.Geometry>
+                <GeometryGroup FillRule="Nonzero">
+                  <PathGeometry Figures="M0.69827104,1.818773 L0.69827104,2.8387196 1.1454784,2.8387196 C1.2278587,2.8387196 1.3040277,2.8262973 1.3739856,2.8014522 1.4439435,2.7766075 1.5044211,2.7409749 1.5554184,2.6945541 1.6064157,2.6481333 1.6462983,2.5912519 1.675066,2.5239091 1.7038337,2.4565666 1.7182175,2.3810513 1.7182175,2.2973633 1.7182175,2.1469867 1.6695086,2.0296276 1.5720906,1.9452858 1.4746727,1.860944 1.3337761,1.818773 1.1494012,1.818773 L0.69827104,1.818773 z M0.36874989,1.5206349 L1.2082443,1.5206349 C1.3311609,1.5206349 1.4445972,1.5359995 1.5485533,1.5667286 1.6525095,1.5974579 1.7427355,1.6442053 1.8192315,1.7069714 1.8957275,1.7697372 1.9555513,1.8478677 1.9987028,1.9413629 2.0418546,2.0348587 2.0634303,2.144372 2.0634303,2.2699032 2.0634303,2.3679752 2.0487194,2.4578743 2.0192978,2.5396008 1.9898764,2.6213272 1.9480324,2.6942272 1.893766,2.7583008 1.8394949,2.8223782 1.7741157,2.8769691 1.6976224,2.9220805 1.6211265,2.9671936 1.5351502,3.0021725&#xd;&#xa;1.4396937,3.0270176 L1.4396937,3.034863 C1.4867681,3.0557852 1.5276314,3.0796494 1.5622834,3.1064556 1.5969354,3.1332617 1.6299529,3.1649718 1.6613359,3.2015853 1.6927189,3.2381988 1.7237749,3.2797155 1.7545041,3.3261364 1.7852354,3.3725603 1.8195596,3.4264984 1.8574795,3.4879549 L2.3851056,4.3333335 1.9928185,4.3333335 1.522074,3.5448365 C1.4789224,3.4716096 1.4370785,3.4091704 1.3965421,3.3575194 1.3560058,3.3058681 1.3144888,3.2636971 1.2719909,3.2310066 1.2294931,3.1983161 1.1837263,3.1744518 1.1346905,3.1594143 1.0856544,3.1443768 1.0304073,3.136858 0.96894914,3.136858 L0.69827104,3.136858 0.69827104,4.3333335 0.36874989,4.3333335 0.36874989,1.5206349 z" FillRule="Nonzero"/>
+                </GeometryGroup>
+              </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+          </DrawingGroup>
+          <DrawingGroup>
+            <DrawingGroup.Transform>
+              <MatrixTransform Matrix="1,0,0,1,128.927,42.306"/>
+            </DrawingGroup.Transform>
+            <GeometryDrawing Geometry="M3.7809957,0.50000052 C5.5929944,0.50000052 7.0609934,2.0023127 7.0609934,3.8554511 7.0609934,5.7086895 5.5929944,7.2110017 3.7809957,7.2110017 1.968997,7.2110017 0.49999805,5.7086895 0.49999805,3.8554511 0.49999805,2.0023127 1.968997,0.50000052 3.7809957,0.50000052 z">
+              <GeometryDrawing.Pen>
+                <Pen Brush="#FF000000" DashCap="Flat" EndLineCap="Flat" LineJoin="Round" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+              </GeometryDrawing.Pen>
+            </GeometryDrawing>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+    <!-- SBControlBackground -->
+    <SolidColorBrush x:Key="SBControlBackground" Color="White" />
+    
+    <!-- MaximizedButtonBorder -->
+    <DrawingBrush x:Key="MaximizedButtonBorder" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.BitmapEffect>
+                        <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+                    </DrawingGroup.BitmapEffect>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                                <GradientStop Color="#FFFEF6D0" Offset="0"/>
+                                <GradientStop Color="#FFF5AD1C" Offset="0.99"/>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                                <Pen.Brush>
+                                    <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                                        <GradientStop Color="#FFF6CA78" Offset="0"/>
+                                        <GradientStop Color="#FFDA933D" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Pen.Brush>
+                            </Pen>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.BitmapEffect>
+                        <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+                    </DrawingGroup.BitmapEffect>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,3.164,2.664"/>
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                                <GradientStop Color="#00FFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,19.715,18.772"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,5.455,4.25"/>
+                    </DrawingGroup.Transform>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,2.545,0"/>
+                        </DrawingGroup.Transform>
+                        <DrawingGroup>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="1,0,0,1,0.002,0"/>
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Brush="#FFCF881C">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,12.344,2.544"/>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="0.0193719428673069,-0.999812346307819,0.999812346307819,0.0193719428673069,8.82168933595071,10.8631622874193"/>
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Geometry>
+                                        <PathGeometry Figures="M530.04167,71.541667 L530.04167,79.041667">
+                                            <PathGeometry.Transform>
+                                                <MatrixTransform Matrix="1,0,0,0.4,-529.541687011719,-28.1166656494141"/>
+                                            </PathGeometry.Transform>
+                                        </PathGeometry>
+                                    </GeometryDrawing.Geometry>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FFCF881C" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="-0.00127409000924937,-0.999999188346995,0.999999188346995,-0.00127409000924937,-0.397357660988649,3.22980984625883"/>
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Geometry="M0.49998299,0.50000462 L0.49998299,12.545005">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FFCF881C" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry Figures="M515.75,71.375 L515.75,73.375">
+                                        <PathGeometry.Transform>
+                                            <MatrixTransform Matrix="1,0,0,2.594,-515.25,-184.64675"/>
+                                        </PathGeometry.Transform>
+                                    </PathGeometry>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFCF881C" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="1,0,0,1,11.346,0"/>
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Geometry>
+                                        <PathGeometry Figures="M527.75,71.375 L527.75,78.875">
+                                            <PathGeometry.Transform>
+                                                <MatrixTransform Matrix="1,0,0,1.34666666666667,-527.25,-95.6183333333334"/>
+                                            </PathGeometry.Transform>
+                                        </PathGeometry>
+                                    </GeometryDrawing.Geometry>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FFCF881C" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                    <DrawingGroup>
+                        <DrawingGroup.Transform>
+                            <MatrixTransform Matrix="1,0,0,1,0,5.076"/>
+                        </DrawingGroup.Transform>
+                        <DrawingGroup>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="1,0,0,1,0.002,0"/>
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing Brush="#FFCF881C">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,12.344,2.544"/>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                            <DrawingGroup>
+                                <DrawingGroup.Transform>
+                                    <MatrixTransform Matrix="1,0,0,1,0,2.124"/>
+                                </DrawingGroup.Transform>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,11.344,7.976"/>
+                                    </GeometryDrawing.Geometry>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FFCF881C" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+    
+    <!-- MaximizedButtonDown -->
+    <DrawingBrush x:Key="MaximizedButtonDown" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.BitmapEffect>
+                        <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+                    </DrawingGroup.BitmapEffect>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                                <GradientStop Color="#FFE9EAEC" Offset="1"/>
+                                <GradientStop Color="#FF99999A" Offset="0"/>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                                <Pen.Brush>
+                                    <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                                        <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                                        <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Pen.Brush>
+                            </Pen>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,12.346,11.1"/>
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,8,5.375"/>
+                    </DrawingGroup.Transform>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0.002,0"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Brush="#FF868686">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,12.344,2.544"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="-0.0203491344302362,0.999792934925998,-0.999792934925998,-0.0203491344302362,13.041124498846,9.33566100815092"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Geometry="M0.5,0.5 L0.5,4.813">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="0.999312309815977,0.0370797444740005,-0.0370797444740005,0.999312309815977,0.0771387744211343,1.35673451821033"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry Figures="M518.5,170.4375 L518.5625,172.5">
+                                        <PathGeometry.Transform>
+                                            <MatrixTransform Matrix="0.992000000000001,0,0,1.52290909090909,-513.852,-259.060818181818"/>
+                                        </PathGeometry.Transform>
+                                    </PathGeometry>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,11.346,0"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry Figures="M529.8125,170.625 L529.8125,178.1875">
+                                        <PathGeometry.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1.26439669421488,-529.3125,-215.237685950413"/>
+                                        </PathGeometry.Transform>
+                                    </PathGeometry>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="-0.00261799088741799,-0.999996573055985,0.999996573055985,-0.00261799088741799,0.470329019077584,3.23529520728317"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Geometry="M0.5,0.5 L0.5,11.186">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,4.08,10.201"/>
+                    </DrawingGroup.Transform>
+                    <DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0.002,0"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Brush="#FF868686">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,12.344,2.544"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0,2.124"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,11.344,7.97599999999999"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+    
+    <!-- MaximizedButtonMouseOver -->
+    <DrawingBrush x:Key="MaximizedButtonMouseOver" Viewbox="0,0,25.801,25.801" ViewboxUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup Opacity="0.4">
+                    <DrawingGroup.BitmapEffect>
+                        <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2"/>
+                    </DrawingGroup.BitmapEffect>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                                <GradientStop Color="#FFE9EAEC" Offset="0"/>
+                                <GradientStop Color="#FF99999A" Offset="0.99"/>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0.5,0.5,24.801,24.801"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1">
+                                <Pen.Brush>
+                                    <LinearGradientBrush EndPoint="0.511,1" StartPoint="0.489,0">
+                                        <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                                        <GradientStop Color="#FF6B6A6A" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Pen.Brush>
+                            </Pen>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup Opacity="0.5">
+                    <DrawingGroup.BitmapEffect>
+                        <OuterGlowBitmapEffect GlowColor="#FF7C7C7C" GlowSize="2" Opacity="0"/>
+                    </DrawingGroup.BitmapEffect>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,3.164,2.664"/>
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush EndPoint="0.503,1" StartPoint="0.497,0">
+                                <GradientStop Color="#FFFFFFFF" Offset="0.067"/>
+                                <GradientStop Color="#0099999A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="4" RadiusY="4" Rect="0,0,19.715,18.772"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.ClipGeometry>
+                        <RectangleGeometry Rect="0,0,12.346,11.1"/>
+                    </DrawingGroup.ClipGeometry>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,8,5.25"/>
+                    </DrawingGroup.Transform>
+                    <DrawingGroup>
+                        <DrawingGroup Opacity="0.5">
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0.002,0"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Brush="#FF868686">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,12.344,2.544"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0,1.829"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Geometry="M0.49998299,0.50000505 L0.49998299,3.333">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="0.0137353092955446,-0.999905666189844,0.999905666189844,0.0137353092955446,8.08436780254236,10.9636695010932"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Geometry="M0.49998299,0.50000711 L0.49998299,4.492">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="-0.000680678355715393,-0.999999768338461,0.999999768338461,-0.000680678355715393,-0.505158104288268,3.18857336204128"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Geometry="M0.49998299,0.50002215 L0.49998299,12.938">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup>
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,11.346,1.827"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <PathGeometry Figures="M529.66667,269.16667 L529.66667,276.75">
+                                        <PathGeometry.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1.09067985560845,-529.166687011719,-293.074650039639"/>
+                                        </PathGeometry.Transform>
+                                    </PathGeometry>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+                <DrawingGroup>
+                    <DrawingGroup.Transform>
+                        <MatrixTransform Matrix="1,0,0,1,4.205,10.336"/>
+                    </DrawingGroup.Transform>
+                    <DrawingGroup>
+                        <DrawingGroup Opacity="0.5">
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0.002,0"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing Brush="#FF868686">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,12.344,2.544"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                        <DrawingGroup Opacity="0.5">
+                            <DrawingGroup.Transform>
+                                <MatrixTransform Matrix="1,0,0,1,0,2.124"/>
+                            </DrawingGroup.Transform>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,11.344,7.97599999999999"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FF868686" DashCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" StartLineCap="Flat" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!-- BlueHazeButtonGradient -->
+    <LinearGradientBrush x:Key="BlueHazeButtonGradient" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#FDB6CADF" Offset="0" />
+            <GradientStop Color="#FCC3C5FF" Offset="0.1" />
+            <GradientStop Color="#FCC4D0EF" Offset="0.3" />
+            <GradientStop Color="#FDB7C2DF" Offset="0.6" />
+            <GradientStop Color="#FE95B3CF" Offset="0.8" />
+            <GradientStop Color="#FE96AACF" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- BlueHazeButtonUpGradient -->
+    <LinearGradientBrush x:Key="BlueHazeButtonUpGradient" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="Transparent" Offset="0" />
+            <GradientStop Color="#33000000" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- BlueHazeButtonDownGradient -->
+    <LinearGradientBrush x:Key="BlueHazeButtonDownGradient" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#10000000" Offset="0" />
+            <GradientStop Color="#20000000" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!-- BlueHazeButtonDisabledGradient -->
+    <LinearGradientBrush x:Key="BlueHazeButtonDisabledGradient" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#10302A90" Offset="0" />
+            <GradientStop Color="#10201040" Offset="1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+
+    <!-- SBStatusBarBackground -->
+    <LinearGradientBrush x:Key="SBStatusBarBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF8BCAFB" Offset="0"/>
+        <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- SBStatusBarMessageBackground -->
+    <SolidColorBrush x:Key="SBStatusBarMessageBackground" Color="Transparent" />
+
+    <!-- SBStatusBarMessageBackground -->
+    <SolidColorBrush x:Key="SBStatusBarHelpMessageBackground" Color="White" />
+
+
+    <!-- SBIntuitiveHelpTextBoxBackground -->
+    <SolidColorBrush x:Key="SBIntuitiveHelpTextBoxBackground" Color="LightGray" />
+    
+</ResourceDictionary>

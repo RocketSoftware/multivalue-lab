@@ -1,0 +1,2136 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:sbe="clr-namespace:SBXA.UI.WPFControls.MarkupExtensions"
+                    xmlns:sbs="http://schemas.sbxa.com/Shared"
+                    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid">
+
+   <ResourceDictionary.MergedDictionaries>
+
+      <!-- Include the view independant, color-scheme independant, theme resources -->
+      <ResourceDictionary Source="Resources/SBXGridView.Resources.xaml" />
+
+      <!-- Include the view dependant, color-scheme independant, theme graphics -->
+      <ResourceDictionary Source="Resources/CardflowView3D.SBXGridView.Graphics.xaml" />
+
+      <!-- Include the standard grid element templates -->
+      <!-- CardFlowView3D can reuse some styles and templates originally designed for CardView. -->
+      <ResourceDictionary Source="/Xceed.Wpf.DataGrid.v4.0;component\themes/Common/CardView.GridElementTemplates.xaml" />
+
+   </ResourceDictionary.MergedDictionaries>
+
+   <!-- =================================================================== -->
+   <!-- Resources specific to this View/Theme/ColorScheme                   -->
+   <!-- =================================================================== -->
+
+   <!-- This brush will be used as a card background when scrolling before the final 
+        card template is applied. -->
+   <VisualBrush x:Key="emptySurfaceBrush">
+      <VisualBrush.Visual>
+         <Grid Height="1"
+               Width="1"
+               Background="Gray"/>
+      </VisualBrush.Visual>
+   </VisualBrush>
+   
+   <SolidColorBrush x:Key="cardBackgroundBrush"
+                    Color="White"/>
+
+   <SolidColorBrush x:Key="cardForegroundBrush"
+                    Color="Black"/>
+
+   <SolidColorBrush x:Key="titleBandBackgroundBrush"
+                    Color="Black"/>
+
+   <SolidColorBrush x:Key="imageBackgroundBrush"
+                    Color="BurlyWood"/>
+   
+   <SolidColorBrush x:Key="imageBorderBrush"
+                    Color="Black"/>
+
+   <!-- =================================================================== -->
+   <!-- Templates specific to this View/Theme/ColorScheme                   -->
+   <!-- =================================================================== -->
+
+   <!--**************************
+    * TEMPLATE: CardViewScrollViewer
+    ************************** -->
+   <!-- This ScrollViewer Template "undocks" the horizontalScrollBar, adds a ScrollTip and
+        a button which allow the end-user to flip the center card. -->
+   <ControlTemplate x:Key="cardflowView3DScrollViewerTemplate"
+                    TargetType="{x:Type xcdg:CardViewScrollViewer}">
+      <ControlTemplate.Resources>
+         <Storyboard x:Key="mouseOver">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                           Storyboard.TargetName="overBorder"
+                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+               <SplineDoubleKeyFrame KeyTime="00:00:00.400"
+                                     Value="0.3" />
+            </DoubleAnimationUsingKeyFrames>
+            
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                           Storyboard.TargetName="ContentPresenter"
+                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+               <SplineDoubleKeyFrame KeyTime="00:00:00.400"
+                                     Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+         </Storyboard>
+         
+         <Storyboard x:Key="mouseOver_Leave">
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                           Storyboard.TargetName="overBorder"
+                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+               <SplineDoubleKeyFrame KeyTime="00:00:00.400"
+                                     Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                           Storyboard.TargetName="ContentPresenter"
+                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+               <SplineDoubleKeyFrame KeyTime="00:00:00.400"
+                                     Value="0.5" />
+            </DoubleAnimationUsingKeyFrames>
+         </Storyboard>
+         
+         <LinearGradientBrush x:Key="ActiveColor"
+                              StartPoint="1,0.5"
+                              EndPoint="0,0.5">
+            <GradientStop Offset="1"
+                          Color="#FF7A7A7A" />
+            <GradientStop Offset="0.5"
+                          Color="#FF787878" />
+            <GradientStop Offset="0.5"
+                          Color="#FF6C6C6C" />
+            <GradientStop Offset="0"
+                          Color="#FF919191" />
+         </LinearGradientBrush>
+
+         <LinearGradientBrush x:Key="whiteInnerBorder"
+                              StartPoint="0,0.5"
+                              EndPoint="1,0.5">
+            <GradientStop Offset="0"
+                          Color="#99FFFFFF" />
+            
+            <GradientStop Offset="1"
+                          Color="#4CFFFFFF" />
+         </LinearGradientBrush>
+         
+         <RadialGradientBrush x:Key="blackBorderBackground"
+                              GradientOrigin="0.5,0.73">
+            <RadialGradientBrush.RelativeTransform>
+               <TransformGroup>
+                  <ScaleTransform CenterX="0.5"
+                                  CenterY="0.5"
+                                  ScaleX="1.5"
+                                  ScaleY="1.5" />
+                  <SkewTransform AngleX="0"
+                                 AngleY="0"
+                                 CenterX="0.5"
+                                 CenterY="0.5" />
+                  <RotateTransform Angle="0"
+                                   CenterX="0.5"
+                                   CenterY="0.5" />
+                  <TranslateTransform X="0"
+                                      Y="0.5" />
+               </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+            
+            <GradientStop Offset="0"
+                          Color="#7FFFFFFF" />
+            <GradientStop Offset="1"
+                          Color="#00FFFFFF" />
+         </RadialGradientBrush>
+         
+         <RadialGradientBrush x:Key="pressedBorder">
+            <GradientStop Offset="1"
+                          Color="#65000000" />
+            <GradientStop Offset="0.5"
+                          Color="#20000000" />
+         </RadialGradientBrush>
+         
+         <LinearGradientBrush x:Key="blackBorderBrush"
+                              StartPoint="0,0.5"
+                              EndPoint="1,0.5">
+            <GradientStop Offset="0.65"
+                          Color="#FF000000" />
+            <GradientStop Offset="1"
+                          Color="#19000000" />
+         </LinearGradientBrush>
+         
+         <LinearGradientBrush  x:Key="3DbackgroundColor"
+                               EndPoint="0.5,1"
+                               StartPoint="0.5,0">
+            <GradientStop Color="#FF7A7A7A"
+                          Offset="1" />
+            <GradientStop Color="#FF787878"
+                          Offset="0.5" />
+            <GradientStop Color="#FF6C6C6C"
+                          Offset="0.5" />
+            <GradientStop Color="#FF919191"
+                          Offset="0" />
+         </LinearGradientBrush>
+         
+         <RadialGradientBrush x:Key="3DpressedBorder">
+            <GradientStop Offset="1"
+                          Color="#65000000" />
+            <GradientStop Offset="0.5"
+                          Color="#20000000" />
+         </RadialGradientBrush>
+         
+         <RadialGradientBrush x:Key="3DblackBorderBackground"
+                              GradientOrigin="0.5,0">
+            <RadialGradientBrush.RelativeTransform>
+               <TransformGroup>
+                  <ScaleTransform CenterX="0.5"
+                                  CenterY="0.5"
+                                  ScaleX="1"
+                                  ScaleY="1.172" />
+                  <SkewTransform AngleX="0"
+                                 AngleY="0"
+                                 CenterX="0.5"
+                                 CenterY="0.5" />
+                  <RotateTransform Angle="0"
+                                   CenterX="0.5"
+                                   CenterY="0.5" />
+                  <TranslateTransform X="0"
+                                      Y="-0.086" />
+               </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+            <GradientStop Color="#7FFFFFFF"
+                          Offset="0" />
+            <GradientStop Color="#00FFFFFF"
+                          Offset="1" />
+         </RadialGradientBrush>
+         
+         <LinearGradientBrush x:Key="3DblackBorder"
+                              EndPoint="0.5,0"
+                              StartPoint="0.5,1">
+            <GradientStop Color="#FF000000"
+                          Offset="0.65" />
+            <GradientStop Color="#19000000"
+                          Offset="1" />
+         </LinearGradientBrush>
+         
+         <LinearGradientBrush x:Key="3DwhiteInnerBorder"
+                              StartPoint="0,0.5"
+                              EndPoint="1,0.5">
+            <GradientStop Offset="0"
+                          Color="#99FFFFFF" />
+            <GradientStop Offset="1"
+                          Color="#4CFFFFFF" />
+         </LinearGradientBrush>
+
+         <Style x:Key="3DdecreaseRepeatButton"
+                TargetType="{x:Type RepeatButton}">
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type RepeatButton}">
+                     <Grid>
+                        <Grid.RowDefinitions>
+                           <RowDefinition Height="0.457*" />
+                           <RowDefinition Height="0.543*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="0.5*" />
+                           <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="backgroundActiveColor"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Margin="1,1,1,1"
+                                Background="{StaticResource ActiveColor}"
+                                CornerRadius="12,12,8,8" />
+                        <Border x:Name="overBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Background="#FFFFFFFF"
+                                CornerRadius="12,12,8,8"
+                                Opacity="0" />
+                        <Border x:Name="pressedBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Background="{StaticResource pressedBorder}"
+                                CornerRadius="12,12,8,8"
+                                Opacity="0" />
+                        <Border x:Name="blackBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Background="{StaticResource blackBorderBackground}"
+                                BorderBrush="{StaticResource blackBorderBrush}"
+                                BorderThickness="1,1,1,1"
+                                CornerRadius="12,12,8,8" />
+                        <Border x:Name="whiteInnerBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Margin="1,1,1,1"
+                                BorderBrush="{StaticResource whiteInnerBorder}"
+                                BorderThickness="2,1,1,1"
+                                CornerRadius="12,12,8,8" />
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Grid.ColumnSpan="2"
+                                          Grid.RowSpan="2"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          Opacity="0.5" />
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="true" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                           <Trigger.ExitActions>
+                              <BeginStoryboard x:Name="mouseOver_Leave_BeginStoryboard"
+                                               Storyboard="{StaticResource mouseOver_Leave}" />
+                           </Trigger.ExitActions>
+                           <Trigger.EnterActions>
+                              <BeginStoryboard Storyboard="{StaticResource mouseOver}" />
+                           </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                           <Setter TargetName="pressedBorder"
+                                   Property="Opacity"
+                                   Value="0.75" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false" />
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3DincreaseRepeatButton"
+                TargetType="{x:Type RepeatButton}">
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type RepeatButton}">
+                     <Grid>
+                        <Grid.RowDefinitions>
+                           <RowDefinition Height="0.457*" />
+                           <RowDefinition Height="0.543*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="0.5*" />
+                           <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="backgroundActiveColor"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Margin="1,1,1,1"
+                                Background="{StaticResource ActiveColor}"
+                                CornerRadius="8,8,12,12" />
+                        <Border x:Name="overBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Background="#FFFFFFFF"
+                                CornerRadius="8,8,12,12"
+                                Opacity="0" />
+                        <Border x:Name="pressedBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Background="{StaticResource pressedBorder}"
+                                CornerRadius="8,8,12,12"
+                                Opacity="0" />
+                        <Border x:Name="blackBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Background="{StaticResource blackBorderBackground}"
+                                BorderBrush="{StaticResource blackBorderBrush}"
+                                BorderThickness="1,1,1,1"
+                                CornerRadius="8,8,12,12" />
+                        <Border x:Name="whiteInnerBorder"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
+                                Margin="1,1,1,1"
+                                BorderBrush="{StaticResource whiteInnerBorder}"
+                                BorderThickness="2,1,1,1"
+                                CornerRadius="8,8,12,12" />
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Grid.ColumnSpan="2"
+                                          Grid.RowSpan="2"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          Opacity="0.5" />
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="true" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                           <Trigger.ExitActions>
+                              <BeginStoryboard x:Name="mouseOver_Leave_BeginStoryboard"
+                                               Storyboard="{StaticResource mouseOver_Leave}" />
+                           </Trigger.ExitActions>
+                           <Trigger.EnterActions>
+                              <BeginStoryboard Storyboard="{StaticResource mouseOver}" />
+                           </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                           <Setter TargetName="pressedBorder"
+                                   Property="Opacity"
+                                   Value="0.75" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false" />
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3DdecreaseScollRepeatButton"
+                TargetType="{x:Type RepeatButton}">
+            <Setter Property="IsTabStop"
+                    Value="False" />
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type RepeatButton}">
+                     <Grid>
+                        <Rectangle Fill="#00000000"
+                                   StrokeThickness="{TemplateBinding BorderThickness}" />
+                     </Grid>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3DincreaseScrollRepeatButton"
+                TargetType="{x:Type RepeatButton}">
+            <Setter Property="IsTabStop"
+                    Value="false" />
+            <Setter Property="Focusable"
+                    Value="false" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type RepeatButton}">
+                     <Grid>
+                        <Rectangle Fill="#00000000"
+                                   StrokeThickness="{TemplateBinding BorderThickness}" />
+                     </Grid>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3Dthumb"
+                TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type Thumb}">
+                     <Grid x:Name="Grid">
+                        <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="0.5*" />
+                           <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="backgroundActiveColor"
+                                Grid.ColumnSpan="2"
+                                Margin="1,1,1,1"
+                                Background="{StaticResource ActiveColor}"
+                                CornerRadius="8,8,8,8" />
+                        <Border x:Name="overBorder"
+                                Grid.ColumnSpan="2"
+                                Background="#FFFFFFFF"
+                                CornerRadius="8,8,8,8"
+                                Opacity="0" />
+                        <Border x:Name="pressedBorder"
+                                Grid.ColumnSpan="2"
+                                Background="{StaticResource pressedBorder}"
+                                CornerRadius="8,8,8,8"
+                                Opacity="0" />
+                        <Border x:Name="blackBorder"
+                                Grid.ColumnSpan="2"
+                                BorderBrush="{StaticResource blackBorderBrush}"
+                                BorderThickness="1,1,1,1"
+                                CornerRadius="8,8,8,8" />
+                        <Border x:Name="whiteInnerBorder"
+                                Grid.ColumnSpan="2"
+                                Margin="1,1,1,1"
+                                BorderBrush="{StaticResource whiteInnerBorder}"
+                                BorderThickness="2,1,1,1"
+                                CornerRadius="8,8,8,8" />
+                        <Border x:Name="ContentPresenter"
+                                Grid.ColumnSpan="2"
+                                CornerRadius="8,8,8,8"
+                                Opacity="0.5" />
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused"
+                                 Value="True" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                           <Trigger.ExitActions>
+                              <BeginStoryboard x:Name="mouseOver_Leave_BeginStoryboard"
+                                               Storyboard="{StaticResource mouseOver_Leave}" />
+                           </Trigger.ExitActions>
+                           <Trigger.EnterActions>
+                              <BeginStoryboard Storyboard="{StaticResource mouseOver}" />
+                           </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False" />
+                        <Trigger Property="IsDragging"
+                                 Value="True" />
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3DdecreaseRepeatButtonH"
+                TargetType="{x:Type RepeatButton}">
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type RepeatButton}">
+                     <Grid>
+                        <Border x:Name="backgroundActiveColor"
+                                Margin="1,1,1,1"
+                                CornerRadius="12,8,8,12"
+                                Background="{StaticResource 3DbackgroundColor}" />
+                        <Border x:Name="overBorder"
+                                CornerRadius="12,8,8,12"
+                                Opacity="0"
+                                Background="#FFFFFFFF"
+                                Visibility="Visible"
+                                Margin="1,1,1,1" />
+                        <Border x:Name="pressedBorder"
+                                CornerRadius="12,8,8,12"
+                                Opacity="0"
+                                Background="{StaticResource 3DpressedBorder}" />
+                        <Border x:Name="blackBorder"
+                                BorderThickness="1,1,1,1"
+                                CornerRadius="12,8,8,12"
+                                BorderBrush="{StaticResource 3DblackBorder}"
+                                Background="{StaticResource 3DblackBorderBackground}" />
+                        <Border x:Name="whiteInnerBorder"
+                                BorderThickness="1,1,1,2"
+                                CornerRadius="12,8,8,12"
+                                BorderBrush="{StaticResource 3DwhiteInnerBorder}"
+                                Margin="1,1,1,1" />
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Grid.ColumnSpan="2"
+                                          Grid.RowSpan="2"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          Opacity="0.5" />
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="true" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                           <Trigger.ExitActions>
+                              <BeginStoryboard x:Name="mouseOver_Leave_BeginStoryboard"
+                                               Storyboard="{StaticResource mouseOver_Leave}" />
+                           </Trigger.ExitActions>
+                           <Trigger.EnterActions>
+                              <BeginStoryboard Storyboard="{StaticResource mouseOver}" />
+                           </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true" />
+                        <Trigger Property="IsEnabled"
+                                 Value="false" />
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3DincreaseRepeatButtonH"
+                TargetType="{x:Type RepeatButton}">
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type RepeatButton}">
+                     <Grid>
+                        <Border x:Name="backgroundActiveColor"
+                                Margin="1,1,1,1"
+                                CornerRadius="8,12,12,8"
+                                Background="{StaticResource 3DbackgroundColor}"
+                                Grid.RowSpan="1" />
+                        <Border x:Name="overBorder"
+                                CornerRadius="8,12,12,8"
+                                Opacity="0"
+                                Background="#FFFFFFFF"
+                                Visibility="Visible"
+                                Margin="1,1,1,1" />
+                        <Border x:Name="pressedBorder"
+                                CornerRadius="8,12,12,8"
+                                Opacity="0"
+                                Background="{StaticResource 3DpressedBorder}" />
+                        <Border x:Name="blackBorder"
+                                BorderThickness="1,1,1,1"
+                                CornerRadius="8,12,12,8"
+                                BorderBrush="{StaticResource 3DblackBorder}"
+                                Background="{StaticResource 3DblackBorderBackground}" />
+                        <Border x:Name="whiteInnerBorder"
+                                BorderThickness="1,1,1,2"
+                                CornerRadius="8,12,12,8"
+                                BorderBrush="{StaticResource 3DwhiteInnerBorder}"
+                                Margin="1,1,1,1"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="2" />
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          Opacity="0.5" />
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="true" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                           <Trigger.ExitActions>
+                              <BeginStoryboard x:Name="mouseOver_Leave_BeginStoryboard"
+                                               Storyboard="{StaticResource mouseOver_Leave}" />
+                           </Trigger.ExitActions>
+                           <Trigger.EnterActions>
+                              <BeginStoryboard Storyboard="{StaticResource mouseOver}" />
+                           </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true" />
+                        <Trigger Property="IsEnabled"
+                                 Value="false" />
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+         
+         <Style x:Key="3DthumbH"
+                TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type Thumb}">
+                     <Grid x:Name="Grid">
+                        <Border x:Name="backgroundActiveColor"
+                                CornerRadius="8,8,8,8"
+                                Margin="1,1,1,1"
+                                Opacity="1"
+                                Grid.ColumnSpan="1">
+                           <Border.Background>
+                              <LinearGradientBrush EndPoint="0.5,1"
+                                                   StartPoint="0.5,0">
+                                 <GradientStop Color="#FF7A7A7A"
+                                               Offset="1" />
+                                 <GradientStop Color="#FF787878"
+                                               Offset="0.5" />
+                                 <GradientStop Color="#FF6C6C6C"
+                                               Offset="0.5" />
+                                 <GradientStop Color="#FF919191"
+                                               Offset="0" />
+                              </LinearGradientBrush>
+                           </Border.Background>
+                        </Border>
+                        <Border x:Name="overBorder"
+                                CornerRadius="8,8,8,8"
+                                Opacity="0"
+                                Background="#FFFFFFFF"
+                                Visibility="Visible" />
+                        <Border x:Name="pressedBorder"
+                                CornerRadius="8,8,8,8"
+                                Opacity="0"
+                                Background="{StaticResource 3DpressedBorder}" />
+                        <Border x:Name="blackBorder"
+                                BorderThickness="1,1,1,1"
+                                CornerRadius="8,8,8,8"
+                                Grid.ColumnSpan="1"
+                                BorderBrush="{StaticResource 3DblackBorder}" />
+                        <Border x:Name="whiteInnerBorder"
+                                BorderThickness="1,1,1,2"
+                                CornerRadius="8,8,8,8"
+                                Margin="1,1,1,1"
+                                BorderBrush="{StaticResource 3DwhiteInnerBorder}" />
+                        <Border x:Name="ContentPresenter"
+                                Grid.ColumnSpan="2"
+                                CornerRadius="8,8,8,8"
+                                Opacity="0.5" />
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused"
+                                 Value="True" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                           <Trigger.ExitActions>
+                              <BeginStoryboard x:Name="mouseOver_Leave_BeginStoryboard"
+                                               Storyboard="{StaticResource mouseOver_Leave}" />
+                           </Trigger.ExitActions>
+                           <Trigger.EnterActions>
+                              <BeginStoryboard Storyboard="{StaticResource mouseOver}" />
+                           </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False" />
+                        <Trigger Property="IsDragging"
+                                 Value="True" />
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+
+         <Style x:Key="3Dscroll"
+                TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsFlicksEnabled"
+                    Value="false" />
+
+            <Setter Property="Focusable"
+                    Value="False" />
+
+            <Setter Property="Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="{x:Type ScrollBar}">
+                     <Grid x:Name="GridRoot"
+                           Width="24">
+
+                        <Grid.RowDefinitions>
+                           <RowDefinition MaxHeight="24" />
+                           <RowDefinition Height="0.00001*" />
+                           <RowDefinition MaxHeight="24" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.RowSpan="3"
+                                Background="#7F6F6F6F"
+                                CornerRadius="12,12,12,12" />
+
+                        <RepeatButton x:Name="DecreaseRepeat"
+                                      Focusable="False"
+                                      Style="{StaticResource 3DdecreaseRepeatButton}"
+                                      Command="ScrollBar.LineUpCommand">
+                           <Grid>
+                              <Path x:Name="DecreaseArrow"
+                                    Data="M -0.455,5.739 C-0.455,5.739 3.809,-0.739 3.809,-0.739 3.809,-0.739 8.455,5.739 8.455,5.739 8.455,5.739 -0.455,5.739 -0.455,5.739 z"
+                                    Fill="#FFFFFFFF" />
+                           </Grid>
+                        </RepeatButton>
+
+                        <!-- Track is a special layout container which sizes the thumb and the repeat button which do jump scrolling either side of it -->
+                        <!-- ViewPortSize set to NAN to disable the thumb autosizing-->
+                        <Track x:Name="PART_Track"
+                               Grid.Row="1"
+                               Orientation="Vertical"
+                               ViewportSize="NaN"
+                               IsDirectionReversed="true">
+                           <Track.Thumb>
+                              <Thumb Style="{StaticResource 3Dthumb}"
+                                     MinHeight="24" />
+                           </Track.Thumb>
+                           <Track.IncreaseRepeatButton>
+                              <RepeatButton x:Name="PageUp"
+                                            Focusable="False"
+                                            Style="{StaticResource 3DincreaseScrollRepeatButton}"
+                                            Command="ScrollBar.PageDownCommand" />
+                           </Track.IncreaseRepeatButton>
+                           <Track.DecreaseRepeatButton>
+                              <RepeatButton x:Name="PageDown"
+                                            Focusable="False"
+                                            Style="{StaticResource 3DdecreaseScollRepeatButton}"
+                                            Command="ScrollBar.PageUpCommand" />
+                           </Track.DecreaseRepeatButton>
+                        </Track>
+
+                        <RepeatButton x:Name="IncreaseRepeat"
+                                      Grid.Row="2"
+                                      Focusable="False"
+                                      Style="{StaticResource 3DincreaseRepeatButton}"
+                                      Command="ScrollBar.LineDownCommand">
+                           <Grid>
+                              <Path x:Name="IncreaseArrow"
+                                    Data="M 8.455,-0.739 C8.455,-0.739 4.190,5.739 4.190,5.739 4.190,5.739 -0.455,-0.739 -0.455,-0.739 -0.455,-0.739 8.455,-0.739 8.455,-0.739 z"
+                                    Fill="#FFFFFFFF" />
+                           </Grid>
+                        </RepeatButton>
+                     </Grid>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+               <Trigger Property="Orientation"
+                        Value="Horizontal">
+                  <Setter Property="Template">
+                     <Setter.Value>
+                        <ControlTemplate TargetType="ScrollBar">
+                           <Grid x:Name="GridRoot"
+                                 Height="24">
+
+                              <Grid.ColumnDefinitions>
+                                 <ColumnDefinition MaxWidth="24" />
+                                 <ColumnDefinition Width="0.00001*" />
+                                 <ColumnDefinition MaxWidth="24" />
+                              </Grid.ColumnDefinitions>
+
+                              <Border Grid.ColumnSpan="3"
+                                      Background="#7F6F6F6F"
+                                      CornerRadius="12,12,12,12" />
+
+                              <RepeatButton x:Name="DecreaseRepeat"
+                                            Focusable="False"
+                                            Style="{StaticResource 3DdecreaseRepeatButtonH}"
+                                            Command="ScrollBar.LineLeftCommand">
+                                 <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                       <RotateTransform Angle="-90" />
+                                    </Grid.RenderTransform>
+                                    <Path x:Name="DecreaseArrow"
+                                          Data="M -0.455,5.739 C-0.455,5.739 3.809,-0.739 3.809,-0.739 3.809,-0.739 8.455,5.739 8.455,5.739 8.455,5.739 -0.455,5.739 -0.455,5.739 z"
+                                          Fill="#FFFFFFFF" />
+                                 </Grid>
+                              </RepeatButton>
+
+                              <!-- Track is a special layout container which sizes the thumb and the repeat button which do jump scrolling either side of it -->
+                              <!-- ViewPortSize set to NAN to disable the thumb autosizing-->
+                              <Track x:Name="PART_Track"
+                                     Grid.Column="1"
+                                     Orientation="Horizontal"
+                                     ViewportSize="NaN"
+                                     IsDirectionReversed="False">
+                                 <Track.Thumb>
+                                    <Thumb Style="{StaticResource 3DthumbH}"
+                                           MinWidth="24" />
+                                 </Track.Thumb>
+                                 <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp"
+                                                  Focusable="False"
+                                                  Style="{StaticResource 3DincreaseScrollRepeatButton}"
+                                                  Command="ScrollBar.PageRightCommand" />
+                                 </Track.IncreaseRepeatButton>
+                                 <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown"
+                                                  Focusable="False"
+                                                  Style="{StaticResource 3DdecreaseScollRepeatButton}"
+                                                  Command="ScrollBar.PageLeftCommand" />
+                                 </Track.DecreaseRepeatButton>
+                              </Track>
+
+                              <RepeatButton x:Name="IncreaseRepeat"
+                                            Grid.Column="2"
+                                            Focusable="False"
+                                            Style="{StaticResource 3DincreaseRepeatButtonH}"
+                                            Command="ScrollBar.LineRightCommand">
+                                 <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                       <RotateTransform Angle="-90" />
+                                    </Grid.RenderTransform>
+                                    <Path x:Name="IncreaseArrow"
+                                          Data="M 8.455,-0.739 C8.455,-0.739 4.190,5.739 4.190,5.739 4.190,5.739 -0.455,-0.739 -0.455,-0.739 -0.455,-0.739 8.455,-0.739 8.455,-0.739 z"
+                                          Fill="#FFFFFFFF" />
+                                 </Grid>
+                              </RepeatButton>
+                           </Grid>
+                        </ControlTemplate>
+                     </Setter.Value>
+                  </Setter>
+               </Trigger>
+            </Style.Triggers>
+         </Style>
+      </ControlTemplate.Resources>
+      
+      <!-- Root Grid that layout the "content" and the Scrollbars -->
+      <Grid>
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*" />
+
+            <!--Horizontal Scrollbar-->
+            <ColumnDefinition Width="8.5*" />
+            <ColumnDefinition Width="0.75*" />
+         </Grid.ColumnDefinitions>
+
+         <Grid.RowDefinitions>
+            <RowDefinition Height="9.8*" />
+
+            <!--Scrollbar-->
+            <RowDefinition Height="Auto" />
+
+            <!--Margin for the Scrollbar-->
+            <RowDefinition Height="0.2*" />
+         </Grid.RowDefinitions>
+
+         <!-- Content -->
+         <Grid Margin="{TemplateBinding Padding}"
+               Grid.Row="0"
+               Grid.RowSpan="3"
+               Grid.Column="0"
+               Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+               <!-- Fixed Headers -->
+               <RowDefinition Height="Auto" />
+
+               <!-- ScrollContentPresenter -->
+               <RowDefinition />
+
+               <!-- Fixed Footers -->
+               <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Fixed Headers -->
+
+            <StackPanel Grid.Row="0"
+                        xcdg:DataGridControl.IsFixedHeadersHost="True"
+                        Orientation="Vertical" />
+
+            <!-- Fixed Footers -->
+
+            <StackPanel Grid.Row="2"
+                        xcdg:DataGridControl.IsFixedFootersHost="True"
+                        Orientation="Vertical" />
+
+            <!-- ScrollContentPresenter (data rows) -->
+
+            <ScrollContentPresenter Grid.Row="1"
+                                    CanContentScroll="{TemplateBinding CanContentScroll}" />
+         </Grid>
+
+         <!-- ScrollBars -->
+         <ScrollBar x:Name="PART_HorizontalScrollBar"
+                    Grid.Column="1"
+                    Height="24"
+                    Grid.ColumnSpan="1"
+                    Grid.Row="1"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    Style="{StaticResource 3Dscroll}"
+                    Maximum="{TemplateBinding ScrollViewer.ScrollableWidth}"
+                    Value="{TemplateBinding ScrollViewer.HorizontalOffset}"
+                    ViewportSize="{TemplateBinding ScrollViewer.ViewportWidth}"
+                    Visibility="{TemplateBinding ScrollViewer.ComputedHorizontalScrollBarVisibility}" />
+         
+         <!--flipbutton-->
+         <Grid HorizontalAlignment="Left"
+               VerticalAlignment="Bottom"
+               Margin="15,0,0,1"
+               Grid.Column="2"
+               Grid.Row="1">
+            <Button Style="{StaticResource flipButton}"
+                    Focusable="False"
+                    Command="{x:Static xcdg:CardflowView3D.FlipCenterCard}"
+                    CommandTarget="{Binding ElementName=itemsHost}">
+               <StackPanel Width="16"
+                           Height="17"
+                           Orientation="Vertical">
+                  <Rectangle Width="Auto"
+                             Height="2" />
+                  <Rectangle Fill="#FFFFFFFF"
+                             Height="2" />
+                  <Rectangle Height="2" />
+                  <Rectangle Fill="#FFFFFFFF"
+                             Height="2" />
+                  <Rectangle Height="2" />
+                  <Rectangle Fill="#FFFFFFFF"
+                             Height="2" />
+               </StackPanel>
+            </Button>
+         </Grid>
+
+         <!-- ScrollTip only displayed when scrolling -->
+         <!-- Changed to Hidden for SB/XA -->
+         <xcdg:ScrollTip Visibility="Hidden"
+                         Grid.Column="1"
+                         Grid.Row="0"
+                         Content="{x:Null}"
+                         ContentTemplate="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ScrollTipContentTemplate}"
+                         ContentTemplateSelector="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ScrollTipContentTemplateSelector}" />
+      </Grid>
+   </ControlTemplate>
+
+   <!--**************************
+    * STYLE: CardViewScrollViewer 
+    ************************** -->
+
+   <Style x:Key="cardflowView3DScrollViewerStyle"
+          TargetType="{x:Type xcdg:CardViewScrollViewer}">
+
+      <Setter Property="HorizontalScrollBarVisibility"
+              Value="Visible" />
+
+      <Setter Property="VerticalScrollBarVisibility"
+              Value="Auto" />
+
+      <Setter Property="CanContentScroll"
+              Value="True" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardflowView3DScrollViewerTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * TEMPLATE: DataGridControl 
+    ************************** -->
+   <ControlTemplate x:Key="cardflowView3DSBXGridViewDataGridControlTemplate"
+                    TargetType="xcdg:DataGridControl">
+      <Border Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}">
+         <Grid>
+            <!-- The AdornerDecorator will allow visual cues for Drag & Drop operations. -->
+            <AdornerDecorator x:Name="PART_DragDropAdornerDecorator">
+               <xcdg:CardViewScrollViewer x:Name="PART_ScrollViewer"
+                                          Style="{StaticResource cardflowView3DScrollViewerStyle}"
+                                          Padding="{TemplateBinding Padding}">
+
+                  <!-- This control's Name is used by the CardViewScrollViewer Template
+                       (to flip the center card when needed). -->
+                  <xcdg:CardflowItemsHost x:Name="itemsHost"
+                                          ShowReflections="{xcdg:ViewBinding ShowReflections}"
+                                          EmptySurfaceBrush="{xcdg:ViewBinding EmptySurfaceBrush}"
+                                          SideCardsCount="{xcdg:ViewBinding SideCardsCount}"
+                                          IsCardFlippingEnabled="{xcdg:ViewBinding IsCardFlippingEnabled}"
+                                          CardHeightToViewportRatio="{xcdg:ViewBinding CardHeightToViewportRatio}"
+                                          SideCardsZOffset="{xcdg:ViewBinding SideCardsZOffset}"
+                                          SideCardsYAngle="{xcdg:ViewBinding SideCardsYAngle}"
+                                          SideCardsXAngle="{xcdg:ViewBinding SideCardsXAngle}"
+                                          CenterCardYAngle="{xcdg:ViewBinding CenterCardYAngle}"
+                                          CenterCardXAngle="{xcdg:ViewBinding CenterCardXAngle}"
+                                          SideCardsXOffset="{xcdg:ViewBinding SideCardsXOffset}"
+                                          SideCardsXSpacing="{xcdg:ViewBinding SideCardsXSpacing}"
+                                          SideCardsZSpacing="{xcdg:ViewBinding SideCardsZSpacing}"
+                                          FieldOfView="{xcdg:ViewBinding FieldOfView}"
+                                          CameraXOffset="{xcdg:ViewBinding CameraXOffset}"
+                                          CameraYOffset="{xcdg:ViewBinding CameraYOffset}"
+                                          CameraZOffset="{xcdg:ViewBinding CameraZOffset}"
+                                          CameraLooksAtOriginOnX="{xcdg:ViewBinding CameraLooksAtOriginOnX}"
+                                          CameraLooksAtOriginOnY="{xcdg:ViewBinding CameraLooksAtOriginOnY}"
+                                          CameraRevolutionXAngle="{xcdg:ViewBinding CameraRevolutionXAngle}"
+                                          CameraRevolutionYAngle="{xcdg:ViewBinding CameraRevolutionYAngle}" />
+                  
+               </xcdg:CardViewScrollViewer>
+            </AdornerDecorator>
+         </Grid>
+      </Border>
+   </ControlTemplate>
+
+   <!--**************************
+    * TEMPLATE: Row 
+    ************************** -->
+   <ControlTemplate x:Key="cardFlowView3DSBXGridViewRowTemplate"
+                    TargetType="xcdg:Row">
+
+      <!--The regions defined belllow will have a Height and Width set 0. The regions should have been
+          collapsed rather than set to 0x0 however, due to a bug in the Viewport2DVisual3D we have to
+          use this workaround.-->
+
+      <!-- Setting KeyboardNavigation.DirectionalNavigation on the top element of the 
+           template is important to ensure that focus cannot be given to the Row using 
+           keyboard navigation. This is done in conjunction to setting the PART_RowFocusRoot name INSIDE the element marked as "none" -->
+      <Border KeyboardNavigation.DirectionalNavigation="None">
+
+         <!-- In CardflowView3D, a Row is represented as a card with potentially 3 regions: 
+              a title, an image and the remaining Cells. All these regions are invisible by
+              default and will be made visible in the following ControlTemplate.Triggers
+              section.-->
+         <Grid x:Name="PART_RowFocusRoot">
+
+            <Grid Background="{StaticResource cardBackgroundBrush}"
+                  TextElement.Foreground="{StaticResource cardForegroundBrush}">
+               <Grid.RowDefinitions>
+                  <!-- Top Row acts like a Margin for the card's content -->
+                  <RowDefinition Height="0.1*" />
+                  <!-- Upper band where the title would be by default -->
+                  <RowDefinition Height="*" />
+                  <!-- Margin between the upper band and the card's content -->
+                  <RowDefinition Height="0.1*" />
+                  <!-- Cells Or Image Content -->
+                  <RowDefinition Height="0.5*" />
+
+                  <!-- This zone is added to center the title. -->
+                  <RowDefinition Height="0.5*" />
+                  <RowDefinition Height="0.5*" />
+
+                  <RowDefinition Height="0.5*" />
+                  <!-- Cells Or Image Content Margin -->
+                  <RowDefinition Height="0.1*" />
+                  <!-- Extra Zone incase a 2nd cell region is needed -->
+                  <RowDefinition Height="*" />
+                  <!-- Card bottom Margin -->
+                  <RowDefinition Height="0.1*" />
+               </Grid.RowDefinitions>
+
+               <Grid.ColumnDefinitions>
+                  <!-- Card's left side margin -->
+                  <ColumnDefinition Width="0.05*" />
+                  <!-- Cells or Image content -->
+                  <ColumnDefinition Width="*" />
+                  <!-- Cells or Image content Margin -->
+                  <ColumnDefinition Width="0.05*" />
+                  <ColumnDefinition Width="0.05*" />
+                  <!-- Cells or Image content -->
+                  <ColumnDefinition Width="*" />
+                  <!-- Card's Right side margin -->
+                  <ColumnDefinition Width="0.05*" />
+               </Grid.ColumnDefinitions>
+
+               <!-- Top Title Band -->
+               <Grid x:Name="topTitleBand"
+                     Height="0"
+                     Width="0"
+                     Opacity="0.5"
+                     Background="{StaticResource titleBandBackgroundBrush}"
+                     Grid.Row="0"
+                     Grid.RowSpan="2"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="6"/>
+
+               <!-- REGION_Data -->
+               <xcdg:RegionPresenter x:Name="REGION_Data"
+                                     Height="0"
+                                     Width="0"
+                                     Opacity="1"
+                                     IsHitTestVisible="True"
+                                     IsDefaultRegion="True"
+                                     Margin="4,0,0,0"
+                                     Grid.Row="5"
+                                     Grid.RowSpan="4"
+                                     Grid.Column="1"
+                                     Grid.ColumnSpan="4">
+                  <!-- ScrollViewer should not be focusable to prevent it to catch the 
+                       focus when clicked and also to prevent keyboard navigation issues. -->
+                  <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                Focusable="False">
+                     <!-- Usually, only the Data Region shows the CellTitles. This is why
+                          it's the only "CellsHost" to have the IsSharedSizeScope set to
+                          True. See the Cell Template below. -->
+                     <StackPanel xcdg:RegionPresenter.IsCellsHost="True"
+                                 Grid.IsSharedSizeScope="True"/>
+                  </ScrollViewer>
+               </xcdg:RegionPresenter>
+
+               <!-- Region where the image field will be hosted. -->
+               <Grid x:Name="imageHost"
+                     Height="0"
+                     Width="0"
+                     Grid.Row="1"
+                     Grid.RowSpan="3"
+                     Grid.Column="1"
+                     Grid.ColumnSpan="1">
+                  <Border BorderBrush="{StaticResource imageBorderBrush}"
+                          BorderThickness="2"
+                          Background="{StaticResource imageBackgroundBrush}">
+                     <xcdg:RegionPresenter x:Name="REGION_Image"
+                                           IsHitTestVisible="True"
+                                           xcdg:RegionConfiguration.ShowCellTitles="False"
+                                           ImageStretch="UniformToFill">
+                        <Grid xcdg:RegionPresenter.IsCellsHost="True" />
+                     </xcdg:RegionPresenter>
+                  </Border>
+               </Grid>
+
+               <!-- Bottom Title Band -->
+               <Grid x:Name="bottomTitleBand"
+                     Height="0"
+                     Width="0"
+                     Opacity="0.5"
+                     Background="{StaticResource titleBandBackgroundBrush}"
+                     Grid.Row="8"
+                     Grid.RowSpan="2"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="6"/>
+
+               <!-- REGION_Title -->
+               <Grid x:Name="gridTitleRegion"
+                     Height="0"
+                     Width="0"
+                     Grid.Row="4"
+                     Grid.RowSpan="1"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="6">
+
+                  <xcdg:RegionPresenter x:Name="REGION_Title"
+                                        Margin="5"
+                                        xcdg:RegionConfiguration.ShowCellTitles="False">
+                     <Viewbox>
+
+                        <!-- Using a Viewbox will stretch each title according to its
+                             content resulting in titles that can be of various sizes.
+                             This result may not always be esthetically pleasing and can
+                             also produce perspective problems (optical illusions).
+
+                             Giving the root element of the Viewbox an arbitrary width
+                             will correct this undesirable behavior. This size of 140 was
+                             determined by trial and error using our data source and it may
+                             be appropriate to change it according to the data.-->
+
+                        <Grid Width="140">
+                           <Grid xcdg:RegionPresenter.IsCellsHost="True"
+                                 HorizontalAlignment="Center" />
+                        </Grid>
+                     </Viewbox>
+
+                  </xcdg:RegionPresenter>
+               </Grid>
+            </Grid>
+         </Grid>
+      </Border>
+
+      <ControlTemplate.Triggers>
+         <!-- 
+         The following triggers take care of the various surface configurations. They will 
+         show the relevant visual elements to comply with the requested surface configuration.
+         -->
+         
+         <!-- Data (remaining cells) only surface configuration -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:DataSurfaceConfiguration}">
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.Row"
+                    Value="1" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.RowSpan"
+                    Value="8" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.Column"
+                    Value="1" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.ColumnSpan"
+                    Value="4" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Width"
+                    Value="Auto" />
+         </Trigger>
+
+         <!-- Image only surface configuration -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:ImageSurfaceConfiguration}">
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Column"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.ColumnSpan"
+                    Value="4" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.RowSpan"
+                    Value="8" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Row"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="imageHost"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="imageHost"
+                    Property="Width"
+                    Value="Auto" />
+
+         </Trigger>
+
+         <!-- Title only surface configuration -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:TitleSurfaceConfiguration}">
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Column"
+                    Value="0" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.ColumnSpan"
+                    Value="5" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Row"
+                    Value="4" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.RowSpan"
+                    Value="2" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Width"
+                    Value="Auto" />
+
+         </Trigger>
+
+         <!-- Title and image surface configuration -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:ImageAndTitleSurfaceConfiguration}">
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Column"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.ColumnSpan"
+                    Value="4" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.RowSpan"
+                    Value="8" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Row"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="imageHost"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="imageHost"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Column"
+                    Value="0" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.ColumnSpan"
+                    Value="6" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Row"
+                    Value="8" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.RowSpan"
+                    Value="1" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="bottomTitleBand"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="bottomTitleBand"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="bottomTitleBand"
+                    Property="Width"
+                    Value="Auto" />
+
+         </Trigger>
+
+         <!-- Data (remaining cells) and Image surface configuration -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:ImageAndDataSurfaceConfiguration}">
+            <Setter TargetName="imageHost"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="imageHost"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="imageHost"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Row"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.RowSpan"
+                    Value="3" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Column"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.ColumnSpan"
+                    Value="4" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.Row"
+                    Value="4" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.RowSpan"
+                    Value="5" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.Column"
+                    Value="1" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.ColumnSpan"
+                    Value="4" />
+         </Trigger>
+
+         <!-- Data (remaining cells) and title surface configuration -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:TitleAndDataSurfaceConfiguration}">
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Column"
+                    Value="0" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.ColumnSpan"
+                    Value="6" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Row"
+                    Value="0" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.RowSpan"
+                    Value="2" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="topTitleBand"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="topTitleBand"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="topTitleBand"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.Row"
+                    Value="3" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Grid.RowSpan"
+                    Value="6" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Width"
+                    Value="Auto" />
+
+         </Trigger>
+
+         <!-- Data (remaining cells), title and image surface configuration (all regions) -->
+         <Trigger Property="xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType"
+                  Value="{x:Type xcdg:CompleteSurfaceConfiguration}">
+            <Setter TargetName="imageHost"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="imageHost"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="imageHost"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Row"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.RowSpan"
+                    Value="4" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.Column"
+                    Value="1" />
+
+            <Setter TargetName="imageHost"
+                    Property="Grid.ColumnSpan"
+                    Value="1" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Row"
+                    Value="1" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.RowSpan"
+                    Value="1" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.Column"
+                    Value="3" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Grid.ColumnSpan"
+                    Value="2" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="gridTitleRegion"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Data"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="topTitleBand"
+                    Property="Visibility"
+                    Value="Visible" />
+
+            <Setter TargetName="topTitleBand"
+                    Property="Height"
+                    Value="Auto" />
+
+            <Setter TargetName="topTitleBand"
+                    Property="Width"
+                    Value="Auto" />
+
+            <Setter TargetName="REGION_Title"
+                    Property="Margin"
+                    Value="0,5,5,0" />
+         </Trigger>
+
+         <!--
+         Some themes may expose additional properties, usually of type Enum. 
+         Here's how they are typically handled.
+         -->
+         
+         <!-- Custom property has a value of X.  -->
+         <!-- Uncomment these lines: 
+         <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>-->
+         
+               <!-- Suppose that this custom property only works when the Title region 
+                    is displayed alone. -->
+         
+               <!-- Uncomment this line:
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:MultiSurfaceViewBase.CoercedSurfaceConfigurationType)}"
+                          Value="{x:Type xcdg:TitleSurfaceConfiguration}" />-->
+               
+               <!-- Actual custom property value checking. 
+                    The theme properties are automatically transferred by the data grid 
+                    to the MultiSurfaceViewBase's SurfaceConfigurationContext property value. -->
+         
+               <!-- Uncomment these lines:
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:MultiSurfaceViewBase.SurfaceConfigurationContext).CustomProperty}"
+                          Value="X" />
+            </MultiDataTrigger.Conditions>-->
+            
+            <!-- ********************* -->
+            <!-- Put the setters here. -->
+            <!-- ********************* -->
+
+         <!-- Uncomment this line:
+         </MultiDataTrigger>-->
+
+      </ControlTemplate.Triggers>
+   </ControlTemplate>
+
+   <!--**************************
+    * TEMPLATE: Cell 
+    ************************** -->
+   <ControlTemplate x:Key="cardFlowView3DSBXGridViewCellTemplate"
+                    TargetType="xcdg:Cell">
+
+      <Border x:Name="rootBorder"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              Padding="{TemplateBinding Padding}">
+
+         <!-- In CardflowView3D, each cell consists of its FieldName followed by its Content. We use
+              a Grid to layout both elements, with a SharedSizeGroup on the column that lays out
+              the FieldName. In order for this to work as expected, the Row's CellsHost Panel
+              must be set as the Grid.IsSharedSizeScope. -->
+         <Grid>
+
+            <Grid.ColumnDefinitions>
+               <!-- FieldName -->
+               <ColumnDefinition SharedSizeGroup="CellFieldName" />
+
+               <!-- Cell Content -->
+               <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+
+            <!-- Horizontal StackPanel used to lay out the FieldName and a colon. -->
+            <StackPanel x:Name="cellTitle"
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+
+               <ContentPresenter Content="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ParentColumn.Title}"
+                                 ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ParentColumn.TitleTemplate}"
+                                 ContentTemplateSelector="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ParentColumn.TitleTemplateSelector}" />
+
+               <TextBlock Text=": " />
+
+            </StackPanel>
+<!-- Change name from x:Name="cellContent" to PART_CellContentPresenter fo rupgrade from 3.0 to 3.6 -->
+            <xcdg:CellContentPresenter x:Name="PART_CellContentPresenter"
+                                       Grid.Column="1"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+         </Grid>
+
+      </Border>
+
+      <ControlTemplate.Triggers>
+
+         <!-- When changing the appearance (e.g. background/foreground) of the Cell to reflect specific
+              states (e.g. IsCurrent), it is recommended to apply the changes directly to the template
+              elements because we want those modifications to be effective even when a value has been
+              explicitely set to these properties on the TemplatedParent. Also, when someone queries
+              the value of these properties on the TemplatedParent, we don't want to return the
+              intermediate, state-specific values. -->
+
+         <!-- When the Cell is Current, we want to change its background/foreground to the appropriate brushes.
+              We do this only when the cell does not have a validation error because we must give priority
+              to the CellErrorStyle (if present).-->
+
+         <MultiTrigger>
+            <MultiTrigger.Conditions>
+
+               <Condition Property="IsCurrent"
+                          Value="True" />
+
+               <Condition Property="HasValidationError"
+                          Value="False" />
+
+            </MultiTrigger.Conditions>
+
+            <Setter TargetName="rootBorder"
+                    Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=CurrentBackground}" />
+
+            <Setter TargetName="rootBorder"
+                    Property="TextElement.Foreground"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=CurrentForeground}" />
+
+         </MultiTrigger>
+
+         <MultiTrigger>
+            <MultiTrigger.Conditions>
+
+               <Condition Property="IsCurrent"
+                          Value="True" />
+
+               <Condition Property="HasValidationError"
+                          Value="True" />
+
+               <Condition Property="CellErrorStyle"
+                          Value="{x:Null}" />
+
+            </MultiTrigger.Conditions>
+
+            <Setter TargetName="rootBorder"
+                    Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=CurrentBackground}" />
+
+            <Setter TargetName="rootBorder"
+                    Property="TextElement.Foreground"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=CurrentForeground}" />
+
+         </MultiTrigger>
+
+         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.Visible}"
+                      Value="False">
+            <Setter Property="Visibility"
+                    Value="Collapsed"/>
+         </DataTrigger>
+
+         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:RegionConfiguration.ShowCellTitles)}"
+                      Value="False">
+            <Setter TargetName="cellTitle"
+                    Property="Visibility"
+                    Value="Collapsed"/>
+<!-- Changed name from cellContent to PART_CellContentPresenter for upgrade from 3.0 to 3.6 -->
+            <Setter TargetName="PART_CellContentPresenter"
+                    Property="Grid.Column"
+                    Value="0"/>
+
+<!-- Changed name from cellContent to PART_CellContentPresenter for upgrade from 3.0 to 3.6 -->
+            <Setter TargetName="PART_CellContentPresenter"
+                    Property="Grid.ColumnSpan"
+                    Value="2"/>
+         </DataTrigger>
+
+      </ControlTemplate.Triggers>
+
+   </ControlTemplate>
+
+   <!--**************************
+    * TEMPLATE: GroupHeaderControl
+    ************************** -->
+   <ControlTemplate x:Key="cardflowView3DGroupHeaderControlTemplate"
+                     TargetType="xcdg:GroupHeaderControl">
+      <Grid>
+         <Grid>
+            <Grid.RowDefinitions>
+               <RowDefinition Height="0.05*" />
+               <RowDefinition Height="0.95*" />
+            </Grid.RowDefinitions>
+            
+            <Border Grid.Row="0"
+                    Background="Transparent" />
+            
+            <Path Stretch="Fill"
+                  Opacity="0.5"
+                  Data="M 50,59 C77,59 50,23 97,23 144,23 147,23 199,23 251,23 221,59 250,59 279,59 300,59 300,59 300,59 300,300 300,300 300,300 0,300 0,300 0,300 0,59.999996185302734 0,59.999996185302734 0,59.999996185302734 23,59 50,59 z"
+                  Grid.Row="1">
+               <Path.Fill>
+                  <LinearGradientBrush EndPoint="0.5,1"
+                                       StartPoint="0.5,0">
+                     <GradientStop Color="#2A2A2A"
+                                   Offset="0" />
+                     <GradientStop Color="#737373"
+                                   Offset="1" />
+                  </LinearGradientBrush>
+               </Path.Fill>
+            </Path>
+            
+            <Viewbox Grid.Row="1"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center">
+               
+               <!-- Using a Viewbox will stretch the content according to its
+                    content resulting in titles that can be of various sizes.
+                    This result may not always be esthetically pleasing and can
+                    also produce perspective problems (optical illusions).
+
+                    Giving the root element of the Viewbox an arbitrary width
+                    will correct this undesirable behavior. This size of 250 was
+                    determined by trial and error using our data source and it may
+                    be appropriate to change it according to the data.-->
+               
+               <Grid Width="250">
+                  <ContentPresenter Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                    TextElement.Foreground="{TemplateBinding Foreground}"
+                                    HorizontalAlignment="Center" />
+               </Grid>
+            </Viewbox>
+         </Grid>
+      </Grid>
+   </ControlTemplate>
+
+   <!-- =================================================================== -->
+   <!-- Styles required by some grid elements                               -->
+   <!-- =================================================================== -->
+
+   <!--**************************
+    * STYLE: CellErrorStyle 
+    ************************** -->
+   <Style x:Key="cellErrorStyle"
+          TargetType="xcdg:Cell">
+
+      <Setter Property="Background"
+              Value="{StaticResource errorBackgroundBrush}" />
+
+      <Setter Property="Foreground"
+              Value="{StaticResource errorForegroundBrush}" />
+
+      <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},Path=ValidationError.ErrorContent}" />
+
+      <Style.Triggers>
+         <!-- Warning style. -->
+         <Trigger Property="IsValidationErrorRestrictive"
+                     Value="False">
+
+            <Setter Property="Foreground"
+                    Value="{StaticResource warningBackgroundBrush}" />
+
+            <Setter Property="Background"
+                    Value="{StaticResource warningForegroundBrush}" />
+
+         </Trigger>
+      </Style.Triggers>
+
+   </Style>
+
+   <!-- =================================================================== -->
+   <!-- Keyed Styles of grid elements                                       -->
+   <!-- =================================================================== -->
+
+   <!--**************************
+    * STYLE: DataGridControl 
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewDataGridControlStyle"
+          TargetType="xcdg:DataGridControl">
+
+      <Setter Property="BorderBrush"
+              Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" />
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <Setter Property="Background"
+              Value="Black" />
+
+      <Setter Property="Foreground"
+              Value="White" />
+
+      <Setter Property="FontFamily"
+              Value="Arial" />
+
+      <Setter Property="FontSize"
+              Value="13" />
+
+      <!-- In CardflowView3D, RowOnly is the default and the 'highly suggested' value.-->
+      <Setter Property="NavigationBehavior"
+              Value="RowOnly"/>
+
+      <!-- For the horizontal scrolling of the CardflowView3D, PagingBehavior.LeftToRight is better suited 
+           than the default TopToBottom. -->
+      <Setter Property="PagingBehavior"
+              Value="LeftToRight"/>
+
+      <Setter Property="SnapsToDevicePixels"
+              Value="True" />
+
+      <Setter Property="CellErrorStyle"
+              Value="{StaticResource cellErrorStyle}" />
+<!-- Removed for upgrade from 3.0 to 3.6 -->
+<!--
+      <Setter Property="ItemsPanel"
+              Value="{StaticResource cardViewDataGridControlItemsPanelTemplate}" />
+-->
+      <Setter Property="Template"
+              Value="{StaticResource cardflowView3DSBXGridViewDataGridControlTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: Row Style
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewRowStyle"
+          TargetType="xcdg:Row">
+
+      <Setter Property="Margin"
+              Value="5" />
+
+      <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardFlowView3DSBXGridViewRowTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: DataRow 
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewDataRowStyle"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewRowStyle}">
+
+   </Style>
+
+   <!--**************************
+    * STYLE: Cell Style
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewCellStyle"
+          TargetType="xcdg:Cell">
+
+      <Setter Property="CurrentBackground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+
+      <Setter Property="CurrentForeground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+
+      <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+      <Setter Property="Background"
+              Value="Transparent" />
+
+      <!-- A basic Cell Template requires at least a ContentPresenter, which is used to display the Cell's Content. -->
+      <Setter Property="Template"
+              Value="{StaticResource cardFlowView3DSBXGridViewCellTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: DataCell
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewDataCellStyle"
+          TargetType="xcdg:DataCell"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewCellStyle}" >
+
+   </Style>
+
+   <!--**************************
+    * STYLE: GroupHeaderControl
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewGroupHeaderControlStyle"
+          TargetType="xcdg:GroupHeaderControl">
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+
+      <Setter Property="FontFamily"
+              Value="Arial" />
+
+      <Setter Property="FontSize"
+              Value="16" />
+
+      <Setter Property="Margin"
+              Value="5,0,5,5" />
+
+      <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+      <Setter Property="VerticalContentAlignment"
+              Value="Center" />
+
+      <!-- The GroupHeaderControl itself must not holds the various InputBindings that make the
+           GroupHeaderControl work. -->
+      <Setter Property="Focusable"
+              Value="False" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardflowView3DGroupHeaderControlTemplate}" />
+
+      <Style.Triggers>
+         <MultiDataTrigger>
+            <!-- To simplify the UI in CardFlowView3D, only display the last level group headers. -->
+            <MultiDataTrigger.Conditions>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Content.IsBottomLevel}"
+                          Value="False" />
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Content.IsExpanded}"
+                          Value="True" />
+
+            </MultiDataTrigger.Conditions>
+
+            <Setter Property="Visibility"
+                    Value="Collapsed" />
+
+         </MultiDataTrigger>
+      </Style.Triggers>
+
+   </Style>
+
+   <!--**************************
+    * STYLE: ScrollTip
+    ************************** -->
+   <Style x:Key="cardflowView3DSBXGridViewScrollTipStyle"
+          TargetType="xcdg:ScrollTip">
+
+      <Setter Property="Template"
+              Value="{StaticResource scrollTipTemplate}" />
+
+      <Setter Property="Background"
+              Value="Black"/>
+
+      <Setter Property="Foreground"
+              Value="White"/>
+
+      <Setter Property="BorderBrush"
+              Value="Gray"/>
+
+      <Setter Property="VerticalAlignment"
+              Value="Bottom" />
+
+      <Setter Property="HorizontalAlignment"
+              Value="Center" />
+
+   </Style>
+
+   <!-- =================================================================== -->
+   <!-- Default values for the View                                         -->
+   <!-- =================================================================== -->
+
+   <Style x:Key="cardflowView3DSBXGridViewDefaultValues"
+          TargetType="xcdg:CardflowView3D">
+
+      <Setter Property="EmptySurfaceBrush"
+                Value="{StaticResource emptySurfaceBrush}" />
+
+   </Style>
+
+   
+   <!-- =================================================================== -->
+   <!-- DefaultStyleKey declarations                                        -->
+   <!-- =================================================================== -->
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme}"
+          TargetType="xcdg:CardflowView3D"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewDefaultValues}" />
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataGridControl}"
+          TargetType="xcdg:DataGridControl"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewDataGridControlStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:Row}"
+          TargetType="xcdg:Row"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataRow}"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewDataRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:Cell}"
+          TargetType="xcdg:Cell"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataCell}"
+          TargetType="xcdg:DataCell"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewDataCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupHeaderControl}"
+          TargetType="xcdg:GroupHeaderControl"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewGroupHeaderControlStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardflowView3D, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ScrollTip}"
+          TargetType="xcdg:ScrollTip"
+          BasedOn="{StaticResource cardflowView3DSBXGridViewScrollTipStyle}"/>
+
+</ResourceDictionary>

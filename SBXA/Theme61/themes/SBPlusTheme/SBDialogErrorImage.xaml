@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="SBDialogErrorImage">
+        <Viewbox Stretch="Uniform">
+            <Canvas Width="154.98" Height="155.618">
+                <Canvas>
+                    <Canvas RenderTransform="1,0,0,1,-311.624786376953,-429.701293945313">
+                        <Canvas RenderTransform="0.899999976158142,0,0,0.899999976158142,170.442092895508,-31.1130294799805">
+                            <Path Fill="Red" Stroke="#FFCB0000" StrokeThickness="20.128" StrokeMiterLimit="4" RenderTransform="0.306861996650696,0,0,0.306861996650696,127.617797851563,428.995910644531" Data="M634.286,559.505A250.000,250.000,0.000,1,1,134.286,559.505A250.000,250.000,0.000,1,1,634.286,559.505z"/>
+                            <Path StrokeThickness="1" Data="M264.190,668.931C283.237,663.828 298.363,651.273 307.419,635.107 322.127,600.289 267.252,681.807 221.928,666.998 235.104,671.830 249.741,672.803 264.190,668.931z">
+                                <Path.Fill>
+                                    <LinearGradientBrush StartPoint="305.8,668.897" EndPoint="285.341,619.743" MappingMode="Absolute" SpreadMethod="Pad">
+                                        <GradientStop Color="White" Offset="0"/>
+                                        <GradientStop Color="Red" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Path.Fill>
+                            </Path>
+                            <Path StrokeThickness="1" Data="M245.657,529.362C206.220,529.362 174.215,562.210 174.215,602.684 174.215,608.158 174.823,613.486 175.933,618.619 215.138,543.151 257.378,590.656 311.840,575.072 301.204,548.274 275.575,529.362 245.657,529.362z">
+                                <Path.Fill>
+                                    <LinearGradientBrush StartPoint="210.172,529.362" EndPoint="246.428,611.847" MappingMode="Absolute" SpreadMethod="Pad">
+                                        <GradientStop Color="White" Offset="0"/>
+                                        <GradientStop Color="Red" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Path.Fill>
+                            </Path>
+                            <Path Fill="#BBFFFFFF" StrokeThickness="1" Opacity="0.735" Data="F1M267.423,640.037L245.744,618.358 223.861,640.241 205.986,622.366 227.869,600.483 206.190,578.804 223.589,561.404 245.269,583.083 267.219,561.132 285.095,579.008 263.144,600.959 284.823,622.638 267.423,640.037"/>
+                            <Path Fill="White" StrokeThickness="1" Data="F1M267.298,637.006L245.710,615.418 223.953,637.176 209.051,622.274 230.809,600.517 209.221,578.929 223.726,564.424 245.314,586.012 267.128,564.198 282.030,579.099 260.215,600.913 281.803,622.501 267.298,637.006"/>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+
+</ResourceDictionary>

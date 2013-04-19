@@ -1,0 +1,45 @@
+<!--
+
+       Name    : DefaultStatusBarStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+  <Style x:Key="DefaultSBStatusBarProgressBarStyle" TargetType="{x:Type ProgressBar}" >
+    <Setter Property="Width" Value="150" />
+    <Setter Property="FontSize" Value="8" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Height" Value="22" />
+    <Setter Property="Margin" Value="0,0,0,0" />
+    <Setter Property="Orientation" Value="Horizontal" />
+  </Style>
+
+  <Style x:Key="DefaultSBInputModeStyle" TargetType="{x:Type Control}">
+    <Setter Property="ToolTip" Value="{Binding Path=SBPlus.InputStateMessage, RelativeSource={RelativeSource TemplatedParent}}" />
+    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Dormant" >
+                <Setter Property="Template" Value="{DynamicResource WaitingForServerTemplate}"/>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="WaitingForInput" >
+                <Setter Property="Template" Value="{DynamicResource WaitingForUserTemplate}"/>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Busy" >
+                <Setter Property="Template" Value="{DynamicResource WaitingForServerTemplate}"/>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Error" >
+                <Setter Property="Template" Value="{DynamicResource WaitingForUserTemplate}"/>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+  
+</ResourceDictionary>

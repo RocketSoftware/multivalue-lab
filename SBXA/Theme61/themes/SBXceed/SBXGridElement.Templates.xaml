@@ -1,0 +1,600 @@
+<!--
+
+       Name    : DefaultControlStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+    xmlns:sbce="clr-namespace:SBXA.UI.WPFControls.MarkupExtensions"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <!-- Note: Although the NoFocusContextMenu is defined against all the
+             no focus grid cell templates, on most (if not all) a right click
+             just gives focus to the grid cell.
+         -->
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/NoFocusContextMenu.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="SBXSBTextBoxTemplate" TargetType="{x:Type TextBoxBase}">
+        <Border Name="Border"
+                    CornerRadius="0"
+                    Margin="0"
+                    BorderThickness="{Binding Path=BorderThickness, RelativeSource={RelativeSource TemplatedParent}}"
+                    BorderBrush="{Binding Path=BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
+                    Background="{TemplateBinding Background}"
+                    sbc:SBUISupport.TemplateName="SBXSBTextBoxTemplate"
+                    >
+<!--
+            Margin="-1,0,0,0"
+-->
+            <ScrollViewer x:Name="PART_ContentHost" 
+                          Margin="0"
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled"
+                          SnapsToDevicePixels="True"
+                          Foreground="{TemplateBinding Foreground}"
+                          KeyboardNavigation.AcceptsReturn="{Binding Path=AcceptsReturn, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBTextBox}}}"
+                          >
+                <ScrollViewer.Template>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" 
+                                                 CanContentScroll="{TemplateBinding CanContentScroll}" 
+                                                 CanHorizontallyScroll="False" 
+                                                 CanVerticallyScroll="False" 
+                                                 ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                 Content="{TemplateBinding Content}" 
+                                                 Margin="0" 
+                                                 />
+                    </ControlTemplate>
+
+                </ScrollViewer.Template>
+            </ScrollViewer>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SBXSBContentTextBoxTemplate"  TargetType="{x:Type TextBoxBase}">
+            <TextBlock x:Name="PART_FocusSite" 
+                   Height="Auto"
+                   Margin="0"
+                   SnapsToDevicePixels="True"
+                   Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}}"
+                   TextDecorations="{Binding Path=(sbc:SBControl.TextDecorations), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                   Background="{TemplateBinding Background}"
+                   Foreground="{TemplateBinding Foreground}"
+                   />
+    </ControlTemplate>
+
+    <!-- ******************************************************************************************************************************* -->
+    <!--                                 Footer templates for table view                                                                 -->
+    <!-- ******************************************************************************************************************************* -->
+    <DataTemplate x:Key="SBFixFootersTemplate" >
+        <sbx:SBXStatRow sbc:SBUISupport.TemplateName="SBFixFootersTemplate"/>
+    </DataTemplate>
+
+    <!-- ******************************************************************************************************************************* -->
+    <!--                                 Editor and Content templates for table view                                                     -->
+    <!-- ******************************************************************************************************************************* -->
+
+    <!-- *********************** -->
+    <!-- Footer Textclass DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXTextclassFooterCellContentTemplate" >
+        <sbc:SBField x:Name="PART_SBField"
+                     sbc:SBGridControl.ParentColumn="{Binding Path=ParentColumn, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:StatCell}}, Mode=OneWay, Converter={StaticResource SBXColumnConverter}}"
+                     sbc:SBControl.FieldName="{Binding Path=GuiObjectDefinition.FieldDefinition.FieldName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
+                     GuiObjectDefinition="{Binding Path=(sbc:SBGridControl.ParentColumn).ColumnDefinition.FooterGuiObjectDefinition, RelativeSource={RelativeSource  Mode=Self}, Mode=OneWay}"
+                     sbc:SBGUIAttribute.SBObjectName="{sbce:SBObjectNameExtension}"
+                     sbc:SBGUIAttribute.SBParentObjectName="{Binding Path=(sbc:SBGUIAttribute.SBObjectName), RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=OneWay}"
+                     Style="{DynamicResource SBXSBFieldContentStyle}"
+                     sbc:SBUISupport.TemplateName="SBXTextclassFooterCellContentTemplate"
+                     Margin="0,-2,0,0"
+                     Width="NaN"
+                     >
+        </sbc:SBField>
+    </DataTemplate>
+
+    <!-- *********************** -->
+    <!-- Textclass DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXTextclassCellContentTemplate" >
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{Binding}"
+                     Style="{DynamicResource SBXSBFieldContentStyle}"
+                     sbc:SBUISupport.TemplateName="SBXTextclassCellContentTemplate"
+                     sbc:SBGridControl.IsCurrentField="False"
+                     >
+        </sbc:SBField>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ParentColumn.SBEmphasized, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Converter={StaticResource SBConverter}, Mode=OneWay}"
+                         Value="0">
+                <Setter TargetName="PART_SBField"
+                        Property="Background"
+                        Value="Silver"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <!-- 
+                         SBValue="{Binding Path=Data}"    
+         sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}" 
+         Removed this line for the 3.6 upgrade as it appears that the IsCurrent property on DataCell is now being set much earlier that in 3.0. eCase 41134*USA (kp Feb 3, 2010)
+    -->
+
+    <!-- SBXSCTextclassCellContentTemplate -->
+    <DataTemplate x:Key="SBXSCTextclassCellContentTemplate" >
+        <TextBlock x:Name="PART_SBField" 
+                   Style="{DynamicResource SBXSCSBTextBoxStyle}" 
+                   Text="{Binding}" 
+                   TextAlignment="{Binding Path=ParentColumn.ColumnDefinition.Justification, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Converter={StaticResource SBTextAlignmentConverter}, Mode=OneWay}"
+                   sbc:SBUISupport.TemplateName="SBXSCTextclassCellContentTemplate"
+                   />
+    </DataTemplate>
+
+    <!-- SBXTextclassCellEditorTemplate -->
+    <DataTemplate  x:Key="SBXTextclassCellEditorTemplate">
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{xcdg:CellEditorBinding}"
+                     sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}"
+                     Style="{DynamicResource SBXSBFieldStyle}"
+                     sbc:SBUISupport.TemplateName="SBXTextclassCellEditorTemplate">
+                    
+                     <sbc:SBGUIAttribute.SBMaxChar>
+                        <PriorityBinding>
+                            <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBMaxChar)" Mode="OneWay" Converter="{StaticResource SBUnsetNegativeIntConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                            <Binding Path="GuiObjectDefinition.MaxChars" Mode="OneWay"  RelativeSource="{RelativeSource Mode=Self}" />
+                        </PriorityBinding>
+                     </sbc:SBGUIAttribute.SBMaxChar>
+            <sbc:SBControl.IgnoreKeys>
+                <sbc:KeysToIgnoreCollection>
+                    <sbc:KeyToIgnore Key="Next"/>
+                </sbc:KeysToIgnoreCollection>
+            </sbc:SBControl.IgnoreKeys>
+        </sbc:SBField>
+    </DataTemplate>
+
+    <!-- Column and row grid field templates -->
+    <DataTemplate x:Key="SBXCharTextclassCellContentTemplate" >
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{Binding}"
+                     sbc:SBGridControl.IsCurrentField="False"
+                     Style="{DynamicResource SBXCharSBFieldContentStyle}"
+                     sbc:SBUISupport.TemplateName="SBXCharTextclassCellContentTemplate"
+                     >
+        </sbc:SBField>
+    </DataTemplate>
+    <!-- sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}" 
+         Removed this line for the 3.6 upgrade as it appears that the IsCurrent property on DataCell is now being set much earlier that in 3.0. eCase 41134*USA (kp Feb 3, 2010)
+    -->
+
+    <DataTemplate  x:Key="SBXCharTextclassCellEditorTemplate">
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{xcdg:CellEditorBinding}"
+                     sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}"
+                     Style="{DynamicResource SBXCharSBFieldStyle}"
+                     sbc:SBUISupport.TemplateName="SBXCharTextclassCellEditorTemplate"
+                     >
+            <sbc:SBControl.IgnoreKeys>
+                <sbc:KeysToIgnoreCollection>
+                    <sbc:KeyToIgnore Key="Next"/>
+                </sbc:KeysToIgnoreCollection>
+            </sbc:SBControl.IgnoreKeys>
+        </sbc:SBField>
+    </DataTemplate>
+
+    <!-- Interleaved grid field templates -->
+    <DataTemplate x:Key="SBXInterleavedTextclassCellContentTemplate" >
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{Binding}"
+                     sbc:SBGridControl.IsCurrentField="False"
+                     Style="{DynamicResource SBXISBFieldContentStyle}"
+                     sbc:SBUISupport.TemplateName="SBXInterleavedTextclassCellContentTemplate"
+                     >
+        </sbc:SBField>
+    </DataTemplate>
+    <!-- sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}" 
+         Removed this line for the 3.6 upgrade as it appears that the IsCurrent property on DataCell is now being set much earlier that in 3.0. eCase 41134*USA (kp Feb 3, 2010)
+    -->
+
+    <DataTemplate  x:Key="SBXInterleavedTextclassCellEditorTemplate">
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{xcdg:CellEditorBinding}"
+                     sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}"
+                     Style="{DynamicResource SBXISBFieldStyle}"
+                     sbc:SBUISupport.TemplateName="SBXInterleavedTextclassCellEditorTemplate"
+                     >
+            <sbc:SBControl.IgnoreKeys>
+                <sbc:KeysToIgnoreCollection>
+                    <sbc:KeyToIgnore Key="Next"/>
+                </sbc:KeysToIgnoreCollection>
+            </sbc:SBControl.IgnoreKeys>
+        </sbc:SBField>
+    </DataTemplate>
+
+    <!-- *********************** -->
+    <!-- Toggle DataTemplates    -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXToggleCellContentTemplate" >
+        <sbc:SBToggle x:Name="PART_SBField"
+                      Style="{DynamicResource SBXSBToggleContentStyle}"
+                      sbc:SBUISupport.TemplateName="SBXToggleCellContentTemplate"
+                      SBValue="{Binding}"
+                      sbc:SBGridControl.IsCurrentField="False"
+            />
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ParentColumn.SBEmphasized, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Converter={StaticResource SBConverter}, Mode=OneWay}"
+                         Value="0">
+                <Setter TargetName="PART_SBField"
+                        Property="Background"
+                        Value="Silver"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate  x:Key="SBXToggleCellEditorTemplate">
+        <sbc:SBToggle x:Name="PART_SBField"
+                      Style="{DynamicResource SBXSBToggleStyle}"
+                      sbc:SBUISupport.TemplateName="SBXToggleCellEditorTemplate"
+                      SBValue="{xcdg:CellEditorBinding}"
+            />
+    </DataTemplate>
+
+    
+    <!-- *********************** -->
+    <!-- ComboBox DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXComboBoxCellContentTemplate" >
+        <sbc:SBComboBox x:Name="PART_SBField"
+                        SBValue="{Binding}"
+                        Style="{DynamicResource SBXSBComboBoxStyle}"
+                        sbc:SBUISupport.TemplateName="SBXComboBoxCellContentTemplate"
+                        sbc:SBGridControl.IsCurrentField="False"
+                        />
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ParentColumn.SBEmphasized, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Converter={StaticResource SBConverter}, Mode=OneWay}"
+                         Value="0">
+                <Setter TargetName="PART_SBField"
+                        Property="Background"
+                        Value="Silver"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+
+    <DataTemplate  x:Key="SBXComboBoxCellEditorTemplate">
+        <sbc:SBComboBox x:Name="PART_SBField"
+                        SBValue="{xcdg:CellEditorBinding}"
+                        Style="{DynamicResource SBXSBComboBoxStyle}"
+                        sbc:SBUISupport.TemplateName="SBXComboBoxCellEditorTemplate"
+                       />
+    </DataTemplate>
+
+    <!-- ******************************************************************************************************************************* -->
+    <!--                                 Editor and Content templates for card view                                                      -->
+    <!-- ******************************************************************************************************************************* -->
+
+    <!-- *********************** -->
+    <!-- Textclass DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXCardViewTextclassCellContentTemplate" >
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{Binding}"
+                     Style="{DynamicResource SBXCardViewSBFieldContentStyle}"
+                     sbc:SBUISupport.TemplateName="SBXCardViewTextclassCellContentTemplate"
+                     sbc:SBGridControl.IsCurrentField="False"
+                     ContextMenu="{StaticResource NoFocusContextMenu}"
+                     >
+            <sbc:SBControl.IgnoreKeys>
+                <sbc:KeysToIgnoreCollection>
+                    <sbc:KeyToIgnore />
+                </sbc:KeysToIgnoreCollection>
+            </sbc:SBControl.IgnoreKeys>
+        </sbc:SBField>
+    </DataTemplate>
+    
+    <!-- sbc:SBGridControl.IsCurrentField="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}" 
+         Removed this line for the 3.6 upgrade as it appears that the IsCurrent property on DataCell is now being set much earlier that in 3.0. eCase 41134*USA (kp Feb 3, 2010)
+    -->
+
+    <DataTemplate  x:Key="SBXCardViewTextclassCellEditorTemplate">
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{xcdg:CellEditorBinding}"
+                     Style="{DynamicResource SBXCardViewSBFieldStyle}"
+                     sbc:SBUISupport.TemplateName="SBXCardViewTextclassCellEditorTemplate"
+                     >
+            <sbc:SBControl.IgnoreKeys>
+                <sbc:KeysToIgnoreCollection>
+                    <sbc:KeyToIgnore />
+                </sbc:KeysToIgnoreCollection>
+            </sbc:SBControl.IgnoreKeys>
+        </sbc:SBField>
+    </DataTemplate>
+
+    <!-- *********************** -->
+    <!-- ComboBox DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXCardViewComboBoxCellContentTemplate" >
+        <sbc:SBComboBox x:Name="PART_SBField"
+                        SBValue="{Binding}"
+                        Style="{DynamicResource SBXCardViewSBComboBoxContentStyle}"
+                        sbc:SBUISupport.TemplateName="SBXCardViewComboBoxCellContentTemplate"
+                        sbc:SBGridControl.IsCurrentField="False"
+                        />
+    </DataTemplate>
+
+    <DataTemplate  x:Key="SBXCardViewComboBoxCellEditorTemplate">
+        <sbc:SBComboBox x:Name="PART_SBField"
+                        SBValue="{xcdg:CellEditorBinding}"
+                        Style="{DynamicResource SBXCardViewSBComboBoxStyle}"
+                        sbc:SBUISupport.TemplateName="SBXCardViewComboBoxCellEditorTemplate"
+                        />
+    </DataTemplate>
+
+    <!-- *********************** -->
+    <!-- Toggle DataTemplates    -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBXCardViewToggleCellContentTemplate" >
+        <sbc:SBToggle x:Name="PART_SBField"
+                      Style="{DynamicResource DefaultSBXSBToggleContentStyle}"
+                      sbc:SBUISupport.TemplateName="SBXCardViewToggleCellContentTemplate"
+                      SBValue="{Binding}"
+                      sbc:SBGridControl.IsCurrentField="False"
+            />
+    </DataTemplate>
+
+    <DataTemplate  x:Key="SBXCardViewToggleCellEditorTemplate">
+        <sbc:SBToggle x:Name="PART_SBField"
+                      Style="{DynamicResource DefaultSBXSBToggleStyle}"
+                      sbc:SBUISupport.TemplateName="SBXCardViewToggleCellEditorTemplate"
+                      SBValue="{xcdg:CellEditorBinding}"
+            />
+    </DataTemplate>
+
+
+    <!-- ******************************************************************************************************************************* -->
+    <!--                                 Editor and Content templates for 3D card view                                                      -->
+    <!-- ******************************************************************************************************************************* -->
+
+    <!-- *********************** -->
+    <!-- Textclass DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBX3DViewTextclassCellContentTemplate" >
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{Binding}"
+                     sbc:SBGridControl.IsCurrentField="False"
+                     Style="{DynamicResource SBXCardViewSBFieldContentStyle}"
+                     sbc:SBUISupport.TemplateName="SBX3DViewTextclassCellContentTemplate"
+                     />
+    </DataTemplate>
+    
+    <DataTemplate  x:Key="SBX3DViewTextclassCellEditorTemplate">
+        <sbc:SBField x:Name="PART_SBField"
+                     SBValue="{xcdg:CellEditorBinding}"
+                     Style="{DynamicResource SBXCardViewSBFieldStyle}"
+                     sbc:SBUISupport.TemplateName="SBX3DViewTextclassCellEditorTemplate"
+                     />
+    </DataTemplate>
+
+    <!-- *********************** -->
+    <!-- ComboBox DataTemplates  -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBX3DViewComboBoxCellContentTemplate" >
+        <sbc:SBComboBox x:Name="PART_SBField"
+                        SBValue="{Binding}"
+                        Style="{DynamicResource SBXCardViewSBComboBoxContentStyle}"
+                        sbc:SBUISupport.TemplateName="SBX3DViewComboBoxCellContentTemplate"
+                        sbc:SBGridControl.IsCurrentField="False"
+                        />
+    </DataTemplate>
+
+    <DataTemplate  x:Key="SBX3DViewComboBoxCellEditorTemplate">
+        <sbc:SBComboBox x:Name="PART_SBField"
+                        SBValue="{xcdg:CellEditorBinding}"
+                        Style="{DynamicResource SBXCardViewSBComboBoxStyle}"
+                        sbc:SBUISupport.TemplateName="SBX3DViewComboBoxCellEditorTemplate"
+                        />
+    </DataTemplate>
+
+    <!-- *********************** -->
+    <!-- Toggle DataTemplates    -->
+    <!-- *********************** -->
+    <DataTemplate x:Key="SBX3DViewToggleCellContentTemplate" >
+        <sbc:SBToggle x:Name="PART_SBField"
+                      Style="{DynamicResource SBXCardViewSBToggleContentStyle}"
+                      sbc:SBUISupport.TemplateName="SBX3DViewToggleCellContentTemplate"
+                      SBValue="{Binding}"
+                      sbc:SBGridControl.IsCurrentField="False"
+            />
+    </DataTemplate>
+
+    <DataTemplate  x:Key="SBX3DViewToggleCellEditorTemplate">
+        <sbc:SBToggle x:Name="PART_SBField"
+                      Style="{DynamicResource SBXCardViewSBToggleStyle}"
+                      sbc:SBUISupport.TemplateName="SBX3DViewToggleCellEditorTemplate"
+                      SBValue="{xcdg:CellEditorBinding}"
+            />
+    </DataTemplate>
+
+    <!-- SBXSeparatorTemplate -->
+    <DataTemplate x:Key="SBXSeparatorTemplate">
+        <TextBlock Style="{DynamicResource SBXSeparatorStyle}" 
+                   sbc:SBUISupport.TemplateName="SBXSeparatorTemplate"
+                   Text="" />
+    </DataTemplate>
+
+    <!-- *************************************************** -->
+    <!-- StackedDataRowTemplate                             -->
+    <!-- Using a StackPanel to lay the cells out vertically  -->
+    <!-- *************************************************** -->
+    <ControlTemplate x:Key="StackedDataRowTemplate"  TargetType="{x:Type xcdg:DataRow}">
+
+        <!-- This is the Border of the DataRow. We simply make sure that it will reflect
+                        the relevant DataRow's properties. -->
+        <!-- The consequence of naming the Expander "PART_RowFocusRoot" is that
+                       the DataGridControl will automatically focus this Element when 
+                       navigating. Without this, the grid would focus the PART_CellsHost. -->
+        <Border x:Name="PART_RowFocusRoot"
+                VerticalAlignment="Top"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Padding="{TemplateBinding Padding}"
+                sbc:SBUISupport.TemplateName="StackedDataRowTemplate"
+                >
+            <Grid>
+                <Rectangle Style="{DynamicResource SBBorderRectangleStyle}"/>
+
+                <Border BorderThickness="2" Padding="6" Background="{DynamicResource SBFormBorderBackground}" >
+
+                    <!-- This stack panel will contain all the fields laid out in a vertical list. -->
+                    <StackPanel x:Name="PART_CellsHost"
+                           Orientation="Vertical"
+                           Grid.IsSharedSizeScope="True" />
+
+                </Border>
+            </Grid>
+        </Border>
+
+    </ControlTemplate>
+
+    <!-- *************************************************** -->
+    <!-- VerticalWrapDataRowTemplate                         -->
+    <!-- Using a WrapPanel to lay the cells out vertically   -->
+    <!-- *************************************************** -->
+    <ControlTemplate x:Key="VerticalWrapDataRowTemplate"  TargetType="{x:Type xcdg:DataRow}">
+        <!-- This is the Border of the DataRow. We simply make sure that it will reflect
+                        the relevant DataRow's properties. -->
+        <!-- The consequence of naming the Expander "PART_RowFocusRoot" is that
+                       the DataGridControl will automatically focus this Element when 
+                       navigating. Without this, the grid would focus the PART_CellsHost. -->
+        <!--<Border x:Name="PART_RowFocusRoot"
+                    VerticalAlignment="Top"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}">-->
+
+        <Grid x:Name="PART_RowFocusRoot"
+              sbc:SBUISupport.TemplateName="VerticalWrapDataRowTemplate"
+              >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Rectangle Style="{DynamicResource SBBorderRectangleStyle}"/>
+
+            <Border BorderThickness="2" Padding="6" Background="{DynamicResource SBFormBorderBackground}" >
+
+                <!-- This stack panel will contain all the fields laid out in a vertical list. -->
+                <WrapPanel x:Name="PART_CellsHost"
+                               Orientation="Horizontal"
+                               Grid.IsSharedSizeScope="True" />
+
+            </Border>
+        </Grid>
+        <!--</Border>-->
+
+    </ControlTemplate>
+
+    <!-- ************************************************** -->
+    <!-- VerticalWithImageDataRowTemplate                   -->
+    <!-- Using a StackPanel to lay the cells out vertically -->
+    <!-- ************************************************** -->
+    <ControlTemplate x:Key="VerticalWithImageDataRowTemplate"  TargetType="{x:Type xcdg:DataRow}">
+
+        <!-- This is the Border of the DataRow. We simply make sure that it will reflect
+                        the relevant DataRow's properties. -->
+        <!-- The consequence of naming the Expander "PART_RowFocusRoot" is that
+                       the DataGridControl will automatically focus this Element when 
+                       navigating. Without this, the grid would focus the PART_CellsHost. -->
+        <Border x:Name="PART_RowFocusRoot"
+                VerticalAlignment="Top"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Padding="{TemplateBinding Padding}"
+                sbc:SBUISupport.TemplateName="VerticalWithImageDataRowTemplate"
+                >
+            <Grid>
+
+                <Rectangle Style="{DynamicResource SBBorderRectangleStyle}"/>
+
+                <Border BorderThickness="2" Padding="6" Background="{DynamicResource SBFormBorderBackground}" >
+
+                    <!-- Grid.IsSharedSizeScope="True" is set so that all the column in the cell grids line up correctly. -->
+                    <DockPanel >
+
+                        <Grid DockPanel.Dock="Left"
+                           Margin="3,4,2,2"
+                           MaxWidth="85"
+                           MaxHeight="85">
+                            <Border Background="#66000000"
+                                VerticalAlignment="Bottom"
+                                Margin="4,4,0,0">
+
+                                <xcdg:DataCell FieldName="{sbx:SBXFindColumnFieldName FieldNameProperty=ImageField}"
+                                          Template="{DynamicResource SBTitleLessCell}">
+                                    <xcdg:DataCell.RenderTransform>
+                                        <TranslateTransform Y="-4"
+                                                     X="-4"/>
+                                    </xcdg:DataCell.RenderTransform>
+                                </xcdg:DataCell>
+                            </Border>
+                        </Grid>
+
+                        <StackPanel>
+
+
+                            <StackPanel x:Name="PART_CellsHost"
+                           Orientation="Vertical"
+                           Grid.IsSharedSizeScope="True" 
+                            />
+
+                        </StackPanel>
+                    </DockPanel>
+
+                </Border>
+            </Grid>
+        </Border>
+
+    </ControlTemplate>
+
+    <!-- ************************** -->
+    <!-- TEMPLATE: SBXGridControl   -->
+    <!-- VerticalLayoutGridTemplate -->
+    <!-- ************************** -->
+    <ControlTemplate x:Key="VerticalLayoutGridTemplate"
+                    TargetType="sbx:SBXGridControl">
+
+        <Border Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}">
+
+            <!-- The AdornerDecorator will allow visual cues for Drag & Drop operations. -->
+            <AdornerDecorator x:Name="PART_DragDropAdornerDecorator">
+                <!-- The CardViewScrollViewer takes care of laying out the various sections of
+              a DataGrid in CardView: FixedHeaders, FixedFooters, etc. -->
+                <!--FixedSize="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).CardWidth, Mode=TwoWay}"-->
+                <xcdg:CardViewScrollViewer x:Name="PART_ScrollViewer"
+                                            Padding="{TemplateBinding Padding}"
+                                            HorizontalScrollBarVisibility="Auto">
+
+                    <xcdg:CardViewItemsHost Margin="0,15,0,5" 
+                                             Orientation="Horizontal"
+                                             AllowCardResize="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).AllowCardResize}"
+                                             SeparatorLinePen="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).SeparatorLinePen}" />
+                </xcdg:CardViewScrollViewer>
+            </AdornerDecorator>
+
+        </Border>
+
+    </ControlTemplate>
+
+</ResourceDictionary>

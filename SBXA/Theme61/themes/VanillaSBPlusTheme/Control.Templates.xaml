@@ -1,0 +1,54 @@
+﻿<!--
+
+       Name    : Control.Templates.xaml
+       Author  : Kendrew Peacey
+
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- ************************************************************************************ -->
+    <!-- WaitingForUserTemplate                                                             -->
+    <!-- Template for image in the status bar that indicates if we are waiting for the user   -->
+    <!-- This template contains glowing green bulb.                                           -->
+    <!-- ************************************************************************************ -->
+    <ControlTemplate x:Key="WaitingForUserTemplate" TargetType="{x:Type Control}">
+        <Ellipse x:Name="PART_SBInputModeEllipse"
+                   Height="10.972"  Width="11.816" StrokeThickness="1" ClipToBounds="False" SnapsToDevicePixels="True"
+                         />
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="WaitingForInput" >
+                <Setter Property="Ellipse.Fill" TargetName="PART_SBInputModeEllipse" Value="Green" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Dormant" >
+                <Setter Property="Ellipse.Fill" Value="Blue" TargetName="PART_SBInputModeEllipse"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Busy" >
+                <Setter Property="Ellipse.Fill" Value="Yellow" TargetName="PART_SBInputModeEllipse"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Error" >
+                <Setter Property="Ellipse.Fill" Value="Red" TargetName="PART_SBInputModeEllipse" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <!-- ************************************************************************************ -->
+    <!-- WaitingForServerTemplate                                                             -->
+    <!-- Template for image in the status bar that indicates if we are waiting for the server -->
+    <!-- This template contains animated arrows.                                              -->
+    <!-- ************************************************************************************ -->
+    <ControlTemplate x:Key="WaitingForServerTemplate" TargetType="{x:Type Control}">
+        <Ellipse x:Name="PART_SBInputModeEllipse"
+                 Height="10.972"  Width="11.816" StrokeThickness="1" ClipToBounds="False" SnapsToDevicePixels="True"
+                 Fill="Yellow"
+                 />
+    </ControlTemplate>
+
+</ResourceDictionary>

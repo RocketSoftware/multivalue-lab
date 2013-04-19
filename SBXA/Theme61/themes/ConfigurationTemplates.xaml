@@ -1,0 +1,832 @@
+﻿<!--
+
+       Name    : ConfigurationTemplates.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    
+Date            Name    Tracking #      Style                                    Description
+Sept 20, 2011   AKP                                                              Resized config forms to handle new comms server parameters.    
+Sept 13, 2011   SCW     SBXA-4668       AdministrationServerConnectionTemplate   Add sbc:SBControl.SetKeyboardFocus="True" to trigger debuffering on the form.
+              
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="ComboBox" BasedOn="{StaticResource BaseSBControlStyle}" x:Key="DatabaseComboboxStyle">
+        <Setter Property="IsEditable" Value="True"/>
+    </Style>
+
+    <!-- AllCredentialsVisibleTemplate -->
+    <ControlTemplate TargetType="{x:Type ContentControl}" x:Key="AllCredentialsVisibleTemplate">
+
+        <Grid x:Name="PART_SBLogOnGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Application List -->
+            <Grid Grid.Row="0" Margin="5">
+
+                <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="AppNamePmpt" Margin="1,1,1,1" />
+
+                        <sbc:SBComboBox Grid.Row="0" Grid.Column="1"
+                                 ItemsSource="{Binding Path=SBPlus.AvailableApplications, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}}"
+                                 Margin="1,1,1,1"
+                                 Width="200"
+                                 IsSynchronizedWithCurrentItem="False"
+                                 ShouldSendSBCommands="False"
+                                 x:Name="PART_SBAvailableApplications"
+                                 TabIndex="0"
+                                />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Windows credentials -->
+
+            <Grid Grid.Row="1" Margin="5">
+
+                <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBPrompt Grid.Row="0" FontWeight="Bold" sbc:SBGUIAttribute.SBString="WindowsCredentialsPmpt" />
+                        <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="WindowsUserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                        <sbc:SBPrompt Grid.Row="2" sbc:SBGUIAttribute.SBString="WindowsPasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                        <sbc:SBField  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBWindowsUserName"
+                                          Style="{DynamicResource SBCredentialFieldStyle}" 
+                                          TabIndex="1"
+                                          SBValue="{Binding Path=WindowsUserName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}, Mode=TwoWay}"
+                                          />
+
+                        <sbc:SBField Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBWindowsPassword" 
+                                         TabIndex="2" 
+                                         Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                         SBValue="{Binding Path=WindowsPassword, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}, Mode=OneWay}"
+                                         NoEcho="True"
+                                         />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Data Server credentials -->
+            <Grid Grid.Row="2" Margin="6">
+                <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="DataServerCredentialsPmpt" FontWeight="Bold"/>
+                        <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="UserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                        <sbc:SBPrompt Grid.Row="2" sbc:SBGUIAttribute.SBString="PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                        <!-- Data Server credentials -->
+                        <sbc:SBField  SBValue="{Binding Path=UserName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}, Mode=TwoWay}"
+                                          Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBUserName"
+                                          Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="3"
+                                          />
+
+                        <sbc:SBField Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBPassword" 
+                                         TabIndex="4" Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                         SBValue="{Binding Path=Password, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}, Mode=TwoWay}"
+                                         NoEcho="True"
+                                         />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- SB/XA credentials -->
+            <Grid Grid.Row="3" Margin="5">
+                <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <sbc:SBPrompt Grid.Row="0" FontWeight="Bold" sbc:SBGUIAttribute.SBString="SBXACredentialsPmpt" />
+                        <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="SBUserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                        <sbc:SBPrompt Grid.Row="2" sbc:SBGUIAttribute.SBString="SBPasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+
+                        <sbc:SBField Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBSBUserName"
+                                         Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="5"
+                                         SBValue="{Binding Path=SBUserName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}, Mode=TwoWay}"/>
+
+                        <sbc:SBField Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBSBPassword"
+                                         TabIndex="6" Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                         SBValue="{Binding Path=SBPassword, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBLogin}}, Mode=TwoWay}"
+                            />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+    </ControlTemplate>
+
+    <!-- CommunicationServerConnectionTemplate -->
+    <ControlTemplate x:Key="CommunicationServerConnectionTemplate">
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" Grid.Column="0" sbc:SBGUIAttribute.SBString="WinIdentPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBPrompt SBValue="{Binding Path=SBPlus.SBPlusRuntime.WindowsIdentity, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=OneWay}"
+                                  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Width="Auto" HorizontalAlignment="Left"
+                                  ToolTip="WinIdentToolTip"
+                                  Style="{DynamicResource SBCredentialPromptStyle}"
+                                  />
+
+                <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="CommsServerPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBPlus.ApplicationDefinition.CommunicationServerName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBServerName" TabIndex="0" Width="200"/>
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="2" sbc:SBGUIAttribute.SBString="CommsServerPortPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBPlus.ApplicationDefinition.CommunicationServerPort, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBCommunicationsServerPort" TabIndex="0" Width="50"/>
+
+                <!-- ************** Windows User Id ******************************** -->
+                <sbc:SBPrompt Grid.Row="3" Grid.Column="0"  sbc:SBGUIAttribute.SBString="WindowsUserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField x:Name="PART_SBWindowsUserName" 
+                                 SBValue="{Binding Path=SBPlus.ApplicationDefinition.WindowsUserName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" 
+                                 Style="{DynamicResource SBCredentialFieldStyle}" 
+                                 TabIndex="2"/>
+
+                <!-- ************** Windows Password ******************************** -->
+
+                <sbc:SBPrompt Grid.Row="4" Grid.Column="0"  sbc:SBGUIAttribute.SBString="WindowsPasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField x:Name="PART_SBWindowsPassword"
+                                 SBValue="{Binding Path=SBPlus.ApplicationDefinition.WindowsPassword, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" NoEcho="true" 
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}" TabIndex="3"/>
+
+                <!-- *********************************************** -->
+                <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,6,2,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                    sbc:SBGUIAttribute.SBString="Save"
+                                    Grid.Row="0" Grid.Column="0"
+                                    Command="sbc:SBCommands.CacheObjectCommand"
+                                    CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:ISBControl}}}"
+                                  />
+
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  x:Name="PART_SBTestButton"
+                                  sbc:SBGUIAttribute.SBString="TestNetwork"
+                                  ToolTip="Test network settings."
+                                  Grid.Row="0" Grid.Column="1"
+                                  sbc:SBButton.ShouldSendSBCommands="false"
+                                  Command="sbc:SBCommands.TestNetworkCommand"
+                                  CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:ISBControl}}}"
+                                  TabIndex="4"
+                              />
+
+                </Grid>
+            </Grid>
+
+        </Border>
+    </ControlTemplate>
+
+    <!-- CommunicationServerSBConnectionTemplate -->
+    <ControlTemplate x:Key="CommunicationServerSBConnectionTemplate">
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" Grid.Column="0" sbc:SBGUIAttribute.SBString="WinIdentPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBPrompt SBValue="{Binding Path=SBPlus.SBPlusRuntime.WindowsIdentity, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=OneWay}"
+                                  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Width="Auto" HorizontalAlignment="Left"
+                                  ToolTip="WinIdentToolTip"
+                                  Style="{DynamicResource SBCredentialPromptStyle}"
+                                  />
+
+                <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="CommsServerPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBPlus.ApplicationDefinition.CommunicationServerName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBServerName" TabIndex="0" Width="200"/>
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="2" sbc:SBGUIAttribute.SBString="CommsServerPortPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBPlus.ApplicationDefinition.CommunicationServerPort, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBCommunicationsServerPort" TabIndex="0" Width="50"/>
+
+                <!-- ************** SB/XA User Id ******************************** -->
+                <sbc:SBPrompt Grid.Row="3" Grid.Column="0" sbc:SBGUIAttribute.SBString="ApplicationUserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField x:Name="PART_SBUserName"
+                             SBValue="{Binding Path=SBPlus.ApplicationDefinition.SBAuthenticationUserName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                             Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" 
+                             ToolTip="Enter the password that you would use to connect to the application, i.e. you SB/XA password."
+                             Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="2"/>
+
+                <!-- ************** SB/XA Password ******************************** -->
+
+                <sbc:SBPrompt Grid.Row="4" Grid.Column="0"  sbc:SBGUIAttribute.SBString="ApplicationPasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField x:Name="PART_SBPassword"
+                             SBValue="{Binding Path=SBPlus.ApplicationDefinition.SBAuthenticationPassword, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                             Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" NoEcho="true" 
+                             ToolTip="Enter the user name that you would use to connect to the application, i.e. you SB/XA user name."
+                             Style="{DynamicResource LocalSBPasswordFieldStyle}" TabIndex="3"/>
+
+                <!-- *********************************************** -->
+                <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,6,2,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                    sbc:SBGUIAttribute.SBString="Save"
+                                    Grid.Row="0" Grid.Column="0"
+                                    Command="sbc:SBCommands.CacheObjectCommand"
+                                    CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:ISBControl}}}"
+                                  />
+
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  x:Name="PART_SBTestButton"
+                                  sbc:SBGUIAttribute.SBString="TestNetwork"
+                                  ToolTip="Test network settings."
+                                  Grid.Row="0" Grid.Column="1"
+                                  sbc:SBButton.ShouldSendSBCommands="false"
+                                  Command="sbc:SBCommands.TestNetworkCommand"
+                                  CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:ISBControl}}}"
+                                  TabIndex="4"
+                              />
+
+                </Grid>
+            </Grid>
+
+        </Border>
+    </ControlTemplate>
+
+    <!-- CommunicationServerWindowsConnectionTemplate -->
+    <ControlTemplate x:Key="CommunicationServerWindowsConnectionTemplate">
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" Grid.Column="0" sbc:SBGUIAttribute.SBString="WinIdentPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBPrompt SBValue="{Binding Path=SBPlus.SBPlusRuntime.WindowsIdentity, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=OneWay}"
+                                  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Width="Auto" HorizontalAlignment="Left"
+                                  ToolTip="WinIdentToolTip"
+                                  Style="{DynamicResource SBCredentialPromptStyle}"
+                                  />
+
+                <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="CommsServerPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBPlus.ApplicationDefinition.CommunicationServerName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBServerName" TabIndex="0" Width="200"/>
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="2" sbc:SBGUIAttribute.SBString="CommsServerPortPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SBPlus.ApplicationDefinition.CommunicationServerPort, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBCommunicationsServerPort" TabIndex="0" Width="50"/>
+
+                <!-- *********************************************** -->
+                <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,6,2,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                    sbc:SBGUIAttribute.SBString="Save"
+                                    Grid.Row="0" Grid.Column="0"
+                                    Command="sbc:SBCommands.CacheObjectCommand"
+                                    CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:ISBControl}}}"
+                                  />
+
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  x:Name="PART_SBTestButton"
+                                  sbc:SBGUIAttribute.SBString="TestNetwork"
+                                  ToolTip="Test network settings."
+                                  Grid.Row="0" Grid.Column="1"
+                                  sbc:SBButton.ShouldSendSBCommands="false"
+                                  Command="sbc:SBCommands.TestNetworkCommand"
+                                  CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:ISBControl}}}"
+                                  TabIndex="4"
+                              />
+
+                </Grid>
+            </Grid>
+
+        </Border>
+    </ControlTemplate>
+
+    <!-- AdministrationServerConnectionTemplate -->
+    <ControlTemplate x:Key="AdministrationServerConnectionTemplate">
+
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <Grid x:Name="LoginGrid" Margin="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- **** ServerName ****-->
+                <sbc:SBPrompt Grid.Row="0" Grid.Column="0" sbc:SBGUIAttribute.SBString="U2ServerPmpt" Style="{DynamicResource SBLocalPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=U2ServerName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBU2ServerName" 
+                                 Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="1" 
+                                 sbc:SBControl.SetKeyboardFocus="True"
+                                 ToolTip="The name or ip address of the server that is hosting UniData or UniVerse. This name or ip address must be accessible from the server that is hosting the SB/XA Communications Server."/>
+
+                <!-- **** AccountName ****-->
+
+                <sbc:SBPrompt Grid.Row="1" Grid.Column="0" sbc:SBGUIAttribute.SBString="AccountPmpt" Style="{DynamicResource SBLocalPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=U2AccountName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBU2AccountName" Width="200"
+                                 Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="2"/>
+
+                <!-- **** U2DatabaseType ****-->
+                <sbc:SBPrompt Grid.Row="2" Grid.Column="0" sbc:SBGUIAttribute.SBString="DatabaseTypePmpt" Style="{DynamicResource SBLocalPromptStyle}"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" Style="{StaticResource DatabaseComboboxStyle}" 
+                          Text="{Binding Path=U2DatabaseType, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                          x:Name="Part_SBU2DatabaseType" TabIndex="3">
+                    <ComboBoxItem Name="uvcs">uvcs</ComboBoxItem>
+                    <ComboBoxItem Name="udcs">udcs</ComboBoxItem>
+                </ComboBox>
+
+                <!-- **** U2UserName ****-->
+                <sbc:SBPrompt Grid.Row="3" Grid.Column="0" sbc:SBGUIAttribute.SBString="U2UserNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+                <sbc:SBField SBValue="{Binding Path=U2UserName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBU2UserName"
+                                 Style="{DynamicResource SBCredentialFieldStyle}" TabIndex="4"/>
+
+                <!-- **** U2Password ****-->
+                <sbc:SBPrompt Grid.Row="4" Grid.Column="0" sbc:SBGUIAttribute.SBString="U2PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBU2Password"
+                                 TabIndex="5"
+                                 SBValue="{Binding Path=U2Password, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                         />
+
+                <!-- **** Validate U2Password ****-->
+                <sbc:SBPrompt Grid.Row="5" Grid.Column="0" sbc:SBGUIAttribute.SBString="ValidateU2PasswordPmpt" Style="{DynamicResource SBCredentialPromptStyle}" />
+                <sbc:SBField Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1" x:Name="PART_SBValidateU2Password" 
+                                 Style="{DynamicResource LocalSBPasswordFieldStyle}"
+                                 TabIndex="6"
+                                 SBValue="{Binding Path=ValidateU2Password, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                         />
+
+
+                <Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Save" 
+                                      Grid.Row="0" Grid.Column="0"
+                                      HorizontalAlignment="Left"
+                                      Command="sbc:SBCommands.SetAdminDetails"/>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="TestAdminCredentials"
+                                      HorizontalAlignment="Left"
+                                      Grid.Row="0" Grid.Column="1"
+                                      Command="sbc:SBCommands.TestAdminDetailsCommand"
+                            />
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                      sbc:SBGUIAttribute.SBString="Clear"
+                                      HorizontalAlignment="Right"
+                                      Grid.Row="0" Grid.Column="2"
+                                      Command="sbc:SBCommands.ClearAdminDetails"
+                            />
+
+
+                </Grid>
+
+
+            </Grid>
+        </Border>
+
+    </ControlTemplate>
+
+    <!-- ClientConfigurationTemplate -->
+    <ControlTemplate x:Key="ClientConfigurationTemplate" >
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <xcdg:DataGridControl x:Name="PART_ConfigPropertiesGrid"
+                                              Grid.Row="0" Grid.Column="0"
+                                              ItemsSource="{Binding Path=ConfigurationProperties, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBClientConfiguration}}}"
+                                              EditTriggers="CellIsCurrent" 
+                                              Margin="0,3,0,0"
+                                              Width="780"
+                                              Height="400"
+                                              >
+
+                    <xcdg:DataGridControl.Resources>
+
+                        <Style  TargetType="xcdg:GroupByControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+
+                        <Style TargetType="{x:Type xcdg:ColumnManagerRow}">
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Style>
+                    </xcdg:DataGridControl.Resources>
+
+                    <xcdg:DataGridControl.Columns>
+                        <xcdg:Column FieldName="PropName" ReadOnly="true"  Visible="False" IsMainColumn="true"/>
+                        <xcdg:Column FieldName="Description" ReadOnly="true" Width="250"/>
+                        <xcdg:Column FieldName="Value" ReadOnly="false"  Width="490"/>
+                    </xcdg:DataGridControl.Columns>
+
+                    <xcdg:DataGridControl.View>
+
+                        <xcdg:TableView ShowFixedColumnSplitter="False"/>
+
+                    </xcdg:DataGridControl.View>
+
+                </xcdg:DataGridControl>
+
+            </Grid>
+
+        </Border>
+    </ControlTemplate>
+
+    <!-- AuthenticationTypeCellDataTemplate -->
+    <DataTemplate x:Key="AuthenticationTypeCellDataTemplate">
+        <TextBlock Text="{Binding}"
+                 MinHeight="22"
+                 TextTrimming="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:Cell}}, Path=ParentColumn.TextTrimming}"
+                 TextWrapping="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:Cell}}, Path=ParentColumn.TextWrapping}" />
+    </DataTemplate>
+
+    <!-- EndpointSecurityTypeCellDataTemplate -->
+    <DataTemplate x:Key="EndpointSecurityTypeCellDataTemplate">
+        <TextBlock Text="{Binding}"
+                 MinHeight="22"
+                 TextTrimming="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:Cell}}, Path=ParentColumn.TextTrimming}"
+                 TextWrapping="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type xcdg:Cell}}, Path=ParentColumn.TextWrapping}" />
+    </DataTemplate>
+
+    <!-- AuthenticationTypeEditor -->
+    <xcdg:CellEditor x:Key="AuthenticationTypeEditor">
+        <xcdg:CellEditor.EditTemplate>
+            <DataTemplate>
+                <ComboBox BorderThickness="0"
+                      VerticalContentAlignment="Top"
+                      MinHeight="22"
+                      ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=sbc:SBClientConfiguration}, Path=AuthenticationTypes}"
+                      SelectedValue="{xcdg:CellEditorBinding}"
+                      FocusVisualStyle="{x:Null}">
+                    <ComboBox.Resources>
+                        <Style TargetType="Popup">
+                            <Setter Property="TextElement.Foreground"
+                             Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+                        </Style>
+                    </ComboBox.Resources>
+                </ComboBox>
+            </DataTemplate>
+        </xcdg:CellEditor.EditTemplate>
+
+        <!-- Declare the wanted key gesture that will activate the ComboBox CellEditor. -->
+        <xcdg:CellEditor.ActivationGestures>
+            <xcdg:KeyActivationGesture SystemKey="Down" Modifiers="Alt" />
+            <xcdg:KeyActivationGesture Key="Up" Modifiers="Alt" />
+            <xcdg:KeyActivationGesture Key="F4" />
+            <xcdg:KeyActivationGesture Key="Space" />
+        </xcdg:CellEditor.ActivationGestures>
+    </xcdg:CellEditor>
+
+    <!-- EndpointSecurityTypeEditor -->
+    <xcdg:CellEditor x:Key="EndpointSecurityTypeEditor">
+        <xcdg:CellEditor.EditTemplate>
+            <DataTemplate>
+                <ComboBox BorderThickness="0"
+                      VerticalContentAlignment="Top"
+                      MinHeight="22"
+                      ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=sbc:SBClientConfiguration}, Path=EndpointSecurityTypes}"
+                      SelectedValue="{xcdg:CellEditorBinding}"
+                      FocusVisualStyle="{x:Null}">
+                    <ComboBox.Resources>
+                        <Style TargetType="Popup">
+                            <Setter Property="TextElement.Foreground"
+                             Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+                        </Style>
+                    </ComboBox.Resources>
+                </ComboBox>
+            </DataTemplate>
+        </xcdg:CellEditor.EditTemplate>
+
+        <!-- Declare the wanted key gesture that will activate the ComboBox CellEditor. -->
+        <xcdg:CellEditor.ActivationGestures>
+            <xcdg:KeyActivationGesture SystemKey="Down" Modifiers="Alt" />
+            <xcdg:KeyActivationGesture Key="Up" Modifiers="Alt" />
+            <xcdg:KeyActivationGesture Key="F4" />
+            <xcdg:KeyActivationGesture Key="Space" />
+        </xcdg:CellEditor.ActivationGestures>
+    </xcdg:CellEditor>
+
+    <!-- ConnectionsTemplate -->
+    <ControlTemplate x:Key="ConnectionsTemplate">
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
+
+                <Grid DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Add Connection"
+                                  Grid.Row="0" Grid.Column="0"
+                                  Command="sbc:SBCommands.AddConnectionCommand"
+                                  CommandParameter="Add"
+                                  />
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Delete Connection"
+                                  Grid.Row="0" Grid.Column="1"
+                                  Command="sbc:SBCommands.DeleteConnectionCommand"
+                                  CommandParameter="Delete"
+                                  />
+
+                </Grid>
+
+                <xcdg:DataGridControl x:Name="PART_CommunicationServersGrid"
+                                      ItemsSource="{Binding Path=CommunicationServers, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBClientConfiguration}}}"
+                                      EditTriggers="CellIsCurrent" 
+                                      Margin="0,0,0,0"
+                                      Width="780"
+                                      Height="370"
+                                      DockPanel.Dock="Top"
+                                      >
+
+                    <xcdg:DataGridControl.Resources>
+
+                        <Style  TargetType="xcdg:GroupByControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+
+                        <Style TargetType="{x:Type xcdg:ColumnManagerRow}">
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Style>
+                    </xcdg:DataGridControl.Resources>
+
+                    <xcdg:DataGridControl.Columns>
+                        <xcdg:Column FieldName="Name" ReadOnly="True"  Visible="True" IsMainColumn="true" Width="150"/>
+                        <xcdg:Column FieldName="ServerName" ReadOnly="false" Width="120"/>
+                        <xcdg:Column FieldName="Port" ReadOnly="false"  Width="50"/>
+                        <xcdg:Column FieldName="SourceNetwork" ReadOnly="false" Width="100"/>
+                        <xcdg:Column FieldName="AuthenticationType" ReadOnly="false"  Width="190"
+                                     CellContentTemplate="{StaticResource AuthenticationTypeCellDataTemplate}"
+                                     CellEditor="{StaticResource AuthenticationTypeEditor}"
+                                     />
+                        <xcdg:Column FieldName="ReliableSession" ReadOnly="false" Width="50"/>
+                        <xcdg:Column FieldName="EndPointSecurity" ReadOnly="false"  Width="80"
+                                     CellContentTemplate="{StaticResource EndpointSecurityTypeCellDataTemplate}"
+                                     CellEditor="{StaticResource EndpointSecurityTypeEditor}"
+                                     />
+
+                    </xcdg:DataGridControl.Columns>
+
+                    <xcdg:DataGridControl.View>
+
+                        <xcdg:TableflowView ShowFixedColumnSplitter="False" />
+
+                    </xcdg:DataGridControl.View>
+
+                </xcdg:DataGridControl>
+
+            </DockPanel>
+
+        </Border>
+    </ControlTemplate>
+
+    <!-- CommunicationServerConnectionTemplate -->
+    <ControlTemplate x:Key="CommunicationServerConnectionMaintenanceTemplate">
+        <Border Style="{DynamicResource LogOnOptionsBorderStyle}" >
+
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="ConnectionNamePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=ConnectionName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBConnectionName" TabIndex="0" Width="200"/>
+
+                <sbc:SBPrompt Grid.Row="1" sbc:SBGUIAttribute.SBString="CommsServerPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=CommunicationServerName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBServerName" TabIndex="0" Width="200"/>
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="2" sbc:SBGUIAttribute.SBString="CommsServerPortPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=CommunicationServerPort, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBCommunicationsServerPort" TabIndex="0" Width="50"/>
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="3" sbc:SBGUIAttribute.SBString="SourceNetworkPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=SourceNetwork, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                 Style="{DynamicResource EntryFieldStyle}"
+                                 Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1"
+                                 x:Name="PART_SBSourceNetwork" TabIndex="0" Width="150"/>
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="4" sbc:SBGUIAttribute.SBString="AuthenticationTypePmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBComboBox SBValue="{Binding Path=AuthenticationType, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                ItemsSource="{Binding Path=AuthenticationTypes, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=OneTime}"
+                                Style="{DynamicResource EntryFieldStyle}"
+                                Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1"
+                                x:Name="PART_SBCAuthenticationType" TabIndex="0" Width="200"/>
+
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="5" sbc:SBGUIAttribute.SBString="ReliableSessionPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBToggle SBValue="{Binding Path=ReliableSession, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                              Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1"
+                              x:Name="PART_SBCReliableSession" TabIndex="0" 
+                              Style="{DynamicResource SBToggleFieldStyle}"
+                              />
+
+                <!--                <sbc:SBToggle x:Name="SaveCredentialsToggle"-->
+                <!--                              Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"-->
+                <!--                              Style="{DynamicResource SBToggleFieldStyle}"-->
+                <!--                                  SBValue="{Binding Path=SaveCredentials, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"-->
+                <!--                                  TabIndex="1"-->
+                <!--                                  IsTabStop="True" Label="Save Credentials"-->
+                <!--                                  Visibility="Collapsed"-->
+                <!--                                  />-->
+
+
+                <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="6" sbc:SBGUIAttribute.SBString="EndpointSecurityPmpt" Style="{DynamicResource SBCredentialPromptStyle}"/>
+
+                <sbc:SBComboBox SBValue="{Binding Path=EndPointSecurity, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                ItemsSource="{Binding Path=EndpointSecurityTypes, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=OneTime}"
+                                Style="{DynamicResource EntryFieldStyle}"
+                                Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1"
+                                x:Name="PART_SBCEndPointSecurity" TabIndex="0" Width="200"/>
+            </Grid>
+
+        </Border>
+    </ControlTemplate>
+
+</ResourceDictionary>

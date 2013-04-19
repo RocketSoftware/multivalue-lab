@@ -1,0 +1,212 @@
+<!--
+
+       Name    : SBClientConfiguration.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    
+Date            Name    Tracking #      Style                                    Description
+Sept 20, 2011   AKP                                                              Resized forms to handle new comms server parameters.    
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbs="http://schemas.sbxa.com/Shared">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBComboBox.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/LocalFormStyles.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/ConfigurationTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type sbc:SBClientConfiguration}" BasedOn="{StaticResource BaseSBFormStyle}">
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="false" />
+        <Setter Property="sbc:SBGUIAttribute.SBTitle" Value="ClientConfigurationTitle" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="False" />
+        <Setter Property="sbc:SBForm.IsClosable" Value="False" />
+        <Setter Property="sbc:SBForm.FormBorderWidth" Value="{x:Static sbs:GenericConstants.DEFAULT_FORM_BORDER_WIDTH}" />
+        <Setter Property="IsCachable" Value="False" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+                                <DockPanel LastChildFill="True">
+                                    
+                                    <Border  DockPanel.Dock="Top" Margin="5" Style="{StaticResource LogOnOptionsBorderStyle}" >
+
+                                        <Grid Margin="2,2,2,2" ShowGridLines="False">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <!-- **************************** Windows Identity *****************************-->
+                                            <sbc:SBPrompt SBValue="{Binding Path=SBPlus.SBPlusRuntime.WindowsIdentity, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Margin="1,1,1,1" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Width="Auto" HorizontalAlignment="Left"
+                                          ToolTip="WinIdentToolTip"/>
+
+                                            <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="1" Grid.Column="0" sbc:SBGUIAttribute.SBString="WinIdentPmpt"/>
+
+                                            <!-- **************************** Windows Rendering Tier *****************************-->
+                                            <sbc:SBPrompt SBValue="{x:Static sbc:SBUISupport.RenderingTier}"
+                                          Margin="1,1,1,1" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Width="Auto" HorizontalAlignment="Left"
+                                          ToolTip="RenderingTierToolTip"/>
+
+                                            <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="2" Grid.Column="0" sbc:SBGUIAttribute.SBString="RenderingTierPmpt"/>
+
+                                            <!-- **************************** Terminal Server Session *****************************-->
+                                            <sbc:SBPrompt SBValue="{x:Static sbc:SBUISupport.IsTerminalServicesSession}"
+                                          Margin="1,1,1,1" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Width="Auto" HorizontalAlignment="Left"
+                                          ToolTip="IsTerminalServicesSessionToolTip"/>
+
+                                            <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="3" Grid.Column="0" sbc:SBGUIAttribute.SBString="IsTerminalServicesSessionPmpt"/>
+
+                                            <!-- **************************** Configuration Name *****************************-->
+
+<!--                                            <sbc:SBField x:Name="PART_SBConfigurationName" -->
+<!--                                                         SBValue="{Binding Path=SBPlus.ApplicationDefinition.SelectedSession, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"-->
+<!--                                                         Style="{StaticResource EntryFieldStyle}"-->
+<!--                                                         Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"-->
+<!--                                                         TabIndex="0" Width="200"-->
+<!--                                                         />-->
+
+                                            <sbc:SBComboBox x:Name="PART_SBConfigurationName"
+                                                            ItemsSource="{Binding Path=SBPlus.ApplicationDefinition.SelectedSession, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}}"
+                                                            SBValue="{Binding Path=SBPlus.ApplicationDefinition.SelectedProfile, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=TwoWay}"
+                                                            Margin="5,0,0,0"
+                                                            Grid.Row="0" Grid.Column="1" Width="200"
+                                                            IsSynchronizedWithCurrentItem="False"
+                                                            ShouldSendSBCommands="False"
+                                                            TabIndex="0" 
+                                                            sbc:SBControl.SBControlStyle="{DynamicResource EditableComboxControlStyle}"
+                                                            />
+
+                                            <sbc:SBPrompt Margin="1,1,1,1" Grid.Row="0" Grid.Column="0" sbc:SBGUIAttribute.SBString="ConfigurationNamePmpt"/>
+
+                                            <!-- ************************************************ -->
+                                            <Grid Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" 
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Top"
+                                              Margin="3,0,3,0"
+                                              DockPanel.Dock="Bottom"
+                                              >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+
+                                                <sbc:SBButton Style="{StaticResource SBLocalButtonStyle}"
+                                                          Grid.Column="0" Grid.Row="0"
+                                                          sbc:SBGUIAttribute.SBString="ExportConfiguration"
+                                                          ToolTip="Export the configuration to a file."
+                                                          Command="sbc:SBCommands.ExportConfigurationCommand"
+                                                          Margin="3" HorizontalAlignment="Right"
+                                                          />
+
+                                                <sbc:SBButton Style="{StaticResource SBLocalButtonStyle}"
+                                                          Grid.Column="0" Grid.Row="1"
+                                                          sbc:SBGUIAttribute.SBString="ResetConfiguration"
+                                                          ToolTip="Reset the configuration to the default values."
+                                                          Command="sbc:SBCommands.ResetConfigurationCommand"
+                                                          Margin="3" HorizontalAlignment="Right"
+                                                          />
+
+                                                <sbc:SBButton Style="{StaticResource SBLocalButtonStyle}"
+                                                          Grid.Column="0" Grid.Row="2"
+                                                          sbc:SBGUIAttribute.SBString="ReloadConfiguration"
+                                                          ToolTip="Reload the configuration from the control configuration file."
+                                                          Command="sbc:SBCommands.ReloadConfigurationCommand"
+                                                          Margin="3" HorizontalAlignment="Right"
+                                                          />
+
+                                            </Grid>
+
+                                        </Grid>
+
+                                    </Border>
+
+                                    <!-- ************************************************ -->
+                                    <Grid DockPanel.Dock="Bottom"
+                                          HorizontalAlignment="Right"
+                                          Margin="0,3,3,5"
+                                          >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <sbc:SBButton Style="{StaticResource SBLocalButtonStyle}"
+                                                          Grid.Column="0" Grid.Row="1"
+                                                          sbc:SBGUIAttribute.SBString="Save"
+                                                          Command="sbc:SBCommands.CacheObjectCommand"
+                                                          CommandParameter="{Binding Path=SBPlus.ApplicationDefinition, RelativeSource={RelativeSource TemplatedParent}}"
+                                                          HorizontalAlignment="Right"
+                                                          />
+
+                                        <sbc:SBButton Style="{StaticResource SBLocalButtonStyle}"
+                                                          Grid.Column="1" Grid.Row="1"
+                                                          sbc:SBGUIAttribute.SBString="Cancel"
+                                                          Command="sbc:SBCommands.DisposeCurrentFormCommand"
+                                                          CommandParameter="SBClientConfiguration"
+                                                          HorizontalAlignment="Right"
+                                                          />
+
+                                        <sbc:SBButton Style="{StaticResource SBLocalButtonStyle}"
+                                                          Grid.Column="2" Grid.Row="1"
+                                                          sbc:SBGUIAttribute.SBString="ClearCache"
+                                                          ToolTip="Clear the local cache of any data downloaded from the server."
+                                                          Command="sbc:SBCommands.ClearCacheCommand"
+                                                          HorizontalAlignment="Right"
+                                                          />
+
+                                    </Grid>
+
+                                    <TabControl DockPanel.Dock="Top" Width="810" Height="455" >
+                                        <TabItem Header="Client">
+                                                <ContentControl IsTabStop="False" Template="{StaticResource ClientConfigurationTemplate}" />
+                                        </TabItem>
+                                        <TabItem Header="Communications Server Connections">
+                                            <ContentControl IsTabStop="False" Template="{StaticResource ConnectionsTemplate}" />
+                                        </TabItem>
+                                    </TabControl>
+                                </DockPanel>
+                            </ContentControl>
+                        </ControlTemplate>
+                            
+                    </Setter.Value>
+
+                </Setter> 
+                
+            </DataTrigger>
+        </Style.Triggers>
+        
+    </Style>
+
+</ResourceDictionary>

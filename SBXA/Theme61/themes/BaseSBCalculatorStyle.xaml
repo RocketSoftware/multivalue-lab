@@ -1,0 +1,201 @@
+﻿<!--
+       Name    : BaseSBCalculatorStyle.xaml
+       Author  : Alan Buckley
+              
+-->
+    <ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:g="clr-namespace:System.Globalization;assembly=mscorlib"
+    >
+    
+    <Style x:Key="BaseSBCalculatorStyle" TargetType="{x:Type sbc:SBCalc}">
+        <Setter Property="HorizontalAlignment" Value ="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sbc:SBCalc}">
+                    <Grid x:Name="PART_FocusSite" Background="DarkGray"
+                          Focusable="True" IsHitTestVisible="True">
+                        <Grid.Resources>
+                            <GridLength x:Key="CalcButtonWidth">38.0</GridLength>
+                            <GridLength x:Key="CalcButtonHeight">30.0</GridLength>
+                            
+                            <Style x:Key="CalcStdButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcOpButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="LightGray" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcDrgButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="DarkGray" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcMemButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="DarkRed" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcFnButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="Black" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcLogButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="DarkCyan" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcConstButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="#FF808000" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcF2ButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="DarkMagenta" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+                            <Style x:Key="CalcClearButtonStyle" TargetType="Button">
+                                <Setter Property="Background" Value="DarkBlue" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Focusable" Value="False" />
+                            </Style>
+
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                            <RowDefinition Height="{StaticResource CalcButtonHeight}"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{StaticResource CalcButtonWidth}"/>
+                            <ColumnDefinition Width="{StaticResource CalcButtonWidth}"/>
+                            <ColumnDefinition Width="{StaticResource CalcButtonWidth}"/>
+                            <ColumnDefinition Width="{StaticResource CalcButtonWidth}"/>
+                            <ColumnDefinition Width="{StaticResource CalcButtonWidth}"/>
+                            <ColumnDefinition Width="{StaticResource CalcButtonWidth}"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- Result display -->
+                        <StackPanel Orientation="Vertical" Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan ="6"
+                                    Background="LightGray"
+                                    >
+                            <Border BorderBrush="Black" Margin="3" BorderThickness="2">
+                                <TextBlock
+                                     Text="{Binding SBCalcOpnd1Res, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                     TextAlignment="Right"
+                                     Margin="2"
+                                     Background="White"
+                                     FontSize="16"                                
+                                     FontWeight="Bold"
+                                     />
+                            </Border>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Margin="10,2,2,2">Mem</TextBlock>
+                                <TextBlock Margin="2">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="ON" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SBCalcMemory, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="">
+                                                    <Setter Property="Text" Value="OFF" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Margin="2">Mode</TextBlock>
+                                <TextBlock Margin="2">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="DEG" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SBCalcRadians, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="True">
+                                                    <Setter Property="Text" Value="RAD" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Margin="10,2,3,2" FontStyle="Italic">SBXA/Calc</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                        <!-- toggles + F2-->
+                        <Button Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource CalcF2ButtonStyle}" Command="sbc:SBCommands.SBSaveCommand">F2 - OFF</Button>
+                        <!-- Clear Row -->
+                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource CalcDrgButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="drg">DRG &gt;</Button>
+                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource CalcClearButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="Backspace">&lt;-</Button>
+                        <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource CalcClearButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="CE">CE</Button>
+                        <Button Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource CalcClearButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="C">Clear</Button>
+
+                        <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource CalcMemButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="MS">MS</Button>
+                        <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="exp">exp</Button>
+                        <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="pwr">pwr</Button>
+                        <Button Grid.Row="3" Grid.Column="3" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="log">log</Button>
+                        <Button Grid.Row="3" Grid.Column="4" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="ln">ln</Button>
+                        <Button Grid.Row="3" Grid.Column="5" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="%">%</Button>
+
+                        <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource CalcMemButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="MR">MR</Button>
+                        <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="mod">mod</Button>
+                        <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="sin">sin</Button>
+                        <Button Grid.Row="4" Grid.Column="3" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="cos">cos</Button>
+                        <Button Grid.Row="4" Grid.Column="4" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="tan">tan</Button>
+                        <Button Grid.Row="4" Grid.Column="5" Style="{StaticResource CalcOpButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="/">/</Button>
+
+                        <Button Grid.Row="5" Grid.Column="0" Style="{StaticResource CalcMemButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="M+">M+</Button>
+                        <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource CalcLogButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="and">and</Button>
+                        <Button Grid.Row="5" Grid.Column="2" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="1/x">1/x</Button>
+                        <Button Grid.Row="5" Grid.Column="3" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="x2">x2</Button>
+                        <Button Grid.Row="5" Grid.Column="4" Style="{StaticResource CalcFnButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="sqrt">sqrt</Button>
+                        <Button Grid.Row="5" Grid.Column="5" Style="{StaticResource CalcOpButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="*">*</Button>
+
+                        <Button Grid.Row="6" Grid.Column="0" Style="{StaticResource CalcMemButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="M-">M-</Button>
+                        <Button Grid.Row="6" Grid.Column="1" Style="{StaticResource CalcLogButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="or">or</Button>
+                        <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="7">7</Button>
+                        <Button Grid.Row="6" Grid.Column="3" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="8">8</Button>
+                        <Button Grid.Row="6" Grid.Column="4" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="9">9</Button>
+                        <Button Grid.Row="6" Grid.Column="5" Style="{StaticResource CalcOpButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="-">-</Button>
+
+                        <Button Grid.Row="7" Grid.Column="0" Style="{StaticResource CalcConstButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="pi">pi</Button>
+                        <Button Grid.Row="7" Grid.Column="1" Style="{StaticResource CalcLogButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="xor">xor</Button>
+                        <Button Grid.Row="7" Grid.Column="2" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="4">4</Button>
+                        <Button Grid.Row="7" Grid.Column="3" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="5">5</Button>
+                        <Button Grid.Row="7" Grid.Column="4" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="6">6</Button>
+                        <Button Grid.Row="7" Grid.Column="5" Style="{StaticResource CalcOpButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="+">+</Button>
+
+                        <Button Grid.Row="8" Grid.Column="0" Style="{StaticResource CalcConstButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="e">e</Button>
+                        <Button Grid.Row="8" Grid.Column="1" Style="{StaticResource CalcLogButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="not">not</Button>
+                        <Button Grid.Row="8" Grid.Column="2" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="1">1</Button>
+                        <Button Grid.Row="8" Grid.Column="3" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="2">2</Button>
+                        <Button Grid.Row="8" Grid.Column="4" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="3">3</Button>
+                        <Button Grid.Row="8" Grid.Column="5" Grid.RowSpan="2" Style="{StaticResource CalcOpButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="=">=</Button>
+
+                        <!-- Statistic functions not yet implemented
+                        <Button Grid.Row="9" Grid.Column="0" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="sta">sta</Button>
+                        <Button Grid.Row="9" Grid.Column="1" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="dta">dta</Button>
+                        -->
+                        <Button Grid.Row="9" Grid.Column="2" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="0">0</Button>
+                        <Button Grid.Row="9" Grid.Column="3" Style="{StaticResource CalcStdButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter=".">.</Button>
+                        <Button Grid.Row="9" Grid.Column="4" Style="{StaticResource CalcOpButtonStyle}" Command="sbc:SBCommands.SBCalcButtonPressedCommand" CommandParameter="+/-">+/-</Button>
+                        
+                        <Grid.InputBindings>
+                            <KeyBinding Key="Escape" Command="sbc:SBCommands.SBCloseWindowCommand" />
+                            <KeyBinding Key="F2" Command="sbc:SBCommands.SBSaveCommand" />
+                        </Grid.InputBindings>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

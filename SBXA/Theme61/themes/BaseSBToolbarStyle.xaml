@@ -1,0 +1,81 @@
+<!--
+
+       Name    : BaseSBToolbarStyle.xaml
+       Author  : Kendrew Peacey
+
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls">
+
+<!--  <ResourceDictionary.MergedDictionaries>-->
+<!--    <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />-->
+<!--  </ResourceDictionary.MergedDictionaries>-->
+
+  <Style TargetType="{x:Type sbc:SBToolBar}" x:Key="BaseSBToolbarStyle">
+    <Setter Property="Band" Value="1" />      
+    <Setter Property="BandIndex" Value="1"/>
+
+
+        <Style.Triggers>
+            <Trigger Property="IsFloating" Value="False">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate  TargetType="{x:Type sbc:SBToolBar}">
+                            <ToolBar ItemsSource ="{Binding Path=Items, RelativeSource = {RelativeSource Mode=TemplatedParent}}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsFloating" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate  TargetType="{x:Type sbc:SBToolBar}">
+                            <ItemsControl ItemsSource="{Binding Path=Items, RelativeSource = {RelativeSource Mode=TemplatedParent}}">
+                                <ItemsControl.Template>
+                                    <ControlTemplate TargetType="ItemsControl">
+                                         <ItemsPresenter/>
+                                    </ControlTemplate>                                    
+                                </ItemsControl.Template>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <sbc:SBToolbarPanel
+                                            Columns="{Binding Path=Columns, RelativeSource = {RelativeSource Mode=FindAncestor,  AncestorType={x:Type sbc:SBToolBar}}}"
+                                            Rows="{Binding Path=Rows, RelativeSource = {RelativeSource Mode=FindAncestor,  AncestorType={x:Type sbc:SBToolBar}}}"
+                                            AtomicWidth="{Binding Path=AtomicWidth, RelativeSource = {RelativeSource Mode=FindAncestor,  AncestorType={x:Type sbc:SBToolBar}}}"
+                                            AtomicHeight="{Binding Path=AtomicHeight, RelativeSource = {RelativeSource Mode=FindAncestor,  AncestorType={x:Type sbc:SBToolBar}}}"
+                                            />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+  </Style>
+
+</ResourceDictionary>

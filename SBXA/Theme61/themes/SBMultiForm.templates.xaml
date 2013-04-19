@@ -1,0 +1,232 @@
+﻿<!--
+       Name    : SBMultiForm.templates.xaml
+       Author  : Alan Buckley
+-->
+    
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:sbcus="clr-namespace:SBXA.UI.Client"
+                    xmlns:sbs="http://schemas.sbxa.com/Shared"
+                    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- SBMultiFormTemplate -->
+    <ControlTemplate x:Key="SBMultiFormTemplate" TargetType="{x:Type ContentControl}">
+        <Grid KeyboardNavigation.IsTabStop="False" sbc:SBUISupport.TemplateName="SBMultiFormTemplate">
+            <Rectangle x:Name="PART_SBBorderRectangle" Style="{DynamicResource SBBorderRectangleStyle}" />
+
+            <Border x:Name="PART_SBFormContentHeaderBorder" 
+                        KeyboardNavigation.IsTabStop="False"
+                        Style="{DynamicResource SBFormContentHeaderBorderStyle}"
+                        >
+                <Control Style="{DynamicResource SBFormTitleStyle}" x:Name="PART_SBFormTitle"/>
+            </Border>
+
+            <Border x:Name="PART_SBFormBorder"
+                        Style="{DynamicResource SBFormBorderStyle}"
+                        >
+
+                <DockPanel LastChildFill="True">
+
+                    <sbc:SBStatusBar x:Name="PART_FormStatusBar"  
+                                     Visibility="Collapsed"
+                                     DockPanel.Dock="Bottom"
+                                     InputStatusVisibility="Collapsed"
+                                     OptionsMenuVisibility="Collapsed"
+                                     ConnectionStatusVisibility="Collapsed"
+                                     ZoomSliderVisibility="Collapsed"
+                                     VerticalAlignment="Bottom"
+                                     IsHelpMessage="False"
+                                     Focusable="False"
+                                     Message="{Binding Path=ServerStatusBarMessage, Mode=OneWay, Source={x:Static sbc:SBPlus.Current}}"
+                                     />
+
+                    <sbc:SBMenuPresenter DockPanel.Dock="Top" 
+                                             HorizontalAlignment="Stretch"
+                                             x:Name="PART_SBFormMenuPresenter"
+                                             MenuBar="{Binding Path=MenuBar, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Mode=OneWay}"
+                                             ActiveToolbars="{Binding Path=ActiveToolbars, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                             sbc:SBMenuPresenter.IsActionBarVisible="True"
+                                             sbc:SBMenuPresenter.IsButtonBarVisible="True"
+                                         />
+
+                    <sbc:SBButtonBar Visibility="{Binding Path=FunctionKeys.Loaded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, 
+                                                      Converter={StaticResource SBBoolToVisibilityConverter}, Mode=OneWay}"
+                                     DockPanel.Dock="{Binding Path=FunctionKeys.Horizontal, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, 
+                                                      Converter={StaticResource SBBoolToDockConverter}, Mode=OneWay}"
+                                     ButtonParent="{Binding Path=FunctionKeys.ButtonParent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     Buttons="{Binding Path=FunctionKeys.Buttons, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinWidth="{Binding Path=FunctionKeys.Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinHeight="{Binding Path=FunctionKeys.Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinButtonHeight="{Binding Path=FunctionKeys.MinButtonHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     ButtonPadding="4,0"
+                                     Focusable="False"
+                                       />
+
+                     <ContentPresenter x:Name="PART_SBFormContent"
+                                                      Style="{DynamicResource SBFormContentStyle}"
+                                                      >
+                     </ContentPresenter>
+                </DockPanel>
+
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+            <!-- StatusBar Triggers -->
+            <!-- Check to see if I am connected, have a SYSID, am running wiht self contained forms and the form is in focus. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=CanHostStatusBar, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}}" Value="true"/>
+                    <Condition Binding="{Binding Path=ConnectionStatus, Source={x:Static sbc:SBPlus.Current}}" Value="Connected"/>
+                    <Condition Binding="{Binding Path=CurrentSystemId, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                    <Condition Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_FormStatusBar" Property="Visibility" Value="Visible" />
+
+            </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding Path=HelpMessage, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                <Setter TargetName="PART_FormStatusBar" Property="IsHelpMessage" Value="True" />
+                <Setter TargetName="PART_FormStatusBar" Property="Message" Value="{Binding Path=SBPlus.HelpMessage, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBXamlConverter}}" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=IsCurrentForm, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}}" Value="True">
+                <Setter TargetName="PART_FormStatusBar" Property="MessageVisibility" Value="Visible" />
+                <Setter TargetName="PART_FormStatusBar" Property="ProgressMonitor" Value="{Binding Path=ProgressMonitor, Source={x:Static sbc:SBPlus.Current}, Mode=OneWay}" />
+                <Setter TargetName="PART_FormStatusBar" Property="ProgressBarVisibility" Value="Visible" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=IsCurrentForm, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}}" Value="False">
+                <Setter TargetName="PART_FormStatusBar" Property="MessageVisibility" Value="Hidden" />
+            </DataTrigger>
+
+
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- SBMultiFormTabTemplate -->
+    <ControlTemplate x:Key="SBMultiFormTabTemplate" TargetType="{x:Type ContentControl}">
+        <Border x:Name="PART_SBFormBorder"
+                Style="{DynamicResource SBFormBorderStyle}"
+                Margin="0" 
+                sbc:SBUISupport.TemplateName="SBMultiFormTabTemplate"
+                >
+
+            <DockPanel LastChildFill="True">
+
+                <sbc:SBButtonBar Visibility="{Binding Path=FunctionKeys.Loaded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, 
+                                                      Converter={StaticResource SBBoolToVisibilityConverter}, Mode=OneWay}"
+                                     DockPanel.Dock="{Binding Path=FunctionKeys.Horizontal, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, 
+                                                      Converter={StaticResource SBBoolToDockConverter}, Mode=OneWay}"
+                                     ButtonParent="{Binding Path=FunctionKeys.ButtonParent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     Buttons="{Binding Path=FunctionKeys.Buttons, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinWidth="{Binding Path=FunctionKeys.Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinHeight="{Binding Path=FunctionKeys.Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinButtonHeight="{Binding Path=FunctionKeys.MinButtonHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     ButtonPadding="4,0"
+                                     Focusable="False"
+                                       />
+                <ContentPresenter x:Name="PART_SBFormContent"
+                                        DockPanel.Dock="Top"
+                                        HorizontalAlignment="Left"
+                                        Style="{DynamicResource SBFormContentStyle}"
+                                        >
+<!--                    MinWidth="{Binding Path=MaxTabWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm} }}"
+                                        MinHeight="{Binding Path=MaxTabHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm} }}"
+-->
+                </ContentPresenter>
+            </DockPanel>
+
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="Width" Value="NaN">
+                <Setter Property="HorizontalAlignment" TargetName="PART_SBFormContent" Value="Stretch"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <!-- SBMultiFormChildTemplate -->
+    <ControlTemplate x:Key="SBMultiFormChildTemplate" TargetType="{x:Type ContentControl}">
+        <Border x:Name="PART_SBFormBorder"
+                Style="{DynamicResource SBFormBorderStyle}"
+                Margin="0" 
+                sbc:SBUISupport.TemplateName="SBMultiFormChildTemplate"
+                >
+
+                <ScrollViewer x:Name="PART_SBZoomScrollViewer"
+                                  Style="{DynamicResource SBMultiFormZoomScrollViewerStyle}"
+                                  >
+                <Grid x:Name="PART_SBZoomGrid">
+                    <Grid.LayoutTransform>
+                        <ScaleTransform x:Name="PART_SBFormScaleTransform" 
+                                                    CenterX="0"
+                                                    CenterY="0"
+                                                    ScaleX="{Binding Path=(sbc:SBUISupport.ZoomValue), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm} }}"
+                                                    ScaleY="{Binding Path=(sbc:SBUISupport.ZoomValue), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm} }}"
+                                                    />
+                    </Grid.LayoutTransform>
+                    <DockPanel LastChildFill="True"
+                                                MinWidth="{Binding Path=MaxTabWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm} }}"
+                                                MinHeight="{Binding Path=MaxTabHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm} }}"
+                                       >
+                        <sbc:SBButtonBar
+                                     Visibility="{Binding Path=FunctionKeys.Loaded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, 
+                                                      Converter={StaticResource SBBoolToVisibilityConverter}, Mode=OneWay}"
+                                     DockPanel.Dock="{Binding Path=FunctionKeys.Horizontal, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, 
+                                                      Converter={StaticResource SBBoolToDockConverter}, Mode=OneWay}"
+                                     ButtonParent="{Binding Path=FunctionKeys.ButtonParent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     Buttons="{Binding Path=FunctionKeys.Buttons, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinWidth="{Binding Path=FunctionKeys.Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinHeight="{Binding Path=FunctionKeys.Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     MinButtonHeight="{Binding Path=FunctionKeys.MinButtonHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm} }, Mode=OneWay}"
+                                     ButtonPadding="4,0"
+                                     Focusable="False"
+                                       />
+
+                        <ContentPresenter x:Name="PART_SBFormContent"
+                                                DockPanel.Dock="Top"
+                                                HorizontalAlignment="Left"
+                                                Style="{DynamicResource SBFormContentStyle}"
+                                                >
+
+                        </ContentPresenter>
+                    </DockPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="Width" Value="NaN">
+                <Setter Property="HorizontalAlignment" TargetName="PART_SBFormContent" Value="Stretch"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+
+</ResourceDictionary>

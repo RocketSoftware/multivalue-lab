@@ -1,0 +1,27 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style x:Key="SBControlStyle" >
+        <!-- The VerticalAlignment & HorizontalAlignment are with reference to the margin. -->
+        <Setter Property="Control.VerticalAlignment" Value="Top"/>
+        <Setter Property="Control.Padding" Value="1,1,1,1" />
+        <!-- default width and height - may need to do something about UsePixelPostioning here -->
+        <Setter Property="Control.Width" Value="{Binding Path=Width, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Control.Height" Value="{Binding Path=Height, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Control.Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Control.Background" Value="{Binding Path=Background, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Border.BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect Opacity="0.4" ShadowDepth="1"/>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>

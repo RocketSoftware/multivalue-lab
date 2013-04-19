@@ -1,0 +1,696 @@
+<!--
+
+       Name    : DefaultControlStyles.xaml
+       Author  : Kendrew Peacey
+
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    Date            Who Tracking #  Style                                           Description
+    March 5, 2012   AKP SBXA-8077   DefaultSBXSBAutoCompleteComboBoxControlStyle    Resized the ComboBox to fit better in the grid, but had to resolve a colleciton of BindingExpression warnings in order to do this.
+    Feb 27, 2012    AKP SBXA-5366   DefaultXGridControlStyle                        Added IsChangingCurrentCell 
+    Oct 10, 2011    AKP SBXA-4287   DefaultSBXSBFieldStyle                          Removed setting of ContextMenu as it gets set in a trigger by the parent control.
+    Sept 12, 2011   SCW             DefaultSBXSBComboBoxStyle                       Set HasSBFocus trigger.  
+                                                                                    Clean up the setting of the AutoComplete flag, 
+                                                                                    in the case of the combo box being a
+                                                                                    controlling multivalue field.
+    June 14, 2011   AKP             DefaultSBXSBTextBoxContentStyle                 Added Background="{TemplateBinding Background}" 
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbpr="http://schemas.sbxa.com/SBPlusRuntime"
+    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed" 
+    xmlns:sbs="http://schemas.sbxa.com/Shared"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/DefaultFieldStyles.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBComboBoxStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBToggleStyle.xaml" />
+    
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXceed/SBXGridElement.Templates.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <!-- **************************************************************************************************************************************** -->
+    <!-- SBXItemContainerStyle - style to control the look of a row in the grid. The two properties currently set, prevent the selected row from  -->
+    <!--                         being blue.                                                                                                      -->
+    <!-- **************************************************************************************************************************************** -->
+    <Style x:Key="DefaultSBXItemContainerStyle" TargetType="{x:Type xcdg:DataRow}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXItemContainerStyle" />
+        <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=OneWay }" />
+        <Setter Property="SelectionBackground" Value="{Binding Path=Background, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=OneWay }" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXItemContainerStyle" />
+    </Style>
+
+    
+    <!-- DefaultSBXSBComboBoxControlStyle -->
+    <Style x:Key="DefaultSBXSBComboBoxControlStyle" BasedOn="{StaticResource DefaultSBComboBoxControlStyle}" TargetType="{x:Type ComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBComboBoxControlStyle" />
+        <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Height" Value="{Binding Path=Height, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Width" Value="{Binding Path=Width, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Margin" Value="{Binding Path=Margin, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+
+    <!-- DefaultSBXSBFocusComboBoxControlStyle -->
+    <Style x:Key="DefaultSBXSBFocusComboBoxControlStyle" BasedOn="{StaticResource DefaultSBXSBComboBoxControlStyle}" TargetType="{x:Type ComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBFocusComboBoxControlStyle" />
+    </Style>
+
+    <!-- DefaultSBXSBAutoCompleteComboBoxControlStyle -->
+    <Style x:Key="DefaultSBXSBAutoCompleteComboBoxControlStyle" BasedOn="{StaticResource DefaultSBAutoCompleteComboBoxControlStyle}" TargetType="{x:Type sbc:AutoCompleteComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBAutoCompleteComboBoxControlStyle" />
+        <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Height" Value="{Binding Path=Height, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Width" Value="{Binding Path=Width, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Margin" Value="{Binding Path=Margin, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Padding" Value="{Binding Path=Padding, RelativeSource={RelativeSource TemplatedParent}}" /> <!-- SBXA-8077 -->
+    </Style>
+
+    <!-- DefaultSBXSBFocusAutoCompleteComboBoxControlStyle -->
+    <Style x:Key="DefaultSBXSBFocusAutoCompleteComboBoxControlStyle" BasedOn="{StaticResource DefaultSBXSBAutoCompleteComboBoxControlStyle}" TargetType="{x:Type sbc:AutoCompleteComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBFocusAutoCompleteComboBoxControlStyle" />
+    </Style>
+
+    
+    <!-- DefaultSBXSBTextBoxStyle. -->
+    <Style x:Key="DefaultSBXSBTextBoxStyle"  BasedOn="{StaticResource DefaultSBTextBoxStyle}" TargetType="{x:Type sbc:SBTextBox}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBTextBoxStyle" />
+        <Setter Property="BorderThickness" Value="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="sbc:SBUISupport.TemplateName" Value="SBXSBTextBoxTemplate" />
+        <Setter Property="Template" Value="{DynamicResource SBXSBTextBoxTemplate}" />
+
+    </Style>
+
+    <!-- DefaultSBXSBTextBoxContentStyle. -->
+    <Style x:Key="DefaultSBXSBTextBoxContentStyle"  BasedOn="{StaticResource DefaultSBXSBTextBoxStyle}" TargetType="{x:Type sbc:SBTextBox}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBTextBoxContentStyle" />
+        <Setter Property="sbc:SBUISupport.TemplateName" Value="SBXSBContentTextBoxTemplate" />
+        <Setter Property="Template" Value="{DynamicResource SBXSBContentTextBoxTemplate}" />
+    </Style>
+
+    <!-- DefaultSBXISBTextBoxStyle -->
+    <Style x:Key="DefaultSBXISBTextBoxStyle"  BasedOn="{StaticResource DefaultSBXSBTextBoxStyle}" TargetType="{x:Type sbc:SBTextBox}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXISBTextBoxStyle" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <ScrollViewer x:Name="PART_ContentHost"
+                                  Margin="-1,0,0,0" 
+                                  Padding="0" 
+                                  SnapsToDevicePixels="True"
+                                  Background="{TemplateBinding Background}"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  />
+<!--
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- **************************** -->
+    <!-- Used for selection listings. -->
+    <!-- **************************** -->
+
+    <!-- DefaultSBXSCSBTextBoxStyle -->
+    <Style x:Key="DefaultSBXSCSBTextBoxStyle"  TargetType="{x:Type TextBlock}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSCSBTextBoxStyle" />
+        <Setter Property="Margin" Value="0,-3,0,0" />
+        <Setter Property="Height" Value="{Binding Path=Height, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Style.Triggers>
+            <Trigger Property="TextBox.IsReadOnly" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SBIntuitiveHelpTextBoxBackground}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- **************************************** -->
+    <!--      Default toggle styles for the grid  -->
+    <!-- **************************************** -->
+
+    <Style x:Key="DefaultSBXToggleStyle" BasedOn="{StaticResource DefaultSBToggleStyle}" TargetType="{x:Type CheckBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXToggleStyle" />
+        <Setter Property="Content" Value="" />
+    </Style>
+
+    <!-- DefaultSBXSBToggleStyle -->
+    <Style x:Key="DefaultSBXSBToggleStyle" BasedOn="{StaticResource BaseSBToggleStyle}" TargetType="{x:Type sbc:SBToggle}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBToggleStyle" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXToggleStyle}" />
+        <Setter Property="Margin" Value="{Binding Path=Margin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Height" Value="{Binding Path=Height, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="Width" Value="{Binding Path=Width, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="false" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="sbc:SBControl.HasSBFocus" Value="{Binding Path=IsCellEditorDisplayed, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay }" />
+
+
+        <Setter Property="sbc:SBGridControl.ParentColumn" Value="{Binding Path=ParentColumn, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay, Converter={StaticResource SBXColumnConverter}}" />
+        <Setter Property="sbc:SBControl.FieldName" Value="{Binding Path=GuiObjectDefinition.FieldDefinition.FieldName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="sbc:SBGridControl.IsCurrentField" Value="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}" />
+        <Setter Property="GuiObjectDefinition" Value="{Binding Path=ParentColumn.ColumnDefinition, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay}" />
+        <!-- Set the row index on the field, i.e. @CNT -->
+        <Setter Property="sbc:SBMvEditControl.DataRowIndex" Value="{Binding Path=Cells[@CNT].Content, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataRow}}, Mode=OneWay, Converter={StaticResource SBUnsetValueConverter}}" />
+<!--        <Setter Property="ContextMenu" Value="{Binding Path=ParentColumn.ColumnDefinition.ContextMenuDefinition, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay,-->
+<!--                                            Converter={StaticResource SBContextMenuConverter},-->
+<!--                                            ConverterParameter=Field}" />-->
+    </Style>
+
+    <!-- DefaultSBXSBToggleContentStyle -->
+    <Style x:Key="DefaultSBXSBToggleContentStyle" BasedOn="{StaticResource DefaultSBXSBToggleStyle}" TargetType="{x:Type sbc:SBToggle}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBToggleContentStyle" />
+        <Setter Property="Width" Value="NaN" />
+        <Setter Property="ContextMenu" Value="{StaticResource NoFocusContextMenu}" />
+    </Style>
+
+    <!-- DefaultSBXCardViewSBToggleStyle -->
+    <Style x:Key="DefaultSBXCardViewSBToggleStyle" BasedOn="{StaticResource DefaultSBXSBToggleContentStyle}" TargetType="{x:Type sbc:SBToggle}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewSBToggleStyle" />
+    </Style>
+
+
+    <!-- DefaultSBXSBComboBoxStyle -->
+    <Style x:Key="DefaultSBXSBComboBoxStyle" BasedOn="{StaticResource BaseSBComboBoxStyle}" TargetType="{x:Type sbc:SBComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBComboBoxStyle" />
+
+        <Setter Property="sbc:SBControl.HasSBFocus" Value="{Binding Path=IsCellEditorDisplayed, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay }" />
+
+        <Setter Property="GuiObjectDefinition" 
+                Value="{Binding Path=ParentColumn.ColumnDefinition, 
+                                RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, 
+                                Mode=OneWay}" />
+        <Setter Property="sbc:SBGridControl.ParentColumn" 
+                Value="{Binding Path=ParentColumn, 
+                RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay, 
+                Converter={StaticResource SBXColumnConverter}}" />
+        <Setter Property="sbc:SBControl.FieldName" 
+                Value="{Binding Path=GuiObjectDefinition.FieldDefinition.FieldName, RelativeSource={RelativeSource Mode=Self}, 
+                Mode=OneWay}" />
+        <Setter Property="sbc:SBGridControl.IsCurrentField" 
+                Value="{Binding Path=IsCurrent, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}}" />
+        
+        <!-- Set the row index on the field, i.e. @CNT -->
+        <Setter Property="sbc:SBMvEditControl.DataRowIndex" 
+                Value="{Binding Path=Cells[@CNT].Content, 
+                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataRow}}, 
+                                Mode=OneWay, 
+                                Converter={StaticResource SBUnsetValueConverter}}" />
+        
+        <Setter Property="Margin" Value="0,-2,0,0" />
+        
+        <Setter Property="Padding" Value="1,-1,1,1" /> <!-- SBXA-8077 -->
+
+        <!--  get the width from the DataCell as otherwise the combobox does not fill the space. -->
+        <Setter Property="Width" Value="{Binding Path=ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" />
+
+        <!-- <Setter Property="BorderThickness" Value="{Binding Path=BorderThickness, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />-->
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="false" />
+
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBControlBackground}" />
+        <!-- 
+             Order of precendence for setting of the background is first the cell's setting, then the row, then the GuiObjectDefinition and if none of those are set
+             the standard SBControlBackground. 
+        -->
+        <Setter Property="Background">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.ControlBrush}">
+                    <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBBackground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                    <Binding Path="(sbc:SBControl.SBControlBackground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="sbc:SBGUIAttribute.SBMaxChar">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBMaxChar)" Mode="OneWay" Converter="{StaticResource SBUnsetNegativeIntConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                    <Binding Path="GuiObjectDefinition.MaxChars" Mode="OneWay"  RelativeSource="{RelativeSource Mode=Self}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- 
+             Order of precendence for setting of the foreground is first the cell's setting, then the row, then the GuiObjectDefinition and if none of those are set
+             then the fallback to what ever the default is.
+        -->
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <PriorityBinding >
+                    <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBForeground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                    <Binding Path="GuiObjectDefinition.Foreground" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <Trigger Property="AutoComplete" Value="False">
+                <!-- Use regular ComboBox -->
+                <Setter Property="Template" Value="{DynamicResource SBRegularComboBoxTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SBRegularComboBoxTemplate" />
+                <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXSBComboBoxControlStyle}" />
+                <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{DynamicResource SBSXSBFocusComboBoxControlStyle}" />
+            </Trigger>
+
+            <Trigger Property="AutoComplete" Value="True">
+                <!-- Use AutoCompleteComboBox -->
+                <Setter Property="Template" Value="{DynamicResource SBAutoCompleteComboBoxTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SBAutoCompleteComboBoxTemplate" />
+                <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXSBAutoCompleteComboBoxControlStyle}" />
+                <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{DynamicResource SBXSBFocusAutoCompleteComboBoxControlStyle}" />
+            </Trigger>
+
+        </Style.Triggers>
+       
+    </Style>
+
+
+    <!-- DefaultSBXSBComboBoxContentStyle -->
+    <Style x:Key="DefaultSBXSBComboBoxContentStyle" BasedOn="{StaticResource DefaultSBXSBComboBoxStyle}" TargetType="{x:Type sbc:SBComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBComboBoxContentStyle" />
+        <Setter Property="ContextMenu" Value="{StaticResource NoFocusContextMenu}" />
+    </Style>
+
+    <!-- DefaultSBXCardViewSBComboBoxStyle -->
+    <Style x:Key="DefaultSBXCardViewSBComboBoxStyle" BasedOn="{StaticResource DefaultSBXSBComboBoxStyle}" TargetType="{x:Type sbc:SBComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewSBComboBoxStyle" />
+        <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <!-- DefaultSBXCardViewSBComboBoxContentStyle -->
+    <Style x:Key="DefaultSBXCardViewSBComboBoxContentStyle" BasedOn="{StaticResource DefaultSBXSBComboBoxContentStyle}" TargetType="{x:Type sbc:SBComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewSBComboBoxContentStyle" />
+        <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    
+    <!-- BaseSBXSBFieldStyle -->
+    <Style x:Key="BaseSBXSBFieldStyle" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseSBXSBFieldStyle" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXSBTextBoxStyle}" />
+        <Setter Property="FieldFocusControlStyle" Value="{DynamicResource SBXSBTextBoxStyle}" />
+        <Setter Property="Editable" Value="{Binding Path=GuiObjectDefinition.Editable, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="IsEditable" Value="{Binding Path=GuiObjectDefinition.Editable, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="sbc:SBGridControl.ParentColumn" Value="{Binding Path=ParentColumn, 
+                                                                          RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, 
+                                                                          Mode=OneWay,
+                                                                          Converter={StaticResource SBXColumnConverter}}" />
+
+
+        <Setter Property="GuiObjectDefinition" Value="{Binding Path=(sbc:SBGridControl.ParentColumn).ColumnDefinition, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="sbc:SBControl.FieldName" Value="{Binding Path=GuiObjectDefinition.FieldDefinition.FieldName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+
+        <!--<Setter Property="sbx:SBXGridControl.CellData" Value="{sbe:SBCellData}"  />-->
+        
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="false" />
+        <Setter Property="BorderThickness" Value="0" />
+        <!-- Set the row index on the field, i.e. @CNT -->
+        <Setter Property="sbc:SBMvEditControl.DataRowIndex" Value="{Binding Path=ParentRow.Cells[@CNT].Content, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBControlBackground}" />
+        <!-- SBXA-4130, make sure that the this control knows what the selected text is so the F3 can work correctly. -->
+        <Setter Property="sbc:SBField.SelectedText" Value="{Binding Path=(sbc:SBField.SelectedText), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay}" />
+
+        <!-- 
+             Order of precendence for setting of the background is first the cell's setting, then the GuiObjectDefinition and if none of those are set
+             the standard SBControlBackground. 
+        -->
+        <Setter Property="Background">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.ControlBrush}">
+                    <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBBackground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                    <Binding Path="(sbc:SBControl.SBControlBackground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- 
+             Order of precedence for setting of the foreground is first the cell's setting, then the GuiObjectDefinition and if none of those are set
+             then the fallback to what ever the default is.
+        -->
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <PriorityBinding >
+                    <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBForeground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                    <Binding Path="GuiObjectDefinition.Foreground" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Disable the width and height from the BaseSBFieldStyle so that they can be controlled by the cell. In BaseSBControl style the properties are controlled
+             in triggers, so I need to put them in triggers here. -->
+
+        <Style.Triggers>
+            <!-- If we are using character coloumn and row positioning, I need to set the margin to 0, so as to allow the grid row and column to position the field -->
+            <DataTrigger Binding="{Binding Path=UsePixelPositioning, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false">
+                <Setter Property="Width"                Value="NaN"/>
+                <Setter Property="Height"               Value="NaN"/>
+                <Setter Property="HorizontalAlignment"  Value="Stretch" />
+                <Setter Property="VerticalAlignment"  Value="Stretch" />
+            </DataTrigger>
+            <!-- Use the margin from the GuiObjectDefinition to position the control. -->
+            <DataTrigger Binding="{Binding Path=UsePixelPositioning, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true">
+                <Setter Property="Width"                Value="NaN"/>
+                <Setter Property="Height"               Value="NaN"/>
+                <Setter Property="HorizontalAlignment"  Value="Stretch" />
+                <Setter Property="VerticalAlignment"  Value="Stretch" />
+            </DataTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- SBXSBFieldStyle -->
+    <Style x:Key="DefaultSBXSBFieldStyle" BasedOn="{StaticResource BaseSBXSBFieldStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBFieldStyle" />
+        <Setter Property="sbc:SBControl.HasSBFocus" Value="{Binding Path=IsCellEditorDisplayed, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}, Mode=OneWay }" />
+        <Setter Property="Margin" Value="-1,-2,0.5,0" />
+
+        <!-- match cursor position of the currently edited cell to the grid cursor position -->
+        <Setter Property="CursorPosition" Value="{Binding Path=CursorPosition, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}, Mode=TwoWay }" />
+
+
+    </Style>
+    
+    <!-- DefaultSBXSBFieldContentStyle -->
+    <Style x:Key="DefaultSBXSBFieldContentStyle" BasedOn="{StaticResource BaseSBXSBFieldStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSBFieldContentStyle" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXSBTextBoxContentStyle}" />
+        <Setter Property="FieldFocusControlStyle" Value="{x:Null}" />
+        <Setter Property="IsEditable" Value="False" />
+        <Setter Property="Editable" Value="False" />
+        <Setter Property="Margin" Value="2,-1,0.5,0" />
+        <Setter Property="ContextMenu" Value="{StaticResource NoFocusContextMenu}" />
+    </Style>
+
+    <!-- DefaultSBXSCSBFieldContentStyle -->
+    <Style x:Key="DefaultSBXSCSBFieldContentStyle" BasedOn="{StaticResource BaseSBXSBFieldStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSCSBFieldContentStyle" />
+        <Setter Property="FieldFocusControlStyle" Value="{DynamicResource SBXSBTextBoxStyle}" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXSCSBTextBoxStyle}" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSCSBFieldContentStyle" />
+    </Style>
+
+    <!-- DefaultSBXCharSBFieldStyle -->
+    <Style x:Key="DefaultSBXCharSBFieldStyle" BasedOn="{StaticResource DefaultSBXSBFieldStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCharSBFieldStyle" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXISBTextBoxStyle}" />
+        <Setter Property="FieldFocusControlStyle" Value="{DynamicResource SBXISBTextBoxStyle}" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCharSBFieldStyle" />
+    </Style>
+
+    <!-- DefaultSBXCharSBFieldContentStyle -->
+    <Style x:Key="DefaultSBXCharSBFieldContentStyle" BasedOn="{StaticResource DefaultSBXSBFieldContentStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCharSBFieldContentStyle" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBXISBTextBoxStyle}" />
+        <Setter Property="FieldFocusControlStyle" Value="{DynamicResource SBXISBTextBoxStyle}" />
+    </Style>
+
+    <!-- DefaultSBXISBFieldStyle -->
+    <Style x:Key="DefaultSBXISBFieldStyle" BasedOn="{StaticResource DefaultSBXCharSBFieldStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXISBFieldStyle" />
+    </Style>
+
+    <!-- DefaultSBXISBFieldContentStyle -->
+    <Style x:Key="DefaultSBXISBFieldContentStyle" BasedOn="{StaticResource DefaultSBXCharSBFieldContentStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXISBFieldContentStyle" />
+        <!-- Changed to use the priority binding for eCase 12679*USA (kp Feb 15, 2010) -->
+        <Setter Property="Background">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="Transparent">
+                    <Binding Path="(sbx:SBXGridControl.CellData).(sbc:SBGUIAttribute.SBBackground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataCell}}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- DefaultSBXCardViewSBFieldStyle -->
+    <!-- Change target from BaseSBXSBFieldStyle to DefaultSBXSBFieldStyle, eCase 12911*AUS -->
+    <Style x:Key="DefaultSBXCardViewSBFieldStyle" BasedOn="{StaticResource DefaultSBXSBFieldStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewSBFieldStyle" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbpr:ISBForm}}, Mode=OneWay }" Value="false">
+                <!-- When using the CardView the width of the column should be based on the Character count as that is all we have at the moment, the pixel width -->
+                <!-- is inactual fact a coruption of the original width so that the columnstake up the full width of the grid. (GTSPS-12) -->
+                <!--<Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />-->
+                <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.MaxChars, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBCharCountConverter}}" />
+                <Setter Property="Margin" Value="2" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbpr:ISBForm}}, Mode=OneWay }" Value="true">
+                <!-- When using the CardView the width of the column should be based on the Character count as that is all we have at the moment, the pixel width -->
+                <!-- is inactual fact a coruption of the original width so that the columnstake up the full width of the grid. (GTSPS-12) -->
+                <!--<Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />-->
+                <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.MaxChars, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBCharCountConverter}}" />
+                <Setter Property="Margin" Value="2" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DefaultSBXCardViewSBFieldContentStyle -->
+    <Style x:Key="DefaultSBXCardViewSBFieldContentStyle" BasedOn="{StaticResource DefaultSBXSBFieldContentStyle}" TargetType="{x:Type sbc:SBField}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewSBFieldContentStyle" />
+        <Setter Property="sbc:SBControl.HasSBFocus" Value="false" />
+        
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbpr:ISBForm}}, Mode=OneWay }" Value="false">
+                <!-- When using the CardView the width of the column should be based on the Character count as that is all we have at the moment, the pixel width -->
+                <!-- is inactual fact a coruption of the original width so that the columnstake up the full width of the grid. (GTSPS-12) -->
+                <!--<Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />-->
+                <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.MaxChars, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBCharCountConverter}}" />
+                <Setter Property="Margin" Value="2" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbpr:ISBForm}}, Mode=OneWay }" Value="true">
+                <!-- When using the CardView the width of the column should be based on the Character count as that is all we have at the moment, the pixel width -->
+                <!-- is inactual fact a coruption of the original width so that the columnstake up the full width of the grid. (GTSPS-12) -->
+                <!--<Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />-->
+                <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.MaxChars, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBCharCountConverter}}" />
+                <Setter Property="Margin" Value="2" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DefaultXGridControlStyle -->
+    <!-- this is the last SBXGridControl style. It contains those properties that are required for all the grid styles. -->
+    <Style x:Key="DefaultXGridControlStyle" TargetType="{x:Type sbx:SBXGridControl}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultXGridControlStyle" />
+        <!--
+           Moving these two in here causes problem - at some point in time I would like to resolve the problem.
+        
+        <Setter Property="SBColumnDefinitions" Value="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }" />
+        <Setter Property="SBDataSource" Value="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }" />
+        -->
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultXGridControlStyle" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource SBXItemContainerStyle}" />
+
+        <Setter Property="TextclassCellEditorTemplate" Value="{DynamicResource SBXTextclassCellEditorTemplate}" />
+        <Setter Property="TextclassCellContentTemplate" Value="{DynamicResource SBXTextclassCellContentTemplate}"  />
+
+        <Setter Property="CellEditorTemplate" Value="{DynamicResource SBXTextclassCellEditorTemplate}" />
+        <Setter Property="CellContentTemplate" Value="{DynamicResource SBXTextclassCellContentTemplate}" />
+
+        <Setter Property="ToggleCellEditorTemplate" Value="{DynamicResource SBXToggleCellEditorTemplate}" />
+        <Setter Property="ToggleCellContentTemplate" Value="{DynamicResource SBXToggleCellContentTemplate}" />
+
+        <Setter Property="ComboBoxCellEditorTemplate" Value="{DynamicResource SBXComboBoxCellEditorTemplate}" />
+        <Setter Property="ComboBoxCellContentTemplate" Value="{DynamicResource SBXComboBoxCellContentTemplate}" />
+
+        <Setter Property="FooterCellContentTemplate" Value="{DynamicResource SBXTextclassFooterCellContentTemplate}" />
+        <Setter Property="SeparatorTemplate" Value="{DynamicResource SBXSeparatorTemplate}" />
+
+        <Setter Property="ActiveRow" Value="{Binding Path=SelectedRow, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay }" />
+        <Setter Property="ActiveColumn" Value="{Binding Path=SelectedColumn, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay }" />
+        <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }" />
+        <Setter Property="SortColumn" Value="@CNT" />
+        <Setter Property="CursorPosition" Value="{Binding Path=CursorPosition, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay }" />
+        <Setter Property="ActivateSelectedCell" Value="{Binding Path=IsSelectedCellInEditMode, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=OneWay }" />
+        <Setter Property="sbc:SBContentControl.HasSBFocus" Value="{Binding Path=IsSBFocused, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }" />
+        <Setter Property="sbc:SBMvEditControl.ParentSBMvEditControl" Value="{Binding Path=TemplatedParent, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" />
+        <Setter Property="AutoCreateColumns" Value="True" />
+        
+        <Setter Property="sbx:SBXGridControl.RowHeight" Value="{x:Static sbs:GenericConstants.DEFAULT_GRID_ROW_HEIGHT}" />
+        
+        <Setter Property="FixedColumnCount" Value="{Binding Path=View.(xcdg:TableView.FixedColumnCount), RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay }" />
+        <Setter Property="ShowFixedColumnSplitter" Value="{Binding Path=View.ShowFixedColumnSplitter, RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay }" />
+        <!-- SBXA-5366-->
+        <Setter Property="IsChangingCurrentCell" Value="{Binding Path=IsChangingCurrentCell, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Mode=TwoWay }" />
+
+        <Style.Triggers>
+
+            <!-- Use pixel positioning -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbpr:ISBForm}}, Mode=OneWay }" Value="true">
+                <!-- Removed the calculation so that we use the explicit width from the server (SBXA-4225) -->
+<!--                <Setter Property="sbx:SBXGridControl.Width">-->
+<!--                    <Setter.Value>-->
+<!--                        <MultiBinding Converter="{StaticResource SBGridWidthCalculatorConverter}" Mode="OneWay" >-->
+<!--                            <Binding Path="GridWidth" RelativeSource="{RelativeSource Mode=TemplatedParent}" Mode="OneWay" />-->
+<!--                            <Binding Path="ScrollBarWidth" RelativeSource="{RelativeSource Mode=TemplatedParent}" Mode="OneWay" />-->
+<!--                            <Binding Path="DependencyProperty.UnsetValue" FallbackValue="1"  Mode="OneWay"/>-->
+<!--                        </MultiBinding>-->
+<!--                    </Setter.Value>-->
+<!--                </Setter>-->
+                
+                <Setter Property="sbx:SBXGridControl.Width" Value="{Binding Path=GridWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DefaultSBXGridControlStyle -->
+    <Style x:Key="DefaultSBXGridControlStyle" BasedOn="{StaticResource DefaultXGridControlStyle}" TargetType="{x:Type sbx:SBXGridControl}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXGridControlStyle" />
+        <Setter Property="sbx:SBXGridControl.DataRowTemplate" Value="{Binding Path=(sbx:SBXGridControl.DataRowTemplate), Mode=OneWay, RelativeSource={RelativeSource  TemplatedParent}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="sbc:SBCharacterLayout.ColumnWidth" Value="{Binding Path=(sbc:SBCharacterLayout.ColumnWidth), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="sbx:SBXGridControl.ColumnManagerRowTemplate" Value="{Binding Path=(sbx:SBXGridControl.ColumnManagerRowTemplate), Mode=OneWay, RelativeSource={RelativeSource  TemplatedParent}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <!-- If the RowHeight has not been set I need to calulate it by multiplying the GridRowHeight * the number of rows. -->
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXGridControlStyle" />
+
+
+    </Style>
+
+    <!-- Style used when a grid is using column and row layout. -->
+    <Style x:Key="DefaultSBXCharGridControlStyle" BasedOn="{StaticResource DefaultSBXGridControlStyle}" TargetType="{x:Type sbx:SBXGridControl}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCharGridControlStyle" />
+        <Setter Property="TextclassCellEditorTemplate" Value="{DynamicResource SBXInterleavedTextclassCellEditorTemplate}" />
+        <Setter Property="TextclassCellContentTemplate" Value="{DynamicResource SBXInterleavedTextclassCellContentTemplate}"  />
+        <Setter Property="sbx:SBXGridControl.Width" Value="NaN" />
+        <Setter Property="sbx:SBXGridControl.AutoFillColumns" Value="True" />
+        <Setter Property="sbc:SBCharacterLayout.RowHeight" Value="{Binding Path=(sbc:SBCharacterLayout.RowHeight), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCharGridControlStyle" />
+
+        <Setter Property="sbx:SBXGridControl.RowHeight">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource SBXRowHeightConverter}" >
+                    <Binding Path="(sbx:SBXGridControl.RowHeight)" Mode="OneWay" RelativeSource="{RelativeSource TemplatedParent}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                    <Binding Path="(sbc:SBMvEditControl.ParentSBMvEditControl).GuiObjectDefinition.GridRowCount" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                    <Binding Path="(sbc:SBCharacterLayout.RowHeight)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+
+    <!-- Style used when an interleaved grid is using column and row layout. -->
+    <Style x:Key="DefaultSBXInterleavedGridControlStyle" BasedOn="{StaticResource DefaultSBXCharGridControlStyle}" TargetType="{x:Type sbx:SBXGridControl}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXInterleavedGridControlStyle" />
+        <Setter Property="TextclassCellEditorTemplate" Value="{DynamicResource SBXInterleavedTextclassCellEditorTemplate}" />
+        <Setter Property="TextclassCellContentTemplate" Value="{DynamicResource SBXInterleavedTextclassCellContentTemplate}"  />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXInterleavedGridControlStyle" />
+    </Style>
+    
+    <!-- *************************************************************************** -->
+    <!-- VerticalWrapDataRowStyle, custom data row style for a vertical layout.      -->
+    <!-- *************************************************************************** -->
+    <Style x:Key="VerticalWrapDataRowStyle"  TargetType="{x:Type xcdg:DataRow}">
+        <Setter Property="Template" Value="{DynamicResource VerticalWrapDataRowTemplate}"/>
+        <Setter Property="sbc:SBUISupport.StyleName" Value="VerticalWrapDataRowStyle" />
+
+        <Setter Property="Width">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource SBExpressionConverter}">
+                    <Binding Path="GridWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}" Mode="OneWay"/>
+                    <Binding Path="Margin.Left" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}" Mode="OneWay"/>
+                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="17" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <!-- 
+                 This property is never set, but if it ever does get set use it as opposed to hard coding the 17
+        <Binding Path="ScrollBarWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}" Mode="OneWay"/>
+        -->
+
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    </Style>
+
+    <!-- DefaultSBXCardViewControlStyle -->
+    <Style x:Key="DefaultSBXCardViewControlStyle" BasedOn="{StaticResource DefaultXGridControlStyle}" TargetType="{x:Type sbx:SBXGridControl}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewControlStyle" />
+
+        <Setter Property="ItemContainerStyle" Value="{x:Null}" />
+
+        <Setter Property="TextclassCellEditorTemplate" Value="{DynamicResource SBXCardViewTextclassCellEditorTemplate}" />
+        <Setter Property="TextclassCellContentTemplate" Value="{DynamicResource SBXCardViewTextclassCellContentTemplate}"  />
+
+        <Setter Property="CellEditorTemplate" Value="{DynamicResource SBXCardViewTextclassCellEditorTemplate}" />
+        <Setter Property="CellContentTemplate" Value="{DynamicResource SBXCardViewTextclassCellContentTemplate}" />
+
+        <Setter Property="ToggleCellEditorTemplate" Value="{DynamicResource SBXCardViewToggleCellEditorTemplate}" />
+        <Setter Property="ToggleCellContentTemplate" Value="{DynamicResource SBXCardViewToggleCellContentTemplate}" />
+
+        <Setter Property="ComboBoxCellEditorTemplate" Value="{DynamicResource SBXCardViewComboBoxCellEditorTemplate}" />
+        <Setter Property="ComboBoxCellContentTemplate" Value="{DynamicResource SBXCardViewComboBoxCellContentTemplate}" />
+        <Setter Property="Height" Value="{Binding Path=Height, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay }" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXCardViewControlStyle" />
+        <Setter Property="sbx:SBXGridControl.DataRowStyle">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{StaticResource VerticalWrapDataRowStyle}">
+                    <Binding Path="DataRowStyle" Mode="OneWay" RelativeSource="{RelativeSource  TemplatedParent}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="sbx:SBXGridControl.Template">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{StaticResource VerticalLayoutGridTemplate}">
+                    <Binding Path="(sbx:SBXGridControl.GridTemplate)" Mode="OneWay" RelativeSource="{RelativeSource  TemplatedParent}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Removed the calculation so that we use the explicit width from the server (SBXA-4225) -->
+<!--        <Setter Property="sbx:SBXGridControl.Width">-->
+<!--            <Setter.Value>-->
+<!--                <MultiBinding Converter="{StaticResource SBGridWidthCalculatorConverter}" Mode="OneWay" >-->
+<!--                    <Binding Path="GridWidth" RelativeSource="{RelativeSource Mode=TemplatedParent}" Mode="OneWay" />-->
+<!--                    <Binding Path="ScrollBarWidth" RelativeSource="{RelativeSource Mode=TemplatedParent}" Mode="OneWay" />-->
+<!--                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="1"  Mode="OneWay"/>-->
+<!--                </MultiBinding>-->
+<!--            </Setter.Value>-->
+<!--        </Setter>-->
+
+        <Setter Property="sbx:SBXGridControl.Width" Value="{Binding Path=GridWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+
+
+    </Style>
+
+    <!-- ************************ -->
+    <!-- DefaultSBXSeparatorStyle -->
+    <!-- ************************ -->
+    <!-- Style for the seprator TextBlock -->
+    <Style x:Key="DefaultSBXSeparatorStyle" TargetType="{x:Type TextBlock}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSeparatorStyle" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBXSeparatorStyle" />
+    </Style>
+    
+</ResourceDictionary>

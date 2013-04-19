@@ -1,0 +1,218 @@
+<!--
+
+       Name    : SBField.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+
+Date            Name    Tracking #      Style               Description
+Oct 26, 2011    AKP     SBXA-4555                           Moved the enabling of the spell check down to the focus trigger, so it only works when a field has focus.
+
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls">
+  
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml"/>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBFieldTemplates.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/NoFocusContextMenu.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type sbc:SBField}" BasedOn="{StaticResource BaseSBControlStyle}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="Generic SBField Style" />
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBTextBoxStyle}" />
+        <Setter Property="SBPasswordControlStyle" Value="{DynamicResource DefaultSBPasswordStyle}" />
+        <Setter Property="Control.VerticalAlignment" Value="Top"/>
+        <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+
+        <Setter Property="sbc:SBField.GuiObjectType" Value="{Binding Path=GuiObjectDefinition.GuiObjectType, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="FieldTemplate" Value="{DynamicResource SBFieldTemplate}"/>
+        <Setter Property="FieldFocusControlStyle" Value="{DynamicResource SBFocusTextBoxStyle}"/>
+        <Setter Property="MemoFieldTemplate" Value="{DynamicResource SBMemoFieldTemplate}"/>
+        <Setter Property="ImageFieldTemplate" Value="{DynamicResource SBImageFieldTemplate}"/>
+        <Setter Property="NoEchoFieldTemplate" Value="{DynamicResource SBNoEchoFieldTemplate}"/>
+        <Setter Property="sbc:SBGUIAttribute.SBMaxChar" Value="{Binding Path=GuiObjectDefinition.MaxChars, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <!-- Mapping from server attribute names to XUI properties -->
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute5 Name="font"
+                                     GetProperty="Control.FontFamily"
+                                     GetProperty2="Control.FontSize"
+                                     GetProperty3="Control.FontWeight"
+                                     GetProperty4="Control.FontStyle"
+                                     GetProperty5="(sbc:SBControl.TextDecorations)"
+                                     GetConverter5="{StaticResource SBFontToIDConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBFont)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="Control.Background" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="Control.Foreground" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <sbc:SBAttribute Name="coordinates"
+                                     GetProperty="Control.Margin"
+                                     GetConverter="{StaticResource SBCoordinatesToMarginConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBCoordinates)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 Name="dimensions"
+                                     GetProperty="Control.ActualWidth"
+                                     GetProperty2="Control.ActualHeight"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute2 Name="justification"
+                                     GetProperty="Control.HorizontalContentAlignment"
+                                     GetProperty2="Control.VerticalContentAlignment"
+                                     GetConverter2="{StaticResource SBTextAlignmentMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBJustification)"/>
+                    <sbc:SBAttribute Name="password"
+                                     GetProperty="NoEcho"
+                                     GetConverter="{StaticResource SBBooleanConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBPassword)" />
+                    <!-- Added for SBXA-3501 -->
+                    <sbc:SBAttribute Name="emphasized"
+                                     GetProperty="(sbc:SBGUIAttribute.SBEmphasized)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBEmphasized)" />
+
+                    <!-- As above, but they are not currently used in out styles -->
+                    <sbc:SBAttribute Name="border_color"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderColor)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderColor)" />
+                    <sbc:SBAttribute Name="border_style"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderStyle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderStyle)" />
+                    <sbc:SBAttribute Name="border_width"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderWidth)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderWidth)" />
+
+                    <sbc:SBAttribute Name="string"
+                                     GetProperty="(sbc:SBGUIAttribute.SBString)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBString)"/>
+
+                    <sbc:SBAttribute Name="scale_bmp"
+                                     GetProperty="(sbc:SBGUIAttribute.SBScaleBmp)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBScaleBmp)"/>
+
+                    <sbc:SBAttribute Name ="help_string"
+                                     GetProperty="(sbc:SBGUIAttribute.SBHelpString)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBHelpString)"/>
+
+                    <!-- Added for eCase 12661*USA (kp June 15, 2010) -->
+                    <sbc:SBAttribute Name ="editable"                                     
+                                     GetProperty="(sbc:SBGUIAttribute.SBEditable)" 
+                                     SetProperty="(sbc:SBGUIAttribute.SBEditable)"/>
+
+                    <sbc:SBAttribute Name ="max_chars"                                     
+                                     GetProperty="(sbc:SBGUIAttribute.SBMaxChar)" 
+                                     SetProperty="(sbc:SBGUIAttribute.SBMaxChar)"/>
+
+                    <!-- Obsolete properties -->
+                    <sbc:SBAttribute Name="input_flag" Supported="Obsolete" />
+
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <!-- ************************************ -->
+        <!--                NoEcho                 -->
+        <!-- ************************************ -->
+        <Setter Property="NoEcho">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBPassword)"  Mode="OneWay" Converter="{StaticResource SBBooleanConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.NoEcho" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <!-- if the NoEcho property on the GuiObjectDefinition is not set, then use a SBTextBox. -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="NoEcho" Value="False" />
+                    <Condition Property="sbc:SBField.GuiObjectType" Value="Textclass" />
+                </MultiTrigger.Conditions>
+                <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{Binding Path=FieldFocusControlStyle, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="Template" Value="{Binding Path=FieldTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=FieldTemplate" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="NoEcho" Value="False" />
+                    <Condition Property="sbc:SBField.GuiObjectType" Value="Label" />
+                </MultiTrigger.Conditions>
+                <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{Binding Path=FieldFocusControlStyle, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="Template" Value="{Binding Path=FieldTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=FieldTemplate" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="NoEcho" Value="False" />
+                    <Condition Property="sbc:SBField.GuiObjectType" Value="Memo" />
+                </MultiTrigger.Conditions>
+                <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBEditTextBoxStyle}" />
+                <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{DynamicResource SBFocusEditTextBoxStyle}"/>
+                <Setter Property="sbc:SBField.WordWrap" Value="{Binding Path=GuiObjectDefinition.WordWrap, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+                <Setter Property="Template" Value="{Binding Path=MemoFieldTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=MemoFieldTemplate" />
+            </MultiTrigger>
+
+            <!-- if the NoEcho property on the GuiObjectDefinition is set, then use a password box. -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="NoEcho" Value="True" />
+                    <Condition Property="sbc:SBField.GuiObjectType" Value="Textclass" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{Binding Path=NoEchoFieldTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=NoEchoFieldTemplate" />
+            </MultiTrigger>
+
+            <Trigger Property="sbc:SBField.GuiObjectType" Value="Image">
+                <Setter Property="Template" Value="{Binding Path=ImageFieldTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=ImageFieldTemplate" />
+            </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="NoEcho" Value="False" />
+                    <Condition Property="sbc:SBField.GuiObjectType" Value="MultiValueField" />
+                </MultiTrigger.Conditions>
+                <Setter Property="sbc:SBControl.SBFocusControlStyle" Value="{Binding Path=FieldFocusControlStyle, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="Template" Value="{Binding Path=FieldTemplate, RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=FieldTemplate" />
+            </MultiTrigger>
+
+            <Trigger Property="sbc:SBControl.HasSBFocus" Value="True" >
+                <Setter Property="ContextMenu" Value="{Binding Path=GuiObjectDefinition.ContextMenuDefinition,
+                                               RelativeSource={RelativeSource Mode=Self}, Mode=OneWay,
+                                               Converter={StaticResource SBContextMenuConverter},
+                                               ConverterParameter=Field}" />
+                <!-- SBXA-153 Enabled spell check via a property on the server, which will be set on SBField. -->
+                <!-- SBXA-4555 Moved the enabling of the spell check down here so it only works when a field has focus.  -->
+                <Setter Property="IsSpellCheckEnabled" Value="{Binding Path=GuiObjectDefinition.IsSpellCheckEnabled, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+            </Trigger>
+
+            <Trigger Property="sbc:SBControl.HasSBFocus" Value="False" >
+                <Setter Property="ContextMenu" Value="{StaticResource NoFocusContextMenu}" />
+            </Trigger>
+
+        </Style.Triggers>
+    </Style>
+
+
+</ResourceDictionary>

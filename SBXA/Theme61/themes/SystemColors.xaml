@@ -1,0 +1,25 @@
+<!--
+
+       Name    : SystemColors.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+    <!--  <SolidColorBrush x:Key="WindowColor" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" /> -->
+    <SolidColorBrush x:Key="WindowColor" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" />
+    <SolidColorBrush x:Key="ActiveBorderColor" Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}" />
+    <!--  <SolidColorBrush x:Key="ControlColor" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" /> -->
+    <SolidColorBrush x:Key="ControlColor" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}" />
+    <SolidColorBrush x:Key="ControlTextColor" Color="{DynamicResource {x:Static SystemColors.WindowTextColorKey}}" />
+    <SolidColorBrush x:Key="MenuBarColor" Color="{DynamicResource {x:Static SystemColors.MenuBarColorKey}}" />
+    <SolidColorBrush x:Key="MenuTextColor" Color="{DynamicResource {x:Static SystemColors.MenuTextColorKey}}" />
+
+</ResourceDictionary>

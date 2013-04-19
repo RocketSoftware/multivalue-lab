@@ -1,0 +1,81 @@
+﻿<!--
+
+       Name    : SBGenericStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusWPFUIController.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlus.Templates.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusWindow.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBField.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMultiValueFieldRow.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMultiValueField.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBToggle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbForm.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPreRunQuestions.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBLabel.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBComboBox.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMultiForm.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMultiFormItem.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBLogin.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBHelpForm.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBReportForm.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBAdminServerSetup.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBCommsServerConfiguration.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBConnectionMaintenance.xaml" />
+        
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBCommsServerConfig.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBErrorDialog.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMenu.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBContextMenu.xaml" />
+
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBStatusBar.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbMainControl.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBButton.generic.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBButtonBar.generic.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBDialog.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbRadioButton.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBSeparator.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBRectangle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBClientConfiguration.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMenuPresenter.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBToolbar.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBToolbarTray.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBToolbarButton.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBProgressBar.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/XE.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXPSViewer.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMpxTree.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBCalendar.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBCalculator.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBChart.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXGridView/CompactCardView.SBXGridView.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBSelectionControl.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMvEditControl.xaml" />
+
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBCharacterLayout.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPixelLayout.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBDebug/PropertyViewer.xaml" />
+
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBMailXPS.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

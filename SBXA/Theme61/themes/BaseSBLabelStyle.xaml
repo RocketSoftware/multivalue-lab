@@ -1,0 +1,210 @@
+<!--
+
+       Name    : BaseSBLabelStyle.xaml
+       Author  : Kendrew Peacey
+                     
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml"/>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="BaseSBLabelStyle" TargetType="{x:Type sbc:SBLabel}" BasedOn="{StaticResource BaseSBControlStyle}">
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBLabelStyle}" />
+        <Setter Property="Control.VerticalAlignment" Value="Top"/>
+        <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+        <Setter Property="HasRichContent" Value="{Binding Path=(sbc:SBGUIAttribute.SBString), RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBCheckForRichTextConverter}}" />
+
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute5 x:Name="font"
+                                     GetProperty="Control.FontFamily"
+                                     GetProperty2="Control.FontSize"
+                                     GetProperty3="Control.FontWeight"
+                                     GetProperty4="Control.FontStyle"
+                                     GetProperty5="(sbc:SBControl.TextDecorations)"
+                                     GetConverter5="{StaticResource SBFontToIDConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBFont)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="Control.Background" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="(sbc:SBForm.FormForeground)" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <sbc:SBAttribute Name="coordinates"
+                                     GetProperty="Control.Margin"
+                                     GetConverter="{StaticResource SBCoordinatesToMarginConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBCoordinates)"/>
+                    <sbc:SBAttribute Name="emphasized"
+                                     GetProperty="(sbc:SBGUIAttribute.SBEmphasized)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBEmphasized)" />
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 Name="dimensions"
+                                     GetProperty="Control.Width"
+                                     GetProperty2="Control.Height"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute2 x:Name="justification"
+                                     GetProperty="Control.HorizontalContentAlignment"
+                                     GetProperty2="Control.VerticalContentAlignment"
+                                     GetConverter2="{StaticResource SBTextAlignmentMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBJustification)"/>
+                    <sbc:SBAttribute Name="false_fill"
+                                     GetProperty="(sbc:SBGUIAttribute.SBFalseFill)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBFalseFill)" />
+                    <sbc:SBAttribute Name="border_color"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderColor)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderColor)" />
+                    <sbc:SBAttribute Name="border_style"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderStyle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderStyle)" />
+                    <sbc:SBAttribute Name="border_width"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderWidth)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderWidth)" />
+
+                    <sbc:SBAttribute Name="string"
+                                     GetProperty="(sbc:SBGUIAttribute.SBString)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBString)"/>
+
+                    <sbc:SBAttribute Name ="editable"                                     
+                                     GetProperty="(sbc:SBGUIAttribute.SBEditable)" 
+                                     SetProperty="(sbc:SBGUIAttribute.SBEditable)"/>
+
+                    <sbc:SBAttribute Name="input_flag" Supported="Obsolete" />
+
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <!-- eCase 12864*USA <Setter Property="SBValue" Value="{Binding Path=(sbc:SBGUIAttribute.SBString), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>-->
+        <Setter Property="sbc:SBGUIAttribute.SBString">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="SBValue" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" Converter="{StaticResource SBUnsetValueConverter}"></Binding>
+                    <Binding Path="GuiObjectDefinition.SBString" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"></Binding>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <Binding Path="(sbc:SBGUIAttribute.SBForeground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBColorConverter}"/>
+            </Setter.Value>
+        </Setter>
+        
+        <Style.Triggers>
+            
+            <!-- Check if this is a derived field. If it is re-write the binding with a new Fallback value.-->
+            <DataTrigger Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsDataField, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <PriorityBinding >
+                            <PriorityBinding.FallbackValue>
+                                <LinearGradientBrush StartPoint="0.5,0.042" EndPoint="0.5,1.167">
+                                    <GradientStop Offset="0" Color="#FFDFDFDF"/>
+                                    <GradientStop Offset="1" Color="#FFFFFFFF"/>
+                                </LinearGradientBrush>
+                            </PriorityBinding.FallbackValue>
+                            <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="TwoWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                            <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <!-- If it's not a derived field let the form show through by default.
+                 This had to be done here as the base SBControlStyle defines a different background.
+                 NB: Labels don't have a field definition so had to check for a null FieldDefinition
+                       rather than the IsDataField property
+            -->
+            <DataTrigger Binding="{Binding Path=GuiObjectDefinition.FieldDefinition, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="{x:Null}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <PriorityBinding FallbackValue ="transparent">                            
+                            <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="TwoWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                            <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.IsEnabled), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="false">
+                <Setter Property="Opacity" Value=".25"/>
+            </DataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=HasRichContent, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="False"></Condition>
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), Converter={StaticResource SBIsNullOrEmptyConverter}, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="False"></Condition>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBLabel}">
+                            <TextBlock x:Name="PART_SBLabelImageContainer" 
+                                       Style="{Binding Path=SBControlStyle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                       Height="Auto">                                                                 
+                                <Image Source="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBConverter}}" Stretch="{Binding Path=GuiObjectDefinition.ScaleBmp, Converter={StaticResource SBBoolToStretchConverter}, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"></Image>                              
+                            </TextBlock>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="No RichContent, but has image Template" />
+
+            </MultiDataTrigger>
+  
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=HasRichContent, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="False"></Condition>
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), Converter={StaticResource SBIsNullOrEmptyConverter}, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True"></Condition>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBLabel}">
+                            <TextBlock x:Name="PART_SBLabel" 
+                                       Style="{Binding Path=SBControlStyle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                       Height="Auto"
+                                       TextDecorations="{Binding Path=(sbc:SBControl.TextDecorations), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                       />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="No RichContent Template" />
+
+            </MultiDataTrigger>
+            
+
+            <DataTrigger Binding="{Binding Path=HasRichContent, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBLabel}">                            
+                            <ContentControl x:Name="PART_SBLabelContainer" 
+                                            Focusable="False"
+                                            Content="{Binding Path=(sbc:SBGUIAttribute.SBString), RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource SBXamlConverter}}" />                                
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="RichContent Template" />
+
+            </DataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
