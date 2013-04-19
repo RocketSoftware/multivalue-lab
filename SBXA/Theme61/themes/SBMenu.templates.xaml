@@ -1,0 +1,114 @@
+﻿<!--
+
+       Name    : SBMenu.Templates.xaml
+       Author  : Kendrew Peacey
+    
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    
+Date            Name    Tracking #      Style                       Description
+March 5, 2012   AKP     SBXA-8077       SBHorizontalMenuTemplate    Moved the binding to SBMenu.HighlightedOption from BaseMenuItemStyle
+                                        SBVerticalMenuTemplate
+              
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:Definitions="clr-namespace:SBXA.Shared.Definitions;assembly=SBXAShared" 
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBMenuStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ******************************** -->
+    <!-- TEMPLATE: SBMenuItemTemplate     -->
+    <!-- ******************************** -->
+    <HierarchicalDataTemplate x:Key="SBMenuItemTemplate" 
+                              DataType="{x:Type Definitions:MenuOption}" 
+                              ItemsSource="{Binding Path=MenuOptions}" >
+        <ContentControl Style="{DynamicResource SBMenuItemStyle}" Focusable="False">
+            <ContentControl.Content >
+                <MultiBinding Converter="{StaticResource SBMenuItemTextToRichContentConverter}" ConverterParameter="*">
+                    <Binding Path="TextKey" />
+                    <Binding Path="SelectLetter" FallbackValue="" />
+                </MultiBinding>
+            </ContentControl.Content>
+
+        </ContentControl>
+
+    </HierarchicalDataTemplate>
+
+    <!--    <HierarchicalDataTemplate x:Key="SBMenuItemTemplate"-->
+    <!--                              DataType="{x:Type sbs:MenuOption}" -->
+    <!--                              ItemsSource="{Binding Path=MenuOptions}" >-->
+    <!--        <TextBlock x:Name="PART_SBMenuItemText" Text="{Binding Path=TextKey}" Style="{DynamicResource SBMenuItemStyle}" />-->
+    <!--    </HierarchicalDataTemplate>-->
+
+    <!-- ********************************** -->
+    <!-- TEMPLATE: SBHorizontalMenuTemplate -->
+    <!-- ********************************** -->
+    <ControlTemplate x:Key="SBHorizontalMenuTemplate" TargetType="{x:Type sbc:SBMenu}">
+        <Menu x:Name="PART_SBMenu"
+                          ItemsSource="{Binding Path=MenuDefinition.MenuOptions, RelativeSource={RelativeSource TemplatedParent}}" 
+                          ItemTemplate="{StaticResource SBMenuItemTemplate}"
+                          Background="{TemplateBinding Background}"
+                          KeyboardNavigation.TabNavigation="Cycle"
+                          FocusManager.IsFocusScope="True"
+                          Focusable="False"
+              sbc:SBUISupport.TemplateName="ItemTemplate = SBMenuItemTemplate"
+                          >
+            <Menu.Resources>
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource BaseMenuItemStyle}" >
+                    <!-- This from the BaseMenuItemStyle as it was causing exceptions to be thrown by the grid. -->
+                    <Setter Property="sbc:SBMenu.HighlightedOption" Value="{Binding Path=(sbc:SBMenu.HighlightedOption), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMenu}}}" />
+                </Style>
+            </Menu.Resources>
+            <Menu.InputBindings>
+                <KeyBinding Key= "F1" Command="sbc:SBCommands.SBHelpCommand" />
+            </Menu.InputBindings>
+        </Menu>
+    </ControlTemplate>
+
+    <!-- ******************************** -->
+    <!-- TEMPLATE: SBVerticalMenuTemplate -->
+    <!-- ******************************** -->
+    <ControlTemplate x:Key="SBVerticalMenuTemplate" TargetType="{x:Type sbc:SBMenu}">
+        <Border BorderBrush="Black" BorderThickness="1,1,1,1"
+                >
+            <Menu x:Name="PART_SBMenu"
+                  ItemsSource="{Binding Path=MenuDefinition.MenuOptions, RelativeSource={RelativeSource TemplatedParent}}" 
+                  ItemTemplate="{StaticResource SBMenuItemTemplate}"
+                  Background="{TemplateBinding Background}"
+                  IsEnabled="{Binding Path=(sbc:SBForm.IsSBEnabled), RelativeSource={RelativeSource TemplatedParent}}"
+                  sbc:SBUISupport.TemplateName="ItemTemplate = SBMenuItemTemplate"
+                  >
+                <Menu.Template>
+                    <ControlTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Menu.Template>
+
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
+                <Menu.Resources>
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource BaseMenuItemStyle}" >
+                        <!-- This from the BaseMenuItemStyle as it was causing exceptions to be thrown by the grid. -->
+                        <Setter Property="sbc:SBMenu.HighlightedOption" Value="{Binding Path=(sbc:SBMenu.HighlightedOption), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMenu}}}" />
+                    </Style>
+                </Menu.Resources>
+                <Menu.InputBindings>
+                    <KeyBinding Key = "OemQuestion" Command="sbc:SBCommands.SlashCommand" 
+                                CommandTarget="{x:Static sbc:SBPlus.Current}"/>
+                    <KeyBinding Key= "F1" Command="sbc:SBCommands.SBHelpCommand" />
+                </Menu.InputBindings>
+            </Menu>
+        </Border>
+    </ControlTemplate>
+
+
+</ResourceDictionary>

@@ -1,0 +1,59 @@
+﻿<!--
+
+       Name    : DefaultMultiValueFieldStyle.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="SBMultiValueFieldItemsControlTemplate" TargetType="ItemsControl">
+
+        <Border BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                        Name="Bd"
+                                        Background="{TemplateBinding Panel.Background}"
+                                        SnapsToDevicePixels="True"
+                                        Padding="1,1,1,1">
+            <ScrollViewer Focusable="False" Padding="{TemplateBinding Control.Padding}"  
+                                VerticalScrollBarVisibility="{Binding Path=ScrollBar.VerticalScrollBarVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiValueField}}}"
+                                HorizontalScrollBarVisibility="{Binding Path=ScrollBar.HorizontalScrollBarVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiValueField}}}"
+                                ScrollViewer.CanContentScroll="{Binding Path=ScrollBar.CanContentScroll, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiValueField}}}"
+                                x:Name="PART_MVScrollViewer"
+                                Width="{Binding Path=WindowWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiValueField}}}">
+
+                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+            </ScrollViewer>
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="SBMultiValueFieldItemContainerStyle">
+        <Setter Property="Control.Width" Value="{Binding Width}"/>
+        <Setter Property="Control.Margin" Value="0"/>
+        <Setter Property="Control.HorizontalAlignment" Value="Left" />
+        <Setter Property="Control.VerticalAlignment" Value="Top" />
+    </Style>
+
+    <DataTemplate x:Key="SBMultiValueFieldItemTemplate">
+        <sbc:SBMultiValueFieldRow x:Name="PART_SBMultiValueFieldRow" ItemsSource="{Binding Path=ItemsSource}" 
+                                  Style="{DynamicResource SBMultiValueFieldRowStyle}"/>
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="SBMultiValueFieldItemsPanelTemplate">
+        <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" />
+    </ItemsPanelTemplate>
+
+</ResourceDictionary>

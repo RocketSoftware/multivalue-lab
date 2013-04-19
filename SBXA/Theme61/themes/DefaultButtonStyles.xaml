@@ -1,0 +1,378 @@
+<!--
+
+       Name    : DefaultButtonStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <ControlTemplate x:Key="SBGlassButton" TargetType="{x:Type Button}">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="Timeline1">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="Timeline2">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+
+        <Border BorderThickness="0,0,0,0" CornerRadius="4,4,4,4">
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+            </Border.BitmapEffect>
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                    <GradientStop Color="#FFA5CBD3" Offset="0"/>
+                    <GradientStop Color="#FF528EBB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border x:Name="border" BorderBrush="#FF000000" BorderThickness="0.5" CornerRadius="4,4,4,4">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                        <GradientStop Color="#002C7FBF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.507*"/>
+                        <RowDefinition Height="0.493*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Opacity="0" HorizontalAlignment="Stretch" x:Name="glow" Width="Auto" Grid.RowSpan="2" CornerRadius="4,4,4,4">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                                <GradientStop Color="#FF5DC6DD" Offset="0"/>
+                                <GradientStop Color="#FF4297D7" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    
+                    <ContentPresenter x:Name="PART_SBButtonContentPresenter"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Grid.RowSpan="2"
+                                      Margin="{Binding Path=Padding, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    
+                    <Border HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="shine" Width="Auto" CornerRadius="4,4,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.494,0.889" StartPoint="0.494,0.028">
+                                <GradientStop Color="#99FFFFFF" Offset="0"/>
+                                <GradientStop Color="#33FFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" TargetName="shine" Value="0.4"/>
+                <Setter Property="Border.BitmapEffect" TargetName="border">
+                    <Setter.Value>
+                        <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Border.Background" TargetName="border">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                            <GradientStop Color="#FF75B1BD" Offset="0"/>
+                            <GradientStop Color="#FF215882" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Visibility" TargetName="glow" Value="Hidden"/>
+            </Trigger>
+            <Trigger Property="IsDefault" Value="True">
+                <Setter Property="BorderThickness" TargetName="border" Value="0.5"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="BorderThickness" TargetName="border" Value="1"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" TargetName="shine" Value="0.4"/>
+                <Setter Property="Border.BitmapEffect" TargetName="border">
+                    <Setter.Value>
+                        <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Border.Background" TargetName="border">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                            <GradientStop Color="#FF75B1BD" Offset="0"/>
+                            <GradientStop Color="#FFCFCFCF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Visibility" TargetName="glow" Value="Hidden"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard x:Name="Timeline2_BeginStoryboard" Storyboard="{StaticResource Timeline2}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}, Mode=OneWay}" Value="False">
+                <Setter TargetName="PART_SBButtonContentPresenter" Property="Margin" Value="2" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SBImageButton" TargetType="{x:Type Button}">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="Timeline1">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="Timeline2">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+
+        <Border BorderThickness="0,0,0,0" CornerRadius="4,4,4,4">
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+            </Border.BitmapEffect>
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                    <GradientStop Color="#FFA5CBD3" Offset="0"/>
+                    <GradientStop Color="#FF528EBB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Border x:Name="border" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                        <GradientStop Color="#002C7FBF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.507*"/>
+                        <RowDefinition Height="0.493*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Opacity="0" HorizontalAlignment="Stretch" x:Name="glow" Width="Auto" Grid.RowSpan="2" CornerRadius="4,4,4,4">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                                <GradientStop Color="#FF5DC6DD" Offset="0"/>
+                                <GradientStop Color="#FF4297D7" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+
+                    <!-- Changed the margin from 5,5,5,5 to 1 so that the image can at least be seen. (kp April 1, 2008) -->
+                    <Image x:Name="PART_SBGraphic"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Grid.RowSpan="2"
+                 Margin="1"/>
+
+                    <Border HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="shine" Width="Auto" CornerRadius="4,4,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.494,0.889" StartPoint="0.494,0.028">
+                                <GradientStop Color="#99FFFFFF" Offset="0"/>
+                                <GradientStop Color="#33FFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="False">
+                <Setter TargetName="PART_SBGraphic" Property="Source" Value="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), 
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, 
+            Converter={StaticResource SBConverter}, 
+            Mode=OneWay}" />
+            </Trigger>
+
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" TargetName="shine" Value="0.4"/>
+                <Setter Property="Border.BitmapEffect" TargetName="border">
+                    <Setter.Value>
+                        <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Border.Background" TargetName="border">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.529,1.125" StartPoint="0.529,0.125">
+                            <GradientStop Color="#FF75B1BD" Offset="0"/>
+                            <GradientStop Color="#FF215882" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Visibility" TargetName="glow" Value="Hidden"/>
+            </Trigger>
+
+            <MultiDataTrigger>
+                <!-- if down graphic is not null and the button is pressed. -->
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBDownGraphic), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, 
+                   Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                    <Condition Binding="{Binding Path=IsPressed, ElementName=PART_SBButton}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_SBGraphic" Property="Source" Value="{Binding Path=(sbc:SBGUIAttribute.SBDownGraphic), 
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, 
+            Converter={StaticResource SBConverter}, 
+            Mode=OneWay}" />
+            </MultiDataTrigger>
+
+            <!-- if down graphic is null and the button is pressed. Display the graphic. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBDownGraphic), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, 
+                   Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="True"/>
+                    <Condition Binding="{Binding Path=IsPressed, ElementName=PART_SBButton}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_SBGraphic" Property="Source" Value="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), 
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, 
+            Converter={StaticResource SBConverter}, 
+            Mode=OneWay}" />
+                <Setter TargetName="PART_SBGraphic" Property="Margin" Value="7,7,5,5" />
+            </MultiDataTrigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard x:Name="Timeline2_BeginStoryboard" Storyboard="{StaticResource Timeline2}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="DefaultSBButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="2,0,2,0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <!-- ************************************ -->
+        <!--                Font                  -->
+        <!-- ************************************ -->
+        <Setter Property="Control.FontFamily">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="Lucida Sans">
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Family" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Family" />
+                    <Binding Path="SBPlus.DefaultFontFamily" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontSize">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Size" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Size" />
+                    <Binding Path="SBPlus.DefaultFontSize" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontWeight">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="Bold">
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Weight" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Weight" />
+                    <Binding Path="SBPlus.DefaultFontWeight" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontStyle">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Style" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Style" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+        
+        <!-- Note: Textdecorations not currently used on buttons -->
+        <Setter Property="sbc:SBControl.TextDecorations">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Decorations" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Decorations" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- ************************************ -->
+        <!--             Background               -->
+        <!-- ************************************ -->
+        <Setter Property="Background">
+            <Setter.Value>
+                <PriorityBinding >
+                    <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="TwoWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- ************************************ -->
+        <!--             Foreground               -->
+        <!-- ************************************ -->
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <PriorityBinding >
+                    <Binding Path="(sbc:SBGUIAttribute.SBForeground)" Mode="TwoWay" RelativeSource="{RelativeSource Mode=TemplatedParent}"  Converter="{StaticResource SBColorConverter}" />
+                    <Binding Path="GuiObjectDefinition.Foreground" Mode="OneWay" RelativeSource="{RelativeSource Mode=TemplatedParent}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="Button.IsPressed" Value="true">
+                <Setter Property="sbc:SBButton.SBButtonClicked" Value="true" />
+            </Trigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, Converter={StaticResource SBIsNullOrEmptyConverter}, Mode=OneWay }" Value="false" />
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBBackground), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="true" />
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SBImageButton}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBGraphic), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBButton}}, Converter={StaticResource SBIsNullOrEmptyConverter}, Mode=OneWay }" Value="true" />
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBBackground), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="true" />
+                    <Condition Binding="{Binding Path=(sbc:SBGUIAttribute.SBForeground), RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SBGlassButton}" />
+            </MultiDataTrigger>
+
+
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="DefaultSBButtonBarStyle" TargetType="{x:Type Panel}" >
+        <Setter Property="Margin" Value="0,0,0,5" />
+    </Style>
+
+</ResourceDictionary>

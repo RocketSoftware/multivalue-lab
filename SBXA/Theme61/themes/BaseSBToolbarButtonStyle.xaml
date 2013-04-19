@@ -1,0 +1,114 @@
+<!--
+
+       Name    : BaseSBToolbarButtonStyle.xaml
+       Author  : Kendrew Peacey
+    
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="BaseSBToolbarButtonStyle" TargetType="{x:Type sbc:SBToolbarButton}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseSBToolbarButtonStyle" />
+        <Setter Property = "FontFamily" Value= "{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"/>
+        <Setter Property = "FontSize" Value= "{DynamicResource {x:Static  SystemFonts.MessageFontSizeKey}}"/>
+        <Setter Property = "FontStyle" Value= "{DynamicResource {x:Static SystemFonts.MessageFontStyleKey}}"/>
+        <Setter Property = "FontWeight" Value= "{DynamicResource {x:Static SystemFonts.MessageFontWeightKey}}"/>
+        <Setter Property = "Foreground" Value= "{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap" >
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="emphasized"
+                                     GetProperty="(sbc:SBGUIAttribute.SBEmphasized)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBEmphasized)" />
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sbc:SBToolbarButton}">
+                    <Button
+                        Opacity="{Binding Path=IsEnabled,  RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBBoolToOpacityConverter}, Mode=OneWay}" 
+                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                        Background="{TemplateBinding Panel.Background}"
+                        Foreground="{TemplateBinding Foreground}"
+                        FontFamily="{TemplateBinding FontFamily}"
+                        FontSize="{TemplateBinding FontSize}"
+                        FontStyle="{TemplateBinding FontStyle}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        SnapsToDevicePixels="True"
+                        x:Name="PART_SBToolBarButton"
+                        IsEnabled="{Binding Path=(sbc:SBGUIAttribute.SBEmphasized), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBConverter}, Mode=OneWay}"
+                        >
+                        <!-- Setting the image width and height rather than the buttons ensures the image is sized correctly
+                             even when the button chrome is changed -->
+                        <Image x:Name="PART_SBToolBarButtonImage"                             
+                            Width="{TemplateBinding FaceWidth}"
+                            Height="{TemplateBinding FaceHeight}"
+                            HorizontalAlignment="Center"  
+                            VerticalAlignment="Center"                             
+                            Source="{Binding Path=UpImageSource, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBConverter}}"
+                        />
+                        
+<!-- Source="{TemplateBinding UpImage}" -->
+                        
+                        <Control.InputBindings>
+                            <MouseBinding Command="sbc:SBCommands.SBClickCommand" Gesture="LeftClick" CommandParameter="ActivateCommandParameter"/>
+                        </Control.InputBindings>
+                    </Button>
+                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UpImage" Value ="{x:Null}">
+                            <Setter Property="Content" TargetName="PART_SBToolBarButton"
+                                    Value="{Binding Path=ButtonDefinition.SBString, RelativeSource={RelativeSource TemplatedParent}}">
+                            </Setter>
+                          
+                            <Setter Property="ToolBar.OverflowMode" Value="Never" />
+                        </Trigger>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground">
+                                <Setter.Value>
+                                    <DynamicResource
+                        ResourceKey="{x:Static SystemColors.GrayTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

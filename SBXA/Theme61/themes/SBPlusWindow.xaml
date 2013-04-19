@@ -1,0 +1,34 @@
+<!--
+
+       Name    : SBPlusWindow.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    >
+
+    <ControlTemplate x:Key="SBFormContainerTemplate">
+        <ContentControl x:Name="PART_SBFormContainer"
+                        IsTabStop="False"
+                        Content="{Binding Path=CurrentForm, RelativeSource={RelativeSource Mode=TemplatedParent }}"
+                 />
+
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type sbc:SBPlusWindow}">
+        
+        <Setter Property="sbc:SBControl.CanEnableGhost" Value="{Binding Path=CurrentForm.(sbc:SBControl.CanEnableGhost), RelativeSource={RelativeSource Mode=Self }}" />
+
+        <Setter Property="Template" Value="{StaticResource SBFormContainerTemplate}" />
+
+    </Style>
+
+</ResourceDictionary>

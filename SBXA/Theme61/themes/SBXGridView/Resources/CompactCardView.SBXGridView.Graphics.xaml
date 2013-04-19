@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid">
+
+   <ResourceDictionary.MergedDictionaries>
+
+      <!-- CompactCardView uses the same graphics as CardView -->
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXGridView/Resources/CardView.SBXGridView.Graphics.xaml" />
+
+   </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

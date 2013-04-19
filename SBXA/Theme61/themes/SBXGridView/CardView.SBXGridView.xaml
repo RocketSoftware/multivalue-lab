@@ -1,0 +1,769 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:sbe="clr-namespace:SBXA.UI.WPFControls.MarkupExtensions"
+                    xmlns:sbs="http://schemas.sbxa.com/Shared"
+                    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid">
+
+   <ResourceDictionary.MergedDictionaries>
+
+      <!-- Include the view independant, color-scheme independant, theme resources -->
+      <ResourceDictionary Source="Resources/SBXGridView.Resources.xaml" />
+
+      <!-- Include the view dependant, color-scheme independant, theme graphics -->
+      <ResourceDictionary Source="Resources/CardView.SBXGridView.Graphics.xaml" />
+
+      <!-- Include the standard grid element templates -->
+      <ResourceDictionary Source="/Xceed.Wpf.DataGrid.v4.0;component\themes/Common/CardView.GridElementTemplates.xaml" />
+
+   </ResourceDictionary.MergedDictionaries>
+
+   <!-- =================================================================== -->
+   <!-- Resources specific to this View/Theme/ColorScheme                   -->
+   <!-- =================================================================== -->
+
+
+   <!-- =================================================================== -->
+   <!-- Templates specific to this View/Theme/ColorScheme                   -->
+   <!-- =================================================================== -->
+
+
+   <!-- =================================================================== -->
+   <!-- Styles required by some grid elements                               -->
+   <!-- =================================================================== -->
+
+   <!--**************************
+    * STYLE: CellErrorStyle 
+    ************************** -->
+   <Style x:Key="cellErrorStyle"
+          TargetType="xcdg:Cell">
+
+      <Setter Property="Background"
+              Value="{StaticResource errorBackgroundBrush}"/>
+
+      <Setter Property="Foreground"
+              Value="{StaticResource errorForegroundBrush}"/>
+
+      <Setter Property="ToolTip"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=ValidationError.ErrorContent}"/>
+
+   </Style>
+
+   <!-- =================================================================== -->
+   <!-- Keyed Styles of grid elements                                       -->
+   <!-- =================================================================== -->
+
+   <!--**************************
+    * STYLE: DataGridControl 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewGridControlStyle"
+          TargetType="xcdg:DataGridControl">
+
+      <Setter Property="BorderBrush"
+              Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" />
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+
+      <!-- In CardView, it is more convenient to use Row/Explicit navigation than Cell navigation. -->
+      <Setter Property="NavigationBehavior"
+              Value="RowOrCell"/>
+
+      <!-- For the horizontal scrolling of the CardView, PagingBehavior.LeftToRight is better suited 
+           than the default TopToBottom. -->
+      <Setter Property="PagingBehavior"
+              Value="LeftToRight"/>
+
+      <!-- This is required to display gridlines of uniform thickness -->
+      <Setter Property="SnapsToDevicePixels"
+              Value="True" />
+
+      <Setter Property="CellErrorStyle"
+              Value="{StaticResource cellErrorStyle}" />
+<!-- Removed for upgrade from 3.0 to 3.6
+      <Setter Property="ItemsPanel"
+              Value="{StaticResource cardViewDataGridControlItemsPanelTemplate}" />
+-->
+      <Setter Property="Template"
+              Value="{StaticResource cardViewDataGridControlTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: Row Style
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewRowStyle"
+          TargetType="xcdg:Row">
+
+      <Setter Property="SelectionBackground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+
+      <Setter Property="SelectionForeground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+
+      <Setter Property="InactiveSelectionBackground"
+              Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
+
+      <Setter Property="InactiveSelectionForeground"
+              Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+
+      <Setter Property="Margin"
+              Value="5" />
+
+      <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <!-- Set the Row's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying DataGridControl. -->
+      <Setter Property="Background"
+              Value="Transparent" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewRowTemplate}" />
+   </Style>
+
+   <!--**************************
+    * STYLE: DataRow 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewDataRowStyle"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource cardViewSBXGridViewRowStyle}">
+
+   </Style>
+
+   <!--**************************
+    * STYLE: InsertionRow 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewInsertionRowStyle"
+          TargetType="xcdg:InsertionRow"
+          BasedOn="{StaticResource cardViewSBXGridViewDataRowStyle}">
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewInsertionRowTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: ColumnManagerRow 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewColumnManagerRowStyle"
+          TargetType="xcdg:ColumnManagerRow">
+
+      <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+      <Setter Property="xcdg:UIViewBase.DropMarkOrientation"
+              Value="Horizontal" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewColumnManagerRowTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: StatRow 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewStatRowStyle"
+          TargetType="xcdg:StatRow"
+          BasedOn="{StaticResource cardViewSBXGridViewRowStyle}">
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewStatRowTemplate}"/>
+
+   </Style>
+
+   <!--**************************
+    * STYLE: FilterRow 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewFilterRowStyle"
+          TargetType="xcdg:FilterRow"
+          BasedOn="{StaticResource cardViewSBXGridViewRowStyle}">
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewFilterRowTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: Cell Style
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewCellStyle"
+          TargetType="xcdg:Cell">
+
+      <Setter Property="CurrentBackground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+
+      <Setter Property="CurrentForeground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+
+      <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+      <Setter Property="Background"
+              Value="Transparent" />
+
+      <!-- A basic Cell Template requires at least a ContentPresenter, which is used to display the Cell's Content.
+           This ContentPresenter is usually placed inside a Border that is responsible for painting the gridlines. -->
+      <Setter Property="Template"
+              Value="{StaticResource cardViewCellTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: DataCell
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewDataCellStyle"
+          TargetType="xcdg:DataCell"
+          BasedOn="{StaticResource cardViewSBXGridViewCellStyle}" >
+
+      <Style.Triggers>
+
+         <MultiDataTrigger>
+
+            <MultiDataTrigger.Conditions>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).HideEmptyCells}"
+                          Value="True"/>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentRow.IsBeingEdited}"
+                          Value="False"/>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content, Mode=OneWay, Converter={StaticResource nullToBooleanConverter}}"
+                          Value="True"/>
+
+            </MultiDataTrigger.Conditions>
+
+            <Setter Property="Visibility"
+                    Value="Collapsed"/>
+
+         </MultiDataTrigger>
+
+      </Style.Triggers>
+
+   </Style>
+
+   <!--**************************
+    * STYLE: InsertionCell
+   ************************** -->
+   <Style x:Key="cardViewSBXGridViewInsertionCellStyle"
+          TargetType="xcdg:InsertionCell"
+          BasedOn="{StaticResource cardViewSBXGridViewCellStyle}" />
+
+   <!--**************************
+    * STYLE: ColumnManagerCell 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewColumnManagerCellStyle"
+          TargetType="xcdg:ColumnManagerCell">
+
+      <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+      <Setter Property="BorderThickness"
+              Value="0,0,0,1" />
+
+      <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+      <Setter Property="Background"
+              Value="Transparent" />
+
+      <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+      <!-- We don't use the base Cell Template for the ColumnManagerCell because it needs more elements
+           to function properly, like a glyph that represents the Column's SortDirection. -->
+      <Setter Property="Template"
+              Value="{StaticResource cardViewColumnManagerCellTemplate}" />
+
+      <Style.Triggers>
+
+         <Trigger Property="IsBeingDragged"
+                  Value="True">
+
+            <Setter Property="Background"
+                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+         </Trigger>
+
+      </Style.Triggers>
+
+   </Style>
+
+   <!--**************************
+    * STYLE: StatCell Style
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewStatCellStyle"
+          TargetType="xcdg:StatCell">
+
+      <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+      <Setter Property="Background"
+              Value="Transparent" />
+
+      <!-- A basic Cell Template requires at least a ContentPresenter, which is used to display the Cell's Content.
+           This ContentPresenter is usually placed inside a Border that is responsible for painting the gridlines. -->
+      <Setter Property="Template"
+              Value="{StaticResource cardViewStatCellTemplate}" />
+
+      <Style.Triggers>
+
+         <!-- Collapse the cell when HideEmptyCells is true and the StatFunction returns null. -->
+         <MultiDataTrigger>
+
+            <MultiDataTrigger.Conditions>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).HideEmptyCells}"
+                          Value="True"/>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content, Mode=OneWay, Converter={StaticResource nullToBooleanConverter}}"
+                          Value="True"/>
+
+            </MultiDataTrigger.Conditions>
+
+            <Setter Property="Visibility"
+                    Value="Collapsed"/>
+
+         </MultiDataTrigger>
+
+         <!-- Collapse the cell when HideEmptyCells is true and no StatFunction is defined for the cell. -->
+         <MultiDataTrigger>
+
+            <MultiDataTrigger.Conditions>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).HideEmptyCells}"
+                          Value="True"/>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasContent}"
+                          Value="False"/>
+
+            </MultiDataTrigger.Conditions>
+
+            <Setter Property="Visibility"
+                    Value="Collapsed"/>
+
+         </MultiDataTrigger>
+
+         <!-- Hide the cell when HideEmptyCells is false and no StatFunction is defined for the cell. -->
+         <MultiDataTrigger>
+
+            <MultiDataTrigger.Conditions>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).HideEmptyCells}"
+                          Value="False"/>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasContent}"
+                          Value="False"/>
+
+            </MultiDataTrigger.Conditions>
+
+            <Setter Property="Visibility"
+                    Value="Hidden"/>
+
+         </MultiDataTrigger>
+
+      </Style.Triggers>
+
+   </Style>
+
+   <!--**************************
+    * STYLE: FilterCell
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewFilterCellStyle"
+          TargetType="xcdg:FilterCell"
+          BasedOn="{StaticResource cardViewSBXGridViewCellStyle}">
+      
+      <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+      <Setter Property="Background"
+              Value="Transparent" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewFilterCellTemplate}" />
+      
+   </Style>
+
+   <!--**************************
+    * STYLE: GroupByControl 
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewGroupByControlStyle"
+          TargetType="xcdg:GroupByControl">
+
+      <!-- If we don't specify a MinHeight, the default "size-to-content" behavior will arrange 
+           the control with a Height of 0, which makes it invisible and unusable.
+           In a typical CardView, a height of at least 50 is appropriate for the GroupByControl. -->
+      <Setter Property="MinHeight"
+              Value="50" />
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+      <Setter Property="Padding"
+              Value="8"/>
+
+      <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+      <Setter Property="BorderThickness"
+              Value="1,1,0,1" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewGroupByControlTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: GroupByItem
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewGroupByItemStyle"
+          TargetType="xcdg:GroupByItem">
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+      <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+      <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+      <Setter Property="BorderThickness"
+              Value="1" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewGroupByItemTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: GroupHeaderControl
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewGroupHeaderControlStyle"
+          TargetType="xcdg:GroupHeaderControl">
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+      <Setter Property="Margin"
+              Value="5,0,5,5" />
+
+      <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+      <Setter Property="VerticalContentAlignment"
+              Value="Center" />
+
+      <!-- The GroupHeaderControl itself must not holds the various InputBindings that make the
+           GroupHeaderControl work. -->
+      <Setter Property="Focusable"
+              Value="False" />
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewGroupHeaderControlTemplate}" />
+
+      <Style.Triggers>
+         <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Content.IsBottomLevel}"
+                          Value="False" />
+
+               <Condition Binding="{Binding RelativeSource={RelativeSource Self},Path=Content.IsExpanded}"
+                          Value="True" />
+
+            </MultiDataTrigger.Conditions>
+
+            <Setter Property="Visibility"
+                    Value="Collapsed" />
+
+         </MultiDataTrigger>
+      </Style.Triggers>
+
+   </Style>
+
+   <!--**************************
+    * STYLE: GroupLevelIndicator
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewGroupLevelIndicatorStyle"
+          TargetType="xcdg:GroupLevelIndicator">
+
+      <Setter Property="Width"
+              Value="12" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: DetailIndicator
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewDetailIndicatorStyle"
+          TargetType="xcdg:DetailIndicator">
+
+      <Setter Property="Width"
+              Value="12" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: GroupLevelIndicatorPane
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewGroupLevelIndicatorPaneStyle"
+          TargetType="xcdg:GroupLevelIndicatorPane">
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewGroupLevelIndicatorPaneTemplate}" />
+
+   </Style>
+
+   <!--**************************
+    * STYLE: HierarchicalGroupLevelIndicatorPane
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewHierarchicalGroupLevelIndicatorPaneStyle"
+          TargetType="xcdg:HierarchicalGroupLevelIndicatorPane">
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewHierarchicalGroupLevelIndicatorPaneTemplate}" />
+
+   </Style>
+  
+   <!--**************************
+    * STYLE: HierarchicalGroupByControl
+    ************************** -->
+   <Style x:Key="tableViewSBXGridViewHierarchicalGroupByControlStyle"
+          TargetType="xcdg:HierarchicalGroupByControl">
+
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="{x:Type xcdg:HierarchicalGroupByControl}">
+
+               <xcdg:GroupByControl AllowGroupingModification="{TemplateBinding AllowGroupingModification}"
+                                    AllowSort="{TemplateBinding AllowSort}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Padding="{TemplateBinding Padding}"
+                                    StairHeight="{TemplateBinding StairHeight}"
+                                    ConnectionLinePen="{TemplateBinding ConnectionLinePen}"
+                                    NoGroupContent="{TemplateBinding NoGroupContent}"/>
+
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <!--**************************
+    * STYLE: AutoFilterControl
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewAutoFilterControlStyle"
+          TargetType="xcdg:AutoFilterControl">
+
+      <Setter Property="Template"
+              Value="{StaticResource cardViewAutoFilterControlTemplate}"/>
+   </Style>
+
+   <!--**************************
+    * STYLE: ScrollTip
+    ************************** -->
+   <Style x:Key="cardViewSBXGridViewScrollTipStyle"
+          TargetType="xcdg:ScrollTip">
+
+      <Setter Property="Template"
+              Value="{StaticResource scrollTipTemplate}"/>
+
+      <Setter Property="VerticalAlignment"
+              Value="Bottom"/>
+
+      <Setter Property="HorizontalAlignment"
+              Value="Center"/>
+
+      <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+
+      <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+
+      <Setter Property="BorderBrush"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+   </Style>
+
+   <!-- =================================================================== -->
+   <!-- Default values for the View                                         -->
+   <!-- =================================================================== -->
+
+   <Style x:Key="cardViewSBXGridViewDefaultValues"
+          TargetType="xcdg:CardView">
+
+      <Setter Property="DefaultDropMarkPen"
+              Value="{StaticResource dropMarkPen}" />
+
+      <Setter Property="CardTitleBackground"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+      <Setter Property="CardTitleForeground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+      <!-- Those glyphs are null by default on ViewBase, so every Theme should define
+           and set their own custom glyphs. -->
+
+      <Setter Property="AscendingSortGlyph"
+              Value="{StaticResource ascendingSortGlyph}" />
+
+      <Setter Property="DescendingSortGlyph"
+              Value="{StaticResource descendingSortGlyph}" />
+
+      <Setter Property="ExpandGroupGlyph"
+              Value="{StaticResource expandGroupGlyph}" />
+
+      <Setter Property="CollapseGroupGlyph"
+              Value="{StaticResource collapseGroupGlyph}" />
+
+      <Setter Property="CurrentItemGlyph"
+              Value="{StaticResource currentItemGlyph}" />
+
+      <Setter Property="EditingRowGlyph"
+              Value="{StaticResource editingRowGlyph}" />
+
+      <Setter Property="ValidationErrorGlyph"
+              Value="{StaticResource validationErrorGlyph}" />
+
+      <Setter Property="InsertionRowGlyph"
+              Value="{StaticResource insertionRowGlyph}" />
+
+      <Setter Property="AutoFilterDropDownGlyph"
+              Value="{StaticResource autoFilterDropDownGlyph}"/>
+
+      <Setter Property="AutoFilterGlyph"
+              Value="{StaticResource autoFilterGlyph}"/>
+
+   </Style>
+
+
+   <!-- =================================================================== -->
+   <!-- DefaultStyleKey declarations                                        -->
+   <!-- =================================================================== -->
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme}"
+          TargetType="xcdg:CardView"
+          BasedOn="{StaticResource cardViewSBXGridViewDefaultValues}" />
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataGridControl}"
+          TargetType="xcdg:DataGridControl"
+          BasedOn="{StaticResource cardViewSBXGridViewGridControlStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:Row}"
+          TargetType="xcdg:Row"
+          BasedOn="{StaticResource cardViewSBXGridViewRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataRow}"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource cardViewSBXGridViewDataRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:InsertionRow}"
+          TargetType="xcdg:InsertionRow"
+          BasedOn="{StaticResource cardViewSBXGridViewInsertionRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ColumnManagerRow}"
+          TargetType="xcdg:ColumnManagerRow"
+          BasedOn="{StaticResource cardViewSBXGridViewColumnManagerRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:StatRow}"
+          TargetType="xcdg:StatRow"
+          BasedOn="{StaticResource cardViewSBXGridViewStatRowStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:FilterRow}"
+          TargetType="xcdg:FilterRow"
+          BasedOn="{StaticResource cardViewSBXGridViewFilterRowStyle}" />
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:Cell}"
+          TargetType="xcdg:Cell"
+          BasedOn="{StaticResource cardViewSBXGridViewCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataCell}"
+          TargetType="xcdg:DataCell"
+          BasedOn="{StaticResource cardViewSBXGridViewDataCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:InsertionCell}"
+          TargetType="xcdg:InsertionCell"
+          BasedOn="{StaticResource cardViewSBXGridViewInsertionCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ColumnManagerCell}"
+          TargetType="xcdg:ColumnManagerCell"
+          BasedOn="{StaticResource cardViewSBXGridViewColumnManagerCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:StatCell}"
+          TargetType="xcdg:StatCell"
+          BasedOn="{StaticResource cardViewSBXGridViewStatCellStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:FilterCell}"
+          TargetType="xcdg:FilterCell"
+          BasedOn="{StaticResource cardViewSBXGridViewFilterCellStyle}" />
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupByControl}"
+          TargetType="xcdg:GroupByControl"
+          BasedOn="{StaticResource cardViewSBXGridViewGroupByControlStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupByItem}"
+          TargetType="xcdg:GroupByItem"
+          BasedOn="{StaticResource cardViewSBXGridViewGroupByItemStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupHeaderControl}"
+          TargetType="xcdg:GroupHeaderControl"
+          BasedOn="{StaticResource cardViewSBXGridViewGroupHeaderControlStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupLevelIndicator}"
+          TargetType="xcdg:GroupLevelIndicator"
+          BasedOn="{StaticResource cardViewSBXGridViewGroupLevelIndicatorStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DetailIndicator}"
+          TargetType="xcdg:DetailIndicator"
+          BasedOn="{StaticResource cardViewSBXGridViewDetailIndicatorStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupLevelIndicatorPane}"
+          TargetType="xcdg:GroupLevelIndicatorPane"
+          BasedOn="{StaticResource cardViewSBXGridViewGroupLevelIndicatorPaneStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:HierarchicalGroupLevelIndicatorPane}"
+          TargetType="xcdg:HierarchicalGroupLevelIndicatorPane"
+          BasedOn="{StaticResource cardViewSBXGridViewHierarchicalGroupLevelIndicatorPaneStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:AutoFilterControl}"
+          TargetType="xcdg:AutoFilterControl"
+          BasedOn="{StaticResource cardViewSBXGridViewAutoFilterControlStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ScrollTip}"
+          TargetType="xcdg:ScrollTip"
+          BasedOn="{StaticResource cardViewSBXGridViewScrollTipStyle}"/>
+
+   <Style x:Key="{xcdg:ThemeKey TargetViewType=xcdg:CardView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:HierarchicalGroupByControl}"
+          TargetType="xcdg:HierarchicalGroupByControl"
+          BasedOn="{StaticResource cardViewSBXGridViewHierarchicalGroupByControlStyle}"/>
+
+</ResourceDictionary>

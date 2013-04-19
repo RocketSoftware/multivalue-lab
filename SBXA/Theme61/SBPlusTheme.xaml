@@ -1,0 +1,27 @@
+<!--
+
+       Name    : SBPlusTheme.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+           Date        Description
+           05/12/2011  Removed duplicate SB/XA named style definitions. 
+                       These are now defined uniquely in DefaultStyles.xaml.
+              
+-->
+<ResourceDictionary x:Class="SBXA.UI.WPFControls.SBPlusTheme"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:sbe="http://schemas.sbxa.com/WPFControls"
+                    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+                    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+                    >
+    
+    <ResourceDictionary.MergedDictionaries>        
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlus.Resources.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/DefaultStyles.xaml" />        
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>

@@ -1,0 +1,152 @@
+﻿<!--
+
+       Name    : DefaultSBMultiFormStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbce="clr-namespace:SBXA.UI.WPFControls.MarkupExtensions"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbs="http://schemas.sbxa.com/Shared"
+    xmlns:sbdebug="clr-namespace:SBXA.UI.WPFControls.SBDebug"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBMultiFormItemStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ***********************************************************************   -->
+    <!--                                 SBMultiFormItemTemplate                   -->
+    <!--                                                                           -->
+    <!-- Template that adds the data for the tab item. This template only controls -->
+    <!-- what is in the actual tab and not the content of the panel.               -->
+    <!-- ***********************************************************************   -->
+    <DataTemplate x:Key="SBMultiFormItemTemplate">
+        <TextBlock Text ="{Binding Caption}" />
+    </DataTemplate>
+
+    <!-- DefaultSBFixedFormStyle -->
+    <Style x:Key="DefaultSBFixedFormStyle" TargetType="sbc:SBMultiFormItem" BasedOn="{StaticResource BaseSBMultiFormItemStyle}">
+        <Setter Property="TabItemDefinition" Value="{Binding Path=MultiFormDefinition.FixedFormDefinition, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="ParentForm" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}"  />
+    </Style>
+
+
+    <Style x:Key="DefaultSBTabFormStyle" TargetType="{x:Type sbc:SBMultiFormItem}">
+        <Setter Property="sbc:SBForm.IsBorderPresent" Value="False" />
+        <Setter Property="Template" Value="{DynamicResource SBMultiFormTabTemplate}" />
+    </Style>
+    
+    <!-- ***********************************************************************  -->
+    <!--                                 SBTabContentTemplate                     -->
+    <!--                                                                          -->
+    <!-- This template loads the data required to display a form on a tab panel   -->
+    <!-- ***********************************************************************  -->
+    <DataTemplate x:Key="SBTabContentTemplate">
+        <sbc:SBMultiFormItem x:Name="PART_SBTabForm"
+                             TabItemDefinition="{Binding}"                             
+                             sbc:SBControl.UsePixelPositioning="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}, Mode=OneWay}"
+                             ParentForm="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}"
+                             Style="{DynamicResource SBTabFormStyle}"
+                             />
+    </DataTemplate>
+
+
+    <!-- *********************************************************************** -->
+    <!--                 SBTabControlContentPresenterStyle                       -->
+    <!--                                                                         -->
+    <!-- Style to control what the tab control content presenter looks like.     -->
+    <!-- *********************************************************************** -->
+
+    <Style x:Key="DefaultSBTabControlContentPresenterStyle" TargetType="{x:Type ContentPresenter}">
+        <Style.Triggers>
+
+            <!-- if we are using pixel positioning set the width and height. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}, Mode=OneWay }" Value="true">
+<!--                <Setter Property="Width" Value="{Binding Path=MaxTabWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}" />
+                <Setter Property="Height" Value="{Binding Path=MaxTabHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}" />
+-->
+                <Setter Property="Width" Value="NaN" />
+                <Setter Property="Height" Value="NaN" />
+            </DataTrigger>
+
+            <!-- if we are NOT using pixel positioning set the width and height to NaN, i.e. unset them. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}, Mode=OneWay }" Value="false">
+                <Setter Property="Width" Value="NaN" />
+                <Setter Property="Height" Value="NaN" />
+            </DataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+    <!-- *********************************************************************** -->
+    <!--                 SBTabControlTabPanelStyle                               -->
+    <!--                                                                         -->
+    <!-- Style to control what the tab control tab panel looks like.             -->
+    <!-- *********************************************************************** -->
+    <Style x:Key="DefaultSBTabControlTabPanelStyle" TargetType="{x:Type TabPanel}">
+        <Setter Property="Margin" Value="2,0,0,0" />
+    </Style>
+
+    <!-- *********************************************************************** -->
+    <!--                 SBTabControlStyle                                       -->
+    <!--                                                                         -->
+    <!-- Style to control what the tab control looks like.                       -->
+    <!-- *********************************************************************** -->
+    <Style x:Key="DefaultSBTabControlStyle" TargetType="{x:Type TabControl}">
+
+        <Setter Property="ItemsSource" Value="{Binding Path=MultiFormDefinition.Tabs, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Setter Property="ItemTemplate" Value="{DynamicResource SBMultiFormItemTemplate}" />
+        <Setter Property="SelectedIndex" Value="{Binding Path=SelectedIndex, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}" />
+        <Setter Property="Control.FontFamily" Value ="{Binding Path=SBPlus.DefaultFontFamily, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="Control.FontSize" Value ="{Binding Path=SBPlus.DefaultFontSize, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="Control.FontWeight" Value ="{Binding Path=SBPlus.DefaultFontWeight, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}, Converter={StaticResource SBUnsetValueConverter}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <ContentPresenter x:Name="PART_SBTabControlContentPresenter"
+                                          Style="{DynamicResource SBTabControlContentPresenterStyle}"
+                                          Grid.Row="1"                                          
+                                          ContentSource="SelectedContent"
+                                          ContentTemplate="{StaticResource SBTabContentTemplate}"
+                                          />
+                        <TabPanel x:Name="PART_SBTabControlTabPanel"
+                                  Style="{DynamicResource SBTabControlTabPanelStyle}"
+                                  Grid.Row="0"
+                                  IsItemsHost="True"
+                                  >
+                            <TabPanel.Resources>
+                                <!-- It appears we need to define the TabItem override here for it to be used -->
+                                <Style TargetType="{x:Type TabItem}">
+                                    <Setter Property="IsEnabled" Value ="{Binding Path=EnableTabItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}" />
+                                    <Setter Property="Padding" Value="3,2,3,2" />
+                                </Style>
+                            </TabPanel.Resources>
+                        </TabPanel>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=SelectedIndex, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm}}}" Value="-1">
+                <Setter Property="SelectedIndex" Value="0" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

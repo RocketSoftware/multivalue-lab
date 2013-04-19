@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/Brushes.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/Control.Templates.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/SBPlusTheme.Resources.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/SBDialogWarningImage.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/SBDialogErrorImage.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/SBDialogInformationImage.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

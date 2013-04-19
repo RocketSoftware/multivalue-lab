@@ -1,0 +1,45 @@
+<!--
+
+       Name    : BaseSBMenuPresenter.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+    <ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <Style x:Key="BaseSBMenuPresenter" TargetType="{x:Type sbc:SBMenuPresenter}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="MenuBar" Value="{Binding Path=MenuBar, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBContentControl} }, Mode=OneWay}" />
+        <Setter Property="ActiveToolbars" Value="{Binding Path=ActiveToolbars, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBContentControl} }, Mode=OneWay}" />
+        <Setter Property="sbc:SBMenuPresenter.IsActionBarVisible" Value="True" />
+        <Setter Property="sbc:SBMenuPresenter.IsButtonBarVisible" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sbc:SBMenuPresenter}">
+                    <Grid x:Name="PART_SBMenuGrid">
+                        <DockPanel x:Name="PART_SBMenuPresenterPanel" LastChildFill="True">
+                            <Grid x:Name="PART_SBMenuPresenterHorizontalGrid" DockPanel.Dock="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <ContentPresenter Content="{TemplateBinding MenuBar}" Grid.Row="0" />
+                                <sbc:SBToolbarTray x:Name="PART_SBToolbarTray" Grid.Row="1"  Visibility="Hidden"/>
+                            </Grid>
+                            <Grid Background="Transparent"  DockPanel.Dock="Top" />
+                        </DockPanel>
+                    </Grid>
+                    <!--<ContentPresenter />-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

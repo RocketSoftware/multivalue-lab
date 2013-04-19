@@ -1,0 +1,223 @@
+<!--
+
+       Name    : BaseSBFormStyle.xaml
+       Author  : Kendrew Peacey
+    
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbs="http://schemas.sbxa.com/Shared"
+   >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <!-- BaseSBFormStyle TargetType="{x:Type sbc:SBForm}" -->
+    <Style x:Key="BaseSBFormStyle" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseSBFormStyle" />
+        <Setter Property="Control.Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="False" />
+        <Setter Property="Control.IsTabStop" Value="False" />
+        <Setter Property="Control.Visibility" Value="{Binding Path=(sbc:SBGUIAttribute.SBDrawable), RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBDrawableConverter}}" />
+        <Setter Property="sbc:SBContentControl.CharacterLayoutTemplate" Value="{DynamicResource SBCharacterFormTemplate}" />
+        <Setter Property="sbc:SBGUIAttribute.SBTitle" Value="{Binding Path=GuiObjectDefinition.Title, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="Control.Background" Value="Transparent" />
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBControlBackground}" />
+        <Setter Property="sbc:SBPlusWindow.ViewboxStretchMode" Value="Fill" />
+        <Setter Property="sbc:SBForm.CanHostStatusBar" Value="true" />
+        <Setter Property="sbc:SBUISupport.ZoomValue" Value="{Binding Path=(sbc:SBUISupport.ZoomValue), Source={x:Static sbc:SBPlus.Current}}" />
+        <!-- The following settings were suggested by a customer as they are supposed to improve the quality of the text. They were introduced in .Net 4.0 -->
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+        <Setter Property="FrameworkElement.UseLayoutRounding" Value="True"/>
+        <Setter Property="FrameworkElement.SnapsToDevicePixels" Value="True"/>
+        
+
+        <!-- Mapping from server attribute names to XUI properties -->
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute Name="title"
+                                     GetProperty="(sbc:SBGUIAttribute.SBTitle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBTitle)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="(sbc:SBForm.FormBackground)" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="(sbc:SBForm.FormForeground)" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <sbc:SBAttribute2 Name="coordinates"
+                                     GetProperty="SBLeft"
+                                     GetProperty2="SBTop"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBCoordinates)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 Name="dimensions"
+                                     GetProperty="Control.ActualWidth"
+                                     GetProperty2="Control.ActualHeight"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute Name="tile"
+                                     GetProperty="(sbc:SBGUIAttribute.SBTile)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBTile)" />
+                    <sbc:SBAttribute Name="border_width"
+                                     GetProperty="(sbc:SBForm.FormBorderWidth)"
+                                     GetConverter="{StaticResource SBPixelConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderWidth)" />
+                    <sbc:SBAttribute Name="border_color"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderColor)"
+                                     GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderColor)" />
+
+                    <!-- Added for SBXA-1691 -->
+                    <sbc:SBAttribute Name="parent"
+                                     GetProperty="(sbc:SBGUIAttribute.SBParentObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBParentObjectName)" />
+
+                    <!-- Following attributes are mapped to a SBGUI attribute so they can be used, -->
+                    <!-- but they are not currently used in our styles -->
+                    <sbc:SBAttribute Name="border_style"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderStyle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderStyle)" />                    
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Top/Left in WPF pixels from left of screen -->        
+        <Setter Property="sbc:SBForm.SBTop"
+                Value ="{Binding Path=GuiObjectDefinition.Margin, 
+                                 RelativeSource={RelativeSource Mode=Self},
+                                 Converter={StaticResource SBTopRelativeToMainConverter},
+                                 Mode=OneWay}" />
+        
+        <Setter Property="sbc:SBForm.SBLeft"
+                Value ="{Binding Path=GuiObjectDefinition.Margin,
+                        RelativeSource={RelativeSource Mode=Self},
+                   Converter={StaticResource SBLeftRelativeToMainConverter},
+                   Mode=OneWay}"
+                />
+        
+        <Setter Property="sbc:SBForm.FormBackground">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.WindowBrush}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBTile)" Mode="OneWay" Converter="{StaticResource SBTileConverter}" RelativeSource="{RelativeSource Mode=Self}" />
+                    <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                    <Binding Path="(sbc:SBControl.SBControlBackground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="sbc:SBForm.FormForeground">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.WindowBrush}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBForeground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Foreground" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+            
+        
+        <Setter Property="sbc:SBForm.FormBorderWidth">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static sbs:GenericConstants.DEFAULT_FORM_BORDER_WIDTH}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBBorderWidth)"
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBPixelConverter}"
+                             ConverterParameter="ReturnUnsetForEmpty"/>
+                    <Binding Path="GuiObjectDefinition.BorderWidth" 
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBUnsetDoubleConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="sbc:SBForm.FormBorderColor">
+            <Setter.Value>
+                <PriorityBinding >
+                    <PriorityBinding.FallbackValue>
+                        <LinearGradientBrush EndPoint="0.738,0.989" StartPoint="0.279,0.018">
+                            <GradientStop Color="#FF3B9DD1" Offset="1"/>
+                            <GradientStop Color="#FF73C5F0" Offset="0"/>
+                        </LinearGradientBrush>
+                    </PriorityBinding.FallbackValue>
+                    <Binding Path="(sbc:SBGUIAttribute.SBBorderColor)"
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"
+                             />
+                    <Binding Path="GuiObjectDefinition.SBBorderColor" 
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <!-- if this form is using column and row positioning then I need to create the content as a SBCharacterLayout -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="true"/>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Control.Template" Value="{Binding Path=(sbc:SBContentControl.CharacterLayoutTemplate), RelativeSource={RelativeSource Mode=Self}}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="sbc:SBContentControl.CharacterLayoutTemplate" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="true"/>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Control.Template" Value="{DynamicResource SBFormTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SBFormTemplate" />
+            </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false">
+                <Setter Property="Control.Template" Value="{DynamicResource SBGenericFormTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SBGenericFormTemplate" />
+            </DataTrigger>
+
+            <!-- if we are using pixel positioning set the form width. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="sbc:SBForm.FormWidth" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+            </MultiDataTrigger>
+
+            <!-- if we are using pixel positioning set the form height. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="sbc:SBForm.FormHeight" Value="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+            </MultiDataTrigger>
+           
+            <DataTrigger Binding="{Binding Path=GuiObjectDefinition.StyleName, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                <Setter Property="sbc:SBGUIAttribute.SBStyleName" Value="{Binding Path=GuiObjectDefinition.StyleName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+</ResourceDictionary>

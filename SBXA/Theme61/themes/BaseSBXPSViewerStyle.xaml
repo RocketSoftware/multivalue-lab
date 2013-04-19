@@ -1,0 +1,425 @@
+﻿<!--
+
+       Name    : BaseSBXPSViewerStyle.xaml
+       Author  : Pavel Smelianski
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:wsd="clr-namespace:System.Windows.Documents;assembly=PresentationUI"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <!-- DocumentViewer Context menu definition -->
+    <ContextMenu x:Key="DocumentViewerContextMenu">
+        <MenuItem Command="ApplicationCommands.Copy" />
+        <!--MenuItem moMode="Separator" /-->
+        <MenuItem Command="ComponentCommands.ScrollPageUp" Header="Previous Page" />
+        <MenuItem Command="ComponentCommands.ScrollPageDown" Header="Next Page" />
+        <!--MenuItem Mode="Separator" /-->
+        <MenuItem Command="NavigationCommands.FirstPage" />
+        <MenuItem Command="NavigationCommands.LastPage" />
+        <!--MenuItem Mode="Separator" /-->
+        <MenuItem Command="NavigationCommands.IncreaseZoom" />
+        <MenuItem Command="NavigationCommands.DecreaseZoom" />
+    </ContextMenu>
+
+    <Style x:Key="MyStyle" TargetType="DocumentViewer">
+        <Setter Property="Foreground"
+          Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background"
+          Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <!--Setter Property="ContextMenu"
+          Value="{DynamicResource {ComponentResourceKey
+          TypeInTargetAssembly={x:Type wsd:PresentationUIStyleResources},
+          ResourceId=PUIDocumentViewerContextMenu}}"/-->
+        <Setter Property="ContextMenu"
+                Value="{StaticResource DocumentViewerContextMenu}" />                          
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DocumentViewer">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+                        <Grid 
+            KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ToolBar
+              ToolBarTray.IsLocked="True" 
+              KeyboardNavigation.TabNavigation="Continue">
+                                <Button Command="sbc:SBXPSViewerCommands.SBXPSViewerCancelCommand"                 
+                Content="Cancel"/>
+                                <Button Command="sbc:SBXPSViewerCommands.SBXPSViewerSBProcessCommand"                 
+                Content="Call SB Process"/>                                
+                                <Button Command="ApplicationCommands.Copy" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                Content="Copy"/>
+                                <Separator />
+                                <Button Command="NavigationCommands.IncreaseZoom" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                Content="Zoom In"/>
+                                <Button Command="NavigationCommands.DecreaseZoom" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                Content="Zoom Out"/>
+                                <Separator />
+                                <Button Command="NavigationCommands.Zoom" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                CommandParameter="100.0" 
+                Content="Actual Size" />
+                                <Button Command="DocumentViewer.FitToWidthCommand" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                Content="Fit to Width" />
+                                <Button Command="DocumentViewer.FitToMaxPagesAcrossCommand" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                CommandParameter="1" 
+                Content="Whole Page"/>
+                                <Button Command="DocumentViewer.FitToMaxPagesAcrossCommand" 
+                CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                CommandParameter="2" 
+                Content="Two Pages"/>
+                            </ToolBar>
+
+                            <ScrollViewer Grid.Row="1"
+              CanContentScroll="true"
+              HorizontalScrollBarVisibility="Auto"
+              x:Name="PART_ContentHost"
+              IsTabStop="true"/>
+
+                         <ContentControl Grid.Row="2"
+              x:Name="PART_FindToolBarHost"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <ControlTemplate x:Key="GlowingBulb2" TargetType="{x:Type Control}">
+        <Ellipse x:Name="PART_InputModeEllipse"
+                   Height="10.972"  Width="11.816" StrokeThickness="1" ClipToBounds="False" SnapsToDevicePixels="True"
+                         />
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="Complete" >
+                <Setter Property="Ellipse.Fill" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.6,0.87" StartPoint="0.367,0.134">
+                            <GradientStop Color="#FF3B903B" Offset="1"/>
+                            <GradientStop Color="#FF94EC95" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.Stroke" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.848,0.97" StartPoint="0.266,0.05">
+                            <GradientStop Color="#FF33B021" Offset="1"/>
+                            <GradientStop Color="#FF206315" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.BitmapEffect" TargetName="PART_InputModeEllipse" >
+                    <Setter.Value>
+                        <OuterGlowBitmapEffect GlowColor="#FF000000" GlowSize="3" Opacity="0.5"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource TemplatedParent}}" Value="Initial" >
+                <Setter Property="Ellipse.Fill" Value="Blue" TargetName="PART_InputModeEllipse"/>
+                <Setter Property="Ellipse.Fill" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.6,0.87" StartPoint="0.367,0.134">
+                            <GradientStop Color="#FF3B6B90" Offset="1"/>
+                            <GradientStop Color="#FF72E2FF" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.Stroke" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.848,0.97" StartPoint="0.266,0.05">
+                            <GradientStop Color="#FF2185B0" Offset="1"/>
+                            <GradientStop Color="#FF153663" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.BitmapEffect" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <OuterGlowBitmapEffect GlowColor="#FF000000" GlowSize="3" Opacity="0.5"/>
+                    </Setter.Value>
+                </Setter>
+                <!--<Setter Property="ToolTip" Value="The client is busy" />-->
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="InProgress" >
+                <Setter Property="Ellipse.Fill" Value="Blue" TargetName="PART_InputModeEllipse"/>
+                <Setter Property="Ellipse.Fill" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.6,0.87" StartPoint="0.367,0.134">
+                            <GradientStop Color="#FFD5920E" Offset="0.995"/>
+                            <GradientStop Color="#FFFEE969" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.Stroke" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.848,0.97" StartPoint="0.266,0.05">
+                            <GradientStop Color="#FFFAE100" Offset="1"/>
+                            <GradientStop Color="#FFB08418" Offset="0.01"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.BitmapEffect" TargetName="PART_InputModeEllipse">
+                    <Setter.Value>
+                        <OuterGlowBitmapEffect GlowColor="#FF000000" GlowSize="3" Opacity="0.5"/>
+                    </Setter.Value>
+                </Setter>
+                <!--<Setter Property="ToolTip" Value="The U2 server is busy" />-->
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="Error" >
+                <Setter Property="Ellipse.Fill" Value="Red" TargetName="PART_InputModeEllipse" />
+                <Setter Property="Ellipse.Fill" TargetName="PART_InputModeEllipse" >
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.58,0.745" StartPoint="0.386,0.128">
+                            <GradientStop Color="#FFD91016" Offset="1"/>
+                            <GradientStop Color="#FFFFA2A2" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.Stroke" TargetName="PART_InputModeEllipse" >
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.848,0.97" StartPoint="0.266,0.05">
+                            <GradientStop Color="#FFFE7686" Offset="1"/>
+                            <GradientStop Color="#FF7D1111" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Ellipse.BitmapEffect" TargetName="PART_InputModeEllipse" >
+                    <Setter.Value>
+                        <OuterGlowBitmapEffect GlowColor="#FF000000" GlowSize="3" Opacity="0.5"/>
+                    </Setter.Value>
+                </Setter>
+                <!--<Setter Property="ToolTip" Value="The application is in an error state." />-->
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+   
+    <ControlTemplate x:Key="AnimatedArrows2" TargetType="{x:Type Control}">
+        <Grid HorizontalAlignment="Center"  VerticalAlignment="Center" Width="18.497" Height="17.429"
+    RenderTransformOrigin="0.5,0.5" x:Name="grid" ToolTip="{TemplateBinding ToolTip}">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    <SkewTransform AngleX="0" AngleY="0"/>
+                    <RotateTransform x:Name="arrowsRotate" Angle="360"/>
+                    <TranslateTransform X="0" Y="0"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Path x:Name="Path" Stretch="Fill" Data="F1 M 461.733,174.177C 461.76,174.289 461.727,174.052 461.727,174.052L 463.797,173.082C 462.85,169.867 459.703,167.358 455.971,167.358C 452.454,167.358 449.633,169.525 448.469,172.37L 446.593,171.659L 448.336,176.424L 452.349,173.922L 450.538,173.082C 451.416,171.194 453.538,169.654 456.019,169.654C 458.798,169.654 461.125,171.584 461.733,174.177" ClipToBounds="False" Margin="0,0,1.293,8.363">
+                <Path.Fill>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <GradientStop Color="#FF59FF59" Offset="0"/>
+                        <GradientStop Color="#FF08BB21" Offset="0.625"/>
+                    </LinearGradientBrush>
+                </Path.Fill>
+                <Path.BitmapEffect>
+                    <OuterGlowBitmapEffect GlowColor="#FF000000" GlowSize="2" Opacity="0.4"/>
+                </Path.BitmapEffect>
+            </Path>
+            <Path x:Name="Path_Copy" Stretch="Fill" Data="F1 M 450.127,177.344L 448.081,178.422C 449.017,181.997 452.128,184.788 455.818,184.788C 459.295,184.788 462.085,182.378 463.236,179.214L 465.09,180.005L 463.799,175.205L 459.399,177.487L 461.189,178.422C 460.322,180.521 458.224,182.234 455.77,182.234C 453.023,182.234 450.722,180.088 450.12,177.205" Margin="1.488,7.847,0,0">
+                <Path.Fill>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <GradientStop Color="#FF53FF53" Offset="0.707"/>
+                        <GradientStop Color="#FF13CF2E" Offset="0"/>
+                    </LinearGradientBrush>
+                </Path.Fill>
+                <Path.BitmapEffect>
+                    <OuterGlowBitmapEffect GlowColor="#FF000000" GlowSize="2" Opacity="0.4"/>
+                </Path.BitmapEffect>
+            </Path>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="Error" >
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                From="0" To="1" Duration="0:0:1" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                To="1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="InProgress" >
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!-- RotateTransform angle from 0 to 360 in 1 second, repeated forever -->
+                            <DoubleAnimation Storyboard.TargetName="arrowsRotate"
+                               Storyboard.TargetProperty="Angle"
+                               From="360" To="0" Duration="0:0:01"
+                               RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="arrowsRotate"
+                               Storyboard.TargetProperty="Angle"
+                               To="0" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="SBXPSViewerInputModeStyle" TargetType="{x:Type Control}">
+        <Setter Property="ToolTip" Value="{Binding Path=SBPlus.InputStateMessage, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="Initial" >
+                <Setter Property="Template" Value="{StaticResource AnimatedArrows2}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="Complete" >
+                <Setter Property="Template" Value="{StaticResource GlowingBulb2}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="InProgress" >
+                <Setter Property="Template" Value="{StaticResource AnimatedArrows2}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=EngineState, RelativeSource={RelativeSource TemplatedParent}}" Value="Error" >
+                <Setter Property="Template" Value="{StaticResource GlowingBulb2}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BaseSBXPSViewerStyle" BasedOn="{StaticResource BaseSBFormStyle}" TargetType="{x:Type sbc:SBXPSViewer}" >
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="True"/>
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="True"/>
+        <!-- XPS Viewer has it's own zoom so ensure SB Zoom isn't used as well -->
+        <Setter Property="sbc:SBUISupport.ZoomValue" Value="1.0" />
+        <Setter Property="Width" Value="800" />
+        <Setter Property="Height" Value="600" />
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Path=SizeToContent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBWindow}}}"
+                                                             Value="Manual">
+                <Setter Property="Width" Value="NaN" />
+                <Setter Property="Height" Value="NaN" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBXPSViewer}">
+                            <ContentControl>
+                                <!-- Header duplicated from BaseSBFormStyle -->
+                                <Grid KeyboardNavigation.IsTabStop="False">
+                                    <Rectangle x:Name="PART_SBBorderRectangle" Style="{DynamicResource SBBorderRectangleStyle}" />
+
+                                    <Border x:Name="PART_SBFormContentHeaderBorder" 
+                                        KeyboardNavigation.IsTabStop="False"
+                                        Style="{DynamicResource SBFormContentHeaderBorderStyle}"
+                                    >
+                                        <Control Style="{DynamicResource SBFormTitleStyle}" x:Name="PART_SBFormTitle"/>
+                                    </Border>
+
+                                    <Border x:Name="PART_SBFormBorder"
+                                        Style="{DynamicResource SBFormBorderStyle}"
+                                    >
+
+                                        <DockPanel LastChildFill="True">
+                                            <Menu DockPanel.Dock="Top">
+                                                <MenuItem Header="_File">
+                                                    <MenuItem Header="_Save    F2" Command="sbc:SBXPSViewerCommands.SBXPSViewerSaveCommand"/>
+                                                    <MenuItem Header="_Print   F4" Command="sbc:SBXPSViewerCommands.SBXPSViewerPrintCommand"/>
+                                                    <MenuItem Header="E-_mail..." Command="sbc:SBXPSViewerCommands.SBXPSViewerEmailCommand" />
+                                                    <MenuItem Header="Export To _Word" Command="sbc:SBXPSViewerCommands.SBXPSViewerToWordCommand" />
+                                                    <MenuItem Header="Export To _Text..." Command="sbc:SBXPSViewerCommands.SBXPSViewerToTextCommand" />
+                                                    <MenuItem Header="_Exit    CTRL-X" Command="sbc:SBXPSViewerCommands.SBXPSViewerCloseCommand"/>
+                                                </MenuItem>
+                                            </Menu>
+
+                                            <StatusBar x:Name="PART_StatusBar" DockPanel.Dock="Bottom">
+                                                <!--Style="{DynamicResource SBStatusBarProgressBarStyle}"-->
+                                                <StatusBarItem>
+                                                    <Control IsTabStop="False" Style="{StaticResource SBXPSViewerInputModeStyle}" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                                </StatusBarItem>
+                                                <StatusBarItem>
+                                                    <Label Content="Pages Processed:"></Label>
+                                                </StatusBarItem>
+                                                <StatusBarItem>
+                                                    <Label Content="{Binding Path=DocPageNumber, RelativeSource={RelativeSource TemplatedParent}}"></Label>
+                                                </StatusBarItem>
+
+
+                                            </StatusBar>
+
+                                            <DocumentViewer x:Name="PART_XPSViewer" DockPanel.Dock="Top" Padding="5" Document="{Binding Path=Doc, RelativeSource={RelativeSource TemplatedParent}}"  Style="{StaticResource MyStyle}" Focusable="True"/>
+
+                                        </DockPanel>
+                                    </Border>
+                                </Grid>
+                                <ContentControl.InputBindings>
+                                    <KeyBinding Command="sbc:SBXPSViewerCommands.SBXPSViewerCloseCommand"
+                                                Key="Escape"/>                                    
+                                    <KeyBinding Command="sbc:SBXPSViewerCommands.SBXPSViewerSaveCommand"
+                                                Key="F2"/>
+                                    <KeyBinding Command="sbc:SBXPSViewerCommands.SBXPSViewerPrintCommand"
+                                                Key="F4"/>
+                                    <KeyBinding Command="sbc:SBXPSViewerCommands.SBXPSViewerSBProcessCommand"
+                                                Key="F5"/>
+                                    <KeyBinding Command="sbc:SBXPSViewerCommands.SBXPSViewerCancelCommand"
+                                                Key="F6"/>
+                                    <KeyBinding Command="sbc:SBXPSViewerCommands.SBXPSViewerCloseCommand"
+                                                Key="X"
+                                                Modifiers="Control"/>
+                                </ContentControl.InputBindings>
+
+                            </ContentControl>
+
+                            <ControlTemplate.Triggers>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+</ResourceDictionary>

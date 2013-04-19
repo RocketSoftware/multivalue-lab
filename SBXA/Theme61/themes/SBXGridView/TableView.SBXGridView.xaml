@@ -1,0 +1,1722 @@
+<!--
+
+       Name    : BaseSBMvEditControlStyle.xaml
+       Author  : Kendrew Peacey
+ 
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+    
+Date            Name    Tracking #      Style                                   Description
+April 25, 2012  AKP     SBXA-7968       SBTableViewColumnManagerCellTemplate    Removed the vertical separator
+Sept 20, 2011   SCW     SBXA-4728       tableViewSBXGridViewFilterRowStyle   Add this omitted style.
+    
+-->
+    
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+                    xmlns:sbdebug="clr-namespace:SBXA.UI.WPFControls.SBDebug"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:sbce="clr-namespace:SBXA.UI.WPFControls.MarkupExtensions"
+                    xmlns:sbs="http://schemas.sbxa.com/Shared"
+                    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+                    >
+<!-- Added sb? namespaces above for SB/XA eCase 41134*USA -->
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Added for SB/XA eCase 41134*USA -->
+        <!-- Include standard SB/XA converters. -->
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+
+        <!-- Added for SB/XA eCase 41134*USA -->
+        <!-- Include SBPlus theme brushes -->
+        <!--<ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBPlusTheme/Brushes.xaml" />-->
+
+        <!-- Changed from Xceed generated theme for SB/XA eCase 41134*USA -->
+        <!-- Include the view independant, color-scheme independant, theme resources -->
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXGridView/Resources/SBXGridView.Resources.xaml" />
+
+        <!-- Include the view dependant, color-scheme independant, theme graphics -->
+        
+      <!-- Upgrade for 4.0 -->
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXGridView/Resources/TableView.SBXGridView.Graphics.xaml" />
+
+        <!-- Include the standard grid element templates -->
+        <ResourceDictionary Source="/Xceed.Wpf.DataGrid.v4.0;component\themes/Common/TableView.GridElementTemplates.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Converter to figure out odd and even rowindexes -->
+    <xcdg:IndexToOddConverter x:Key="IndexToOddConverter"/>
+
+    <!-- =================================================================== -->
+    <!-- Resources specific to this View/Theme/ColorScheme                   -->
+    <!-- =================================================================== -->
+
+
+    <!-- =================================================================== -->
+    <!-- Templates specific to this View/Theme/ColorScheme                   -->
+    <!-- =================================================================== -->
+
+
+    <!-- =================================================================== -->
+    <!-- Styles required by some grid elements                               -->
+    <!-- =================================================================== -->
+
+    <!--**************************
+    * STYLE: baseSplitterStyle
+    ************************** -->
+    <Style x:Key="baseFixedColumnSplitterStyle"
+          TargetType="xcdg:FixedColumnSplitter">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="baseFixedColumnSplitterStyle" />
+    </Style>
+
+    <!--**************************
+    * STYLE: rowSplitterStyle
+    ************************** -->
+    <Style x:Key="rowSplitterStyle"
+          TargetType="xcdg:FixedColumnSplitter"
+          BasedOn="{StaticResource baseFixedColumnSplitterStyle}">
+        
+        <Setter Property="sbc:SBUISupport.StyleName" Value="rowSplitterStyle" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: ColumnManagerRowSplitterStyle
+    ************************** -->
+    <Style x:Key="columnManagerRowSplitterStyle"
+          TargetType="xcdg:FixedColumnSplitter"
+          BasedOn="{StaticResource baseFixedColumnSplitterStyle}">
+        
+        <Setter Property="sbc:SBUISupport.StyleName" Value="columnManagerRowSplitterStyle" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: StatRowSplitterStyle
+    ************************** -->
+    <Style x:Key="statRowSplitterStyle"
+          TargetType="xcdg:FixedColumnSplitter"
+          BasedOn="{StaticResource baseFixedColumnSplitterStyle}">
+        
+        <Setter Property="sbc:SBUISupport.StyleName" Value="statRowSplitterStyle" />
+
+        <!-- For aesthetic reasons, the FixedColumnSplitter is not shown in the StatRow. -->
+        <Setter Property="Template"
+              Value="{x:Null}"/>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: CellErrorStyle 
+    ************************** -->
+    <Style x:Key="cellErrorStyle"
+          TargetType="xcdg:Cell">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="cellErrorStyle" />
+
+        <Setter Property="Background"
+              Value="{StaticResource errorBackgroundBrush}"/>
+
+        <Setter Property="Foreground"
+              Value="{StaticResource errorForegroundBrush}"/>
+
+        <Setter Property="ToolTip"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=ValidationError.ErrorContent}"/>
+
+    </Style>
+
+    <!-- =================================================================== -->
+    <!-- Keyed Styles of grid elements                                       -->
+    <!-- =================================================================== -->
+
+    <!--**************************
+    * STYLE: DataGridControl 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewGridControlStyle"
+          TargetType="xcdg:DataGridControl">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewGridControlStyle" />
+
+        <Setter Property="BorderBrush"
+              Value="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" />
+
+        <Setter Property="BorderThickness"
+              Value="1" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+
+        <!-- This is required to display gridlines of uniform thickness -->
+        <Setter Property="SnapsToDevicePixels"
+              Value="True" />
+
+        <Setter Property="CellErrorStyle"
+              Value="{StaticResource cellErrorStyle}" />
+        
+<!-- Removed in 3.6
+        <Setter Property="ItemsPanel"
+              Value="{StaticResource tableViewDataGridControlItemsPanelTemplate}" />
+-->        
+        <Setter Property="Template"
+              Value="{StaticResource tableViewDataGridControlTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: RowSelectorPane
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewRowSelectorPaneStyle"
+          TargetType="xcdg:RowSelectorPane">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewRowSelectorPaneStyle" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+        <Setter Property="TextElement.Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <!-- Set teh width of the RowSelectorPane on the grid so that the grid width can be calculated if need be. -->
+        <Setter Property="sbc:SBGridControl.RowSelectorWidth" Value="{Binding Path=Width, RelativeSource={RelativeSource Mode=Self}}" />
+    </Style>
+
+    <!--**************************
+    * STYLE: RowSelector
+    ************************** -->
+    <xcdg:TypeToBooleanConverter x:Key="insertionRowTypeConverter" />
+    
+    <Style x:Key="tableViewSBXGridViewRowSelectorStyle"
+          TargetType="xcdg:RowSelector">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="insertionRowTypeConverter" />
+
+        <!-- Set the RowSelector's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying RowSelectorPane. -->
+        <Setter Property="Background"
+              Value="Transparent" />
+
+        <Setter Property="HorizontalContentAlignment"
+              Value="Center" />
+
+        <Setter Property="VerticalContentAlignment"
+              Value="Top" />
+
+        <Setter Property="Padding"
+              Value="2" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewRowSelectorTemplate}" />
+
+        <Style.Triggers>
+
+            <!-- The DataContext of a RowSelector is always set to its corresponding
+              Row/item. This is why we use DataTriggers with no explicit Binding Source
+              when we want to react to properties of the Row/item. -->
+
+            <!-- When the Row is Current, display the current glyph in the RowSelector (but not when the Row is an InsertionRow. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsCurrent}"
+                          Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=RowType, Converter={StaticResource insertionRowTypeConverter}, ConverterParameter={x:Type xcdg:InsertionRow} }"
+                          Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="ContentTemplate"
+                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).CurrentItemGlyph}" />
+            </MultiDataTrigger>
+
+            <!-- When the Row is being edited, display the appropriate glyph in the RowSelector. -->
+            <Trigger Property="IsBeingEdited"
+                  Value="True">
+                <Setter Property="ContentTemplate"
+                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).EditingRowGlyph}" />
+
+            </Trigger>
+
+            <!-- When the Row has a validation error, display the appropriate glyph in the RowSelector. -->
+            <Trigger Property="HasValidationError"
+                  Value="True">
+                <Setter Property="ContentTemplate"
+                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ValidationErrorGlyph}" />
+            </Trigger>
+
+            <!-- When the row is an InsertionRow and the row is not being current -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=RowType, Converter={StaticResource insertionRowTypeConverter}, ConverterParameter={x:Type xcdg:InsertionRow} }"
+                          Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsBeingEdited}"
+                          Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasValidationError}"
+                          Value="False" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="ContentTemplate"
+                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).InsertionRowGlyph}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: Row Style
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewRowStyle"
+          TargetType="xcdg:Row">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewRowStyle" />
+
+        <Setter Property="FocusVisualStyle"
+             Value="{StaticResource tableViewRowFocusVisualStyle}"/>
+
+        <!-- PriorityBinding that determines if a set attribute on the row has occurred. use SBXSBBackground -->
+        <!-- The cells use the background of the field, not the row. So I need to override the cells background if the background on the
+             row is set using a SETATTR. -->
+        
+        <!--<Setter Property="SelectionBackground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />-->
+        
+        <Setter Property="SelectionBackground" Value="Transparent" /> <!-- I am not quite sure what I should do here. -->
+        
+        <Setter Property="SelectionForeground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+
+        <!--<Setter Property="InactiveSelectionBackground"
+              Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />-->
+
+        <!-- Changed the fallback to transparent, otherwise the first row of the grid has a blue background when the grid does not have focus. -->
+        <Setter Property="InactiveSelectionBackground" Value="Transparent" />
+
+        <Setter Property="InactiveSelectionForeground"
+              Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+
+        <Setter Property="xcdg:TableView.FixedColumnSplitterStyle"
+              Value="{StaticResource rowSplitterStyle}"/>
+
+        <!-- The Row is responsible for drawing the horizontal gridlines. It draws only its top gridline,
+           assuming that the bottom gridline will be drawn by its following row/element -->
+        <Setter Property="BorderThickness"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).HorizontalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Top'}" />
+
+        <Setter Property="BorderBrush"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).HorizontalGridLineBrush}" />
+
+        <!--<Setter Property="Template" Value="{StaticResource tableViewRowTemplate}" />-->
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{StaticResource tableViewRowTemplate}">
+                    <Binding Path="(sbx:SBXGridControl.DataRowTemplate)" Mode="OneWay" RelativeSource="{RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:ViewBase.IsLastItem)}"
+                      Value="True">
+                <Setter Property="BorderThickness"
+                    Value="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).HorizontalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Top, Bottom'}" />
+                <Setter Property="Margin"
+                    Value="0,0,0,5"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.HasExpandedDetails)}"
+                      Value="True">
+                <Setter Property="BorderThickness"
+                    Value="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).HorizontalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Top, Bottom'}" />
+
+            </DataTrigger>
+
+            <!-- Enabled/Disabled Odd datarow style alternation -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).IsAlternatingRowStyleEnabled}"
+                          Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridVirtualizingPanel.ItemIndex), Converter={x:Static xcdg:IndexToOddConverter.Singleton}}"
+                          Value="True" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="Background"
+                    Value="LightGray" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: DataRow 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewDataRowStyle"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource tableViewSBXGridViewRowStyle}">
+        
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewDataRowStyle" />
+        
+        <!-- The row height may need to be adjusted to match the cell height for character col and row positioning. -->
+        <Setter Property="Height">
+            <Setter.Value>
+                    <Binding Path="(sbx:SBXGridControl.RowHeight)" 
+                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}" 
+                             Mode="OneWay"
+                             Converter="{StaticResource SBConverter}"/>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+
+    <!--**************************
+    * STYLE: DataRow for selection processes.
+    ************************** -->
+    <Style x:Key="tableViewSBXSCGridViewDataRowStyle"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource tableViewSBXGridViewDataRowStyle}">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXSCGridViewDataRowStyle" />
+
+        <Setter Property="SelectionBackground"
+              Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+        
+        <Setter Property="InactiveSelectionBackground"
+              Value="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" />
+
+    </Style>
+    
+    <!--**************************
+    * STYLE: InsertionRow 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewInsertionRowStyle"
+          TargetType="xcdg:InsertionRow"
+          BasedOn="{StaticResource tableViewSBXGridViewDataRowStyle}">
+        
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewInsertionRowStyle" />
+
+        <Style.Triggers>
+            <Trigger Property="IsCurrent"
+                  Value="True">
+
+                <Setter Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource Self},Path=SelectionBackground}" />
+                <Setter Property="Foreground"
+                    Value="{Binding RelativeSource={RelativeSource Self},Path=SelectionForeground}" />
+
+            </Trigger>
+
+            <Trigger Property="xcdg:GroupLevelIndicatorPane.GroupLevel"
+                  Value="-1">
+                <!-- We don't want to display the Group Margins for the InsertionRow. -->
+                <Setter Property="xcdg:GroupLevelIndicatorPane.ShowIndicators"
+                    Value="False"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: ColumnManagerRow 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewColumnManagerRowStyle"
+          TargetType="xcdg:ColumnManagerRow"
+          BasedOn="{StaticResource tableViewSBXGridViewRowStyle}">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewColumnManagerRowStyle" />
+
+        <!-- Use a different background and foreground than the base Row style. -->
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="xcdg:TableView.FixedColumnSplitterStyle"
+              Value="{StaticResource columnManagerRowSplitterStyle}"/>
+
+        <Setter Property="xcdg:RowSelector.Visible"
+              Value="False" />
+
+        <!--<Setter Property="Template"  Value="{StaticResource tableViewColumnManagerRowTemplate}"/>-->
+        
+        <!-- Check if a column manager row template has been set on the grid, if so use it. -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{StaticResource tableViewColumnManagerRowTemplate}">
+                    <Binding Path="(sbx:SBXGridControl.ColumnManagerRowTemplate)" Mode="OneWay" RelativeSource="{RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}" Converter="{StaticResource SBUnsetValueConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Disable sorting if there are editable columns. E11162*USA. -->
+        <Setter Property="AllowSort" Value="{Binding Path=(sbc:SBGridControl.EditableColumnCount), 
+            FallbackValue=False, 
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type xcdg:DataGridControl}},
+            Converter={StaticResource SBConverter}, ConverterParameter=Reverse}" />
+
+        <Style.Triggers>
+            <Trigger Property="xcdg:GroupLevelIndicatorPane.GroupLevel"
+                  Value="-1">
+                <!-- We don't want to display the Group Margins for the ColumnManagerRow. -->
+                <Setter Property="xcdg:GroupLevelIndicatorPane.ShowIndicators"
+                    Value="False"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * TEMPLATE: StatRow 
+    * SBXInterleavedStatRowTemplate
+    ************************** -->
+    <ControlTemplate x:Key="SBXInterleavedStatRowTemplate" TargetType="xcdg:StatRow">
+
+        <!-- A basic Row Template requires at least a Panel named "PART_CellsHost" to which the Row's cells will be added.
+           This Panel is usually placed inside a Border who is responsible for painting the gridlines. -->
+
+
+        <!-- This Grid is used to layout the GroupLevelIndicatorPane placeholder and the CellsHost panel. -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- HierarchicalGroupLevelIndicatorPane -->
+                <ColumnDefinition Width="Auto" />
+                <!-- GroupLevelIndicatorPane -->
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+
+                <!-- CellsHost panel -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- The border responsible for the visual outline of the row (gridlines and background)
+              spans the GroupLevelIndicatorPane and CellsHost Panel. Those 2 elements are not children of
+              the Border because we don't want the border to be displayed in the GroupLevelIndicatorPane. -->
+            <Border Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 xcdg:TableView.CanScrollHorizontally="False"
+                 Background="{TemplateBinding Background}"
+                 BorderBrush="{TemplateBinding BorderBrush}"
+                 BorderThickness="{TemplateBinding BorderThickness}"
+                 Padding="{TemplateBinding Padding}" />
+
+            <!-- GroupLevelIndicatorPane is a placeholder for individual GroupLevelIndicator elements that are added
+                       whenever this Row is part of a group. -->
+            <xcdg:HierarchicalGroupLevelIndicatorPane xcdg:TableView.CanScrollHorizontally="False"
+                                                    Grid.Column="0" />
+            <xcdg:GroupLevelIndicatorPane xcdg:TableView.CanScrollHorizontally="False"
+                                        Grid.Column="1" />
+
+            <!-- Button that is used to expand/collapse the group. -->
+            <Button x:Name="detailsToggle"
+                 Template="{StaticResource detailsExpanderButtonTemplate}"
+                 VerticalAlignment="Top"
+                 Grid.Column="2"
+                 Margin="2,4,2,0"
+                 Command="{x:Static xcdg:DataGridCommands.ToggleDetailExpansion}"
+                 OverridesDefaultStyle="True"
+                 Focusable="False"
+                 Visibility="Collapsed"
+                 xcdg:TableView.CanScrollHorizontally="False" />
+
+
+            <!-- The border responsible for the visual grid lines at left and right of the row. 
+              This is to compensate the StatCell styles that are not drawing any vertical grid
+              lines. In these cases, we still want the left-most and right-most grid line to be
+              shown. -->
+            <Border Grid.Column="2"
+                 Grid.ColumnSpan="2"
+                 BorderThickness="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Right'}"
+                 BorderBrush="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineBrush}" />
+
+            <!-- The PART_CellsHost part designates the Panel to which this Row's Cells should be added.-->
+            <!--<xcdg:FixedCellPanel x:Name="PART_CellsHost"
+                                 sbc:SBUISupport.StyleName="SBXInterleavedStatRowTemplate"
+                               Grid.Column="3"
+                               ColumnStretchMinWidth="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ColumnStretchMinWidth}"
+                               ColumnStretchMode="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ColumnStretchMode}"
+                               FixedCellCount="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).FixedColumnCount, Mode=TwoWay}"
+                               SplitterStyle="{TemplateBinding xcdg:TableView.FixedColumnSplitterStyle}"
+                               SplitterWidth="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).FixedColumnSplitterWidth}"
+                               ShowSplitter="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ShowFixedColumnSplitter}"
+                               FixedColumnDropMarkPen="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).FixedColumnDropMarkPen}"
+                               Margin="{TemplateBinding BorderThickness}" />-->
+            
+            <sbc:SBInterleavedGridLayout x:Name="PART_CellsHost"
+                                         Margin="{TemplateBinding BorderThickness}" 
+                                         Grid.Column="1"
+                                         Grid.Row="0"
+                                         ShowGridLines="False"
+                                         sbc:SBCharacterLayout.ColumnWidth="{Binding Path=(sbc:SBCharacterLayout.ColumnWidth), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+                                         sbc:SBCharacterLayout.RowHeight="{Binding Path=(sbc:SBCharacterLayout.RowHeight), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXGridControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+                                         />
+        </Grid>
+
+        <ControlTemplate.Triggers>
+
+            <!-- When there are details, display the Toggle button for the expansion, collapsing of the details -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).HasDetails}"
+                          Value="True" />
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).AllowDetailToggle}"
+                          Value="True" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="detailsToggle"
+                    Property="Visibility"
+                    Value="Hidden" />
+
+            </MultiDataTrigger>
+
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <!--**************************
+    * STYLE: StatRow 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewStatRowStyle"
+          TargetType="xcdg:StatRow"
+          BasedOn="{StaticResource tableViewSBXGridViewRowStyle}">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewStatRowStyle" />
+
+        <Setter Property="xcdg:TableView.FixedColumnSplitterStyle"
+              Value="{StaticResource statRowSplitterStyle}"/>
+
+        <Setter Property="Template" Value="{StaticResource tableViewStatRowTemplate}"/>
+
+        <Style.Triggers>
+            <Trigger Property="xcdg:GroupLevelIndicatorPane.GroupLevel"
+                  Value="-1">
+                <!-- When the StatRow is not inside a group, we don't want to display the Group Margins. -->
+                <Setter Property="xcdg:GroupLevelIndicatorPane.ShowIndicators"
+                    Value="False"/>
+            </Trigger>
+            <!-- trigger to use a different template for a fixed footers row if the grid is interleaved and not using pixel positioning. (eCase 40842*USA)-->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Path=(sbc:SBControl.UsePixelPositioning), Mode=OneWay}" Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.ParentDataGridControl).TemplatedParent.GuiObjectDefinition.FieldDefinition.IsInterleaved}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource SBXInterleavedStatRowTemplate}"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+
+    <!--**************************
+    * STYLE: FilterRow 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewFilterRowStyle"
+          TargetType="xcdg:FilterRow"
+          BasedOn="{StaticResource tableViewSBXGridViewRowStyle}">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewFilterRowStyle" />
+
+        <Style.Triggers>
+            <Trigger Property="xcdg:GroupLevelIndicatorPane.GroupLevel"
+                  Value="-1">
+                <!-- We don't want to display the Group Margins for the FilterRow. -->
+                <Setter Property="xcdg:GroupLevelIndicatorPane.ShowIndicators"
+                    Value="False" />
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: Cell Style
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewCellStyle"
+          TargetType="xcdg:Cell">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewCellStyle"  />
+        <!-- The following line caused the field to flash white, before taking on the color set in the field style. This only occurred in the -->
+        <!-- interleaved grids. (kp Feb 4, 2010) -->
+        <!-- <Setter Property="CurrentBackground" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />-->
+        
+         <Setter Property="CurrentBackground" Value="Transparent" />
+
+        <Setter Property="CurrentForeground"
+              Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+
+        <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+        <Setter Property="Background"
+              Value="Transparent" />
+
+        <!-- In TableView, each Cell has the same width as its ParentColum's ActualWidth -->
+        <Setter Property="Width"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=ParentColumn.ActualWidth}" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <!-- The Cell is responsible for drawing the vertical gridlines. It draws only its right gridline, 
+           assuming that the left gridline will have been drawn by its preceding cell -->
+        <Setter Property="BorderThickness"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Right'}" />
+
+        <Setter Property="BorderBrush"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineBrush}" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewCellTemplate}" />
+
+        <!-- Check to see if I am using positioning, i.e. UsePixelPositioning on the column definition is True, if not the width is controled by the grid in the row. -->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.ColumnDefinition.UsePixelCoordinates, Mode=OneWay}" Value="True" >
+                <!-- In TableView, each Cell has the same width as its ParentColum's ActualWidth -->
+                <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self},Path=ParentColumn.ActualWidth}" />
+            </DataTrigger>
+            <!-- if the grid is not using pixel positioing and is not interleaved I must still layout the grid as a grid. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.ColumnDefinition.UsePixelCoordinates, Mode=OneWay}" Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.ParentDataGridControl).TemplatedParent.GuiObjectDefinition.FieldDefinition.IsInterleaved}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Self},Path=ParentColumn.ActualWidth}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--**************************
+    * STYLE: DataCell
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewDataCellStyle"
+          TargetType="xcdg:DataCell"
+          BasedOn="{StaticResource tableViewSBXGridViewCellStyle}">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewDataCellStyle" />
+        
+        <!-- Removes the border around the cell -->
+        <Setter Property="Padding" Value="0,0,1,0" />
+
+        <Setter Property="sbx:SBXGridControl.SetCellData" Value="{Binding Path=.}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: InsertionCell
+   ************************** -->
+    <Style x:Key="tableViewSBXGridViewInsertionCellStyle"
+          TargetType="xcdg:InsertionCell"
+          BasedOn="{StaticResource tableViewSBXGridViewDataCellStyle}" >
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewInsertionCellStyle" />
+        
+    </Style>
+
+    <sbx:SBXContextMenu x:Key="ColumnHeaderContextMenu">
+        <MenuItem Header="Lock Column" Command="sbc:SBCommands.SBLockGridColumnCommand" IsCheckable="True" 
+                  IsChecked="{Binding Path=(sbx:SBXColumn.IsFixed), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbx:SBXContextMenu}}}" />
+    </sbx:SBXContextMenu>
+
+    <!--**************************
+    * TEMPLATE: ColumnManagerCell 
+    ************************** -->
+    <ControlTemplate x:Key="SBTableViewColumnManagerCellTemplate"
+                    TargetType="xcdg:ColumnManagerCell">
+
+        <!-- We don't use the base Cell Template for the ColumnManagerCell because it need more elements
+           to function properly: a Thumb named "PART_ColumnResizerThumb" that is used to resize the
+           ColumnManagerCells's ParentColumn.Width and a glyph that represents the Column's SortDirection. -->
+
+        <Border  BorderBrush="{TemplateBinding BorderBrush}"
+               BorderThickness="{TemplateBinding BorderThickness}">
+
+            <!-- This Grid is used to position the resizer Thumb over the ColumnManagerCell -->
+            <Grid >
+
+
+                <Rectangle x:Name="PART_columnSeparator"
+                           Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Stretch"
+                           Width="1"
+                           Margin="0,2,0,2" />
+
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Background="{TemplateBinding Background}" Grid.Column="0">
+
+                        <!-- This Grid is used to layout the delimiter lines on top of the ContentPresenter -->
+                        <Grid>
+
+                            <Border Padding="2,0,0,0">
+
+
+                                <Grid x:Name="contentPanel" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="PART_SBXColumnHeader"
+                                               Grid.Column="0"
+                                               Grid.Row="0"
+                                               Text="{TemplateBinding xcdg:ColumnManagerCell.Content}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               TextAlignment="{Binding Path=ParentColumn.ColumnDefinition.Justification, 
+                                                                       RelativeSource={RelativeSource TemplatedParent}, 
+                                                                       Mode=OneWay,
+                                                                       Converter={StaticResource SBTextAlignmentConverter}}"
+                                               />
+                                    <ContentPresenter x:Name="sortGlyphPresenter"
+                                                      Grid.Column="1"
+                                                      Grid.Row="0"
+                                                      Content="{x:Null}"
+                                                      ContentTemplate="{x:Null}"/>
+                                </Grid>
+
+                            </Border>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Border x:Name="thumbToggleBackgroundBorder" Grid.Column="1">
+
+                        <Grid>
+
+                            <Border x:Name="toggleDelimeterBorder"
+                             BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                             BorderThickness="1,0,0,0"
+                             Margin="0,4,0,4"
+                             Background="Transparent"
+                             Visibility="Collapsed">
+
+                                <Border x:Name="toggleDelimeterBorder2"
+                                BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+                                BorderThickness="1,0,0,0"
+                                Margin="0,0,0,0"
+                                Background="Transparent"
+                                Visibility="Collapsed">
+
+                                </Border>
+
+                            </Border>
+
+                            <ToggleButton x:Name="toggleButton"
+                                   Template="{StaticResource filterToggleButton}"
+                                   Focusable="False"
+                                   VerticalAlignment="Stretch"
+                                   Visibility="Collapsed"
+                                   Margin="2,0,0,0"
+                                   Opacity="0.5" />
+
+                            <xcdg:AutoFilterPopup x:Name="filterOptions"
+                                            PopupAnimation="Slide"
+                                            IsOpen="{Binding ElementName=toggleButton,
+                                                Path=IsChecked,
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                            StaysOpen="False"
+                                            AllowsTransparency="True"
+                                            PlacementTarget="{Binding ElementName=toggleButton}">
+
+                                <xcdg:AutoFilterControl x:Name="autoFilterControl"
+                                                 Background="White"
+                                                 BorderBrush="Black"
+                                                 BorderThickness="1"
+                                                 AutoFilterColumn="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=xcdg:ColumnManagerCell},
+                                                                            Path=ParentColumn}"
+                                                 Style="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType=xcdg:ColumnManagerCell}, 
+                                                                 Path=ParentColumn.AutoFilterControlStyle}"
+                                                 TextElement.Foreground="{TemplateBinding TextElement.Foreground}" />
+                            </xcdg:AutoFilterPopup>
+
+                            <!-- Thumb that is used to resize the Column. -->
+                            <Thumb x:Name="PART_ColumnResizerThumb"
+                            Style="{StaticResource invisibleThumbStyle}"
+                            Width="6"
+                            HorizontalAlignment="Right" />
+
+                        </Grid>
+
+                    </Border>
+
+                </Grid>
+
+            </Grid>
+
+        </Border>
+
+        <ControlTemplate.Triggers>
+
+            <!-- Trigger related to the filteringToggleButton-->
+            <Trigger SourceName="toggleButton"
+                  Property="IsMouseOver"
+                  Value="True">
+
+                <Setter TargetName="toggleButton"
+                    Property="Opacity"
+                    Value="1" />
+            </Trigger>
+
+            <!-- Always visible if filterOptions popup IsOpen -->
+            <Trigger SourceName="filterOptions"
+                  Property="IsOpen"
+                  Value="True">
+
+                <Setter TargetName="toggleButton"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleButton"
+                    Property="Opacity"
+                    Value="1" />
+
+                <Setter TargetName="toggleDelimeterBorder2"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleButton"
+                    Property="Opacity"
+                    Value="1" />
+
+            </Trigger>
+
+            <!-- Display FilterToggleButton Trigger on MouseOver -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentRow.AllowAutoFilter}"
+                          Value="True" />
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}"
+                          Value="True" />
+
+                    <Condition Value="True"
+                          Binding="{Binding ElementName=autoFilterControl, Path=HasDistinctValues}" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="toggleButton"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleDelimeterBorder"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleDelimeterBorder2"
+                    Property="Visibility"
+                    Value="Visible" />
+
+
+            </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" >
+                <Setter Property="sbx:SBXGridControl.MouseOverControl" Value="{Binding RelativeSource={RelativeSource Self}, Path=.}" />
+            </DataTrigger>
+            
+            <!-- Display FilterToggleButton Trigger to display AutoFilterGlyph -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentRow.AllowAutoFilter}"
+                          Value="True" />
+
+                    <Condition Value="True"
+                          Binding="{Binding ElementName=autoFilterControl, Path=HasDistinctValues}" />
+
+                    <Condition Value="True"
+                          Binding="{Binding ElementName=autoFilterControl, Path=HasAutoFilterValues}" />
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter TargetName="toggleButton"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleDelimeterBorder"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleDelimeterBorder2"
+                    Property="Visibility"
+                    Value="Visible" />
+
+                <Setter TargetName="toggleButton"
+                    Property="Opacity"
+                    Value="1" />
+
+            </MultiDataTrigger>
+
+            <Trigger Property="IsPressed"
+                  Value="True">
+
+                <Setter TargetName="contentPanel"
+                    Property="Margin"
+                    Value="1,1,-1,-1" />
+
+            </Trigger>
+
+            <!-- The following 2 triggers allow the appropriate Sort Glyph to be displayed
+              depending on the ParentColumn's SortDirection. -->
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.SortDirection}"
+                      Value="Ascending">
+
+                <Setter TargetName="sortGlyphPresenter"
+                    Property="ContentPresenter.ContentTemplate"
+                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).AscendingSortGlyph}" />
+
+                <Setter TargetName="sortGlyphPresenter"
+                    Property="Margin"
+                    Value="6,0,0,0" />
+
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.SortDirection}"
+                      Value="Descending">
+
+                <Setter TargetName="sortGlyphPresenter"
+                    Property="ContentPresenter.ContentTemplate"
+                    Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).DescendingSortGlyph}" />
+
+                <Setter TargetName="sortGlyphPresenter"
+                    Property="Margin"
+                    Value="6,0,0,0" />
+
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.HasFixedWidth}"
+                      Value="True">
+                <Setter TargetName="PART_ColumnResizerThumb"
+                    Property="IsEnabled"
+                    Value="False" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentRow.AllowColumnResize}"
+                      Value="False">
+                <Setter TargetName="PART_ColumnResizerThumb"
+                    Property="IsEnabled"
+                    Value="False" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentColumn.Visible}"
+                      Value="False">
+                <Setter Property="Visibility"
+                    Value="Collapsed" />
+            </DataTrigger>
+
+            <!-- make sure the column resize is disabled if we are using character row layout. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Path=(sbc:SBControl.UsePixelPositioning), Mode=OneWay}" Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.ParentDataGridControl).TemplatedParent.GuiObjectDefinition.FieldDefinition.IsInterleaved}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ColumnResizerThumb"
+                    Property="IsEnabled"
+                    Value="False" />
+                <Setter TargetName="PART_ColumnResizerThumb"
+                    Property="Visibility"
+                    Value="Hidden" />
+                <Setter TargetName="PART_columnSeparator"
+                    Property="Visibility"
+                    Value="Hidden" />
+                
+            </MultiDataTrigger>
+
+            <!--<EventTrigger RoutedEvent="UIElement.MouseRightButtonUp" SourceName="textBlock">
+                <Setter Property="ContextMenu" Value="{StaticResource NoFocusContextMenu}" />
+            </EventTrigger>-->
+            
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+    <!--**************************
+    * STYLE: ColumnManagerCell 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewColumnManagerCellStyle"
+          TargetType="xcdg:ColumnManagerCell">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewColumnManagerCellStyle" />
+
+        <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+        <Setter Property="Background"
+              Value="Transparent" />
+
+        <!-- In TableView, each Cell has the same width as its ParentColum's ActualWidth -->
+        <Setter Property="Width"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=ParentColumn.ActualWidth}" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <Setter Property="ContextMenu" Value="{StaticResource ColumnHeaderContextMenu}" />
+        
+        <Setter Property="Template"
+              Value="{StaticResource SBTableViewColumnManagerCellTemplate}" />
+
+        <Style.Triggers>
+
+            <Trigger Property="IsBeingDragged"
+                  Value="True">
+
+                <Setter Property="Background"
+                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+            </Trigger>
+
+            <!-- eCase 12255*USA, when using character layout the ColumnManager must not have the width set otherwise it truncates right justified headings. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, Path=(sbc:SBControl.UsePixelPositioning), Mode=OneWay}" Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.ParentDataGridControl).TemplatedParent.GuiObjectDefinition.FieldDefinition.IsInterleaved}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Width" Value="NaN"/>
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: StatCell
+   ************************** -->
+    <Style x:Key="tableViewSBXGridViewStatCellStyle"
+          TargetType="xcdg:StatCell">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewStatCellStyle" />
+
+        <!-- Set the Cell's background to Transparent to make it hit-testable
+           while preserving the background drawn by the underlying Row. -->
+        <Setter Property="Background"
+              Value="Transparent" />
+
+        <!-- In TableView, each Cell has the same width as its ParentColum's ActualWidth -->
+        <Setter Property="Width"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=ParentColumn.ActualWidth}" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <!-- To prevent difference in size between StatCells and DataCells-->
+        <Setter Property="BorderBrush"
+              Value="Transparent" />
+
+        <Setter Property="BorderThickness"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Right'}" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewStatCellTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: FilterCell
+   ************************** -->
+    <Style x:Key="tableViewSBXGridViewFilterCellStyle"
+          TargetType="xcdg:FilterCell">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewFilterCellStyle" />
+
+        <!-- In TableView, each Cell has the same width as its ParentColum's ActualWidth -->
+        <Setter Property="Width"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=ParentColumn.ActualWidth}" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <!-- The Cell is responsible for drawing the vertical gridlines. It draws only its right gridline, 
+           assuming that the left gridline will have been drawn by its preceding cell -->
+
+        <Setter Property="BorderThickness"
+              Value="{Binding RelativeSource={RelativeSource Self},Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineThickness,Converter={StaticResource thicknessConverter},ConverterParameter='Right'}" />
+
+        <Setter Property="BorderBrush"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).VerticalGridLineBrush}" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewFilterCellTemplate}" />
+
+        <Style.Triggers>
+            <!-- A null ContentTemplate means that there won't be any input control allowing
+              the end-user to modify the filter. -->
+            <Trigger Property="ContentTemplate"
+                  Value="{x:Null}">
+                <Setter Property="Background" 
+                    Value="LightGray" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--**************************
+    * STYLE: GroupByControl 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewGroupByControlStyle"
+          TargetType="xcdg:GroupByControl">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewGroupByControlStyle" />
+
+        <!-- If we don't specify a MinHeight, the default "size-to-content" behavior will arrange 
+           the control with a Height of 0, which makes it invisible and unusable.
+           In a typical TableView, a height of at least 25 is appropriate for the GroupByControl. -->
+        <Setter Property="MinHeight"
+              Value="25" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="Padding"
+              Value="8"/>
+
+        <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+        <Setter Property="BorderThickness"
+              Value="1,1,1,0" />
+
+        <Setter Property="xcdg:RowSelector.Visible"
+              Value="False" />
+
+        <Setter Property="xcdg:TableView.CanScrollHorizontally"
+              Value="False" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewGroupByControlTemplate}" />
+
+        <Setter Property="Visibility" Value="Collapsed"/> <!-- make sure that this GroupBy is not visible for SB/XA -->
+    </Style>
+
+    <!--**************************
+    * STYLE: GroupByItem
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewGroupByItemStyle"
+          TargetType="xcdg:GroupByItem">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewGroupByItemStyle" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewGroupByItemTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: GroupHeaderControl 
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewGroupHeaderControlStyle"
+          TargetType="xcdg:GroupHeaderControl">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewGroupHeaderControlStyle" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+        <Setter Property="xcdg:TableView.CanScrollHorizontally"
+              Value="False"/>
+
+        <Setter Property="BorderThickness"
+              Value="0,1,1,0" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <Setter Property="VerticalContentAlignment"
+              Value="Center" />
+
+        <!-- The GroupHeaderControl itself must not be focusable. The main Border inside its Template will
+           be made Focusable because it is holding the various InputBindings that make the
+           GroupHeaderControl work. -->
+        <Setter Property="Focusable"
+              Value="False" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewGroupHeaderControlTemplate}" />
+
+    </Style>
+
+
+    <!--**************************
+    * STYLE: GroupLevelIndicator
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewGroupLevelIndicatorStyle"
+          TargetType="xcdg:GroupLevelIndicator">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewGroupLevelIndicatorStyle" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+        <Setter Property="BorderThickness"
+              Value="0,0,1,0" />
+
+        <Setter Property="Width"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).GroupLevelIndicatorWidth}" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewGroupLevelIndicatorTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: DetailIndicator
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewDetailIndicatorStyle"
+          TargetType="xcdg:DetailIndicator">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewDetailIndicatorStyle" />
+
+        <Setter Property="Background"
+              Value="{x:Null}" />
+
+        <Setter Property="Width"
+              Value="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).DetailIndicatorWidth}" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewDetailIndicatorTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: GroupLevelIndicatorPane
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewGroupLevelIndicatorPaneStyle"
+          TargetType="xcdg:GroupLevelIndicatorPane">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewGroupLevelIndicatorPaneStyle" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewGroupLevelIndicatorPaneTemplate}"/>
+
+        <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}"/>
+
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsLeaf"
+                          Value="False" />
+                    <Condition Property="xcdg:ViewBase.IsLastItem"
+                          Value="True"/>
+                </MultiTrigger.Conditions>
+
+                <Setter Property="Margin"
+                    Value="0,0,0,-5" />
+            </MultiTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: HierarchicalGroupLevelIndicatorPane
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewHierarchicalGroupLevelIndicatorPaneStyle"
+          TargetType="xcdg:HierarchicalGroupLevelIndicatorPane">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewHierarchicalGroupLevelIndicatorPaneStyle" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewHierarchicalGroupLevelIndicatorPaneTemplate}"/>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: HierarchicalGroupByControlNode
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewHierarchicalGroupByControlNodeStyle"
+          TargetType="xcdg:HierarchicalGroupByControlNode">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewHierarchicalGroupByControlNodeStyle" />
+
+        <Setter Property="StairHeight"
+              Value="0"/>
+
+        <Setter Property="ConnectionLineOffset"
+              Value="0"/>
+
+        <Setter Property="ConnectionLineAlignment"
+              Value="CenterToCenter"/>
+
+        <Setter Property="Focusable"
+              Value="False"/>
+
+        <Setter Property="Margin"
+              Value="4"/>
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewHierarchicalGroupByControlNodeTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: HierarchicalGroupByControl
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewHierarchicalGroupByControlStyle"
+          TargetType="xcdg:HierarchicalGroupByControl">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewHierarchicalGroupByControlStyle" />
+
+        <!-- If we don't specify a MinHeight, the default "size-to-content" behavior will arrange 
+           the control with a Height of 0, which makes it invisible and unusable.
+           In a typical TableView, a height of at least 25 is appropriate for the GroupByControl. -->
+        <Setter Property="MinHeight"
+              Value="25" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="Padding"
+              Value="8"/>
+
+        <Setter Property="BorderBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+        <Setter Property="BorderThickness"
+              Value="1,1,1,0" />
+
+        <Setter Property="StairHeight"
+              Value="0"/>
+
+        <Setter Property="ConnectionLineOffset"
+              Value="0"/>
+
+        <Setter Property="ConnectionLineAlignment"
+              Value="CenterToCenter"/>
+
+        <Setter Property="xcdg:RowSelector.Visible"
+              Value="False" />
+
+        <Setter Property="xcdg:TableView.CanScrollHorizontally"
+              Value="False" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewCommonHierarchicalGroupByControlTemplate}" />
+
+        <Style.Triggers>
+
+            <!-- We use the old GroupByControl Template if there are no Details in the DataGridControl.ItemsSource -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).HasDetails}"
+                          Value="False"/>
+
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(xcdg:DataGridControl.DataGridContext).ParentDataGridContext, Converter={StaticResource nullToBooleanConverter}}"
+                          Value="True"/>
+
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="Template"
+                    Value="{StaticResource tableViewCommonHierarchicalGroupByControlOldGroupByControlTemplate}"/>
+
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!--**************************
+    * STYLE: HierarchicalGroupByItem
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewHierarchicalGroupByItemStyle"
+          TargetType="xcdg:HierarchicalGroupByItem">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewHierarchicalGroupByItemStyle" />
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+
+        <Setter Property="Padding"
+              Value="{StaticResource cellPadding}" />
+
+        <Setter Property="Margin"
+              Value="4,0,4,0"/>
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewHierarchicalGroupByItemTemplate}" />
+
+    </Style>
+
+    <!--**************************
+    * STYLE: AutoFilterControl
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewAutoFilterControlStyle"
+          TargetType="xcdg:AutoFilterControl">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewAutoFilterControlStyle" />
+
+        <Setter Property="Template"
+              Value="{StaticResource tableViewAutoFilterControlTemplate}"/>
+    </Style>
+
+    <!--**************************
+    * STYLE: ScrollTip
+    ************************** -->
+    <Style x:Key="tableViewSBXGridViewScrollTipStyle"
+          TargetType="xcdg:ScrollTip">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewScrollTipStyle" />
+
+        <Setter Property="Template"
+              Value="{StaticResource scrollTipTemplate}"/>
+
+        <Setter Property="VerticalAlignment"
+              Value="Center"/>
+
+        <Setter Property="HorizontalAlignment"
+              Value="Right"/>
+
+        <Setter Property="Background"
+              Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
+
+        <Setter Property="Foreground"
+              Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+
+        <Setter Property="BorderBrush"
+              Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+    </Style>
+
+    <!-- =================================================================== -->
+    <!-- Default values for the View                                         -->
+    <!-- =================================================================== -->
+
+    <Style x:Key="tableViewSBXGridViewDefaultValues"
+          TargetType="sbx:SBXGridView">
+
+        <Setter Property="sbc:SBUISupport.StyleName" Value="tableViewSBXGridViewDefaultValues" />
+
+        <Setter Property="HorizontalGridLineBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+        <Setter Property="HorizontalGridLineThickness"
+              Value="1" />
+
+        <Setter Property="VerticalGridLineBrush"
+              Value="{StaticResource gridLineBrush}" />
+
+        <Setter Property="VerticalGridLineThickness"
+              Value="1" />
+
+        <Setter Property="GroupLevelIndicatorWidth"
+              Value="17" />
+
+        <Setter Property="DetailIndicatorWidth"
+              Value="34" />
+
+        <Setter Property="DefaultDropMarkPen"
+              Value="{StaticResource dropMarkPen}" />
+
+        <!-- Those glyphs are null by default on ViewBase, so every Theme should define
+           and set their own custom glyphs. -->
+
+        <Setter Property="AscendingSortGlyph"
+              Value="{StaticResource ascendingSortGlyph}" />
+
+        <Setter Property="DescendingSortGlyph"
+              Value="{StaticResource descendingSortGlyph}" />
+
+        <Setter Property="ExpandGroupGlyph"
+              Value="{StaticResource expandGroupGlyph}" />
+
+        <Setter Property="CollapseGroupGlyph"
+              Value="{StaticResource collapseGroupGlyph}" />
+
+        <Setter Property="CurrentItemGlyph"
+              Value="{StaticResource currentItemGlyph}" />
+
+        <Setter Property="EditingRowGlyph"
+              Value="{StaticResource editingRowGlyph}" />
+
+        <Setter Property="ValidationErrorGlyph"
+              Value="{StaticResource validationErrorGlyph}" />
+
+        <Setter Property="InsertionRowGlyph"
+              Value="{StaticResource insertionRowGlyph}" />
+
+        <Setter Property="AutoFilterDropDownGlyph"
+              Value="{StaticResource autoFilterDropDownGlyph}"/>
+
+        <Setter Property="AutoFilterGlyph"
+              Value="{StaticResource autoFilterGlyph}"/>
+
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- DefaultStyleKey declarations                                        -->
+    <!-- =================================================================== -->
+
+    <!-- Added kp Sept 10, 2008 -->
+    <Style x:Key="DefaultSBXTableViewStyle" BasedOn="{StaticResource tableViewSBXGridViewDefaultValues}" TargetType="sbx:SBXGridView">
+        <Setter Property="sbc:SBUISupport.StyleName"            Value="DefaultSBXTableViewStyle" />
+        <Setter Property="UseDefaultHeadersFooters"             Value="False" />
+        <Setter Property="KeyboardNavigation.TabNavigation"     Value="Local"/>
+        <Setter Property="ShowFixedColumnSplitter"              Value="False" />
+        <Setter Property="InsertionRowLocation"                 Value="None" />
+<!--        <Setter Property="ColumnManagerRowLocation"             Value="FixedHeader" />-->
+        <Setter Property="GroupByControlLocation"               Value="None" />
+        <Setter Property="ShowRowSelectorPane" Value="{Binding Path=ShowRowSelector, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay }"/>
+        <Setter Property="ColumnManagerRowLocation" Value="{Binding Path=GuiObjectDefinition.ShowHeadings, 
+                                                          RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}, 
+                                                          Converter={StaticResource SBConverter},
+                                                          Mode=OneWay }" />
+        <!--<Setter Property="sbc:SBGridControl.VerticalScrollBar"  Value="{sbce:SBFindElement ElementName=PART_VerticalScrollBar}" />-->
+    </Style>
+
+    <!-- Changed from BasedOn="{StaticResource tableViewSBXGridViewDefaultValues}" to BasedOn="{StaticResource DefaultSBXTableViewStyle}" kp Sept 10, 2008 -->
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme}"
+          TargetType="sbx:SBXGridView"
+          BasedOn="{StaticResource DefaultSBXTableViewStyle}" />
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataGridControl}"
+          TargetType="xcdg:DataGridControl"
+          BasedOn="{StaticResource tableViewSBXGridViewGridControlStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:RowSelectorPane}"
+          TargetType="xcdg:RowSelectorPane"
+          BasedOn="{StaticResource tableViewSBXGridViewRowSelectorPaneStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:RowSelector}"
+          TargetType="xcdg:RowSelector"
+          BasedOn="{StaticResource tableViewSBXGridViewRowSelectorStyle}" />
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:Row}"
+          TargetType="xcdg:Row"
+          BasedOn="{StaticResource tableViewSBXGridViewRowStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataRow}"
+          TargetType="xcdg:DataRow"
+          BasedOn="{StaticResource tableViewSBXGridViewDataRowStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:InsertionRow}"
+          TargetType="xcdg:InsertionRow"
+          BasedOn="{StaticResource tableViewSBXGridViewInsertionRowStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ColumnManagerRow}"
+          TargetType="xcdg:ColumnManagerRow"
+          BasedOn="{StaticResource tableViewSBXGridViewColumnManagerRowStyle}">
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:StatRow}"
+          TargetType="xcdg:StatRow"
+          BasedOn="{StaticResource tableViewSBXGridViewStatRowStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:FilterRow}"
+          TargetType="xcdg:FilterRow"
+          BasedOn="{StaticResource tableViewSBXGridViewFilterRowStyle}" />
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:Cell}"
+          TargetType="xcdg:Cell"
+          BasedOn="{StaticResource tableViewSBXGridViewCellStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DataCell}"
+          TargetType="xcdg:DataCell"
+          BasedOn="{StaticResource tableViewSBXGridViewDataCellStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:InsertionCell}"
+          TargetType="xcdg:InsertionCell"
+          BasedOn="{StaticResource tableViewSBXGridViewInsertionCellStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ColumnManagerCell}"
+          TargetType="xcdg:ColumnManagerCell"
+          BasedOn="{StaticResource tableViewSBXGridViewColumnManagerCellStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:StatCell}"
+          TargetType="xcdg:StatCell"
+          BasedOn="{StaticResource tableViewSBXGridViewStatCellStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:FilterCell}"
+          TargetType="xcdg:FilterCell"
+          BasedOn="{StaticResource tableViewSBXGridViewFilterCellStyle}" />
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupByControl}"
+          TargetType="xcdg:GroupByControl"
+          BasedOn="{StaticResource tableViewSBXGridViewGroupByControlStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupByItem}"
+          TargetType="xcdg:GroupByItem"
+          BasedOn="{StaticResource tableViewSBXGridViewGroupByItemStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupHeaderControl}"
+          TargetType="xcdg:GroupHeaderControl"
+          BasedOn="{StaticResource tableViewSBXGridViewGroupHeaderControlStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupLevelIndicator}"
+          TargetType="xcdg:GroupLevelIndicator"
+          BasedOn="{StaticResource tableViewSBXGridViewGroupLevelIndicatorStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:DetailIndicator}"
+          TargetType="xcdg:DetailIndicator"
+          BasedOn="{StaticResource tableViewSBXGridViewDetailIndicatorStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:GroupLevelIndicatorPane}"
+          TargetType="xcdg:GroupLevelIndicatorPane"
+          BasedOn="{StaticResource tableViewSBXGridViewGroupLevelIndicatorPaneStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:HierarchicalGroupLevelIndicatorPane}"
+          TargetType="xcdg:HierarchicalGroupLevelIndicatorPane"
+          BasedOn="{StaticResource tableViewSBXGridViewHierarchicalGroupLevelIndicatorPaneStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:AutoFilterControl}"
+          TargetType="xcdg:AutoFilterControl"
+          BasedOn="{StaticResource tableViewSBXGridViewAutoFilterControlStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:ScrollTip}"
+          TargetType="xcdg:ScrollTip"
+          BasedOn="{StaticResource tableViewSBXGridViewScrollTipStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:HierarchicalGroupByControlNode}"
+          TargetType="xcdg:HierarchicalGroupByControlNode"
+          BasedOn="{StaticResource tableViewSBXGridViewHierarchicalGroupByControlNodeStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:HierarchicalGroupByControl}"
+          TargetType="xcdg:HierarchicalGroupByControl"
+          BasedOn="{StaticResource tableViewSBXGridViewHierarchicalGroupByControlStyle}"/>
+
+    <Style x:Key="{xcdg:ThemeKey TargetViewType=sbx:SBXGridView, ThemeType=sbx:SBXGridViewTheme, TargetElementType=xcdg:HierarchicalGroupByItem}"
+          TargetType="xcdg:HierarchicalGroupByItem"
+          BasedOn="{StaticResource tableViewSBXGridViewHierarchicalGroupByItemStyle}"/>
+
+</ResourceDictionary>

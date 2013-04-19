@@ -1,0 +1,96 @@
+<!--
+
+       Name    : SBLogin.xaml
+       Author  : Kendrew Peacey
+
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBComboBox.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/DefaultFieldStyles.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/LocalFormStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Default template for SBLogin. -->
+    <Style TargetType="{x:Type sbc:SBLogin}" BasedOn="{StaticResource BaseSBFormStyle}">
+        <Setter Property="sbc:SBGUIAttribute.SBObjectName" Value="SBLOGIN" />
+        <Setter Property="sbc:SBGUIAttribute.SBTitle" Value="{Binding Path=LoginTitle, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsClosable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsCachable" Value="False" />
+        <Setter Property="LogonOptionsTemplate" Value="{DynamicResource OptionsVisibleTemplate}" />
+        
+        <Style.Triggers>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.SelectedProfile, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="True" />
+                    <Condition Binding="{Binding Path=ApplicationVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Hidden" />
+                    <Condition Binding="{Binding Path=CredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Hidden" />
+                    <Condition Binding="{Binding Path=SBPlusCredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Hidden" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{DynamicResource SessionListTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SessionListTemplate" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.CredentialsRequiredFor, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="1"/>
+                    <Condition Binding="{Binding Path=ApplicationVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Visible" />
+                    <Condition Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{DynamicResource ApplicationListVisibleTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="ApplicationListVisibleTemplate" />
+            </MultiDataTrigger>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlusCredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Visible"/>
+                    <Condition Binding="{Binding Path=CredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Visible" />
+                    <Condition Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{DynamicResource OsAndSBVisibleTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="OsAndSBVisibleTemplate" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlusCredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Hidden"/>
+                    <Condition Binding="{Binding Path=CredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Visible" />
+                    <Condition Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{DynamicResource OsVisibleTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="OsVisibleTemplate" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlusCredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Visible"/>
+                    <Condition Binding="{Binding Path=CredentialsVisibility, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="Hidden" />
+                    <Condition Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{DynamicResource SBVisibleTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SBVisibleTemplate" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.CredentialsRequiredFor, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="6"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{DynamicResource NewSBPasswordTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="NewSBPasswordTemplate" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

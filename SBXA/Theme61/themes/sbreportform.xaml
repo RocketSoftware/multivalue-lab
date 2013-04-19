@@ -1,0 +1,110 @@
+﻿<!--
+
+       Name    : SBReportForm.xaml
+       Author  : Pavel Smelianski
+
+       
+       
+-->
+<ResourceDictionary 
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:sbs="http://schemas.sbxa.com/Shared"
+            xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+            xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBComboBox.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/DefaultFieldStyles.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/LocalFormStyles.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/ConfigurationTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate TargetType="{x:Type sbc:SBReportForm}" x:Key="SBReportFormTemplate">                   
+        <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+            <DockPanel LastChildFill="True">
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_Save As   F2"
+                                  Command="sbc:SBReportFormCommands.SBReportFormSaveCommand"
+                                  CommandTarget="{Binding ElementName=PART_ReportHtmlControl}"/>
+                        <MenuItem Header ="_Print All   F4"
+                                  Command="sbc:SBReportFormCommands.SBReportFormPrintAllCommand"
+                                  CommandTarget="{Binding ElementName=PART_ReportHtmlControl}"/>
+                        <MenuItem Header="e_Xit        CTRL-X"
+                                  Command="sbc:SBReportFormCommands.SBReportFormCloseCommand"
+                                  CommandTarget="{Binding ElementName=PART_ReportHtmlControl}"/>
+                    </MenuItem>
+                </Menu>
+                <sbc:SBHtmlControl x:Name="PART_ReportHtmlControl" 
+                               Source ="{Binding Path=Source, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"
+                               HTML ="{Binding Path=HTML, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"
+                               />
+               
+            </DockPanel>
+            <ContentControl.InputBindings>
+                <KeyBinding Command="sbc:SBReportFormCommands.SBReportFormSaveCommand"
+                                                Key="F2"/>               
+                <KeyBinding Command="sbc:SBReportFormCommands.SBReportFormPrintAllCommand"
+                                                Key="F4"/>                
+                <KeyBinding Command="sbc:SBReportFormCommands.SBReportFormCloseCommand"
+                                                Key="X"
+                                                Modifiers="Control"/>
+                <KeyBinding Command="sbc:SBReportFormCommands.SBReportFormCloseCommand"
+                            Key="Escape" />
+            </ContentControl.InputBindings>
+        </ContentControl>
+       
+    </ControlTemplate>
+
+
+    <Style TargetType="{x:Type sbc:SBReportForm}">
+        <!--Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="False" /-->
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="True" />
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="False" />
+        <Setter Property="sbc:SBForm.FormBorderWidth" Value="{x:Static sbs:GenericConstants.DEFAULT_FORM_BORDER_WIDTH}" />
+        <Setter Property="sbc:SBForm.CanHostStatusBar" Value="False" />
+        <Setter Property="Template" Value="{StaticResource SBReportFormTemplate}" />
+        <!-- Top/Left in WPF pixels from left of screen.
+             Note: Unlike other forms pixel position in Margin is already in screen coordinates
+        -->
+        
+        <Setter Property="sbc:SBForm.FormBorderColor">
+            <Setter.Value>
+                <PriorityBinding >
+                    <PriorityBinding.FallbackValue>
+                        <LinearGradientBrush EndPoint="0.738,0.989" StartPoint="0.279,0.018">
+                            <GradientStop Color="#FF3B9DD1" Offset="1"/>
+                            <GradientStop Color="#FF73C5F0" Offset="0"/>
+                        </LinearGradientBrush>
+                    </PriorityBinding.FallbackValue>
+                    <Binding Path="(sbc:SBGUIAttribute.SBBorderColor)"
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"
+                             />
+                    <Binding Path="GuiObjectDefinition.SBBorderColor" 
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="sbc:SBForm.SBTop"
+                Value ="{Binding Path=GuiObjectDefinition.Margin.Top, 
+                                 RelativeSource={RelativeSource Mode=Self},
+                                 Mode=OneWay}" />
+        <Setter Property="sbc:SBForm.SBLeft"
+                Value ="{Binding Path=GuiObjectDefinition.Margin.Left,
+                        RelativeSource={RelativeSource Mode=Self},
+                   Mode=OneWay}"
+                />
+        <Style.Resources>
+            <Thickness x:Key="SBReportFormMargin" Left="10" Right="10" />
+        </Style.Resources>
+    </Style>
+
+</ResourceDictionary>

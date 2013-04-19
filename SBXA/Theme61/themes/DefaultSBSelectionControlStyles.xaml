@@ -1,0 +1,26 @@
+﻿<!--
+
+       Name    : DefaultSBSelectionControlStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+                    xmlns:sbs="http://schemas.sbxa.com/Shared"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBButtonStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="DefaultSBSelectionControlButtonStyle" BasedOn="{StaticResource BaseSBButtonStyle}" TargetType="{x:Type sbc:SBButton}">
+        <Setter Property="Control.VerticalAlignment" Value="Center" />
+        <Setter Property="Control.Width" Value="{Binding Source={x:Static sbs:GenericConstants.SG_BUTTON_WIDTH}}" />
+    </Style>
+
+
+</ResourceDictionary>

@@ -1,0 +1,182 @@
+<!--
+       
+       Name    : Converters.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbconv="clr-namespace:SBXA.UI.WPFControls.Converters"
+    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+    >
+
+    <sbp:SBBooleanConverter x:Key="SBBooleanConverter"/>
+
+    <sbp:SBReverseBooleanConverter x:Key="SBReverseBooleanConverter"/>
+
+    <sbc:SBMarginConverter x:Key="SBMarginConverter"/>
+
+    <sbc:SBFontConverter x:Key="SBFontConverter" />
+    
+    <sbc:SBFontToIDConverter x:Key="SBFontToIDConverter" />    
+
+    <sbp:OrientationTypeConverter x:Key="OrientationTypeConverter" />
+
+    <sbp:MenuTypeTypeConverter x:Key="SBMenuTypeConverter" />
+
+    <sbc:SBListConverter x:Key="SBListConverter" />
+
+    <sbconv:CompareConverter x:Key="CompareConverter" />
+
+    <sbconv:SBLanguageConverter x:Key="SBLanguageConverter" />
+
+    <sbconv:SBMultiValueConverter x:Key="SBMultiValueConverter" />
+
+    <sbconv:SBColumnAndRowConverter x:Key="SBColumnAndRowConverter" />
+
+    <sbconv:IntToMonthConverter x:Key="IntToMonthConverter" />
+
+    <sbconv:SBColorConverter x:Key="SBColorConverter"/>
+
+    <!-- Converts an SB+ Visible value to a Visibility value. -->
+    <sbconv:SBDrawableConverter x:Key="SBDrawableConverter"/>
+
+    <sbconv:SBPixelConverter x:Key="SBPixelConverter"/>
+
+    <sbconv:SBCoordinatesToMarginConverter x:Key="SBCoordinatesToMarginConverter" />
+    
+    <sbconv:SBDimensionsConverter x:Key="SBDimensionsConverter"/>
+    
+    <sbconv:SBDimensionsMultiConverter x:Key="SBDimensionsMultiConverter"/>
+    
+    <sbconv:SBLeftRelativeToMainConverter x:Key="SBLeftRelativeToMainConverter" />
+    <sbconv:SBTopRelativeToMainConverter x:Key="SBTopRelativeToMainConverter" />
+
+    <sbconv:SBXceedItemConverter x:Key="SBXceedItemConverter"/>
+
+    <sbconv:SBIsNullConverter x:Key="SBIsNullConverter"/>
+
+    <sbconv:SBGenericConverter x:Key="SBConverter"/>
+
+    <sbconv:SBIsNullOrEmptyConverter x:Key="SBIsNullOrEmptyConverter"/>
+
+    <sbconv:SBCompareConverter x:Key="SBCompareConverter"/>
+
+    <sbconv:SBSelectionModeConverter x:Key="SBSelectionModeConverter"/>
+
+    <sbconv:SBXColumnConverter x:Key="SBXColumnConverter"/>
+
+    <sbconv:SBBorderWidthConverter x:Key="SBBorderWidthConverter"/>
+
+    <sbconv:SBLinefeedConverter x:Key="SBLinefeedConverter"/>
+    
+    <sbconv:SBWordWrapConverter x:Key="SBWordWrapConverter"/>
+
+    <sbconv:SBConcatenateConverter x:Key="SBConcatenateConverter"/>
+    
+    <sbconv:SBObjectNameConverter x:Key="SBObjectNameConverter"/>
+
+    <sbconv:SBGridWidthCalculatorConverter x:Key="SBGridWidthCalculatorConverter"/>
+    
+    <sbconv:SBGridHeightCalculatorConverter x:Key="SBGridHeightCalculatorConverter"/>
+    
+    <!-- Converts an SBXA.Shared.Definitions.SeparatorDirection -->
+	<!-- to a System.Windows.Controls.Orientation value.              -->
+    <sbconv:SBOrientationConverter x:Key="SBOrientationConverter"/>
+	
+	<sbconv:SBTextAlignmentConverter x:Key="SBTextAlignmentConverter"/> <!-- Converts a Justification to a TextAlignment value for the purposes of justification. -->
+
+    <!-- Converts horizontal and vertical alignment to a SBString -->
+    <sbconv:SBTextAlignmentMultiConverter x:Key="SBTextAlignmentMultiConverter"/>
+    
+    <sbconv:StringToRichTextConverter x:Key="StringToRichTextConverter"/>
+    
+    <sbconv:SBXamlConverter x:Key="SBXamlConverter"/>
+
+    <!-- Converter to convert a null into DependencyProperty.UnsetValue -->
+    <sbconv:SBUnsetValueConverter x:Key="SBUnsetValueConverter"/>
+
+
+    <!-- Converter to convert true into DependencyProperty.UnsetValue -->
+    <sbconv:SBUnsetTrueConverter x:Key="SBUnsetTrueConverter"/>
+
+    <!-- Converter to convert false into DependencyProperty.UnsetValue -->
+    <sbconv:SBUnsetFalseConverter x:Key="SBUnsetFalseConverter"/>
+
+    <!-- Converter to convert a null or Double.NAN into DependencyProperty.UnsetValue -->
+    <sbconv:SBUnsetDoubleConverter x:Key="SBUnsetDoubleConverter"/>
+
+    <sbconv:SBTypeTypeConverter x:Key="SBTypeTypeConverter"/>
+    
+    <sbconv:SBButtonTextToRichContentConverter x:Key="SBButtonTextToRichContentConverter"/>
+
+    <sbconv:SBButtonTextToAccessKeyConverter x:Key="SBButtonTextToAccessKeyConverter"/>
+
+    <sbconv:SBMenuItemTextToRichContentConverter x:Key="SBMenuItemTextToRichContentConverter"/>
+
+    <sbconv:SBMenuItemUnderlineConverter x:Key="SBMenuItemUnderlineConverter"/>
+
+    <sbconv:SBExpressionConverter x:Key="SBExpressionConverter" />
+    
+    <sbconv:SBBoolToStretchConverter x:Key="SBBoolToStretchConverter" />
+
+    <!-- Converter checks to see if the value in the second element in the array is the tru value is the ToggleDefinition in the first element in the array. -->
+    <sbconv:SBIsToggleCheckedConverter x:Key="SBIsToggleCheckedConverter" />
+    
+    <sbconv:SBComboBoxValueConverter x:Key="SBComboBoxValueConverter" />
+
+    <sbconv:SBGetChildrenConverter x:Key="SBGetChildrenConverter" />
+    
+    <sbconv:SBContextMenuConverter x:Key="SBContextMenuConverter" />
+    
+    <sbconv:SBStyleNameConverter x:Key="SBStyleNameConverter" />
+    
+    <!-- Convert that will provide a way to pass a parameter to a SB+ process, when using the sbc:SBCommands.ExecuteSBPlusProcessCommand -->
+    <sbconv:SBProcessNameConverter x:Key="SBProcessNameConverter" />
+    <!-- Convert that will provide a way to pass parameters to a SB+ process, when using the sbc:SBCommands.ExecuteSBPlusProcessCommand -->
+    <sbconv:SBMultipleParameterConverter x:Key="SBMultipleParameterConverter" />
+    
+    
+    <sbconv:SBTileConverter x:Key="SBTileConverter" />
+
+    <sbconv:SBColumnCounterConverter x:Key="SBColumnCounterConverter" />
+
+    <sbconv:SBCharacterColumnConverter x:Key="SBCharacterColumnConverter" />
+    
+    <!-- Converters specific to Xceed components -->
+    <sbx:SBXRowHeightConverter x:Key="SBXRowHeightConverter"/>
+    
+    <!-- Converter to check if the values contains Rich text -->
+    <sbconv:SBCheckForRichTextConverter x:Key="SBCheckForRichTextConverter"/>
+
+    <sbconv:SBBoolToDockConverter x:Key="SBBoolToDockConverter" />
+    <sbconv:SBBoolToVisibilityConverter x:Key="SBBoolToVisibilityConverter" />
+
+    <!-- Converts character count to device independent pixels. -->
+    <sbconv:SBCharCountConverter x:Key="SBCharCountConverter" />
+
+    <sbconv:SBBitmapTransparentConverter x:Key="SBBitmapTransparentConverter" />
+
+    <sbconv:SBDebugConverter x:Key="SBDebugConverter"/>
+
+    <sbconv:SBUnsetNegativeIntConverter x:Key="SBUnsetNegativeIntConverter" />
+
+    <!-- Converts from a double to a string in the form nn%-->
+    <sbconv:SBPercentConverter x:Key="SBPercentConverter" />
+    
+    <sbconv:SBScrollViewerVisibilityConverter x:Key="SBScrollViewerVisibilityConverter" />
+
+    <sbconv:SBRadioButtonTextToRichContentConverter x:Key="SBRadioButtonTextToRichContentConverter" />
+
+    <sbconv:SBSlashComboBoxItemConverter x:Key="SBSlashComboBoxItemConverter"/>
+
+    <sbconv:SBBoolToOpacityConverter x:Key="SBBoolToOpacityConverter"/>
+
+</ResourceDictionary>
