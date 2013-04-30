@@ -149,7 +149,7 @@ RETURN
 *** then perform XOR "bit by bit". The second (by $DEFINE USE_BITXOR) is to convert all
 *** pads/key into literal hex strings, then convert 8 hex chars into one integer and 
 *** perform 32-bit integer XOR by calling BITXOR(), finally convert each partial result
-*** back into literal hex strings. The second approach appeasrs more convoluted but much
+*** back into literal hex strings. The second approach appears more convoluted but much
 *** more efficient. 
 ***
 *** A more elegant implementation shown below (HMAC_DAN) was written by Dan McGrath.
