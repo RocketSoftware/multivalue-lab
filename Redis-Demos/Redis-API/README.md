@@ -11,3 +11,8 @@ Program listing
 **redis.connect(ret, server, port, options)** - This will connect you to a redis server using settings from the COMMON vars when passed in variables are empty.  
 **redis.disconnect(ret)** - This will disconnect you from the redis server  
 **redis.generic** - This accepts a string command for Redis (e.g., try "SET myKey myData") and return the results using a U2 Dynamic Object.  
+**redis.get(result, key, retMsg)** - Returns the value from a key.  
+**redis.set(result, key, value, retMsg)** - Sets a key to the desire value.  
+
+
+For all subroutines with the argument 'result': 1 = success, 0 = redis returned an error, -1 = a network error, and -9 = not connected to Redis.  
