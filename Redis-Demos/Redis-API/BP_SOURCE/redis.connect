@@ -1,0 +1,31 @@
+SUBROUTINE redis.connect(ret, server, port, options)
+$INCLUDE INCLUDE redis.internal
+
+   redis$database = redis$database$default
+   
+   redis$lastTime = TIME()
+   redis$lastDate = DATE()
+
+   timeout = options<1>
+   serverTimeout = options<2>
+   
+   IF NOT(LEN(server)) THEN server = redis$server$default
+   IF NOT(LEN(port)) THEN port = redis$port$default
+   IF NOT(LEN(timeout)) THEN timeout = redis$timeout$default
+   IF NOT(LEN(serverTimeout)) THEN serverTimeout = redis$serverTimeout$default
+   
+   redis$server = server
+   redis$port = port
+   redis$timeout = timeout
+   redis$serverTimeout = serverTimeout
+   
+   IF redis$connected THEN CALL redis.disconnect(result)
+   
+   result = openSocket(server, port, BLOCKING$MODE, timeout, redis$socket)
+   
+   * Should implement a circular error buffer later
+   redis$connected = NOT(result)
+
+ret = redis$connected 
+RETURN
+
