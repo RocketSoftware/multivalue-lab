@@ -8,4 +8,6 @@ UniVerse at v11.1.9
 <dl>
 <dt>ExportHelp</dt>
 <dd>Shows you how to export all of our TCL/ECL online help as a single JSON string</dd>
-<dl>
+<dt>SimpleConsume</dt>
+<dd>A simple program to demonstration U2 Dynamic Objects</dd>
+</dl>

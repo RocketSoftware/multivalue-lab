@@ -12,10 +12,11 @@ Demo code from Rocket's U2 Servers Lab for UniData/UniVerse and associated clien
 <dd>Examples for security-related features</dd>
 <dt>UCI-Demos</dt>
 <dd>Examples for UCI</dd>
+<dd>Examples for using the Uni Call Interface, a C API for executing SQL calls against UniData and UniVerse</dd>
 <dt>UDO-Demos</dt>
-<dd>Examples for U2 Dynamic Objects</dd>
+<dd>Examples for U2 Dynamic Objects in the U2 Basic language</dd>
 <dt>UOJ-Demos</dt>
-<dd>Examples for UniObjects for Java</dd>
+<dd>Examples for UniObjects for Java, which is the Java API for accessing UniData and UniVerse natively</dd>
 </dl>
 
 ### License
