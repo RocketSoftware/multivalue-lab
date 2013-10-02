@@ -1,0 +1,89 @@
+* SSL CREATE_SCR Example using BASIC SSL Functions
+* Function: Create the Security Context Record
+* stored the record in _SECUCTX_ (UniData) / &SECUCTX& file (UniVerse)
+*
+* set variables
+MY.LOG.FILE = 'C:\TEMP\CREATE_SCR.log'
+MY.LOG.ACTION = 'ON'
+MY.LOG.LEVEL = '10'
+EQUATE LF TO CHAR(010)
+*
+* start logging (option)
+MY.RTN.CODE = protocolLogging(MY.LOG.FILE,MY.LOG.ACTION,MY.LOG.LEVEL)
+CRT @(-1); CRT "BEGIN ........... "
+CRT "protocolLogging return code (0=success)= ":MY.RTN.CODE
+*
+CERT_PATH="c:\certs\"
+SCR_NAME="u2sample"
+PRIVATE_KEYPWD="my_password"
+*
+* 1. Generate private & public kys
+* PEM, file, RSA, keylength=512, password  
+PRIVATE_KEYFILE=CERT_PATH:SCR_NAME:".pem"
+PUBLIC_KEYFILE=CERT_PATH:SCR_NAME:".pub"
+MY.RTN.CODE = generateKey(PRIVATE_KEYFILE,PUBLIC_KEYFILE,1,2,1,512,PRIVATE_KEYPWD,"")
+CRT "generateKey = ":MY.RTN.CODE
+*
+* 2. Create the Certificate Request
+* PEM, file, RSA, MD5, private key password, PEM
+subjectData = "C=US":@FM:"ST=Colorado":@FM:"L=Denver":@FM:"O=IBM":@FM:"OU=U2":@FM:"CN=service@us.ibm.com"
+REQUEST_FILE=CERT_PATH:SCR_NAME:".req"
+MY.RTN.CODE = createCertRequest(PRIVATE_KEYFILE,1,2,1,1,PRIVATE_KEYPWD,subjectData,REQUEST_FILE,1)
+CRT "createSecurityContext = ":MY.RTN.CODE
+*
+* 3. Create a certificate
+* Self-signing, request file, private keyfile, password, CA
+CERT_FILE=CERT_PATH:SCR_NAME:".crt"
+MY.RTN.CODE = createCertificate(1, REQUEST_FILE, PRIVATE_KEYFILE, PRIVATE_KEYPWD, "", 365, "", CERT_FILE)
+CRT 'createCertificate: ':MY.RTN.CODE
+*
+* 4. Create the security context record
+* 4.1) Create a SCR handle
+MY.RTN.CODE = createSecurityContext(MY.CONTEXT,'')
+CRT "createSecurityContext = ":MY.RTN.CODE
+*
+* 4.2) Set authentication rule 1=Sever, 2=Client
+MY.RTN.CODE = addAuthenticationRule(MY.CONTEXT, "1", "VerificationStrength", "generous")
+CRT "Added server authentication Rule: ":MY.RTN.CODE
+*CRT "Added client authentication Rule: ":MY.RTN.CODE
+*
+* 4.3) add certificate
+MY.USED.AS="1" ;* Used as Certificate Authority
+MY.FORMAT="1" ;* PEM format
+MY.ALGORITHM="1" ;* RSA key
+MY.RTN.CODE = addCertificate(CERT_FILE, MY.USED.AS, MY.FORMAT, MY.ALGORITHM, MY.CONTEXT)
+CRT 'addCertificate: ':MY.RTN.CODE
+*
+* 4.4) Set private key
+MY.RTN.CODE=setPrivateKey(PRIVATE_KEYFILE, "1", "2", PRIVATE_KEYPWD, "0", MY.CONTEXT)
+CRT 'add pvt key: ':MY.RTN.CODE
+*
+* 4.5) Set client authentication Depth
+MY.RTN.CODE = setAuthenticationDepth(MY.CONTEXT, 1, "1")
+CRT "setAuthenticationDepth: ":MY.RTN.CODE 
+*
+* 4.6) Set Client Authentication (2: OFF default)(option)
+MY.RTN.CODE = setClientAuthentication(MY.CONTEXT, 2)
+CRT "setClientAuthentication: ":MY.RTN.CODE 
+*
+* 4.7) Save the SCR
+SCR_Record=SCR_NAME:".scr"
+SCR_PWD="my_password"
+MY.RTN.CODE=saveSecurityContext(MY.CONTEXT, SCR_Record, SCR_PWD)
+CRT "Save Context: ":MY.RTN.CODE
+*
+* 4.8) Show context record (option)
+MY.RTN.CODE = showSecurityContext(MY.CONTEXT,MY.CONFIG.INFO)
+CRT 'showSecurityContext: ':MY.RTN.CODE
+*
+* SWAP @FM WITH LF IN MY.CONFIG.INFO ; * UniData only
+MY.CONFIG.INFO = CONVERT(@FM, LF, MY.CONFIG.INFO) ;* UniVerse & UniData
+*
+CRT MY.CONFIG.INFO
+*
+* Clean up (option)
+MY.LOG.ACTION = 'OFF'
+MY.LOG.LEVEL = '0'
+MY.RTN.CODE = protocolLogging(MY.LOG.FILE, MY.LOG.ACTION, MY.LOG.LEVEL)
+CRT 'protocolLogging OFF: ':MY.RTN.CODE
+CRT 'End of the program'
