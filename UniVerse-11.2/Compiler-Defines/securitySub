@@ -1,0 +1,37 @@
+* This will compile on both UniData and UniVerse 11.2+ without any changes
+* To operate, create a file called 'SEC.USERS'
+* This is designed to be used as the remote security VOC entry.
+
+$IFDEF U2__UNIVERSE
+  SUBROUTINE secSub (rVOC, cmd, lvl, prt, acc, usr, flag)
+    OPEN "SEC.USRS" TO sec ELSE
+      flag = 0 ;* fail to 'deny'
+      RETURN
+    END
+
+    cmdKey = FIELD(cmd, ' ', 1) ;* default for command
+    accKey = acc:'|':cmdKey ;* default for command in account
+    usrKey = usr:'|':accKey ;* specific for usr/acc/cmd combo
+    READV flag FROM sec, usrKey ELSE
+      READV flag FROM sec, accKey ELSE
+        READV flag FROM sec, cmdKey ELSE flag = 0 ;* Default 'deny'
+      END
+    END
+  RETURN
+$ELSE
+  SUBROUTINE secSub (flag)
+    OPEN "SEC.USRS" TO sec ELSE
+      flag = 0 ;* fail to 'deny'
+      RETURN
+    END
+
+    cmdKey = FIELD(@SENTENCE, ' ', 1) ;* default for cmd
+    accKey = @WHO:'|':cmdKey ;* default for cmd in account
+    usrKey = @LOGNAME:'|':accKey ;* specific for usr/acc/cmd combo
+    READV flag FROM sec, usrKey ELSE
+      READV flag FROM sec, accKey ELSE
+        READV flag FROM sec, cmdKey ELSE flag = 0 ;* Default 'deny'
+      END
+    END
+  RETURN
+$ENDIF
