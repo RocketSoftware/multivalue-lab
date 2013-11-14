@@ -1,0 +1,17 @@
+# This file is used to configure account based licensing. It gets placed in your uvhome directory
+
+# Note: 'Account ID'  is the logical name you give to 1 or more accounts you want to group together
+#       Seats/DB are the number of database seats to allocate to that group
+#       Seats/CNPL are the number of connection pools to allocate to that group
+#       'Account Description' is a description you want for that account group.
+
+# Any left over database seats or connection pools automatically get allocated to the 'default' group.
+
+# Account ID | Seats/DB | Seats/CNPL | Account Description
+demo-acct   1  0 My demo account
+	C:\U2\UV\DEMO
+	C:\U2\XDEMO
+		
+dev-accts   10 7  Development accounts
+	C:\U2\devacct1
+	C:\U2\devacct2
