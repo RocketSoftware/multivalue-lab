@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="Customer.Store" Alias="Self" Provider="U2.Data.Client" ProviderManifestToken="UNIVERSE, 10.03.0000">
+        <EntityContainer Name="CustomerTargetContainer" >
+          <EntitySet Name="CUSTOMER" EntityType="Customer.Store.CUSTOMER" Table="CUSTOMER"  Schema="HS_SALES" />
+          <EntitySet Name="CUSTOMER_MV" EntityType="Customer.Store.CUSTOMER_MV" Table="CUSTOMER_MV"  Schema="HS_SALES" />
+        </EntityContainer>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+          </Key>
+          <Property Name="CUSTID" Type="int" Nullable="false" />
+          <Property Name="PHONE" Type="varchar" MaxLength="254" />
+          <Property Name="ZIP" Type="varchar" MaxLength="254" />
+          <Property Name="STATENAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="STATE" Type="varchar" MaxLength="254" />
+          <Property Name="CITY" Type="varchar" MaxLength="254" />
+          <Property Name="FULLADDR" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="ADDR2" Type="varchar" MaxLength="254" />
+          <Property Name="ADDR1" Type="varchar" MaxLength="254" />
+          <Property Name="COMPANY" Type="varchar" MaxLength="254" />
+          <Property Name="FULLNAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="LNAME" Type="varchar" MaxLength="254" />
+          <Property Name="FNAME" Type="varchar" MaxLength="254" />
+          <Property Name="SAL" Type="varchar" MaxLength="254" />
+        </EntityType>
+
+        <EntityType Name="CUSTOMER_MV">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+          </Key>
+          <Property Name="CUSTID" Type="int" Nullable="false" />
+          <Property Name="PHONE" Type="varchar" MaxLength="254" />
+          <Property Name="ZIP" Type="varchar" MaxLength="254" />
+          <Property Name="STATENAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="STATE" Type="varchar" MaxLength="254" />
+          <Property Name="CITY" Type="varchar" MaxLength="254" />
+          <Property Name="FULLADDR" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="ADDR2" Type="varchar" MaxLength="254" />
+          <Property Name="ADDR1" Type="varchar" MaxLength="254" />
+          <Property Name="COMPANY" Type="varchar" MaxLength="254" />
+          <Property Name="FULLNAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="LNAME" Type="varchar" MaxLength="254" />
+          <Property Name="FNAME" Type="varchar" MaxLength="254" />
+          <Property Name="SAL" Type="varchar" MaxLength="254" />
+          <Property Name="SVC_PAID_DATE" Type="date" />
+          <Property Name="SVC_PRICE" Type="int" />
+          <Property Name="SVC_END" Type="date" />
+          <Property Name="SVC_START" Type="date" />
+          <Property Name="DISCOUNT" Type="numeric" Precision="4" Scale="1" StoreGeneratedPattern="Computed" />
+          <Property Name="PRICE" Type="int" />
+          <Property Name="LIST_PRICE" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="PAID_DATE" Type="date" />
+          <Property Name="BUY_DATE" Type="date" />
+          <Property Name="SER_NUM" Type="varchar" MaxLength="254" />
+          <Property Name="DESCRIPTION" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="PRODID" Type="varchar" MaxLength="254" />
+        </EntityType>
+
+       
+        
+
+
+
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Customer" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="CustomerContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CUSTOMERS" EntityType="Customer.CUSTOMER" />
+          <EntitySet Name="CUSTOMERS_MV" EntityType="Customer.CUSTOMER_MV" />
+          
+          
+        </EntityContainer>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+          </Key>
+          <Property Name="CUSTID" Type="Int32" Nullable="false" />
+          <Property Name="PHONE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="ZIP" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="STATENAME" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="STATE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="CITY" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="FULLADDR" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="ADDR2" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="ADDR1" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="COMPANY" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="LNAME" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="FNAME" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="SAL" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          
+        </EntityType>
+
+        <EntityType Name="CUSTOMER_MV">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+          </Key>
+          <Property Type="Int32" Name="CUSTID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FNAME" Nullable="false" />
+          <Property Type="String" Name="LNAME" Nullable="false" />
+          <Property Name="SVC_PAID_DATE" Type="DateTime" />
+          <Property Name="SVC_PRICE" Type="Int32" />
+          <Property Name="SVC_END" Type="DateTime" />
+          <Property Name="SVC_START" Type="DateTime" />
+          <Property Name="DISCOUNT" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="PRICE" Type="Int32" />
+          <Property Name="LIST_PRICE" Type="Int32" />
+          <Property Name="PAID_DATE" Type="DateTime" />
+          <Property Name="BUY_DATE" Type="DateTime" />
+          <Property Name="SER_NUM" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="PRODID" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Customer" />
+        <Alias Key="Target" Value="Customer.Store" />
+        <EntityContainerMapping CdmEntityContainer="CustomerContainer" StorageEntityContainer="CustomerTargetContainer">
+          <EntitySetMapping Name="CUSTOMERS">
+            <EntityTypeMapping TypeName="IsTypeOf(Customer.CUSTOMER)">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+                <ScalarProperty Name="STATENAME" ColumnName="STATENAME" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="FULLADDR" ColumnName="FULLADDR" />
+                <ScalarProperty Name="ADDR2" ColumnName="ADDR2" />
+                <ScalarProperty Name="ADDR1" ColumnName="ADDR1" />
+                <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="SAL" ColumnName="SAL" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+                <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="Customer.CUSTOMER">
+              <ModificationFunctionMapping>
+                
+                
+                
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERS_MV">
+            <EntityTypeMapping TypeName="IsTypeOf(Customer.CUSTOMER_MV)">
+              <MappingFragment StoreEntitySet="CUSTOMER_MV">
+                <ScalarProperty Name="SVC_PAID_DATE" ColumnName="SVC_PAID_DATE" />
+                <ScalarProperty Name="SVC_PRICE" ColumnName="SVC_PRICE" />
+                <ScalarProperty Name="SVC_END" ColumnName="SVC_END" />
+                <ScalarProperty Name="SVC_START" ColumnName="SVC_START" />
+                <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+                <ScalarProperty Name="PRODID" ColumnName="PRODID" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="SER_NUM" ColumnName="SER_NUM" />
+                <ScalarProperty Name="BUY_DATE" ColumnName="BUY_DATE" />
+                <ScalarProperty Name="PAID_DATE" ColumnName="PAID_DATE" />
+                <ScalarProperty Name="LIST_PRICE" ColumnName="LIST_PRICE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+                <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          
+          
+          
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Customer" ZoomLevel="67" >
+        <EntityTypeShape EntityType="Customer.CUSTOMER" Width="2.875" PointX="6.125" PointY="0.75" Height="3.7109993489583326" />
+        <EntityTypeShape EntityType="Customer.CUSTOMER_MV" Width="2.25" PointX="2.25" PointY="1.375" Height="3.9033007812499996" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
