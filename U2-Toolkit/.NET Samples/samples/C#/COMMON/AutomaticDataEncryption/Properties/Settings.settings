@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WalletConnection.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Server" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="Database" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HS.SALES</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">user</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pass</Value>
+    </Setting>
+    <Setting Name="WalletID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">myWLT</Value>
+    </Setting>
+    <Setting Name="WalletPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">myWLTPWD123</Value>
+    </Setting>
+    <Setting Name="ServerType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UniData</Value>
+    </Setting>
+    <Setting Name="FileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PRODUCTS</Value>
+    </Setting>
+    <Setting Name="AccessMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Native</Value>
+    </Setting>
+    <Setting Name="RpcServiceType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">uvcs</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

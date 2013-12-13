@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "EntityFramework_CodeFirst_MultiValue2_x64", "EntityFramework_CodeFirst_MultiValue2_x64.vbproj", "{76F16441-EC5B-4D73-8FAE-9B22388ADD93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Debug|x64.ActiveCfg = Debug|x64
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Debug|x64.Build.0 = Debug|x64
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Debug|x86.ActiveCfg = Debug|x86
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Debug|x86.Build.0 = Debug|x86
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Release|x64.ActiveCfg = Release|x64
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Release|x64.Build.0 = Release|x64
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Release|x86.ActiveCfg = Release|x86
+		{76F16441-EC5B-4D73-8FAE-9B22388ADD93}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
