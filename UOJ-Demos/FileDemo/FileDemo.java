@@ -606,7 +606,7 @@ class LoadFileListener implements ActionListener {
          // Now lets fill the file with meaningless data
          for (int count = 0; count < 200; count++) {
             data = data + chr;
-            demoFile.write(new Integer(count), data);
+            demoFile.write(Integer.valueOf(count), data);
             chr++;
          }
          
