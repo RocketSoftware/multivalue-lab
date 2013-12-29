@@ -301,7 +301,6 @@ public class uojconnect{
                 else
                         System.out.print( msg );
         }
-        public static UniSession demo1, demo2;
         public static UniJava uvJava                            = null;
         public static int     totalErrors                       = 0;
         public static final int FAILURE                         = 1;
