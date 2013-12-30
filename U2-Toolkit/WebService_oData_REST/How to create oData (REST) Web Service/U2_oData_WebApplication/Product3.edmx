@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="XDEMOModel1.Store" Alias="Self" Provider="U2.Data.Client" ProviderManifestToken="UNIVERSE, 11.1.10" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="XDEMOModel1StoreContainer">
+          <EntitySet Name="PRODUCTS" EntityType="XDEMOModel1.Store.PRODUCTS" store:Type="Tables" Schema="UVACCT" />
+        </EntityContainer>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="decimal" Nullable="false" Precision="11" />
+          <Property Name="ISBN" Type="varchar" MaxLength="254" />
+          <Property Name="TITLE" Type="varchar" MaxLength="254" />
+          <Property Name="DISKS" Type="int" />
+          <Property Name="RATING" Type="varchar" MaxLength="254" />
+          <Property Name="ASPECT" Type="decimal" Precision="14" />
+          <Property Name="GENRE" Type="varchar" MaxLength="254" />
+          <Property Name="NOEPISODES" Type="int" />
+          <Property Name="LOCATION.CODE" Type="varchar" MaxLength="254" />
+          <Property Name="THEATERDATE" Type="date" />
+          <Property Name="MPN" Type="varchar" MaxLength="254" />
+          <Property Name="STUDIO" Type="varchar" MaxLength="254" />
+          <Property Name="DVDRELDATE" Type="date" />
+          <Property Name="L.UPC" Type="varchar" Nullable="false" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="LOCATION" Type="varchar" Nullable="false" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="MOVIE_IMAGE" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <Function Name="f_XDEMO_GETPRODUCTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" StoreFunctionName="*XDEMO*GETPRODUCTS" Schema="" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XDEMOModel1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="XDEMOEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PRODUCT3S" EntityType="XDEMOModel1.PRODUCT3" />
+          <FunctionImport Name="f_XDEMO_GETPRODUCTS" EntitySet="PRODUCT3S" ReturnType="Collection(XDEMOModel1.PRODUCT3)" />
+        </EntityContainer>
+        <EntityType Name="PRODUCT3">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="Decimal" Nullable="false" Precision="11" Scale="0" />
+          <Property Name="TITLE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="RATING" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XDEMOModel1StoreContainer" CdmEntityContainer="XDEMOEntities1">
+          <EntitySetMapping Name="PRODUCT3S"><EntityTypeMapping TypeName="XDEMOModel1.PRODUCT3"><MappingFragment StoreEntitySet="PRODUCTS">
+            <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+            <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+            <ScalarProperty Name="RATING" ColumnName="RATING" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="f_XDEMO_GETPRODUCTS" FunctionName="XDEMOModel1.Store.f_XDEMO_GETPRODUCTS" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Product3" ZoomLevel="100">
+        <EntityTypeShape EntityType="XDEMOModel1.PRODUCT3" Width="1.5" PointX="0.75" PointY="0.75" Height="1.59568359375" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
