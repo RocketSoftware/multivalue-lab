@@ -1,0 +1,46 @@
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Assets\ApplicationIcon.png
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileSmall.png
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Assets\Tiles\IconicTileMediumLarge.png
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Assets\Tiles\IconicTileSmall.png
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\U2PhoneApp.dll
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\U2PhoneApp.pdb
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\AppManifest.xaml
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Properties\WMAppManifest.xml
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\U2PhoneApp_Debug_AnyCPU.xap
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\App.g.cs
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\MainPage.g.cs
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\U2PhoneApp.g.resources
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\U2PhoneApp.Resources.AppResources.resources
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\U2PhoneApp.csproj.GenerateResource.Cache
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\U2PhoneApp.dll
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\U2PhoneApp.pdb
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\XapCacheFile.xml
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\EDM_Details_Page.g.cs
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Microsoft.Data.Edm.WP71.dll
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Microsoft.Data.OData.WP71.dll
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\Microsoft.Data.Services.Client.WP80.dll
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\Bin\Debug\System.Spatial.WP71.dll
+D:\Projects\Window 8 and Windows Phone 8\Projects\U2PhoneApp\obj\Debug\U2PhoneApp.csprojResolveAssemblyReference.cache
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\ApplicationIcon.png
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileSmall.png
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\Tiles\IconicTileMediumLarge.png
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\Tiles\IconicTileSmall.png
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\U2PhoneApp.dll
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\U2PhoneApp.pdb
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\AppManifest.xaml
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Properties\WMAppManifest.xml
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\U2PhoneApp_Debug_AnyCPU.xap
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.csprojResolveAssemblyReference.cache
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\App.g.cs
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\EDM_Details_Page.g.cs
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\MainPage.g.cs
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.g.resources
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.Resources.AppResources.resources
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.csproj.GenerateResource.Cache
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.dll
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.pdb
+D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\XapCacheFile.xml

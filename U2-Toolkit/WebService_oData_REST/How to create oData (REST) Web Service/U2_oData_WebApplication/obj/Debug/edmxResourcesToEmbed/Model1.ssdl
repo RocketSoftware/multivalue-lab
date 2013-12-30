@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="XDEMOModel.Store" Alias="Self" Provider="U2.Data.Client" ProviderManifestToken="UNIVERSE, 11.1.10" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="XDEMOModelStoreContainer">
+    <EntitySet Name="STATES" EntityType="XDEMOModel.Store.STATES" store:Type="Tables" Schema="UVACCT" />
+  </EntityContainer>
+  <EntityType Name="STATES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" Nullable="false" MaxLength="254" />
+    <Property Name="STATE_NAME" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <Function Name="f_" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" StoreFunctionName="%" Schema="" />
+</Schema>

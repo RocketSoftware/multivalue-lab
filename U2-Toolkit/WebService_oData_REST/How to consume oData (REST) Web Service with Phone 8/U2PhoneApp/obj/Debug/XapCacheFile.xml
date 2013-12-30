@@ -1,0 +1,16 @@
+﻿<xapCache source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\U2PhoneApp_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="12/24/2013 1:14:13 PM">
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\obj\Debug\U2PhoneApp.dll" archivePath="U2PhoneApp.dll" lastWriteTime="12/24/2013 1:14:12 PM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Assets\Tiles\FlipCycleTileLarge.png" archivePath="Assets\Tiles\FlipCycleTileLarge.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Assets\Tiles\FlipCycleTileSmall.png" archivePath="Assets\Tiles\FlipCycleTileSmall.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Assets\Tiles\IconicTileMediumLarge.png" archivePath="Assets\Tiles\IconicTileMediumLarge.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Assets\Tiles\IconicTileSmall.png" archivePath="Assets\Tiles\IconicTileSmall.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="4/29/2013 8:27:08 PM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\ApplicationIcon.png" archivePath="Assets\ApplicationIcon.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="4/28/2013 10:16:12 AM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Microsoft.Data.Edm.WP71.dll" archivePath="Microsoft.Data.Edm.WP71.dll" lastWriteTime="4/16/2013 5:31:45 PM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Microsoft.Data.OData.WP71.dll" archivePath="Microsoft.Data.OData.WP71.dll" lastWriteTime="4/16/2013 5:31:45 PM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Microsoft.Data.Services.Client.WP80.dll" archivePath="Microsoft.Data.Services.Client.WP80.dll" lastWriteTime="4/16/2013 5:31:46 PM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\System.Spatial.WP71.dll" archivePath="System.Spatial.WP71.dll" lastWriteTime="4/16/2013 5:31:45 PM" />
+  <file source="D:\WorkingDir\artilce_worpress\How to consume\U2PhoneApp\Bin\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="4/28/2013 10:16:16 AM" />
+</xapCache>
