@@ -1,0 +1,265 @@
+$INCLUDE UNIVERSE.INCLUDE UDO.H
+$INCLUDE UNIVERSE.INCLUDE SSL.H
+
+* BASE.URL should be changed according to your R/Link setup. The port number should be either 443 for real HTTPS server or 8443 for self certified.
+BASE.URL = 'https://localhost:8443/RLINK/api/';
+LIST.URL = 'List'
+FILE.GET.URL = 'FileGet'
+CRED.URL = '?user_id=test&password=test&list_contents=true'
+authstrength = "generous"
+svrclnt = 2
+
+* Variable declarations
+MAX_LIST = 6
+REQUEST.URL = ''
+PROMPT = ""
+FILE.NAME = ""
+NAME = ""
+RETCODE = 0
+RETVAL = ""
+RETTYPE = ""
+POSITION = 0
+PATH = ""
+CURRENT = ""
+PARENTS = ""
+IS.DIR = ""
+SIZE = ""
+INDEX = 1
+ENTRIES = ""
+ENTRY = ""
+CHOICE = 0
+ObjHandle = ""
+ArrHandle = ""
+ValHandle = ""
+ValType = ""
+
+* Main Program Starts
+CURRENT = '/'
+GOSUB CHANGE.DIR
+
+STOP
+* Main Program Ends
+
+* Subroutines
+
+*
+* FILE.GET: This subroutine creates a /FileGet Rest Request
+*           and download the CURRENT File from the server.
+*
+FILE.GET:
+	REQUEST.URL = BASE.URL : FILE.GET.URL : CURRENT : CRED.URL
+	FILE.NAME = FIELD(CURRENT, '/', 3)
+	CRT 'Downloading ' : FILE.NAME : ' ...'
+	GOSUB MAKE.REST.REQUEST
+	GOSUB WRITE.FILE
+
+	RETURN
+
+*
+* WRITE.FILE: This subroutine creates a system level file
+*             from the REST response data.
+*
+WRITE.FILE:
+	OPENSEQ 'DOWNLOADS', FILE.NAME TO FILE
+	    ELSE CREATE FILE ELSE ABORT
+	WEOFSEQ FILE
+	WRITESEQ restData TO FILE ELSE STOP
+	CLOSESEQ FILE
+	CRT 'Download finished!'
+	RETURN
+
+*
+* CHANGE.DIR: This subroutine kind of mimic the UNIX/DOS cd
+*             command using /List REST API call.
+*
+CHANGE.DIR:
+	REQUEST.URL = BASE.URL : LIST.URL : CURRENT : CRED.URL
+	GOSUB MAKE.REST.REQUEST
+
+	NAME = 'items'
+	GOSUB PARSE.RESPONSE
+
+	RETURN
+
+*
+* LOOP.ARRAY: Main UI. Show File Structure and handle
+*             the user input.
+*
+LOOP.ARRAY:
+	INDEX = 1
+	ENTRIES = ""
+	FOR I = 1 TO MAX_LIST
+		status = UDOArrayGetNextItem(ArrHandle, ValHandle, ValType)
+		IF status = UDO_SUCCESS THEN
+			IF ValType = UDO_OBJECT THEN
+				ObjHandle = ValHandle
+				GOSUB PARSE.OBJECT
+			END
+		END ELSE EXIT
+	NEXT I
+
+	PROMPT = "Enter 1 - ": (I - 1) :" to change directory, Enter 0 to return:"
+	CRT PROMPT
+
+	INPUT USER.INPUT
+
+	IF USER.INPUT > 0 AND USER.INPUT < I THEN
+		CHOICE = USER.INPUT
+		IS.DIR = EXTRACT(ENTRIES, CHOICE, 3, 0)
+		IF IS.DIR = UDO_TRUE THEN
+			CRT 'Do you want to CD into this directory? (y/n)'
+			INPUT USER.INPUT
+			IF USER.INPUT = 'Y' OR USER.INPUT = 'y' THEN
+				PARENTS<-1> = CURRENT
+				CURRENT = EXTRACT(ENTRIES, CHOICE, 1, 0)
+				GOSUB CHANGE.DIR
+			END
+		END ELSE
+			CRT 'Do you want to download this file? (y/n)'
+			INPUT USER.INPUT
+			IF USER.INPUT = 'Y' OR USER.INPUT = 'y' THEN
+				PARENTS<-1> = CURRENT
+				CURRENT = EXTRACT(ENTRIES, CHOICE, 1, 0)
+				GOSUB FILE.GET
+				GOSUB RETURN.TO.PARENT
+			END
+		END
+	END ELSE
+		IF USER.INPUT = 0 THEN
+			IF PARENTS # '' THEN
+			    GOSUB RETURN.TO.PARENT
+			END ELSE RETURN
+		END
+	END
+	RETURN	
+
+*
+* PARSE.OBJECT: Parse each JSON/UDO Object to get the
+*               file/directory information.
+*
+PARSE.OBJECT:
+	ENTRY = ""
+
+	NAME = 'path'
+	GOSUB GET.VALUE
+	PATH = RETVAL
+	ENTRY = ENTRY : PATH
+
+	NAME = 'size'
+	GOSUB GET.VALUE
+	SIZE = RETVAL
+
+	ENTRY = ENTRY : @VM : SIZE
+
+	NAME = 'is_container'
+	GOSUB GET.VALUE
+	IS.DIR = RETTYPE
+
+	ENTRY = ENTRY : @VM : IS.DIR
+
+	IF ENTRIES = "" THEN
+		ENTRIES = ENTRY
+	END ELSE
+		ENTRIES = ENTRIES : @FM : ENTRY
+	END
+	
+	IF IS.DIR = UDO_TRUE THEN
+		OUT = INDEX : " Directory: " : PATH
+	END ELSE
+		OUT = INDEX : " File: " : PATH : CHAR(9) : SIZE
+	END
+
+	INDEX = INDEX + 1
+
+	CRT OUT
+
+	RETURN
+
+*
+* GET.VALUE: Retrieve value by property name.
+*
+GET.VALUE:
+	status = UDOGetProperty(ObjHandle, NAME, ValHandle, ValType)
+	IF status # UDO_SUCCESS THEN
+		PRINT 'Get items property failure.'
+		STOP
+	END
+
+	RETVAL = ValHandle
+	RETTYPE = ValType
+
+	RETURN	
+
+*
+* RETURN.TO.PARENT: Change the working directory to the parent
+*                   directory.
+*
+RETURN.TO.PARENT:
+	POSITION = DCOUNT(PARENTS, @FM)
+	CURRENT = PARENTS<POSITION>
+	DEL PARENTS<POSITION>
+	GOSUB CHANGE.DIR
+	RETURN	
+
+*
+* PARSE.RESPONSE; Parse the root node of the response JSON object.
+*
+PARSE.RESPONSE:
+	status = UDORead(restData, UDOFORMAT_JSON, udoHandle)
+	IF status # UDO_SUCCESS THEN
+		PRINT 'JSON parse error.'
+		STOP
+	END
+
+	status = UDOGetProperty(udoHandle, NAME, ItemsHandle, ItemsType)
+	IF status # UDO_SUCCESS THEN
+		PRINT 'Get items property failure.'
+		STOP
+	END
+
+	IF ItemsType = UDO_ARRAY THEN
+		ArrHandle = ItemsHandle
+		GOSUB LOOP.ARRAY
+	END ELSE
+		IF ItemsType = UDO_OBJECT THEN
+			ObjHandle = ItemsHandle
+			GOSUB PARSE.OBJECT
+		END
+	END
+
+	RETURN
+
+*
+* MAKE.REST.REQUEST: Submit the REST request.
+*
+MAKE.REST.REQUEST:
+	status = createSecurityContext(ctx, SSL_SSLV3)
+	IF status <> 0 THEN
+		PRINT "cannot create SCR"
+		STOP
+	END
+
+	* set auth rules
+	* set auth strength
+	status = addAuthenticationRule(ctx, svrclnt, SSL_RULE_STRENGTH, authstrength) 
+	IF status <> 0 THEN
+		PRINT "cannot set auth strength ":authstrength
+		STOP
+	END
+
+	status = createSecureRequest(REQUEST.URL, 'GET', listRequest, ctx)
+
+	IF status # 0 THEN
+		PRINT 'createSecureRequest error: ':status
+		STOP
+	END
+
+	status = submitRequest(listRequest, 5000, "", Header, restData, httpStatus)
+
+	IF status # 0 THEN
+		PRINT 'submitRequest error: ':status
+		STOP
+	END
+	RETURN
+
+END
