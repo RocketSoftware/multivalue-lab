@@ -1,0 +1,45 @@
+PROGRAM SSAVE.LIST
+
+* Redis based replacement for SAVE.LIST
+* Utilizes Redis sets which enables easy replacement of MERGE.LIST
+* Benefits: Multi-machine access, in memory storage, offload merge processing
+* Note: It uses sets, so it only stores unique items. Duplicates will be de-duplicated
+
+$INCLUDE INCLUDE redis.internal
+
+IF NOT(redis$connected) THEN CALL redis.connect(redis, 'localhost','','')
+
+* Use '(default)' as the default savedlist name if none is given.
+CMD.LINE = @SENTENCE :" (default)"
+listName = "SaveSet:":FIELD(@SENTENCE, ' ', 2)
+
+* Enable transaction as lists could be used by multiple processes/machines
+CALL redis.generic(response, 'MULTI')
+
+* Delete any existing list
+CALL redis.del(flag, listName, retMsg)
+
+* Add each item in SELECT list to the redis set
+* Pipeline would greatly improve performance
+* Saving full set as a single string also improves performances,
+* but prevents redis set operations
+EOL = @FALSE
+keyCount = 0
+LOOP
+   READNEXT key ELSE EOL = @TRUE
+UNTIL EOL
+   keyCount += 1
+   CALL redis.sadd(flag, listName, key, retMsg)
+REPEAT
+
+* End transaction here to comment both del of old and setting of new
+CALL redis.generic(response, 'EXEC')
+
+* Act more like native commands in output text for backwards compatibility
+IF keyCount = 0 THEN 
+   CRT "No active select list."
+END ELSE
+   CRT keyCount:" key(s) saved to 1 record(s)."
+END
+
+STOP
