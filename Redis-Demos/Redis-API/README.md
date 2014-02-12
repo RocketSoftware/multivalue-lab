@@ -1,7 +1,7 @@
 Redis-API Demo
 ==============
 
-A basic API for accessing Redis using U2 Basic. Place the files from INCLUDE into the INCLUDE directory of your account. The program files in BP_SOURCE can then be compiled.  
+A basic API for accessing Redis using U2 Basic. Place the files from INCLUDE into the INCLUDE directory of your account. The program files in BP_SOURCE can then be compiled.  For UniVerse, you will need to change $INCLUDE INCLUDE to $INCLUDE UNIVERSE.INCLUDE.
 
 Please see INCLUDE redis.include for a list of the COMMON variables that are used by these subroutines.
 
