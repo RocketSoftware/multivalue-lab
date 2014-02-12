@@ -1,0 +1,35 @@
+SUBROUTINE UDOEXTRACT(result, handle, target, option)
+$INCLUDE INCLUDE UDO.H
+
+   ret = UDOGetProperty(handle, target, result, vtype)
+
+   IF option = 0 THEN
+      BEGIN CASE
+         CASE vtype = UDO_ARRAY
+         ret = UDOWrite(result, UDOFORMAT_JSON, jsonResult)
+            result = jsonResult
+            RETURN
+         CASE vtype = UDO_OBJECT
+            ret = UDOWrite(result, UDOFORMAT_JSON, jsonResult)
+            result = jsonResult
+            RETURN
+      END CASE
+   END ELSE
+      BEGIN CASE
+         CASE vtype = UDO_ARRAY
+            ret = UDOArrayGetSize(result, size)
+            list = ''
+            FOR I = 1 TO size
+               ret = UDOArrayGetItem(result, I, val, vtype)
+               list<-1> = val
+            NEXT I
+            result = list
+            RETURN
+         CASE vtype = UDO_OBJECT
+            ret = UDOWrite(result, UDOFORMAT_JSON, jsonResult)
+            list = jsonResult
+            RETURN
+      END CASE
+   END
+   
+RETURN
