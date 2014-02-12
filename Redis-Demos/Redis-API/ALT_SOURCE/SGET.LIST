@@ -1,0 +1,38 @@
+PROGRAM SGET.LIST
+
+* Redis based replacement for GET.LIST
+* Utilizes Redis sets which enable easy replacement of MERGE.LIST
+* Benefits: Multi-machine access, in memory storage, offload merge processing
+
+$INCLUDE INCLUDE redis.internal
+
+IF NOT(redis$connected) THEN CALL redis.connect(flag, 'localhost','','')
+
+* Use '(default)' as the default savedlist name if none is given.
+CMD.LINE = @SENTENCE :" (default)"
+listName = "SaveSet:":FIELD(@SENTENCE, ' ', 2)
+
+* Request entire set from Redis
+CALL redis.generic(response, 'SMEMBERS ':listName)
+CALL UDOEXTRACT(stat, response, 'status', 0)
+
+* Check for successful request; create a SELECT list if we have one.
+* Important (UniVerse): Attr 4 of VOC must contain 'K' to keep the SELECT list active
+BEGIN CASE
+   CASE stat = redis$ERROR_MESSAGE
+      CALL UDOEXTRACT(msg, response, 'message', 0)
+      CRT "(error) ":msg
+   CASE stat = redis$MULTI_BULK_REPLY
+      CALL UDOEXTRACT(list, response, 'message', 1)
+      
+      IF LEN(list) THEN FORMLIST list
+      
+      keyCount = DCOUNT(list, @AM)
+      
+      CRT keyCount:" records retrieved to list 0."
+   CASE 1
+      CALL UDOEXTRACT(msg, response, 'errcode', 0)
+      CRT "(error) ":msg
+END CASE
+
+STOP
