@@ -19,6 +19,8 @@ Demo code from Rocket's U2 Servers Lab for UniData/UniVerse and associated clien
 <dd>Examples for UniObjects for Java, which is the Java API for accessing UniData and UniVerse natively</dd>
 <dt>U2-RLINK-Demos</dt>
 <dd>Examples for using the RLink Rest API</dd>
+<dt>Verb-Demos</dt>
+<dd>Alternative Verbs to the built-in ones for added functionality or development/analysis capabilities</dd>
 </dl>
 
 ### License
