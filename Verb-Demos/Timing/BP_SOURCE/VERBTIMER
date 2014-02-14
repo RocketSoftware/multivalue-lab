@@ -1,0 +1,81 @@
+*
+* Purpose: This program will enable you to record the running time of specific verbs
+*          without needing to change any calls to that verb.
+* Usage: Rename a verb's VOC entry by prefixing 'STD' at the start, then copy this
+*        programs VOC entry to the original verb's.
+*        If you also copy the original verb's VOC entry to a lowercase version with
+*        'std' as the prefix, it will preserve lower case mode switching.
+*
+* Results: All timing results are stored in a file called QUERY.REPORTING.FILE
+*
+* Example: Copy SELECT -> STDSELECT & stdselect
+*          Copy VERBTIMER -> SELECT
+*          In this example, all SELECT statements will now be timed.
+*
+
+EQU queryStatement TO 1
+EQU queryTotalTime TO 2
+EQU queryCount TO 3
+EQU queryTimes TO 4
+
+LOGGING.ACTIVE = @TRUE
+
+* @SENTENCE could be changed by subsequent EXECUTE statements
+command = @SENTENCE
+
+VERB = FIELD(@SENTENCE:" ", " ", 1)
+IF VERB = DOWNCASE(VERB) THEN STD = "std" ELSE STD = "STD"
+
+* Open logging file, or create a new one if it doesn't exist
+OPEN "QUERY.REPORTING" TO QUERY.REPORTING.FILE ELSE
+   dbType = SYSTEM(9010)[1,2]
+
+   IF dbType = "UD" THEN
+      EXECUTE "CREATE.FILE QUERY.REPORTING 107,8" CAPTURING A RETURNING B
+   END ELSE
+      EXECUTE "CREATE.FILE QUERY.REPORTING 2 107 16" CAPTURING A RETURNING B
+   END
+   
+   * Attempt to reopen, disable logging if unable to open.
+   OPEN "QUERY.REPORTING" TO QUERY.REPORTING.FILE ELSE LOGGING.ACTIVE = @FALSE
+END
+
+* Logging is optional, don't want query to fail just because we cannot time it.
+IF LOGGING.ACTIVE THEN
+   * Create a hash of the query to use as a key
+   ret = DIGEST("SHA1", command, 1, result)
+   hexHash = OCONV(result[1,10],"MX0C"):OCONV(result[11,10],"MX0C")
+   
+   * Read in the existing record, if it exists
+   READ logRecord FROM QUERY.REPORTING.FILE, hexHash ELSE logRecord = ''
+   startTime = TIME()
+   today = DATE()
+END
+
+* Execute the standard version of the command.
+EXECUTE STD:command
+
+IF LOGGING.ACTIVE THEN
+   endTime = TIME()
+   queryTime = 0
+   
+   * Compensation for queries that run over multiple dates.
+   IF DATE() # today AND endTime > 4000 THEN queryTime = 86400 * (DATE() - today)
+   queryTime += endTime - startTime
+
+   IF LEN(logRecord) THEN
+      * String ADD to support excessively large timings
+      logRecord<queryTotalTime> = SADD(logRecord<queryTotalTime>,queryTime)
+      logRecord<queryCount> += 1
+      logRecord<queryTimes,-1> = queryTime
+   END ELSE
+      logRecord<queryStatement> = command
+      logRecord<queryTotalTime> = queryTime
+      logRecord<queryCount> = 1
+      logRecord<queryTimes> = queryTime
+   END
+   
+   WRITE logRecord ON QUERY.REPORTING.FILE, hexHash
+END
+
+STOP
