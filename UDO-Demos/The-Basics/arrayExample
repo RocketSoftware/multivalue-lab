@@ -1,0 +1,57 @@
+*******************************************************************************
+*       Program arrayExample
+*******************************************************************************
+*  Description:  Simple program tha shows how to create a JSON Array in UDO  
+*****************************************************************************
+$INCLUDE INCLUDE UDO.H
+**$INCLUDE UNIVERSE.INCLUDE UDO.H
+*
+OUTSTRING = ""
+*
+** Create the initial UDO object
+STATUS = UDOCreate(UDO_OBJECT, udoHandle)
+NOTE = "UDOCreate an object";GOSUB CHECKERROR
+*
+** Create a UDO Array
+STATUS = UDOCreate(UDO_ARRAY, thisArray)
+NOTE = "UDOCreate an array";GOSUB CHECKERROR
+** Note that thisArr is an empty object
+*
+** The following loop will add several items to the array
+FOR EACH.ITEM = 1 TO 2
+    STATUS = UDOCreate(UDO_OBJECT, theEmailObj)
+    NOTE = "UDOCreate an object";GOSUB CHECKERROR
+    STATUS = UDOSetProperty(theEmailObj, "email", "recepient":EACH.ITEM:"@example.com")
+    STATUS = UDOSetProperty(theEmailObj, "name", "recepient":EACH.ITEM:" Name")
+    STATUS = UDOSetProperty(theEmailObj, "type", "TO")
+    STATUS = UDOArrayAppendItem( thisArray, theEmailObj )
+    NOTE = "UDOCArrayAppendItem email object ":EACH.ITEM;GOSUB CHECKERROR
+NEXT EACH.ITEM
+** We will now add it to the initial UDO object
+NAME = "TO"
+STATUS = UDOSetProperty(udoHandle, NAME, thisArray)
+NOTE = "UDOSetProperty (add the array to the object)";GOSUB CHECKERROR
+*
+** Write the object out as a JSON string
+STATUS = UDOWrite(udoHandle, UDOFORMAT_JSON, OUTSTRING)
+NOTE = "UDOWrite the object to a JSON string";GOSUB CHECKERROR
+*
+** Display the JSON string.
+PRINT OUTSTRING
+** UDOFree closes the UDO object and releases the memory
+STATUS = UDOFree(udoHandle)
+NOTE = "UDOFree";GOSUB CHECKERROR
+*
+STOP
+*
+CHECKERROR:
+*
+** check the status and display an error message if not UDO_SUCCESS
+IF STATUS = UDO_SUCCESS THEN
+   PRINT NOTE," completed ok"
+END ELSE
+   ESTAT = UDOGetLastError( error_code, error_message)
+   PRINT NOTE:" function failed: "
+   PRINT error_code, error_message
+END
+RETURN
