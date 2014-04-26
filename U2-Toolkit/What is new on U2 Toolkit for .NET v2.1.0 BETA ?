@@ -1,0 +1,22 @@
+New Features in V2.1.0
+
+•	Complete ONE .NET Package
+•	Under one roof : SQL Access, Native Access and UniObjects API (formerly known as UO.NET)
+•	Access NoSQL (multi-value data) with SQL Syntax
+•	Populate  System Builder Account Files, Attributes and Subroutines in Visual Studio Server Explorer.
+•	Multi-value ADO.NET Provider (Native Access with U2 Files, Attributes, Subroutines)
+•	Multi-Value Add-ins (U2 Files, Attributes, Subroutines in Visual Studio Server Explorer)
+•	Performance Tuning Parameters in connection string:  “NativeFetch” and “UseFastGetRecordID”
+•	Automatic Data Encryption (ADE) using U2Files and Subroutines
+•	SSL using U2Files and Subroutines
+•	Connection Pooling using U2Files and Subroutines
+•	Drag and Drop U2Files and Subroutines into DataSet Designer and Entity Data Model Designer
+•	VS2010, VS2012 and VS2013 Support
+•	U2Files to JSON data ( to be used with JavaScript/HTML5, MVVM pattern/Knockout.js)
+•	ASP.NET Web API and oData support using U2Files and Subroutines ( mobile devices, Tablet App, PhoneGap Mobile App, Xamarin Mobile App, Windows Store)
+•	ASP.NET MVC4 Web Application and Classic ASP.NET Application using U2Files and Subroutines
+•	WCF using U2Files and Subroutines
+•	WPF using U2Files and Subroutines
+•	SQL Server Integration Services (SSIS) using U2Files and Subroutines
+•	SQL Server Reporting Services (SSRS) using U2Files and Subroutines
+•	SharePoint Designer and external data sources (U2 Files and Subroutines)
