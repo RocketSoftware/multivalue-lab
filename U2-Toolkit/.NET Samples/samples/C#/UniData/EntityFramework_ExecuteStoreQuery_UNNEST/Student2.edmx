@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="Student2.Store" Alias="Self" Provider="U2.Data.Client" ProviderManifestToken="UNIDATA, 07.02.0000">
+        <EntityContainer Name="Student2TargetContainer" >
+          <EntitySet Name="STUDENT_NF_SUB" EntityType="Student2.Store.STUDENT_NF_SUB"  />
+        </EntityContainer>
+        <EntityType Name="STUDENT_NF_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+
+          </Key>
+          <Property Name="ID" Type="varchar" Nullable="false"  />
+          <Property Name="FNAME" Type="varchar" MaxLength="20" />
+          <Property Name="LNAME" Type="varchar" MaxLength="25" />
+          <Property Name="MAJOR" Type="varchar" MaxLength="25" />
+          <Property Name="MINOR" Type="varchar" MaxLength="25" />
+          <Property Name="SEMESTER" Type="varchar" MaxLength="20" />
+          
+          
+
+        </EntityType>
+
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Student2" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="Student2Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Student2_UNNEST" EntityType="Student2.Student2_UNNEST" />
+        </EntityContainer>
+        <EntityType Name="Student2_UNNEST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FNAME" Nullable="true" />
+          <Property Type="String" Name="LNAME" Nullable="true" />
+          <Property Type="String" Name="MAJOR" Nullable="true" />
+          <Property Type="String" Name="MINOR" Nullable="true" />
+          <Property Type="String" Name="SEMESTER" Nullable="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Student2" />
+        <Alias Key="Target" Value="Student2.Store" />
+        <EntityContainerMapping CdmEntityContainer="Student2Container" StorageEntityContainer="Student2TargetContainer">
+          <EntitySetMapping Name="Student2_UNNEST">
+            <EntityTypeMapping TypeName="IsTypeOf(Student2.Student2_UNNEST)">
+              <MappingFragment StoreEntitySet="STUDENT_NF_SUB">
+                <ScalarProperty Name="MINOR" ColumnName="MINOR" />
+                <ScalarProperty Name="MAJOR" ColumnName="MAJOR" />
+                <ScalarProperty Name="SEMESTER" ColumnName="SEMESTER" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Student2" >
+        <EntityTypeShape EntityType="Student2.Student2_UNNEST" Width="2.5" PointX="1.875" PointY="0.75" Height="2.172587890625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

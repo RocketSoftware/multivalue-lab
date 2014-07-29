@@ -1,0 +1,50 @@
+SUBROUTINE redis.del (result, keys, retMsg)
+$INCLUDE INCLUDE redis.internal
+
+   retMsg = ''
+
+   IF NOT(redis$connected) THEN result = -9 ; RETURN
+
+   args = DCOUNT(keys,@AM)
+    
+   message = "*":args+1:redis$msg$separator ;* Number of arguments (keys+1 for DEL)
+   message := "$3":redis$msg$separator ;* Byte length of command
+   message := "DEL":redis$msg$separator ;* Redis Command
+   LOOP
+      REMOVE key FROM keys SETTING delim
+      message :="$":LEN(key):redis$msg$separator ;* Byte length of key name
+      message := key:redis$msg$separator ;* Key name
+   WHILE delim
+   REPEAT
+
+   result = writeSocket(redis$socket, message, redis$timeout, BLOCKING$MODE, bytes)
+*TODO: compare bytes with LEN(message)
+
+   result = NOT(result)
+
+   IF result THEN
+      result = readSocket(redis$socket, message.type, 1, redis$timeout, BLOCKING$MODE, bytes)
+      IF NOT(result) OR bytes = -1 THEN
+         result = 0
+      END
+
+      result = readSocket(redis$socket, message, 0, redis$timeout, BLOCKING$MODE, bytes)
+      *TODO: Need to actually check this later
+
+      BEGIN CASE
+         CASE message.type = "+"
+            result = 1
+            retMsg = message
+         CASE message.type = ":"
+            result = 1
+            retMsg = FIELD(message, CHAR(13), 1)
+         CASE message.type = "-"
+            result = 0
+            retMsg = message
+         CASE 1
+            result = 0
+      END CASE
+   END
+
+RETURN
+

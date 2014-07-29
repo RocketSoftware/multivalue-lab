@@ -1,0 +1,65 @@
+PROGRAM SMERGE.LIST
+
+* Redis based replacement for MERGE.LIST
+* Utilizes Redis sets which support UNION, INTERSECTION and DIFFERENCE
+* Benefits: Multi-machine access, in memory storage, offload merge processing
+
+$INCLUDE INCLUDE redis.internal
+
+IF NOT(redis$connected) THEN CALL redis.connect(flag, 'localhost','','')
+
+CHECK = COUNT(@SENTENCE, ' ')
+
+BEGIN CASE
+   CASE CHECK = 3 ;* SMERGE.LIST list1 {DIFF | INTERSECTION | UNION} list2
+   CASE CHECK = 5 ;* SMERGE.LIST list1 {DIFF | INTERSECTION | UNION} list2 TO list3
+      toList = 'SaveSet:':FIELD(@SENTENCE, ' ', 6)
+   CASE 1
+      CRT "Invalid syntax (":CHECK:")"
+      STOP
+END CASE
+
+leftList = 'SaveSet:':FIELD(@SENTENCE, ' ', 2)
+mergeType = FIELD(@SENTENCE, ' ', 3)
+rightList = 'SaveSet:':FIELD(@SENTENCE, ' ', 4)
+
+* Convert U2 MERGE.LIST options to Redis commands
+BEGIN CASE
+   CASE mergeType = 'DIFF'
+      mergeCall = 'sdiff' ;* http://redis.io/commands/sdiff
+   CASE mergeType = 'INTERSECTION'
+      mergeCall = 'sinter' ;* http://redis.io/commands/sinter
+   CASE mergeType = 'UNION'
+      mergeCall = 'sunion' ;* http://redis.io/commands/sunion
+   CASE 1
+      CRT "Invalid Merge option (":mergeType:")"
+END CASE
+
+IF CHECK = 5 THEN mergeCall := 'store ':toList
+
+mergeCall := ' ':leftList:' ':rightList
+
+CALL redis.generic(response, mergeCall)
+CALL UDOEXTRACT(stat, response, 'status', 0)
+
+BEGIN CASE
+   CASE stat = redis$ERROR_MESSAGE
+      CALL UDOEXTRACT(msg, response, 'message', 0)
+      CRT "(error) ":msg
+   CASE stat = redis$INTEGER_MESSAGE ;* When there is a TO list
+      CALL UDOEXTRACT(msg, response, 'message', 1)
+      CRT "key(s): ":msg
+   CASE stat = redis$MULTI_BULK_REPLY ;* When there is no TO list
+      CALL UDOEXTRACT(list, response, 'message', 1)
+      
+      IF LEN(list) THEN FORMLIST list
+      
+      keyCount = DCOUNT(list, @AM)
+      
+      CRT keyCount:" records retrieved to list 0."
+   CASE 1
+      CALL UDOEXTRACT(msg, response, 'errcode', 0)
+      CRT "(error) ":msg
+END CASE
+
+STOP

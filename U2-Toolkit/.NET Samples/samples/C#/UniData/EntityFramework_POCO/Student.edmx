@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="Student.Store" Alias="Self" Provider="U2.Data.Client" ProviderManifestToken="UNIDATA, 07.02.0000">
+        <EntityContainer Name="StudentTargetContainer" >
+			<EntitySet Name="STUDENT_NF_SUB" EntityType="Student.Store.STUDENT_NF_SUB"  />
+			<EntitySet Name="STUDENT_CGA_MV_SUB" EntityType="Student.Store.STUDENT_CGA_MV_SUB"  />
+			<EntitySet Name="STUDENT_CGA_MS_SUB" EntityType="Student.Store.STUDENT_CGA_MS_SUB"  />
+        </EntityContainer>
+		  <EntityType Name="STUDENT_NF_SUB">
+			  <Key>
+				  <PropertyRef Name="ID" />
+
+			  </Key>
+			  <Property Name="ID" Type="varchar" Nullable="false"  />
+			  <Property Name="LNAME" Type="varchar" MaxLength="25" />
+			  <Property Name="FNAME" Type="varchar" MaxLength="20" />
+			  <Property Name="MAJOR" Type="varchar" MaxLength="20" />
+			  <Property Name="MINOR" Type="varchar" MaxLength="20" />
+			  <Property Name="ADVISOR" Type="varchar" MaxLength="20" />
+			  <Property Name="GPA1" Type="varchar" MaxLength="20" />
+			  
+		  </EntityType>
+
+		  <EntityType Name="STUDENT_CGA_MV_SUB">
+			  <Key>
+				  <PropertyRef Name="ID" />
+				  <PropertyRef Name="CGA_MV_KEY" />
+				  
+			  </Key>
+			  <Property Name="ID" Type="varchar" Nullable="false" MaxLength="12" />
+			  <Property Name="CGA_MV_KEY" Nullable="false" Type="int" />
+			  <Property Name="SEMESTER" Type="varchar" MaxLength="4" />
+		  </EntityType>
+
+		  <EntityType Name="STUDENT_CGA_MS_SUB">
+			  <Key>
+				  <PropertyRef Name="ID" />
+				  <PropertyRef Name="CGA_MV_KEY" />
+				  <PropertyRef Name="CGA_MS_KEY" />
+
+			  </Key>
+			  <Property Name="ID" Type="varchar" Nullable="false" MaxLength="12" />
+			  <Property Name="CGA_MV_KEY" Nullable="false" Type="int" />
+			  <Property Name="CGA_MS_KEY" Nullable="false" Type="int" />
+			  <Property Name="COURSE_NBR" Type="varchar" MaxLength="4" />
+			  <Property Name="COURSE_HOURS" Type="varchar" MaxLength="4" />
+			  <Property Name="COURSE_NAME" Type="varchar" MaxLength="4" />
+			  <Property Name="TEACHER" Type="varchar" MaxLength="4" />
+			  <Property Name="COURSE_GRD" Type="varchar" MaxLength="4" />
+		  </EntityType>
+
+
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Student" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="StudentContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Students" EntityType="Student.Student" />
+          <EntitySet Name="Semesters" EntityType="Student.Semester" />
+          <AssociationSet Name="StudentSemester" Association="Student.StudentSemester">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Semester" EntitySet="Semesters" /></AssociationSet>
+          <EntitySet Name="Courses" EntityType="Student.Course" />
+          <AssociationSet Name="SemesterCourse" Association="Student.SemesterCourse">
+            <End Role="Semester" EntitySet="Semesters" />
+            <End Role="Course" EntitySet="Courses" /></AssociationSet>
+</EntityContainer>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" /></Key>
+          <Property Type="String" Name="ID" Nullable="false" />
+          <Property Type="String" Name="LNAME" Nullable="true" />
+          <Property Type="String" Name="FNAME" Nullable="true" />
+          <Property Type="String" Name="MAJOR" Nullable="true" />
+          <Property Type="String" Name="MINOR" Nullable="true" />
+          <Property Type="String" Name="ADVISOR" Nullable="true" />
+          <Property Type="String" Name="GPA1" Nullable="true" />
+          <NavigationProperty Name="Semesters" Relationship="Student.StudentSemester" FromRole="Student" ToRole="Semester" /></EntityType>
+		  <EntityType Name="Semester">
+			  <Key>
+				  <PropertyRef Name="ID" />
+				  <PropertyRef Name="CGA_MV_KEY" />
+			  </Key>
+			  <Property Type="String" Name="ID" Nullable="false" />
+			  <Property Type="Int32" Name="CGA_MV_KEY" Nullable="false" />
+			  <Property Type="String" Name="SEMESTER" Nullable="true" />
+			  <NavigationProperty Name="Student" Relationship="Student.StudentSemester" FromRole="Semester" ToRole="Student" />
+          <NavigationProperty Name="Courses" Relationship="Student.SemesterCourse" FromRole="Semester" ToRole="Course" />
+			  
+		  </EntityType>
+		  <Association Name="StudentSemester">
+			  <End Type="Student.Student" Role="Student" Multiplicity="1" />
+			  <End Type="Student.Semester" Role="Semester" Multiplicity="*" />
+			  <ReferentialConstraint>
+				  <Principal Role="Student">
+					  <PropertyRef Name="ID" />
+				  </Principal>
+				  <Dependent Role="Semester">
+					  <PropertyRef Name="ID" />
+				  </Dependent>
+			  </ReferentialConstraint>
+		  </Association>
+		  <EntityType Name="Course">
+			  <Key>
+				  <PropertyRef Name="ID" />
+            <PropertyRef Name="CGA_MV_KEY" />
+            <PropertyRef Name="CGA_MS_KEY" />
+			  </Key>
+			  <Property Type="String" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="CGA_MV_KEY" Nullable="false" />
+          <Property Type="Int32" Name="CGA_MS_KEY" Nullable="false" />
+          <Property Type="String" Name="COURSE_NBR" Nullable="true" />
+          <Property Type="String" Name="COURSE_HOURS" Nullable="true" />
+          <Property Type="String" Name="COURSE_NAME" Nullable="true" />
+          <Property Type="String" Name="TEACHER" Nullable="true" />
+          <Property Type="String" Name="COURSE_GRD" Nullable="true" />
+          <NavigationProperty Name="Semester" Relationship="Student.SemesterCourse" FromRole="Course" ToRole="Semester" />
+          
+		  </EntityType>
+        <Association Name="SemesterCourse">
+          <End Type="Student.Semester" Role="Semester" Multiplicity="1" />
+          <End Type="Student.Course" Role="Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="CGA_MV_KEY" /></Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="CGA_MV_KEY" /></Dependent></ReferentialConstraint></Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Student" />
+        <Alias Key="Target" Value="Student.Store" />
+        <EntityContainerMapping CdmEntityContainer="StudentContainer" StorageEntityContainer="StudentTargetContainer">
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="IsTypeOf(Student.Student)">
+              <MappingFragment StoreEntitySet="STUDENT_NF_SUB">
+                <ScalarProperty Name="GPA1" ColumnName="GPA1" />
+                <ScalarProperty Name="ADVISOR" ColumnName="ADVISOR" />
+                <ScalarProperty Name="MINOR" ColumnName="MINOR" />
+                <ScalarProperty Name="MAJOR" ColumnName="MAJOR" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment>
+              </EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Semesters">
+            <EntityTypeMapping TypeName="IsTypeOf(Student.Semester)">
+              <MappingFragment StoreEntitySet="STUDENT_CGA_MV_SUB">
+                <ScalarProperty Name="SEMESTER" ColumnName="SEMESTER" />
+                <ScalarProperty Name="CGA_MV_KEY" ColumnName="CGA_MV_KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="IsTypeOf(Student.Course)">
+              <MappingFragment StoreEntitySet="STUDENT_CGA_MS_SUB">
+                <ScalarProperty Name="COURSE_GRD" ColumnName="COURSE_GRD" />
+                <ScalarProperty Name="TEACHER" ColumnName="TEACHER" />
+                <ScalarProperty Name="COURSE_NAME" ColumnName="COURSE_NAME" />
+                <ScalarProperty Name="COURSE_HOURS" ColumnName="COURSE_HOURS" />
+                <ScalarProperty Name="COURSE_NBR" ColumnName="COURSE_NBR" />
+                <ScalarProperty Name="CGA_MS_KEY" ColumnName="CGA_MS_KEY" />
+                <ScalarProperty Name="CGA_MV_KEY" ColumnName="CGA_MV_KEY" />
+                <ScalarProperty Name="ID" ColumnName="ID" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Student" >
+        <EntityTypeShape EntityType="Student.Student" Width="1.5" PointX="0.5" PointY="0.5" Height="2.5571907552083331" />
+        <EntityTypeShape EntityType="Student.Semester" Width="1.5" PointX="2.5" PointY="0.5" Height="1.9802864583333335" />
+        <AssociationConnector Association="Student.StudentSemester">
+          <ConnectorPoint PointX="2" PointY="1.4901432291666668" />
+          <ConnectorPoint PointX="2.5" PointY="1.4901432291666668" /></AssociationConnector>
+        <EntityTypeShape EntityType="Student.Course" Width="1.5" PointX="4.5" PointY="0.5" Height="2.7494921874999996" />
+        <AssociationConnector Association="Student.SemesterCourse">
+          <ConnectorPoint PointX="4" PointY="1.4901432291666668" />
+          <ConnectorPoint PointX="4.5" PointY="1.4901432291666668" /></AssociationConnector></Diagram></edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

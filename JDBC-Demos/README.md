@@ -11,4 +11,7 @@ Ensure that both the JDBC driver and UOJ libraries are in your Java class path.
 As an example for Windows:
     set CLASSPATH=%CLASSPATH%;c:\u2\unidk\uojsdk\lib\asjava.zip;c:\u2\unidk\jdbc\lib\unijdbc.jar
 
-**JDBC-Sample** - A simple sample for using JDBC in a Java program.
+<dl>
+<dt>JDBC-Sample</dt>
+<dd>A simple sample for using JDBC in a Java program</dd>
+</dl>

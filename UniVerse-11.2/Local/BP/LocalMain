@@ -1,0 +1,25 @@
+PROGRAM LocalMain
+    ** Let's have a quick look at local scoping
+
+    CRT "Calling the local SUBROUTINE"
+    CALL Main(@SENTENCE) ;* This will call Main() below, rather than an external subroutine
+    CRT "Back from the local SUBROUTINE"
+
+END
+
+SUBROUTINE Main(Args)
+    CRT "Running inside the local SUBROUTINE"
+    CRT "Args:" :Args
+	
+    FOR Counter = 1 TO 3
+        CALL InnerLoop(Counter)
+    NEXT Counter
+RETURN
+
+SUBROUTINE InnerLoop(OutsideCounter)
+    * Notice this won't affect Main()'s 'Counter' variable due to scoping
+    FOR Counter = 1 TO OutsideCounter
+        CRT "*":
+    NEXT Counter
+    CRT
+RETURN
