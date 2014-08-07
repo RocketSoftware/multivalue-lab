@@ -1,0 +1,5 @@
+C:\MyProject\VS2012\WindowsPhone\U2_oData_WebApplication\bin\U2_oData_WebApplication.dll
+C:\MyProject\VS2012\WindowsPhone\U2_oData_WebApplication\bin\U2_oData_WebApplication.pdb
+C:\MyProject\VS2012\WindowsPhone\U2_oData_WebApplication\obj\Debug\ResolveAssemblyReference.cache
+C:\MyProject\VS2012\WindowsPhone\U2_oData_WebApplication\obj\Debug\U2_oData_WebApplication.dll
+C:\MyProject\VS2012\WindowsPhone\U2_oData_WebApplication\obj\Debug\U2_oData_WebApplication.pdb

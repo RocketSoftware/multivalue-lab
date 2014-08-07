@@ -1,0 +1,69 @@
+*******************************************************************************
+*
+*       Program simpleCreate
+*******************************************************************************
+*  Created on: Jan 16, 2012 11:08:58 AM
+*  Description:  Simple program that shows how to consume JSON with UDO 
+*
+*
+*****************************************************************************
+$INCLUDE INCLUDE UDO.H
+**$INCLUDE UNIVERSE.INCLUDE UDO.H
+
+NAME = ""; VAL_OUT = ""; TYPE_OUT = ""
+inputString = '{ "isTrue": true, "isFalse": false, "isNull": null, "isNumber": 12, "isString": "some test", "isArray": [ 1, 2, 3], "isObject": { "name": "value" } }'
+outputString = ""; udoHandle = ''
+
+STATUS = UDORead(inputString, UDOFORMAT_JSON, udoHandle)
+STATUS = UDOWrite(udoHandle, UDOFORMAT_JSON, outputString)
+STATUS = UDORead(outputString, UDOFORMAT_JSON, udoHandle)
+
+IF STATUS = UDO_SUCCESS THEN
+   PRINT "OK"
+END ELSE
+   PRINT "NOT OK"
+END
+
+PRINT @(-1):"The json in this example is: "
+PRINT inputString
+PRINT
+PRINT "Note that the input JSON string is not formated" 
+PRINT
+PRINT "Press return to see an example of getting the properties by using UDOGetNextProperty function":;INPUT WAIT
+PRINT @(-1):"The original JSON string written out from UDOWrite function"
+PRINT outputString
+PRINT
+
+LOOP
+  STATUS = UDOGetNextProperty(udoHandle, NAME, VAL_OUT, TYPE_OUT)
+UNTIL STATUS # UDO_SUCCESS
+  BEGIN CASE
+  CASE TYPE_OUT = UDO_FALSE
+    TYPE_NAME = "False"
+  CASE TYPE_OUT = UDO_TRUE
+    TYPE_NAME = "True"
+  CASE TYPE_OUT = UDO_NULL
+    TYPE_NAME = "Null"
+  CASE TYPE_OUT = UDO_NUMBER
+    TYPE_NAME = "Number"
+  CASE TYPE_OUT = UDO_STRING
+    TYPE_NAME = "String"
+  CASE TYPE_OUT = UDO_ARRAY
+    TYPE_NAME = "Array"
+  CASE TYPE_OUT = UDO_OBJECT
+    TYPE_NAME = "Object"
+  END CASE
+  
+  PRINT NAME:" is type ":TYPE_NAME:
+  STATUS = UDOWrite(VAL_OUT, UDOFORMAT_JSON, VAL_OUT)
+  
+  IF STATUS = UDO_SUCCESS THEN
+     PRINT ", required UDOWrite, ":
+  END ELSE
+    PRINT ", did not require UDOWrite, ":
+  END
+  
+  PRINT " and has a value of '":VAL_OUT:"'"
+REPEAT
+
+STATUS = UDOFree(udoHandle)

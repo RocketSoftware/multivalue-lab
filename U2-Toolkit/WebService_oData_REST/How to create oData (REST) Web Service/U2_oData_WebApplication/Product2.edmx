@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="XDEMOModel.Store" Alias="Self" Provider="U2.Data.Client" ProviderManifestToken="UNIVERSE, 11.1.10" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="XDEMOModelStoreContainer">
+          <EntitySet Name="PRODUCTS" EntityType="XDEMOModel.Store.PRODUCTS" store:Type="Tables" Schema="UVACCT" />
+          <EntitySet Name="PRODUCTS_AWARD_INFO" EntityType="XDEMOModel.Store.PRODUCTS_AWARD_INFO" store:Type="Tables" Schema="UVACCT" />
+          <AssociationSet Name="PRODUCTS_PRODUCTS_AWARD_INFO" Association="XDEMOModel.Store.PRODUCTS_PRODUCTS_AWARD_INFO">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="PRODUCTS_AWARD_INFO" EntitySet="PRODUCTS_AWARD_INFO" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="decimal" Nullable="false" Precision="11" />
+          <Property Name="ISBN" Type="varchar" MaxLength="254" />
+          <Property Name="TITLE" Type="varchar" MaxLength="254" />
+          <Property Name="DISKS" Type="int" />
+          <Property Name="RATING" Type="varchar" MaxLength="254" />
+          <Property Name="ASPECT" Type="decimal" Precision="14" />
+          <Property Name="GENRE" Type="varchar" MaxLength="254" />
+          <Property Name="NOEPISODES" Type="int" />
+          <Property Name="LOCATION.CODE" Type="varchar" MaxLength="254" />
+          <Property Name="THEATERDATE" Type="date" />
+          <Property Name="MPN" Type="varchar" MaxLength="254" />
+          <Property Name="STUDIO" Type="varchar" MaxLength="254" />
+          <Property Name="DVDRELDATE" Type="date" />
+          <Property Name="L.UPC" Type="varchar" Nullable="false" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="LOCATION" Type="varchar" Nullable="false" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="MOVIE_IMAGE" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="PRODUCTS_AWARD_INFO">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+            <PropertyRef Name="@ASSOC_ROW" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="decimal" Nullable="false" Precision="11" />
+          <Property Name="AWARD_TYPE" Type="varchar" MaxLength="254" />
+          <Property Name="AWARD_NAME" Type="varchar" MaxLength="254" />
+          <Property Name="AWARD_RECIPIENT" Type="varchar" MaxLength="254" />
+          <Property Name="@ASSOC_ROW" Type="numeric" Nullable="false" Precision="9" />
+        </EntityType>
+        <Association Name="PRODUCTS_PRODUCTS_AWARD_INFO">
+          <End Role="PRODUCTS" Type="XDEMOModel.Store.PRODUCTS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCTS_AWARD_INFO" Type="XDEMOModel.Store.PRODUCTS_AWARD_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="PRODUCT_ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS_AWARD_INFO">
+              <PropertyRef Name="PRODUCT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="f_XDEMO_GETPRODUCTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" StoreFunctionName="*XDEMO*GETPRODUCTS" Schema="" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XDEMOModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="XDEMOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PRODUCT2S" EntityType="XDEMOModel.PRODUCT2" />
+          <EntitySet Name="PRODUCTS_AWARD_INFO" EntityType="XDEMOModel.PRODUCTS_AWARD_INFO" />
+          <AssociationSet Name="PRODUCTS_PRODUCTS_AWARD_INFO" Association="XDEMOModel.PRODUCTS_PRODUCTS_AWARD_INFO">
+            <End Role="PRODUCTS" EntitySet="PRODUCT2S" />
+            <End Role="PRODUCTS_AWARD_INFO" EntitySet="PRODUCTS_AWARD_INFO" />
+          </AssociationSet>
+          <FunctionImport Name="f_XDEMO_GETPRODUCTS" EntitySet="PRODUCT2S" ReturnType="Collection(XDEMOModel.PRODUCT2)" />
+        </EntityContainer>
+        <EntityType Name="PRODUCT2">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="Decimal" Nullable="false" Precision="11" Scale="0" />
+          <Property Name="ISBN" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="TITLE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="DISKS" Type="Int32" />
+          <Property Name="RATING" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="ASPECT" Type="Decimal" Precision="14" Scale="0" />
+          <Property Name="GENRE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="NOEPISODES" Type="Int32" />
+          <Property Name="LOCATION_CODE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="THEATERDATE" Type="DateTime" />
+          <Property Name="MPN" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="STUDIO" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="DVDRELDATE" Type="DateTime" />
+          <Property Name="L_UPC" Type="String" Nullable="false" MaxLength="254" Unicode="false" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="LOCATION" Type="String" Nullable="false" MaxLength="254" Unicode="false" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="MOVIE_IMAGE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PRODUCTS_AWARD_INFO" Relationship="XDEMOModel.PRODUCTS_PRODUCTS_AWARD_INFO" FromRole="PRODUCTS" ToRole="PRODUCTS_AWARD_INFO" />
+        </EntityType>
+        <EntityType Name="PRODUCTS_AWARD_INFO">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+            <PropertyRef Name="C_ASSOC_ROW" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="Decimal" Nullable="false" Precision="11" Scale="0" />
+          <Property Name="AWARD_TYPE" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="AWARD_NAME" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="AWARD_RECIPIENT" Type="String" MaxLength="254" Unicode="false" FixedLength="false" />
+          <Property Name="C_ASSOC_ROW" Type="Decimal" Nullable="false" Precision="9" Scale="0" />
+          <NavigationProperty Name="PRODUCT" Relationship="XDEMOModel.PRODUCTS_PRODUCTS_AWARD_INFO" FromRole="PRODUCTS_AWARD_INFO" ToRole="PRODUCTS" />
+        </EntityType>
+        <Association Name="PRODUCTS_PRODUCTS_AWARD_INFO">
+          <End Role="PRODUCTS" Type="XDEMOModel.PRODUCT2" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCTS_AWARD_INFO" Type="XDEMOModel.PRODUCTS_AWARD_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="PRODUCT_ID" />
+            </Principal>
+            <Dependent Role="PRODUCTS_AWARD_INFO">
+              <PropertyRef Name="PRODUCT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="ProductComplexType" >
+          <Property Type="Decimal" Name="Id" Nullable="false" />
+          <Property Type="Single" Name="Title" Nullable="false" />
+          <Property Type="String" Name="MovieImage" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XDEMOModelStoreContainer" CdmEntityContainer="XDEMOEntities">
+          <EntitySetMapping Name="PRODUCT2S"><EntityTypeMapping TypeName="XDEMOModel.PRODUCT2"><MappingFragment StoreEntitySet="PRODUCTS">
+            <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+            <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+            <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+            <ScalarProperty Name="DISKS" ColumnName="DISKS" />
+            <ScalarProperty Name="RATING" ColumnName="RATING" />
+            <ScalarProperty Name="ASPECT" ColumnName="ASPECT" />
+            <ScalarProperty Name="GENRE" ColumnName="GENRE" />
+            <ScalarProperty Name="NOEPISODES" ColumnName="NOEPISODES" />
+            <ScalarProperty Name="LOCATION_CODE" ColumnName="LOCATION.CODE" />
+            <ScalarProperty Name="THEATERDATE" ColumnName="THEATERDATE" />
+            <ScalarProperty Name="MPN" ColumnName="MPN" />
+            <ScalarProperty Name="STUDIO" ColumnName="STUDIO" />
+            <ScalarProperty Name="DVDRELDATE" ColumnName="DVDRELDATE" />
+            <ScalarProperty Name="L_UPC" ColumnName="L.UPC" />
+            <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+            <ScalarProperty Name="MOVIE_IMAGE" ColumnName="MOVIE_IMAGE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS_AWARD_INFO"><EntityTypeMapping TypeName="XDEMOModel.PRODUCTS_AWARD_INFO"><MappingFragment StoreEntitySet="PRODUCTS_AWARD_INFO">
+            <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+            <ScalarProperty Name="AWARD_TYPE" ColumnName="AWARD_TYPE" />
+            <ScalarProperty Name="AWARD_NAME" ColumnName="AWARD_NAME" />
+            <ScalarProperty Name="AWARD_RECIPIENT" ColumnName="AWARD_RECIPIENT" />
+            <ScalarProperty Name="C_ASSOC_ROW" ColumnName="@ASSOC_ROW" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="f_XDEMO_GETPRODUCTS" FunctionName="XDEMOModel.Store.f_XDEMO_GETPRODUCTS" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Product2">
+        <EntityTypeShape EntityType="XDEMOModel.PRODUCT2" Width="1.5" PointX="0.75" PointY="1" Height="4.2879036458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="XDEMOModel.PRODUCTS_AWARD_INFO" Width="3.25" PointX="3" PointY="2.125" Height="2.1725878906249996" IsExpanded="true" />
+        <AssociationConnector Association="XDEMOModel.PRODUCTS_PRODUCTS_AWARD_INFO" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.2112939453125" />
+          <ConnectorPoint PointX="3" PointY="3.2112939453125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

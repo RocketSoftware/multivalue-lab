@@ -1,0 +1,53 @@
+$INCLUDE UNIVERSE.INCLUDE UDO.H
+*
+*Create JSON String
+      VALUES = '{ "accounting" : [ '
+      VALUES := '                         { "firstName" : "John",'
+      VALUES := '                           "lastName"  : "Doe",'
+      VALUES := '                           "age"       : 23 },'
+      VALUES := '                         { "firstName" : "Mark",'
+      VALUES := '                           "lastName"  : "Smith",'
+      VALUES := '                           "age"       : 32 }'
+      VALUES := '                       ], '
+      VALUES := '"sales"       : [ '
+      VALUES := '                         { "firstName" : "Sally",'
+      VALUES := '                           "lastName"  : "Green",'
+      VALUES := '                           "age"       : 27 },'
+      VALUES := '                         '
+      VALUES := '                         { "firstName" : "Jim",'
+      VALUES := '                         "lastName"  : "Gallen",'
+      VALUES := '                           "age"       : 41 }'
+      VALUES := '                       ] '
+      VALUES := '     } '
+*
+* READ JSON STRING INTO UDO
+*
+      STATUS = UDORead(VALUES,UDOFORMAT_JSON,udo)
+      IF STATUS = UDO_ERROR THEN
+         STATUS = UDOGetLastError(errcode,errmsg)
+         PRINT "Err ":errcode:" - ":errmsg
+         RETURN
+      END
+*
+* First Step through array objects
+      LOOP
+         STATUS = UDOGetNextProperty(udo,NAME, udo1, TYPE)
+      UNTIL STATUS = UDO_ERROR
+         PRINT "NAME ":NAME:"     TYPE ":TYPE
+*
+* Second Loop through Array items
+         LOOP
+            STATUS = UDOArrayGetNextItem(udo1,udo2,TYPE)
+         UNTIL STATUS = UDO_ERROR
+*
+* Third Loop through properties in Item
+            EOF = 0
+            LOOP
+               STATUS = UDOGetNextProperty(udo2,NAME, VAL, TYPE)
+            UNTIL STATUS = UDO_ERROR
+               PRINT "NAME ":NAME:"  VAL ":VAL:"  TYPE ":TYPE
+            REPEAT
+         REPEAT
+      REPEAT
+*
+   END
