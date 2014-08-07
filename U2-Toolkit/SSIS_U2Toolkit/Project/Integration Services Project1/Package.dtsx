@@ -1,0 +1,774 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/4/2014 9:08:15 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="DEN-L-RK01"
+  DTS:CreatorName="ROCKET1\rkumar"
+  DTS:DTSID="{B64240A3-7E1C-4E4D-B65B-CBB986872E6C}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3402.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{258C21F3-9F7F-4928-9211-61C8F013D2EF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[.\SQLEXPRESS.tempdb]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{91297037-466E-4603-BC07-AF6E6642DDAE}"
+      DTS:ObjectName=".\SQLEXPRESS.tempdb">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=tempdb;Integrated Security=True;Application Name=SSIS-Package-{91297037-466E-4603-BC07-AF6E6642DDAE}.\SQLEXPRESS.tempdb;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[rajanVM.HS.SALES.admin]"
+      DTS:CreationName="ADO.NET:U2.Data.Client.U2Connection, U2.Data.Client, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9ab9148678f4f448"
+      DTS:DTSID="{02CAA51B-DE47-45AD-A09B-1794EC45B9C9}"
+      DTS:ObjectName="rajanVM.HS.SALES.admin">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=rajanVM;User ID=admin;Database=HS.SALES;Persist Security Info=True;ServerType=universe;AccessMode=Uci;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAWZ5iUpg1p0G+2DTx9ZbjOgAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADiZpb6pipjkU7Y5pnmXS0bAAAAAASAAACgAAAAEAAAAI+8BjmoLBLA10u0h8Wp6gwIAAAAuEVL80KCc8gUAAAAj/ltXYoeHicSbxmj/BVoHG52b8s</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\U2 Database TO SQL SERVER"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B92986B2-48A8-4B59-A884-8943CCA7F45A}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="U2 Database TO SQL SERVER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\U2 Database TO SQL SERVER\Extract Customer Table"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Extract Customer Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM CUSTOMER</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[rajanVM.HS.SALES.admin]"
+                  connectionManagerRefId="Package.ConnectionManagers[rajanVM.HS.SALES.admin]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[CUSTID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[CUSTID]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[CUSTID]"
+                      name="CUSTID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[SAL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[SAL]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[SAL]"
+                      name="SAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[FNAME]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FNAME]"
+                      name="FNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[LNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[LNAME]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[LNAME]"
+                      name="LNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FULLNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[FULLNAME]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FULLNAME]"
+                      name="FULLNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[COMPANY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[COMPANY]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[COMPANY]"
+                      name="COMPANY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ADDR1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[ADDR1]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ADDR1]"
+                      name="ADDR1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ADDR2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[ADDR2]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ADDR2]"
+                      name="ADDR2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FULLADDR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[FULLADDR]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FULLADDR]"
+                      name="FULLADDR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[CITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[CITY]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[CITY]"
+                      name="CITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[STATE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[STATE]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[STATE]"
+                      name="STATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[STATENAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[STATENAME]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[STATENAME]"
+                      name="STATENAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ZIP]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[ZIP]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ZIP]"
+                      name="ZIP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[PHONE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[PHONE]"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[PHONE]"
+                      name="PHONE"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[CUSTID]"
+                      dataType="i4"
+                      name="CUSTID" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[SAL]"
+                      dataType="wstr"
+                      length="254"
+                      name="SAL" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[FNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="FNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[LNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="LNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[FULLNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="FULLNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[COMPANY]"
+                      dataType="wstr"
+                      length="254"
+                      name="COMPANY" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[ADDR1]"
+                      dataType="wstr"
+                      length="254"
+                      name="ADDR1" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[ADDR2]"
+                      dataType="wstr"
+                      length="254"
+                      name="ADDR2" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[FULLADDR]"
+                      dataType="wstr"
+                      length="254"
+                      name="FULLADDR" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[CITY]"
+                      dataType="wstr"
+                      length="254"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[STATE]"
+                      dataType="wstr"
+                      length="254"
+                      name="STATE" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[STATENAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="STATENAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[ZIP]"
+                      dataType="wstr"
+                      length="254"
+                      name="ZIP" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].ExternalColumns[PHONE]"
+                      dataType="wstr"
+                      length="254"
+                      name="PHONE" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[CUSTID]"
+                      dataType="i4"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[CUSTID]"
+                      name="CUSTID" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[SAL]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[SAL]"
+                      name="SAL" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[FNAME]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[FNAME]"
+                      name="FNAME" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[LNAME]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[LNAME]"
+                      name="LNAME" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[FULLNAME]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[FULLNAME]"
+                      name="FULLNAME" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[COMPANY]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[COMPANY]"
+                      name="COMPANY" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ADDR1]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ADDR1]"
+                      name="ADDR1" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ADDR2]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ADDR2]"
+                      name="ADDR2" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[FULLADDR]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[FULLADDR]"
+                      name="FULLADDR" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[CITY]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[CITY]"
+                      name="CITY" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[STATE]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[STATE]"
+                      name="STATE" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[STATENAME]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[STATENAME]"
+                      name="STATENAME" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ZIP]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ZIP]"
+                      name="ZIP" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[PHONE]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[PHONE]"
+                      name="PHONE" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Sample ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">"Sample ADO NET Destination"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.ADONETDestination, Microsoft.SqlServer.ADONETDest, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[.\SQLEXPRESS.tempdb]"
+                  connectionManagerRefId="Package.ConnectionManagers[.\SQLEXPRESS.tempdb]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[CUSTID]"
+                      cachedDataType="i4"
+                      cachedName="CUSTID"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CUSTID]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[CUSTID]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[SAL]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="SAL"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[SAL]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[SAL]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[FNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="FNAME"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[FNAME]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FNAME]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[LNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="LNAME"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[LNAME]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[LNAME]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[FULLNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="FULLNAME"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[FULLNAME]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FULLNAME]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[COMPANY]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="COMPANY"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[COMPANY]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[COMPANY]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[ADDR1]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="ADDR1"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ADDR1]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ADDR1]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[ADDR2]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="ADDR2"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ADDR2]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ADDR2]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[FULLADDR]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="FULLADDR"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[FULLADDR]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[FULLADDR]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[CITY]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="CITY"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CITY]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[CITY]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[STATE]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="STATE"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[STATE]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[STATE]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[STATENAME]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="STATENAME"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[STATENAME]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[STATENAME]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[ZIP]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="ZIP"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ZIP]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[ZIP]" />
+                    <inputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].Columns[PHONE]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="PHONE"
+                      externalMetadataColumnId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[PHONE]"
+                      lineageId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output].Columns[PHONE]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CUSTID]"
+                      dataType="i4"
+                      name="CUSTID" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[SAL]"
+                      dataType="wstr"
+                      length="254"
+                      name="SAL" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[FNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="FNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[LNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="LNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[FULLNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="FULLNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[COMPANY]"
+                      dataType="wstr"
+                      length="254"
+                      name="COMPANY" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ADDR1]"
+                      dataType="wstr"
+                      length="254"
+                      name="ADDR1" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ADDR2]"
+                      dataType="wstr"
+                      length="254"
+                      name="ADDR2" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[FULLADDR]"
+                      dataType="wstr"
+                      length="254"
+                      name="FULLADDR" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CITY]"
+                      dataType="wstr"
+                      length="254"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[STATE]"
+                      dataType="wstr"
+                      length="254"
+                      name="STATE" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[STATENAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="STATENAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ZIP]"
+                      dataType="wstr"
+                      length="254"
+                      name="ZIP" />
+                    <externalMetadataColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[PHONE]"
+                      dataType="wstr"
+                      length="254"
+                      name="PHONE" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\U2 Database TO SQL SERVER.Paths[ADO NET Source Output]"
+              endId="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\U2 Database TO SQL SERVER\Extract Customer Table.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="219,42"
+          Id="Package\U2 Database TO SQL SERVER"
+          TopLeft="163,129" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\U2 Database TO SQL SERVER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="189,42"
+          Id="Package\U2 Database TO SQL SERVER\Extract Customer Table"
+          TopLeft="161,72" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination"
+          TopLeft="336,290" />
+        <EdgeLayout
+          Id="Package\U2 Database TO SQL SERVER.Paths[ADO NET Source Output]"
+          TopLeft="255.5,114">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="189,176"
+              Start="0,0"
+              End="189,168.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,84" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,84"
+                    Point2="0,88"
+                    Point3="4,88" />
+                  <mssgle:LineSegment
+                    End="185,88" />
+                  <mssgle:CubicBezierSegment
+                    Point1="185,88"
+                    Point2="189,88"
+                    Point3="189,92" />
+                  <mssgle:LineSegment
+                    End="189,168.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\U2 Database TO SQL SERVER\Extract Customer Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\U2 Database TO SQL SERVER\Sample ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
