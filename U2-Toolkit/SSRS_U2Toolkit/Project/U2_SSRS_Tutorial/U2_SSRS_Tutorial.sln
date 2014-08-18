@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "U2_SSRS_Tutorial", "U2_SSRS_Tutorial.rptproj", "{5A7AE84C-F225-48A5-B28A-D21441281438}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.Debug|Default.ActiveCfg = Debug
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.Debug|Default.Build.0 = Debug
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.Debug|Default.Deploy.0 = Debug
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.DebugLocal|Default.Build.0 = DebugLocal
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.Release|Default.ActiveCfg = Release
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.Release|Default.Build.0 = Release
+		{5A7AE84C-F225-48A5-B28A-D21441281438}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
