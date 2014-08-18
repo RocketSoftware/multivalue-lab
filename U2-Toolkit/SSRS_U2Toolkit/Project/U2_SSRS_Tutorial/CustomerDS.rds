@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="CustomerDS">
+  <ConnectionProperties>
+    <Extension>U2</Extension>
+    <ConnectString>Database=HS.SALES;User ID=admin;Password=u2;Server=rajanVM;Persist Security Info=True;ServerType=universe;AccessMode=Uci</ConnectString>
+    <IntegratedSecurity>true</IntegratedSecurity>
+  </ConnectionProperties>
+  <DataSourceID>1f8d5dc9-0e21-43b2-85d6-3c163aae7948</DataSourceID>
+</RptDataSource>
