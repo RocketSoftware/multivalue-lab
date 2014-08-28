@@ -1,0 +1,151 @@
+SUBROUTINE GET.XML.FIELD.SUB(TAG.ID,ITXT,OTXT)
+*
+* Pass    TAG.ID: The name of the XML tag
+*         ITXT:   Dynamic array with all of the elements of an XML
+*                 string exploded into individual attributes using
+*                 the parse.xml.sub subroutine.
+*
+*                 Example:
+*
+*                 <Record><CustName>Acme</CustName></Record>
+*                 would be represented as
+*                 <Record>^<CustName>^Acme^</CustName>^</Record>
+*                 where ^ is an attribute mark
+*
+* Return  OTXT:   Dynamic array in which each attribute contains the
+*                 contents of an XML tag. This can be a single piece
+*                 of data or a group of VM separated tags and their
+*                 data. There will be one attribute for each occurence
+*                 of the searched-for tag as passed in TAG.ID
+*
+*                 Example:
+*
+*                 Search for "Record" is performed against
+*                 <Record>^<CustName>^Acme^</CustName>^</Record>
+*                 will yield <CustName>]Acme]</CustName>
+*                 where ] is a value mark
+*
+*                 Search for "Name" is performed against
+*                 <Names>^<Name>^Jo^</Name>^<Name>^Bob^</Name>^</Names>
+*                 will yield Jo^Bob where ^ is an attribute mark
+*
+* A note about attributes:
+*                 In D3 they represent fields in a record. In XML they
+*                 represent properties/values inside the begining tag.
+*                 In the example <Name style="italic">, style is an
+*                 attribute and italic is its value. So you could
+*                 XML-encode a customer's name and title as
+*
+*                  <Customer>
+*                     <Name>Bill</Name>
+*                     <Title>Sales</Title>
+*                  </Customer>
+*
+*                  or like this
+*
+*                  <Customer Name="Bill" Title="Sales" />
+*
+*  Initialize OTXT for return text, WTXT as a working copy of ITXT
+*  (which needs to be preserved), change value marks to value marks
+*  in WTXT to make it easier to process, set up begining, ending and
+*  attribute tag search strings and initialize various counters,
+*  subscripts and loop maximum
+*   
+   OTXT=""
+   WTXT=ITXT
+   CONVERT @VM TO @AM IN WTXT
+   TXT.MAX=DCOUNT(WTXT,@AM)
+   BEG.TAG="<":TAG.ID:">"
+   ATR.TAG="<":TAG.ID:" "
+   END.TAG="</":TAG.ID:">"
+   BTAGX=0
+   ETAGX=0
+   OTX=0
+   ATTRIBUTES=""
+*
+   FOR TX=1 TO TXT.MAX
+     BEGIN CASE
+       CASE WTXT<TX>=BEG.TAG    ;* this is a beginning tag
+         BTAGX=TX+1
+       CASE WTXT<TX>[1,LEN(ATR.TAG)]=ATR.TAG  ;* begining tag with
+         BTAGX=TX+1                           ;* XML attributes
+         GOSUB ParseAttributes
+         IF IS.EMPTY.TAG THEN     ;* if this is a tag that carries
+           IF ATTRIBUTES#"" THEN  ;* its data in attributes, tagged
+             OTX+=1               ;* data were created in
+             OTXT<OTX>=ATTRIBUTES ;* ParseAttributes and loaded here
+           END
+         END
+       CASE WTXT<TX>=END.TAG      ;* Found the ending tag, load the
+         ETAGX=TX-1               ;* beg-tag to end-tag attributes
+         OTX+=1                   ;* into a VM separated attribute
+         IF ATTRIBUTES#"" THEN
+           OTXT<OTX,-1>=ATTRIBUTES
+           ATTRIBUTES=""
+         END
+         FOR WX=BTAGX TO ETAGX
+           OTXT<OTX,-1>=WTXT<WX>
+         NEXT WX
+* Not sure if the next three cases would ever trigger???
+       CASE WTXT<TX>[1,LEN(BEG.TAG)]#BEG.TAG ;* not this beg or end tag
+       CASE WTXT<TX>[LEN(WTXT<TX>)-LEN(END.TAG)+1,len(END.TAG)]#END.TAG
+       CASE 1 ;* assumes a format that is not used???
+         WTXT<TX>=WTXT<TX>[LEN(BEG.TAG)+1,999999]
+         WTXT<TX>=WTXT<TX>[1,LEN(WTXT<TX>)-LEN(END.TAG)]
+         OTX+=1
+         WTXT<OTX>=WTXT<TX>
+     END CASE
+   NEXT TX
+*
+   GO SubroutineMainExit
+*
+ParseAttributes:   ;* Parse XML attributes into JSON-like array/list
+   IS.EMPTY.TAG=0  ;* Indicates an empty tag
+   ATTRIBUTES=""
+   ATTRX=0
+   ALINE=OCONV(WTXT<TX>,"G1 999999") ;* remove the begining tag from line
+   LOOP                              ;* then attributes are space delimted
+     ALEN=LEN(ALINE)
+   WHILE ALEN DO                   ;* process until exhausted
+     ATTRX+=1 ;* next attribute    ;* chopping the processed part
+     INQT=\\                       ;* of the line off the begining
+     FOR APOS=1 TO ALEN            ;* of the line each iteration
+       BEGIN CASE                  ;* INQT stores active quote character
+         CASE ALINE[APOS,2]="/>" AND INQT="" ;* empty quote end caret
+           IS.EMPTY.TAG=1;                   ;* it's an empty tag, set
+           ALINE=""                          ;* ALINE & APOS to stop
+           APOS=ALEN                         ;* loop processing
+         CASE ALINE[APOS,1]=">" AND INQT=""  ;* end of non-empty tag
+           ALINE=""                          ;* same deal on loop end
+           APOS=ALEN
+         CASE INQT="" AND ALINE[APOS,1]=\"\  ;* start of an
+           INQT=\"\                          ;* attribute value
+         CASE INQT="" AND ALINE[APOS,1]=\'\  ;* same deal, different
+           INQT=\'\                          ;* quote character
+         CASE ALINE[APOS,1]=INQT             ;* came to end of value so
+           ALINE=ALINE[APOS+1,999999]        ;* end of attribute
+           IF ALINE[1,1]=" " THEN ALINE=ALINE[2,999999] ;* strip spaces
+           APOS=ALEN                                    ;* between attrs
+         CASE 1
+           ATTRIBUTES<1,ATTRX>:=ALINE[APOS,1]  ;* stack next character
+       END CASE                                ;* on ATTRIBUTES array
+     NEXT APOS
+   REPEAT
+   GOSUB MakeAttrTags
+*
+   RETURN
+*
+MakeAttrTags: ;* Change attribute notation to standard XML-contained data
+   AMAX=DCOUNT(ATTRIBUTES,@VM)
+   FOR AX=1 TO AMAX
+     TAGID=FIELD(ATTRIBUTES<1,AX>,"=",1)
+     TAGDATA=OCONV(ATTRIBUTES<1,AX>,"G1=999999")
+     ATTRIBUTES<1,AX>="<":TAGID:">":TAGDATA:"</":TAGID:">"
+   NEXT AX
+*
+   RETURN
+*
+SubroutineMainExit:
+   RETURN
+*
+* End of source

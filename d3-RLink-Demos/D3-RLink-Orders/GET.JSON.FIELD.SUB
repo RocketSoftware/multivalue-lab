@@ -1,0 +1,122 @@
+SUBROUTINE GET.JSON.FIELD.SUB(D.NAME,ITXT,OTXT)
+*
+* Pass    D.NAME: The name of the JSON element (key)
+*         ITXT:   JSON string
+*
+* Return  OTXT:   Dynamic array in which each attribute contains the
+*                 contents of a JSON value (string, number or special
+*                 value), array or object associated with that key.
+*                 Special values include "true", "false" or "null".
+*                 There will be one attribute for each orccurence
+*                 of searched-for key specified in D.NAME.
+*
+* This routine can be recalled on its own result string to extract
+* nested data. For example, you can have a key "Customers" whose
+* value is an object containing an array that contains three objects,
+* each of which has the key "Customer" and contains "CustName",
+* "CustPhone" and "CustEmail". To extract each customer's information
+* one customer at a time, you would call the routine multiple times
+* as follows:
+*
+*  CALL GET.JSON.FIELD.SUB("Customer",JSONSTR,SUBSTR)
+*  ATTR.CNT = DCOUNT(SUBSTR,@AM)
+*  FOR AX = 1 TO ATTR.CNT
+*    CALL GET.JSON.FIELD.SUB("CustName",SUBSTR<AX>,CNAME)
+*    CALL GET.JSON.FIELD.SUB("CustPhone",SUBSTR<AX>,PHONE)
+*    GOSUB UpdatePhoneList
+*  NEXT AX
+*
+*  You can also bypass the extraction of the container objects
+*  by searching for a key that occurs within the container object
+*  one or more times and return the value only, like so:
+*
+*  CALL GET.JSON.FIELD.SUB("CustEmail",JSONSTR,EMAILS)
+*  ATTR.CNT = DCOUNT(EMAILS,@AM)
+*  FOR AX = 1 TO ATTR.CNT
+*    EMAIL = EMAILS<AX>
+*    GOSUB ProcessEmail
+*  NEXT AX
+*
+*
+   WTXT=ITXT  ;* ITXT should remain untouched.
+              ;* Move it to WTXT and remove trivial characters
+   CONVERT @AM:@VM:@SVM:CHAR(9):CHAR(10):CHAR(13) TO "" IN WTXT
+   OTXT=""            ;* Set up return dynamic array, its subscript,
+   OTXT.X=0           ;* the input string length and the search
+   WTXT.LEN=LEN(WTXT) ;* argument in double quotes
+   SEARCH.NAME=\"\:D.NAME:\"\
+   SEARCH.LEN=LEN(SEARCH.NAME)
+*
+   FOR IPOS=1 TO WTXT.LEN
+     IF WTXT[IPOS,SEARCH.LEN]=SEARCH.NAME THEN ;* found name
+       IPOS+=SEARCH.LEN
+       FOUND.DELIM=INDEX(WTXT[IPOS,WTXT.LEN],\:\,1)
+       IF FOUND.DELIM ELSE GO SubroutineMainExit
+       IPOS+=FOUND.DELIM
+       FOUND.CHAR=""
+       FOUND.BEG=""
+       FOUND.LEN=""
+       SEARCH.CHAR=""
+       WQUOTE=INDEX(WTXT[IPOS,WTXT.LEN],\"\,1)
+       WBRACE=INDEX(WTXT[IPOS,WTXT.LEN],\{\,1)
+       WBRACK=INDEX(WTXT[IPOS,WTXT.LEN],\[\,1)
+       WCOMMA=INDEX(WTXT[IPOS,WTXT.LEN],\,\,1)
+       IF WQUOTE ELSE WQUOTE=WTXT.LEN
+       IF WBRACE ELSE WBRACE=WTXT.LEN
+       IF WBRACK ELSE WBRACK=WTXT.LEN
+       IF WCOMMA ELSE WCOMMA=WTXT.LEN
+       IF WCOMMA<WQUOTE AND WCOMMA<WBRACE AND WCOMMA<WBRACK THEN
+         OTXT.X+=1
+         OTXT<OTXT.X>=TRIM(WTXT[IPOS,WCOMMA-1])
+       END ELSE
+         LOOP WHILE FOUND.CHAR="" DO
+           WCH=WTXT[IPOS,1]
+           BEGIN CASE
+             CASE IPOS>WTXT.LEN
+               EXIT
+             CASE WCH="{"
+               FOUND.CHAR=WCH
+               FOUND.BEG=IPOS
+               SEARCH.CHAR="}"
+             CASE WCH=\"\
+               FOUND.CHAR=WCH
+               FOUND.BEG=IPOS
+               SEARCH.CHAR=WCH
+             CASE WCH="["
+               FOUND.CHAR=WCH
+               FOUND.BEG=IPOS
+               SEARCH.CHAR="]"
+           END CASE
+           IPOS+=1
+         REPEAT
+         IF FOUND.CHAR="" THEN GO SubroutineMainExit
+         FOUND.COUNT=1
+         LOOP WHILE FOUND.COUNT>0 DO
+           WCH=WTXT[IPOS,1]
+           BEGIN CASE
+             CASE IPOS>WTXT.LEN
+               EXIT
+             CASE WCH=SEARCH.CHAR
+               FOUND.COUNT-=1
+               IF FOUND.COUNT<1 THEN
+                 FOUND.LEN=(IPOS-FOUND.BEG)+1
+                 IF SEARCH.CHAR=\"\ THEN
+                   FOUND.BEG+=1
+                   FOUND.LEN-=2
+                 END
+                 OTXT.X+=1
+                 OTXT<OTXT.X>=WTXT[FOUND.BEG,FOUND.LEN]
+               END
+             CASE WCH=FOUND.CHAR
+               FOUND.COUNT+=1
+           END CASE
+           IPOS+=1
+         REPEAT
+       END
+     END
+   NEXT IPOS
+*
+SubroutineMainExit:
+   RETURN
+*
+* End of source

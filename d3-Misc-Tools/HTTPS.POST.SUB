@@ -1,0 +1,130 @@
+SUBROUTINE HTTPS.POST.SUB(HOST,PORT,URLEXT,REQ.RESP)
+*
+*  Pass    HOST:     URI of host
+*          PORT:     Port on which host is listening
+*          URLEXT:   Everything after the host:port/ in the URL
+*          REQ.RESP: Content to be passed by the HTTP POST request
+*
+*  Return  REQ.RESP: Response served up by the host
+*
+*  Standard D3 stuff to make sockets work
+*
+   CFUNCTION SOCKET.BUILTIN
+   INCLUDE DM,BP,INCLUDES SYSID.INC
+   PLATFORM      = SYSTEM(38)
+   WINDOWS.BASED = (PLATFORM<SYS$IMP> = SYS$NT)
+   AF$INET       = 2 + 0; * internetwork: UDP, TCP, etc
+   SOCK$STREAM   = 1 + 0; * stream socket
+   CR$LF         = CHAR(13):CHAR(10)
+*
+*  Scrub input variables
+*
+   IF NOT(ASSIGNED(HOST)) THEN
+     REQ.RESP = "Variable HOST not assigned"
+     GO SubroutineMainExit
+   END
+   IF NOT(ASSIGNED(PORT)) THEN
+     REQ.RESP = "Variable PORT not assigned"
+     GO SubroutineMainExit
+   END
+   IF NOT(ASSIGNED(URLEXT)) THEN
+     REQ.RESP = "Variable URLEXT not assigned"
+     GO SubroutineMainExit
+   END
+   IF NOT(ASSIGNED(REQ.RESP)) THEN
+     REQ.RESP = "Variable REQ.RESP not assigned"
+     GO SubroutineMainExit
+   END
+*
+   IF HOST = "" THEN
+     REQ.RESP = "Variable HOST is null"
+     GO SubroutineMainExit
+   END
+   IF PORT = "" THEN
+     REQ.RESP = "Variable PORT is null"
+     GO SubroutineMainExit
+   END
+   IF URLEXT = "" THEN
+     REQ.RESP = "Variable URLEXT is null"
+     GO SubroutineMainExit
+   END
+   IF REQ.RESP = "" THEN
+     REQ.RESP = "Variable REQ.RESP is null"
+     GO SubroutineMainExit
+   END
+*
+   PORT += 0 ;* Ensure that PORT is cast as numeric
+*
+*  Create a socket
+*
+   SSLFD=0+0 ;* Ensure cast numeric
+   SOCKFD = %SOCKET( AF$INET, SOCK$STREAM, 0)
+   IF SOCKFD < 0 THEN
+     REQ.RESP = "%socket error ":SOCKFD
+     GO SubroutineMainExit
+   END
+*
+*  Connect to the host over that socket
+*
+   RCD = %CONNECT_SSL( SOCKFD, AF$INET, (CHAR *)HOST, PORT, &SSLFD)
+   IF RCD < 0 THEN
+     REQ.RESP = "%connect_ssl error " : RCD
+     GO SubroutineMainExit
+   END
+*
+*  Form the HTTP POST request to transmit the SOAP request to the
+*  web service provider as content
+*
+*  First create URL from HOST, PORT and URLEXT
+*
+   URL = "https://" : HOST : ":" : PORT : URLEXT
+*
+   REQUEST = "POST " : URL : " HTTP/1.0" : CR$LF
+   REQUEST := "Host: ":HOST : ":" : PORT : CR$LF
+   REQUEST := "Content-Transfer-Encoding: base64" : CR$LF
+   REQUEST := "Content-Length: " : LEN(REQ.RESP) : CR$LF : CR$LF
+   REQUEST := REQ.RESP : CR$LF : CR$LF
+*
+   REQLEN = LEN(REQUEST) + 0 ;* Length of entire request cast numeric
+*
+*  Send the request
+*
+   RCD = %WRITE_SSL( SSLFD, (CHAR *)REQUEST, REQLEN )
+   IF RCD < 0 THEN
+     REQ.RESP = CMD : "%write_ssl error " : RCD
+     GO SubroutineMainExit
+   END
+*
+*  Receive the results
+*
+*  Set up a big buffer initialized to hex 0's
+*
+   BUFFER = STR(CHAR(0), 128 * 1024)
+*
+*  Set up a buffer length variable cast as numeric
+*
+   BUFLEN = LEN(BUFFER) + 0
+*
+*  Initialize the REQ.RESP variable for return duty
+*
+   REQ.RESP=""
+*
+*  Loop through reading the returned data from the socket. Unless this
+*  is really huge, the loop should only execute once, but it loops to
+*  prevent buffer overrun. Concatenate BUFFER return onto REQ.RESP.
+*
+   LOOP
+     BYTES = %READ_SSL( SSLFD, BUFFER, BUFLEN )
+   WHILE BYTES DO
+     REQ.RESP := BUFFER[1, BYTES]
+   REPEAT
+*
+*  Close the socket (seriously, or you won't be able to open another
+*  socket on that port later).
+*
+   %CLOSE_SSL( SOCKFD, &SSLFD )
+*
+SubroutineMainExit:
+   RETURN
+*
+* End of source

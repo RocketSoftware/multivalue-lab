@@ -1,0 +1,54 @@
+SUBROUTINE PARSE.XML.SUB(TXT)
+*
+* Pass    TXT: XML-encoded string
+*
+* Return  TXT: Dynamic array with all of the elements of the XML string
+*              exploded into individual attributes.
+*
+*              Example:
+*
+*              <Record><CustName>Acme</CustName></Record>
+*              becomes
+*              <Record>^<CustName>^Acme^</CustName>^</Record>
+*              where ^ is an attribute mark
+*
+*              This prepares the XML string to be "queried" by the
+*              GET.XML.FIELD.SUB subroutine
+*
+*  Set up input text field ITXT, strip out any attribute, value or
+*  sub-value marks as well as tabs, carriage returns or line feeds
+*  and null TXT in preparation for building the return. TX initialized
+*  as attribute subscript.
+*
+   ITXT=TXT ;* Move input string to work string and
+            ;* strip out Pick delimiters, tabs and CR/LFs
+   CONVERT @AM:@VM:@SVM:CHAR(9):CHAR(10):CHAR(13) TO "" IN ITXT
+   TXT=""
+   TX=0
+*
+*  Pick off an element at a time, load element into TXT array. For this
+*  purpose "element" refers to an opening tag, a closing tag or the data
+*  contained therein. Example: <CustName>Acme</CustName> will be parsed
+*  into three attributes, not one.
+*
+   LOOP
+     IX=INDEX(ITXT,">",1) ;* Find the first ">", end of start tag
+   WHILE IX DO            ;* Process if found. If not, you're done
+     ELEMENT=ITXT[1,IX]   ;* Pick this element off front of ITXT
+*    remove any leading trivial white space from the element
+     LOOP WHILE ELEMENT[1,1]=" " DO
+       ELEMENT=ELEMENT[2,9999999]
+     REPEAT
+     ITXT=ITXT[IX+1,9999999]    ;* Remove the extracted element from ITXT
+     IX=INDEX(ELEMENT,"<",1)    ;* Find first "<", begining of end tag
+     IF IX>1 THEN               ;* if it's not 1st char, data present
+       TX+=1                    ;* Pick off data, add to TXT array
+       TXT<TX>=ELEMENT[1,IX-1]
+     END
+     TX+=1                      ;* Add the closing tag to TXT array
+     TXT<TX>=ELEMENT[IX,9999999]
+   REPEAT
+*
+   RETURN
+*
+* End of source

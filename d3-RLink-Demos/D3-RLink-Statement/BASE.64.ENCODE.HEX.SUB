@@ -1,0 +1,47 @@
+SUBROUTINE BASE.64.ENCODE.HEX.SUB(ITEM)
+*
+*  Pass:    ITEM = Hex-encoded string of any (reasonable) length
+*
+*  Return:  ITEM = Base-64-encoded result string
+*
+   EQUATE CHR.TBL TO "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+*
+   IF NOT(ASSIGNED(ITEM)) THEN
+     ITEM="item unassigned"
+     GO SubroutineMainExit
+   END
+*
+   WITEM=""
+   LMAX=LEN(ITEM)
+*
+   FOR LX=1 TO LMAX STEP 6
+     WS=ITEM[LX,6]
+     WSL=LEN(WS)
+     BEGIN CASE
+       CASE WSL=2
+         DIG1=INT(XTD(WS[1,2])/4)+1
+         DIG2=MOD(XTD(WS[1,2]),4)*16+1
+         WITEM:=CHR.TBL[DIG1,1]:CHR.TBL[DIG2,1]:"=="
+       CASE WSL=4
+         DIG1=INT(XTD(WS[1,2])/4)+1
+         DIG2=MOD(XTD(WS[1,2]),4)*16+INT(XTD(WS[3,2])/16)+1
+         DIG3=MOD(XTD(WS[3,2]),16)*4+1
+         WITEM:=CHR.TBL[DIG1,1]:CHR.TBL[DIG2,1]:CHR.TBL[DIG3,1]:"="
+       CASE WSL=6
+         DIG1=INT(XTD(WS[1,2])/4)+1
+         DIG2=MOD(XTD(WS[1,2]),4)*16+INT(XTD(WS[3,2])/16)+1
+         DIG3=MOD(XTD(WS[3,2]),16)*4+INT(XTD(WS[5,2])/64)+1
+         DIG4=MOD(XTD(WS[5,2]),64)+1
+         WITEM:=CHR.TBL[DIG1,1]:CHR.TBL[DIG2,1]:CHR.TBL[DIG3,1]:CHR.TBL[DIG4,1]
+       CASE 1
+         ITEM="odd number of hex digits found"
+         GO SubroutineMainExit
+     END CASE
+   NEXT LX
+*
+   ITEM=WITEM
+*
+SubroutineMainExit:
+   RETURN
+*
+* End of source

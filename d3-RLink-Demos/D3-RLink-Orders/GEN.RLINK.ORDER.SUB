@@ -1,0 +1,64 @@
+SUBROUTINE GEN.RLINK.ORDER.SUB(ORDER,ERRTXT) ;* Brian S. Cram - 05/29/14
+*
+* Pass:    ORDER  - raw, minimal order data extracted from  
+*                   .CSV or .TXT file converted to normal 
+*                   format of an ORDERS file item
+*
+* Return:  ORDER  - completed ORDERS item
+*
+*          ERRTXT - dynamic array containing error text 
+*                   for any and all errors encountered
+*
+  IF NOT(ASSIGNED(ORDER)) THEN ORDER=""
+  ERRTXT=""
+*
+  OPEN 'SQLDEMO,PRODUCTS,' TO F.PRODUCTS ELSE
+    ERRTXT<-1>="Cannot open SQLDEMO,PRODUCTS,"
+  END
+  OPEN 'SQLDEMO,CUSTOMERS,' TO F.CUSTOMERS ELSE
+    ERRTXT<-1>="Cannot open SQLDEMO,CUSTOMERS,"
+  END
+  IF ERRTXT#"" THEN GO SubroutineMainExit
+*
+Customer:
+  READ CUST FROM F.CUSTOMERS,ORDER<1> THEN
+* ORDER<1> is customer#, <6> is the shipto#, <7-9> are address fields
+    ORDER<6>=ORDER<1>
+    ORDER<7>=0
+    ORDER<8>=0
+    ORDER<9>=0
+  END ELSE
+    ERRTXT<-1>="Invalid Customer#"
+  END
+*
+DateRequired:
+* <3> is the order date, today
+  ORDER<3>=DATE()
+* If the required date is more than 5 days, that's the promised date
+* Otherwise the promised date is today + 5 days
+  IF ORDER<4>>DATE()+5 THEN
+    ORDER<5>=ORDER<4>
+  END ELSE
+    ORDER<5>=DATE()+5
+  END
+*
+LineItems:
+*
+  VMAX=DCOUNT(ORDER<16>,CHAR(253))
+  FOR VX=1 TO VMAX
+* Part# is <16>
+    PN=ORDER<16,VX>
+    READ PROD FROM F.PRODUCTS,PN THEN
+* <17> is date sold, <19> is list price, <21> is sell price
+      ORDER<17,VX>=ORDER<3>
+      ORDER<19,VX>=PROD<7>
+      ORDER<21,VX>=PROD<7>
+    END ELSE
+      ERRTXT<-1>="Line ":VX:": Invalid Product#"
+    END
+  NEXT VX
+*
+SubroutineMainExit:
+  RETURN
+*
+* End of source
