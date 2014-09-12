@@ -29,9 +29,9 @@ Called by EXAMPLE-RLINK.ORDER.PROCESSING. A D3 FlashBASIC subroutine that return
 HTTP.GET.SUB
 ----------------------
 
-Called by EXAMPLE-RLINK.ORDER.PROCESSING and EXAMPLE-RLINK.STATEMENT.PDF. Uses D3's built-in FlashBASIC socket functions to send an HTTP GET request to a server and retrieve the response.
+Called by EXAMPLE-RLINK.ORDER.PROCESSING and EXAMPLE-RLINK.STATEMENT.PDF. Uses D3's built-in flashBASIC socket functions to send an HTTP GET request to a server and retrieve the response.
 
 HTTP.POST.SUB
 ----------------------
 
-Called by EXAMPLE-RLINK.STATEMENT.PDF. Uses D3's built-in FlashBASIC socket functions to send data as HTTP POST content to a server and retrieve the status response.
+Called by EXAMPLE-RLINK.STATEMENT.PDF. Uses D3's built-in flashBASIC socket functions to send data as HTTP POST content to a server and retrieve the status response.
