@@ -6,16 +6,16 @@ A collection of miscellaneous D3 FlashBASIC subroutines.
 <dl>
 
 <dt>HTTP.GET.SUB</dt>
-<dd>Uses D3's built-in flashBASIC socket functions to send an HTTP GET request to a server and retrieve the response.</dd>
+<dd>Uses D3's built-in FlashBASIC socket functions to send an HTTP GET request to a server and retrieve the response.</dd>
 
 <dt>HTTPS.GET.SUB</dt>
-<dd>Uses D3's built-in flashBASIC socket functions to send an HTTPS GET request to a server and retrieve the response (SSL version of HTTP.GET.SUB).</dd>
+<dd>Uses D3's built-in FlashBASIC socket functions to send an HTTPS GET request to a server and retrieve the response (SSL version of HTTP.GET.SUB).</dd>
 
 <dt>HTTP.POST.SUB</dt>
-<dd>Uses D3's built-in flashBASIC socket functions to send data as HTTP POST content to a server and retrieve the status response.</dd>
+<dd>Uses D3's built-in FlashBASIC socket functions to send data as HTTP POST content to a server and retrieve the status response.</dd>
 
 <dt>HTTPS.POST.SUB</dt>
-<dd>Uses D3's built-in flashBASIC socket functions to send data as HTTPS POST content to a server and retrieve the status response (SSL version of HTTP.POST.SUB).</dd>
+<dd>Uses D3's built-in FlashBASIC socket functions to send data as HTTPS POST content to a server and retrieve the status response (SSL version of HTTP.POST.SUB).</dd>
 
 <dt>GET.JSON.FIELD.SUB</dt>
 <dd>A D3 FlashBASIC subroutine that returns a dynamic array containing information extracted from a JSON string. Each attribute of the dynamic array is the value, object or array associated with the passed name.</dd>

@@ -1,5 +1,5 @@
 SUBROUTINE PCL5.FNT.SUB(FONTNO,SIZE,BOLDITAL,STR)
-* ETA/bsc - 05/08/96 - Laser printer font selection routine
+*  Laser printer font selection routine
 *
 *  Pass    SIZE         Characters per inch (fixed pitch fonts)
 *                       Points (proportionally spaced fonts)
