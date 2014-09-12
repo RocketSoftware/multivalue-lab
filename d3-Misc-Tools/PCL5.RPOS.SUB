@@ -1,5 +1,5 @@
 SUBROUTINE PCL5.RPOS.SUB(COL,ROW,STR)
-* ETA/bsc - 09/11/96 - Create laser printer positioning string
+*  Create laser printer positioning string
 *
 *  Pass    COL    Horizontal position in dots @ 300/inch
 *

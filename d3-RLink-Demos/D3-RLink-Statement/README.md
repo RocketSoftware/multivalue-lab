@@ -12,7 +12,7 @@ Example of a D3 FlashBASIC application that generates an HP PCL statement within
 <dd>Called by EXAMPLE-RLINK.STATEMENT.PDF. Accepts customer data and generates random aging data to create a PCL5-encoded string for output to an HP PCL5 printer or file.</dd>
 
 <dt>HTTP.POST.SUB</dt>
-<dd>Called by EXAMPLE-RLINK.STATEMENT.PDF. Uses D3's built-in flashBASIC socket functions to send data as HTTP POST content to a server and retrieve the status response.</dd>
+<dd>Called by EXAMPLE-RLINK.STATEMENT.PDF. Uses D3's built-in FlashBASIC socket functions to send data as HTTP POST content to a server and retrieve the status response.</dd>
 
 <dt>BASE.64.ENCODE.HEX.SUB</dt>
 <dd>Called by EXAMPLE-RLINK.STATEMENT.PDF. Base-64 encodes a passed hex-encoded string.</dt>

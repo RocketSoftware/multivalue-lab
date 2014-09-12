@@ -1,5 +1,5 @@
 SUBROUTINE PCL5.RBOX.SUB(COL,ROW,WIDE,HIGH,TYPE,STR)
-* ETA/bsc - 09/11/96 - Create laser printer shaded box STR=STR:string
+*  Create laser printer shaded box STR=STR:string
 *
 *  Pass    COL    Horizontal position in dots @ 300/inch
 *
