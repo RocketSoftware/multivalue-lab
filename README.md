@@ -11,3 +11,7 @@ Demo code from Rocket's D3 Servers Lab for D3/mvBase and associated clients, API
 <dd>Some miscellaneous D3 FlashBASIC utility subroutines</dd>
 
 </dl>
+
+### License
+
+This project is released under the [MIT License](http://www.opensource.org/licenses/MIT).
