@@ -1,0 +1,36 @@
+READ   512
+READ  2 1600001 2
+10
+
+
+T
+
+
+
+
+
+
+
+
+FileName = "File":TEST_ID
+Modulus = 1600001
+call CreateFile(Failure,Msg,FileName,0,Modulus,2,"64BIT")
+if Failure # 0 then goto ErrorExit
+call OpenFile(Failure,Msg,fFileName,FileName)
+if Failure # 0 then goto ErrorExit
+RecordId = (Modulus - 1) : ''
+Record = spaces(512-24-len(RecordId)-1)
+write Record on fFileName,RecordId on error
+	Failure = 1
+	Msg = "Cannot WRITE ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot WRITE ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+close fFileName
+call DeleteFile(Failure,Msg,FileName)

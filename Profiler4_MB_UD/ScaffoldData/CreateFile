@@ -1,0 +1,46 @@
+
+
+
+
+
+R
+
+
+
+
+
+
+
+
+*$options DEFAULT
+subroutine CreateFile(Failure,Msg,FileName,DataType,DataMod,DataSep,Keywords)
+******************************************************************************
+*
+*     Create a file
+*
+*     Module %M%    Version  %I%   Date  %H%
+*
+*       IBM Confidential
+*       OCO Source Materials
+*       Copyright (C) IBM Corp.  2001, 2004, 2006
+*
+*     (c) Copyright 2001, 2002, 2003, 2004, 2006 IBM Corp. - All Rights Reserved
+*     This is unpublished proprietary source code of IBM Corp.
+*     The copyright notice above does not evidence any actual or intended
+*     publication of such source code.
+*
+*******************************************************************************
+
+call DeleteFile(Failure,Msg,FileName)
+if Failure then return; * Let caller handle failure
+
+if DataType = "DYNAMIC" then
+	Cmnd = "CREATE.FILE ":FileName:" ":DataMod:",":DataSep:" ":DataType:" ":Keywords
+end else	
+	Cmnd = "CREATE.FILE ":FileName:" ":DataMod:",":DataSep:" TYPE ":DataType:" ":Keywords
+end
+
+call ExecuteCommand(Failure,Msg,Cmnd,Output)
+if Failure then return; * Let caller handle failure
+
+return

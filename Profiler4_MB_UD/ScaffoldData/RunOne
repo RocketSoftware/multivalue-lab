@@ -1,0 +1,139 @@
+
+
+
+
+
+R
+
+
+
+
+
+
+
+
+program RunOne
+dim Comline(7)
+matparse Comline from @sentence, ' '
+No.Tokens = inmat()
+if No.Tokens > 3 then
+	pos = 4
+	TestNumber = Comline(pos)
+	pos = pos + 1
+	if No.Tokens - pos ge 0 then
+		Iterations = Comline(pos)
+		pos = pos + 1
+		if No.Tokens - pos ge 0 then
+			TestSet = Comline(pos)
+		end else
+			goto DisplayCommandLineAndExit
+		end
+	end else
+		goto DisplayCommandLineAndExit
+	end
+end else
+	goto DisplayCommandLineAndExit
+end
+
+$include IncludeFile FailureEquates
+$include IncludeFile Profile_Common
+$include IncludeFile Profile_Layout
+$include IncludeFile Profile_Open
+
+* TestId = fmt(TestNumber,"R%%%%")
+gosub FormatTestNumber
+TestId = TestNumber
+ProfileId = TestId
+Iterations += 0
+
+* execute "CORE" capturing Core1
+* debug
+
+TestFailure = 0; * Preset so each test does not have to do so.
+TestMsg = "";    * Preset so each test does not have to do so.
+call @TestId(TestFailure,TestMsg,Iterations, StartWall, FinishWall, StartCpu, FinishCpu)
+* debug
+* execute "CORE" capturing Core2
+
+DiffWall = (FinishWall - StartWall);            * Seconds
+DiffCpu  = iconv(FinishCpu  - StartCpu,"MD33"); * Microseconds
+
+*ProfileRecord = ""
+gosub ReaduProfile
+if Failure # 0 then
+	* READU failed.  We will not be able to pass back information to Run program
+	print Msg
+	stop
+end
+ProfileRecord<PROFILE_ITERATIONS,TestSet>  = Iterations
+ProfileRecord<PROFILE_CPU,TestSet>         = DiffCpu
+ProfileRecord<PROFILE_WALL,TestSet>        = DiffWall
+if TestFailure # 0 then
+	ProfileRecord<PROFILE_ITERATIONS,TestSet>  = "0"; * Override
+	ProfileRecord<PROFILE_FAILURE,TestSet>     = TestFailure
+	ProfileRecord<PROFILE_MESSAGE,TestSet>     = TestMsg
+end
+
+* CoreWork = trims(Core2)
+* gosub ParseCore
+ProfileRecord<PROFILE_CORE_FREE,TestSet>   = 0
+ProfileRecord<PROFILE_CORE_USED,TestSet>   = 0
+ProfileRecord<PROFILE_CORE_TOTAL,TestSet>  = 0
+
+* CoreWork = trims(Core1)
+* gosub ParseCore
+ProfileRecord<PROFILE_CORE_FREE,TestSet>  -= 0
+ProfileRecord<PROFILE_CORE_USED,TestSet>  -= 0
+ProfileRecord<PROFILE_CORE_TOTAL,TestSet> -= 0
+
+gosub WriteProfile
+
+goto AllDone
+
+ParseCore:
+**********
+Line = 0
+More = 1
+loop
+	Line += 1
+	Work = upcase(change(CoreWork<Line>,' ',@fm))
+	begin case
+	case Work<1> = "FREE"
+		locate "BYTES" in Work<1> setting Posn
+		else print "Cannot parse CORE output"; goto AllDone
+		CoreFree = Work<Posn-1>
+	case Work<1> = "USED"
+		locate "BYTES" in Work<1> setting Posn
+		else print "Cannot parse CORE output"; goto AllDone
+		CoreUsed = Work<Posn-1>
+	case Work<1> = "TOTAL"
+		More = 0
+		locate "BYTES" in Work<1> setting Posn
+		else print "Cannot parse CORE output"; goto AllDone
+		CoreTotal = Work<Posn-1>
+	case Work<1> = "CORE"; * is not available in this version of uniVerse."
+		CoreFree = ""
+		CoreUsed = ""
+		CoreTotal = ""
+		More = 0
+	end case
+while More
+repeat
+return
+
+DisplayCommandLineAndExit:
+**************************
+print "Command syntax is:"
+print "RUN TestUnderTest RunOne TestNumber Iterations TestSetNumber"
+* ProfileRecord<PROFILE_ITERATIONS,TestSet>  = ""; * Test failed
+ProfileRecord<PROFILE_ITERATIONS>  = ""; * Test failed; no TestSet specified
+
+AllDone:
+********
+return
+
+$include Include FormatTestNumber
+
+$include IncludeFile Profile_Read
+$include IncludeFile Profile_Readu
+$include IncludeFile Profile_Write

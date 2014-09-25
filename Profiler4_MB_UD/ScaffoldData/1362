@@ -1,0 +1,25 @@
+DYNAMIC
+Clearfile
+100
+
+
+T
+
+
+
+
+
+
+
+
+FileName = "File":TEST_ID
+call CreateFile(Failure,Msg,FileName,"DYNAMIC",1,8,"")
+if Failure # 0 then goto ErrorExit
+call OpenFile(Failure,Msg,fFileName,FileName)
+if Failure # 0 then goto ErrorExit
+clearfile fFileName
+:
+clearfile fFileName
+:
+close fFileName
+call DeleteFile(Failure,Msg,FileName)

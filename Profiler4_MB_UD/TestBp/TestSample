@@ -1,0 +1,33 @@
+program TestSample
+
+print "Microseconds per FOR/NEXT iteration: ":
+input MicroSeconds
+
+* 1000 microseconds per millisecond
+CountsPerMillisecond = 1000 / MicroSeconds
+print CountsPerMillisecond
+
+for Millisecond = 1 to 20
+	Hits = 0
+	Hits10Milliseconds = 0
+	Hits20Milliseconds = 0
+	gosub Sample
+	print Millisecond,Hits,Hits10Milliseconds,Hits20Milliseconds
+next Millisecond
+print "Done."
+return
+
+Sample:
+*******
+for Ndx = 1 to 100
+	CpuStart = system(9)
+	for Outer = 1 to Millisecond
+		for Inner = 1 to CountsPerMillisecond
+		next Inner
+	next Outer
+	CpuEnd = system(9)
+	Hits += (CpuEnd - CpuStart) > 0
+	Hits10Milliseconds += (CpuEnd - CpuStart) > 10
+	Hits20Milliseconds += (CpuEnd - CpuStart) > 20
+next Ndx
+return

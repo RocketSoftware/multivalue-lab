@@ -1,0 +1,45 @@
+DYNAMIC
+Read 1625    0 1 4 Dyn 100
+100
+
+
+T
+
+
+
+
+
+
+
+
+FileNameBase = "File":TEST_ID:"."
+equ MAX_FILES to 100
+dim Files(MAX_FILES)
+for Ndx = 1 to MAX_FILES
+	FileName = FileNameBase:Ndx
+	call CreateFile(Failure,Msg,FileName,"DYNAMIC",1,4,"")
+	if Failure # 0 then goto ErrorExit
+	call OpenFile(Failure,Msg,fFileName,FileName)
+	if Failure # 0 then goto ErrorExit
+	Files(Ndx) = fFileName
+	Opened = Ndx
+next Ndx
+Record = spaces(1625)
+RecordId = "0"
+write Record on fFileName,RecordId on error
+	Failure = 1
+	Msg = "Cannot WRITE ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+close fFileName
+for Ndx = 1 to Opened
+	close Files(Ndx)
+	call DeleteFile(Failure,Msg,FileNameBase:Ndx)
+next Ndx

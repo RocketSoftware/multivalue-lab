@@ -1,0 +1,40 @@
+DYNAMIC
+File Load 100 MIN.MOD
+10
+1376ý1
+10ý1000
+T
+
+
+
+
+
+
+
+
+FileName = "File":TEST_ID
+call CreateFile(Failure,Msg,FileName,"DYNAMIC",1,4,"MINIMUM.MODULUS 100")
+if Failure # 0 then goto ErrorExit
+call OpenFile(Failure,Msg,fFileName,FileName)
+if Failure # 0 then goto ErrorExit
+Record = spaces(1620)
+RecordId = "000000"
+equ MAX_RECORD_ID to 99
+write Record on fFileName,RecordId on error
+	Failure = 1
+	Msg = "Cannot WRITE ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+for Ndx = 0 to MAX_RECORD_ID
+	RecordId = Ndx "6R"
+	write Record on fFileName,RecordId on error
+		Failure = 1
+		Msg = "Cannot WRITE ":FileName:",":RecordId
+		goto ErrorExit
+	end
+next Ndx
+clearfile fFileName
+:
+close fFileName
+call DeleteFile(Failure,Msg,FileName)

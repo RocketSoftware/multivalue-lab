@@ -1,0 +1,25 @@
+DYNAMIC
+Clearfile MIN.MOD 1000
+100
+
+
+T
+
+
+
+
+
+
+
+
+FileName = "File":TEST_ID
+call CreateFile(Failure,Msg,FileName,"DYNAMIC",1,4,"MINIMUM.MODULUS 1000")
+if Failure # 0 then goto ErrorExit
+call OpenFile(Failure,Msg,fFileName,FileName)
+if Failure # 0 then goto ErrorExit
+clearfile fFileName
+:
+clearfile fFileName
+:
+close fFileName
+call DeleteFile(Failure,Msg,FileName)

@@ -1,0 +1,35 @@
+READ  2048
+READ oversize  3  0 1 4
+100
+
+
+T
+
+
+
+
+
+
+
+
+FileName = "File":TEST_ID
+call CreateFile(Failure,Msg,FileName,0,1,4,"32BIT")
+if Failure # 0 then goto ErrorExit
+call OpenFile(Failure,Msg,fFileName,FileName)
+if Failure # 0 then goto ErrorExit
+Record = spaces((2048-12)*3+2)
+RecordId = "0"
+write Record on fFileName,RecordId on error
+	Failure = 1
+	Msg = "Cannot WRITE ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+:
+close fFileName
+call DeleteFile(Failure,Msg,FileName)

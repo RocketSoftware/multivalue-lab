@@ -1,0 +1,17 @@
+FOR/NEXT
+|FOR TO 10001 STEP 1.00001
+10
+
+
+T
+
+
+10000
+
+
+
+
+
+:
+for Ndx = 1 to 10001 step 1.00001
+next Ndx
