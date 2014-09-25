@@ -1,0 +1,142 @@
+open "Scaffold" to f.scaffold else print "Cannot open file";stop
+open "Profile" to f.results else print "Cannot open file";stop
+
+loop
+	print "Start moving which test number (-1 exit) ":
+	input start
+while start >= 1
+	print "How many positions (+/-) ":
+	input offset
+	if offset >=1
+	then	gosub move.higher
+	else	if offset <= -1
+		then gosub move.lower
+		else print "Moving zero offset is easy"
+repeat
+close f.scaffold
+close f.results
+stop
+
+move.lower:
+* How many records are we moving
+id = start
+loop
+	id=id "R%%%%"
+read r.scaffold from f.scaffold,id then end
+while r.scaffold do
+	id += 1
+	read r.scaffold from f.scaffold,id then end 
+repeat
+rec.count = id - start
+print rec.count:" records to move at this test number."
+if rec.count = 0 then return
+
+* Remember, offset is negative here
+hole.start = start + offset
+
+* Check for overlapping moves
+last.hole = start + offset + rec.count - 1
+if last.hole >= start
+then last.hole = start - 1
+for hole = hole.start to last.hole
+	read r.scaffold from f.scaffold,hole
+	then
+		print "Record (non-hole) found at id ":hole
+		return
+	end
+next hole
+
+* Start moving records here
+id.old = start 'R%%%%'
+id.new = hole.start 'R%%%%'
+for i = 1 to rec.count
+	read r.scaffold from f.scaffold,id.old
+	else
+		print "Cannot read SCAFFOLD record ":id.old:" during move"
+		stop
+	end
+	write r.scaffold on f.scaffold,id.new on error
+		print "Cannot write SCAFFOLD record ":id.new:" during move"
+		stop
+	end
+	* could just do this at end for large movement, small overlap
+	delete f.scaffold,id.old
+	read r.results from f.results,id.old
+	else
+		print "Cannot read PROFILE record ":id.old:" during move"
+		continue
+	end
+	write r.results on f.results,id.new on error
+		print "Cannot write PROFILE record ":id.new:" during move"
+		stop
+	end
+	* could just do this at end for large movement, small overlap
+	delete f.results,id.old
+	id.old = (id.old + 1) 'R%%%%'
+	id.new = (id.new + 1) 'R%%%%'
+next i
+* all done doing move
+return
+
+print "Cannot do negative moves yet"
+return
+
+move.higher:
+id = start
+loop
+	id=id "R%%%%"
+		read r.scaffold from f.scaffold,id else
+			* This is where the movement should start.  Is there enough vacant space?
+			hole.start = id
+			hole.count = 1
+			loop
+			while hole.count < offset
+				id += 1
+				hole.count += 1
+				id=id "R%%%%"
+				read r.scaffold from f.scaffold,id then
+					print "Only ":hole.count-1:" unassigned id at ":
+					print hole.start:
+					print ".  Processing aborted:  No records moved."
+					return
+				end
+			repeat
+
+			* Start moving records here
+			id = hole.start
+			loop
+				id -= 1
+			while id >= start
+				id.old =  id 'R%%%%'
+				id.new = (id + offset) 'R%%%%'
+				read r.scaffold from f.scaffold,id.old else
+					print "Cannot read SCAFFOLD record ":id.old:" during move"
+					stop
+				end
+				write r.scaffold on f.scaffold,id.new on error
+					print "Cannot write SCAFFOLD record ":id.new:" during move"
+					stop
+				end
+				* could just do this at end for large movement, small overlap
+				delete f.scaffold,id.old
+				read r.results from f.results,id.old else
+					print "Cannot read PROFILE record ":id.old:" during move"
+					continue
+				end
+				write r.results on f.results,id.new on error
+					print "Cannot write PROFILE record ":id.new:" during move"
+					stop
+				end
+				* could just do this at end for large movement, small overlap
+				delete f.results,id.old
+			repeat
+			* all done doing move
+				return
+
+		end
+
+id += 1
+while (1)
+repeat
+return
+
