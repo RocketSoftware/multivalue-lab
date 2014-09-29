@@ -1,7 +1,0 @@
-FormatTestNumber:
-*****************
-*TestNumber = fmt(TestNumber,"R%%%%")
-if num(TestNumber) then
-	TestNumber += 0
-end
-return
