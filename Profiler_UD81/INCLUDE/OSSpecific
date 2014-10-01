@@ -1,0 +1,65 @@
+* OSSpecific
+******************************************************************************
+*
+*     Define O/S Specific values supporting application requirements
+*
+*     Module %M%    Version  %I%   Date  %H%
+*
+*	IBM Confidential
+*	OCO Source Materials
+*	Copyright (C) IBM Corp.  2001, 2004
+*
+*     (c) Copyright 2001, 2002, 2003, 2004 IBM Corp. - All Rights Reserved
+*     This is unpublished proprietary source code of IBM Corp.
+*     The copyright notice above does not evidence any actual or intended
+*     publication of such source code.
+*
+*******************************************************************************
+*
+*     Maintenence log - insert most recent change descriptions at top
+*
+*     Date.... ECase WHO Description........................................
+*     10/09/01       MAB Created Module
+*
+*******************************************************************************
+
+
+common /OSSpecific/ OpenOSSpecific,UDT.FSEP,OS.EXEC,CommandSeparator,
+	UDT.HOME,UDT.BIN,RM.CMD,
+	UdtExecutable,Pwd,HostName,CommandBase,CopyCommand
+
+if not(OpenOSSpecific) then
+*	include UNIVERSE.INCLUDE MACHINE.NAME
+	if system(33) = "Windows" then
+		* Windows
+		CommandSeparator = " && "
+		CopyCommand = "COPY "
+		MkdirCommand = "mkdir "
+		UDT.FSEP = "\"
+		NotUDT.FSEP = "/"
+	end else
+		* UNIX
+		CommandSeparator = "; "
+		CopyCommand = "cp "
+		MkdirCommand = "mkdir "
+		UDT.FSEP = "/"
+		OS.EXEC = "!"
+		RM.CMD = "rm"
+		PWD.CMD = "pwd"
+		MV.CMD = "mv"
+		NotUDT.FSEP = "\"
+	end
+	UDT.HOME = system(31)
+	UDT.BIN = UDT.HOME:UDT.FSEP:'bin'
+	UdtExecutable = UDT.BIN:UDT.FSEP:'udt'
+	execute OS.EXEC:PWD.CMD capturing Pwd
+	Pwd = Pwd<1>
+	* This should work, but gives me
+	* "Return of computer name failed error 111"
+	* execute OS.EXEC: HOSTNAME capturing HostName
+	execute OS.EXEC: "hostname" capturing HostName
+	HostName = HostName<1>
+	CommandBase = OS.EXEC :"'":UdtExecutable:" "
+	OpenOSSpecific = 1
+end
+

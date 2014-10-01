@@ -1,0 +1,11 @@
+*$options DEFAULT
+
+* Copyright IBM, 17076
+
+subroutine OpenFile(Failure,Msg,fFileName,FileName)
+
+open FileName to fFileName else
+	Failure = 1
+	Msg = "Cannot OPEN ":FileName
+end
+return

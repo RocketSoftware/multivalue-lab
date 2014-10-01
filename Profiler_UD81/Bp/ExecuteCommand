@@ -1,0 +1,41 @@
+*$options DEFAULT
+subroutine ExecuteCommand(Failure,Msg,Cmnd,Output)
+******************************************************************************
+*
+*     Execute a command
+*
+*     Module %M%    Version  %I%   Date  %H%
+*
+*	IBM Confidential
+*	OCO Source Materials
+*	Copyright (C) IBM Corp.  2001, 2004, 2006
+*
+*     (c) Copyright 2001, 2002, 2003, 2004, 2006 IBM Corp. - All Rights Reserved
+*     This is unpublished proprietary source code of IBM Corp.
+*     The copyright notice above does not evidence any actual or intended
+*     publication of such source code.
+*
+*******************************************************************************
+*
+*     Maintenence log - insert most recent change descriptions at top
+*
+*     Date.... ECase WHO Description........................................
+*     10/09/01       MAB Created Module
+*
+*******************************************************************************
+
+* Note that some commands such as LIST or SELECT return the number of records
+* resulting from the command in the setting variable.  In the case of SELECT
+* and LIST, a negative number indicates a real failure and the calling
+* application must make this distinction.
+
+* Msg = ""
+
+execute Cmnd capturing output returning Failure
+if @system.return.code = 0 then
+	Failure = 0
+end else
+	Failure = 1
+	Msg = dquote(Cmnd):" failed with return code ":Failure
+end
+return

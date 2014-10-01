@@ -1,0 +1,34 @@
+* Profile_Layout
+******************************************************************************
+*
+*     Equates for Profile File
+*
+*     Module %M%    Version  %I%   Date  %H%
+*
+*	IBM Confidential
+*	OCO Source Materials
+*	Copyright (C) IBM Corp.  2005
+*
+*     (c) Copyright 2005 IBM Corp. - All Rights Reserved
+*     This is unpublished proprietary source code of IBM Corp.
+*     The copyright notice above does not evidence any actual or intended
+*     publication of such source code.
+*
+*******************************************************************************
+*
+*     Maintenence log - insert most recent change descriptions at top
+*
+*     Date.... ECase WHO Description........................................
+*     02/02/05       MAB Created Module
+*
+*******************************************************************************
+
+
+equ PROFILE_ITERATIONS to 1
+equ PROFILE_CPU        to 2
+equ PROFILE_WALL       to 3
+equ PROFILE_CORE_FREE  to 4
+equ PROFILE_CORE_USED  to 5
+equ PROFILE_CORE_TOTAL to 6
+equ PROFILE_FAILURE    to 7
+equ PROFILE_MESSAGE    to 8

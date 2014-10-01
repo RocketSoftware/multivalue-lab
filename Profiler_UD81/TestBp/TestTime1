@@ -1,0 +1,14 @@
+program TestTime1
+DoNotPage = @(0,0)
+HowMany = 20
+$OPTIONS TIME.MILLISECOND
+print "$OPTIONS TIME.MILLISECOND"
+print "SYSTEM(12)","TIME()","SYSTEM(9)"
+for Ndx = 1 to HowMany
+	print system(12),time(),system(9)
+next Ndx
+print "$OPTIONS -TIME.MILLISECOND"
+$OPTIONS -TIME.MILLISECOND
+for Ndx = 1 to HowMany
+	print system(12),time(),system(9)
+next Ndx

@@ -1,0 +1,117 @@
+subroutine X1456(Failure,Msg,Iterations,StartWall,EndWall,StartCpu,EndCpu)
+
+* Copyright IBM, 17076
+
+StartWall = 0; * In case we do not finish
+StartCpu = 0;  * In case we do not finish
+EndWall = 0;   * In case we do not finish
+EndCpu = 0;    * In case we do not finish
+equ TEST_ID to 1456
+
+FileName = "File":TEST_ID
+LastFileNumber = 10
+$include Include OSSpecific
+call CreateFile(Failure,Msg,"",FileName,"DIR",1,1,"")
+if Failure # 0 then goto ErrorExit
+BaseName = "ABCDEFGHI"
+open FileName to fFileName else
+	Failure = 1
+	Msg = "Cannot OPEN ":FileName
+	goto ErrorExit
+end
+Record = "X"
+for Ndx = 1 to LastFileNumber
+	Number = Ndx "R%%%%"
+	Id = BaseName : Number
+	write Record on fFileName,Id on error
+		Failure = 1
+		Msg = "Cannot WRITE ":FileName:",":Id
+		goto ErrorExit
+	end
+next Ndx
+close fFileName on error
+	Failure = 1
+	Msg = "Cannot CLOSE ":FileName
+	goto ErrorExit
+end
+Path = FileName : UDT.FSEP : Id
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+
+StartWall = system(12)
+StartCpu  = system( 9)
+for IterationsNdx = 1 to Iterations
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+openseq Path to fSeq else
+	Failure = 1
+	Msg = "Cannot OPENSEQ ":Path
+	goto ErrorExit
+end
+
+next IterationsNdx
+EndCpu  = system( 9)
+EndWall = system(12)
+
+closeseq fSeq on error
+	Failure = 1
+	Msg = "Cannot CLOSESEQ ":Path
+	goto ErrorExit
+end
+call DeleteFile(Failure,Msg,"",FileName)
+if Failure then goto ErrorExit
+
+return
+ErrorExit:
+**********
+Print Msg
+Iterations = 0; * Cause loop control to terminate
+return
+
+end

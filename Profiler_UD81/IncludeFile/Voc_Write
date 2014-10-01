@@ -1,0 +1,41 @@
+* Voc_Write
+******************************************************************************
+*
+*     Write Voc file
+*
+*     Module %M%    Version  %I%   Date  %H%
+*
+*	IBM Confidential
+*	OCO Source Materials
+*	Copyright (C) IBM Corp.  2001, 2004
+*
+*     (c) Copyright 2001, 2002, 2003, 2004 IBM Corp. - All Rights Reserved
+*     This is unpublished proprietary source code of IBM Corp.
+*     The copyright notice above does not evidence any actual or intended
+*     publication of such source code.
+*
+*******************************************************************************
+*
+*     Maintenence log - insert most recent change descriptions at top
+*
+*     Date.... ECase WHO Description........................................
+*     10/09/01       MAB Created Module
+*
+*******************************************************************************
+
+WriteVoc:
+*********
+Failure = 0
+if len(VocId) = 0 then
+	Failure = FAILURE_EMPTY_STRING_ID
+	print "Empty string Id for ":VocName
+	debug
+end
+write VocRecord on fVoc,VocId on error
+	Failure = FAILURE_ON_ERROR
+	StatusIO = status()
+	Msg  = "Cannot WRITE ":VocName:",":VocId
+	Msg := "; error ":StatusIO
+end
+return
+

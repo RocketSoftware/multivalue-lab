@@ -1,0 +1,248 @@
+program MoveTest
+******************************************************************************
+*
+*    Move tests in Scaffold, along with their results in Profile
+*
+*     Module %M%    Version  %I%   Date  %H%
+*
+*       IBM Confidential
+*       OCO Source Materials
+*       Copyright (C) IBM Corp.  2005
+*
+*     (c) Copyright 2005 IBM Corp. - All Rights Reserved
+*     This is unpublished proprietary source code of IBM Corp.
+*     The copyright notice above does not evidence any actual or intended
+*     publication of such source code.
+*
+*******************************************************************************
+*
+*     Maintenence log - insert most recent change descriptions at top
+*
+*     Date.... ECase WHO Description........................................
+*     02/02/05       MAB Created Module
+*
+*******************************************************************************
+
+*$options DEFAULT
+
+$include IncludeFile FailureEquates
+
+$include IncludeFile Profile_Common
+$include IncludeFile Profile_Layout
+$include IncludeFile Profile_Open
+$include IncludeFile Scaffold_Common
+$include IncludeFile Scaffold_Layout
+$include IncludeFile Scaffold_Open
+
+loop
+	print "Start moving which test number (-1 exit) ":
+	input Start
+while Start >= 1
+	print "How many positions (+/-) ":
+	input Offset
+	if Offset >=1
+	then	gosub MoveHigher
+	else	if Offset <= -1
+		then gosub MoveLower
+		else print "Moving zero Offset is easy"
+repeat
+stop
+
+MoveLower:
+**********
+* How many records are we moving
+TestNumber = Start
+loop
+	gosub FormatTestNumber
+	ScaffoldId = TestNumber
+	gosub ReadScaffold
+	if Failure then
+		call DisplayMessage(Msg)
+		return
+	end
+while Found
+	TestNumber += 1
+repeat
+RecordCount = TestNumber - Start
+print RecordCount:" records to move at this test number."
+if RecordCount = 0 then return
+
+* Remember, Offset is negative here
+StartHole = Start + Offset
+
+* Check for overlapping moves
+LastHole = Start + Offset + RecordCount - 1
+if LastHole >= Start
+then LastHole = Start - 1
+for TestNumber = StartHole to LastHole
+	gosub FormatTestNumber
+	ScaffoldId = TestNumber
+	gosub ReadScaffold
+	if Failure then
+		call DisplayMessage(Msg)
+		return
+	end
+	if Found then
+		print "Record (non-hole) found at id ":TestNumber
+		return
+	end
+next TestNumber
+
+* Start moving records here
+MoveFrom = Start
+MoveTo   = StartHole
+for Ndx = 1 to RecordCount
+	TestNumber = MoveTo
+	gosub FormatTestNumber
+	ScaffoldId = TestNumber
+	MoveToId = ScaffoldId
+	* Establish lock on destination record ID
+	gosub ReaduScaffold
+	if Failure then
+		call DisplayMessage(Msg)
+		return
+	end
+	if Found then
+		* We should not have gotten here
+		call DisplayMessage(Msg)
+		release fScaffold,MoveToId
+		return
+	end
+	
+	TestNumber = MoveFrom
+	gosub FormatTestNumber
+	ScaffoldId = TestNumber
+	MoveFromId = ScaffoldId
+	gosub ReaduScaffold
+	if Failure then
+		call DisplayMessage(Msg)
+		release fScaffold,MoveToId
+		return
+	end
+	if not(Found) then
+		call DisplayMessage(Msg)
+		release fScaffold,MoveFromId
+		release fScaffold,MoveToId
+		return
+	end
+	ProfileId = MoveToId
+	gosub WriteProfile
+	if Failure then
+		call DisplayMessage(Msg)
+		release fScaffold,MoveFromId
+		return
+	end
+	ProfileId = MoveFromId
+	gosub DeleteScaffold
+	if Failure then
+		call DisplayMessage(Msg)
+		release fScaffold,MoveFromId
+		return
+	end
+
+	* Move the corresponding Profile record
+	ProfileId = MoveToId
+	gosub ReaduProfile
+	if Failure then
+		call DisplayMessage(Msg)
+		return
+	end
+	ProfileId = MoveFromId
+	gosub ReaduProfile
+	if Failure then
+		call DisplayMessage(Msg)
+		return
+	end
+	if not(Found) then
+		release fProfile,MoveFromId
+		release fProfile,MoveToId
+		continue
+	end
+	ProfileId = MoveToId
+	gosub WriteProfile
+	if Failure then
+		call DisplayMessage(Msg)
+		release fProfile,MoveFromId
+		return
+	end
+	ProfileId = MoveFromId
+	gosub DeleteProfile
+
+	MoveFrom += 1
+	MoveTo   += 1
+next Ndx
+* all done doing move
+return
+
+MoveHigher:
+***********
+id = Start
+loop
+	* id=id "R%%%%"
+		read r.scaffold from fScaffold,id else
+			* This is where the movement should Start.  Is there enough vacant space?
+			hole.Start = id
+			hole.count = 1
+			loop
+			while hole.count < Offset
+				id += 1
+				hole.count += 1
+				*id=id "R%%%%"
+				read r.scaffold from fScaffold,id then
+					print "Only ":hole.count-1:" unassigned id at ":
+					print hole.Start:
+					print ".  Processing aborted:  No records moved."
+					return
+				end
+			repeat
+
+			* Start moving records here
+			id = hole.Start
+			loop
+				id -= 1
+			while id >= Start
+				*id.old =  id 'R%%%%'
+				*id.new = (id + Offset) 'R%%%%'
+				id.old =  id
+				id.new = (id + Offset)
+				read r.scaffold from fScaffold,id.old else
+					print "Cannot read SCAFFOLD record ":id.old:" during move"
+					stop
+				end
+				write r.scaffold on fScaffold,id.new on error
+					print "Cannot write SCAFFOLD record ":id.new:" during move"
+					stop
+				end
+				* could just do this at end for large movement, small overlap
+				delete fScaffold,id.old
+				read r.results from fProfile,id.old else
+					print "Cannot read PROFILE record ":id.old:" during move"
+					continue
+				end
+				write r.results on fProfile,id.new on error
+					print "Cannot write PROFILE record ":id.new:" during move"
+					stop
+				end
+				* could just do this at end for large movement, small overlap
+				delete fProfile,id.old
+			repeat
+			* all done doing move
+				return
+
+		end
+
+id += 1
+while (1)
+repeat
+return
+
+$include Include FormatTestNumber
+
+$include IncludeFile Profile_Delete
+$include IncludeFile Profile_Readu
+$include IncludeFile Profile_Write
+$include IncludeFile Scaffold_Delete
+$include IncludeFile Scaffold_Read
+$include IncludeFile Scaffold_Readu
+$include IncludeFile Scaffold_Write
+

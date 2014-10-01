@@ -1,0 +1,33 @@
+subroutine X26(Failure,Msg,Iterations,StartWall,EndWall,StartCpu,EndCpu)
+
+* Copyright IBM, 17076
+
+StartWall = 0; * In case we do not finish
+StartCpu = 0;  * In case we do not finish
+EndWall = 0;   * In case we do not finish
+EndCpu = 0;    * In case we do not finish
+equ TEST_ID to 26
+
+Count = 10
+A = str('123456789':@vm,Count)
+B = A<1,Count>
+
+StartWall = system(12)
+StartCpu  = system( 9)
+for IterationsNdx = 1 to Iterations
+for Ndx = 1 to Count
+	B = A<1,Ndx>
+next Ndx
+
+next IterationsNdx
+EndCpu  = system( 9)
+EndWall = system(12)
+
+return
+ErrorExit:
+**********
+Print Msg
+Iterations = 0; * Cause loop control to terminate
+return
+
+end

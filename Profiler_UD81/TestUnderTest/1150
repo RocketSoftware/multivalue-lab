@@ -1,0 +1,102 @@
+subroutine X1150(Failure,Msg,Iterations,StartWall,EndWall,StartCpu,EndCpu)
+
+* Copyright IBM, 17076
+
+StartWall = 0; * In case we do not finish
+StartCpu = 0;  * In case we do not finish
+EndWall = 0;   * In case we do not finish
+EndCpu = 0;    * In case we do not finish
+equ TEST_ID to 1150
+
+FileName = "File":TEST_ID
+call CreateFile(Failure,Msg,"DATA",FileName,0,1,8,"32BIT")
+if Failure # 0 then goto ErrorExit
+call OpenFile(Failure,Msg,fFileName,FileName)
+if Failure # 0 then goto ErrorExit
+Record = spaces(4081)
+OverflowRecordCount = 10
+* Write a series of records into the only group
+* The last RecordId will be "0".  We test with this last record.
+* It will be the most recent record in the disk buffer cache.
+* Since no other record ID starts with 0, we will not measure
+*  ID string length comparisons.
+* With one record, it will be in the primary group.
+* With two records, it will be in the first overflow group.
+for RecordId = OverflowRecordCount to 0 step -1
+	write Record on fFileName,RecordId on error
+		Failure = 1
+		Msg = "Cannot WRITE ":FileName:",":RecordId
+		goto ErrorExit
+	end
+next RecordId
+RecordId = "0"
+
+StartWall = system(12)
+StartCpu  = system( 9)
+for IterationsNdx = 1 to Iterations
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+read Record from fFileName,RecordId else
+	Failure = 1
+	Msg = "Cannot READ ":FileName:",":RecordId
+	goto ErrorExit
+end
+
+next IterationsNdx
+EndCpu  = system( 9)
+EndWall = system(12)
+
+close fFileName
+call DeleteFile(Failure,Msg,"DATA",FileName)
+
+return
+ErrorExit:
+**********
+Print Msg
+Iterations = 0; * Cause loop control to terminate
+return
+
+end
