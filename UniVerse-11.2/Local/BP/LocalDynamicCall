@@ -1,0 +1,24 @@
+PROGRAM LocalDynamicCall
+    SubName     = 'STARTBIT'
+    SubName<-1> = 'MIDBIT'
+    SubName<-1> = 'ENDBIT'
+
+    FOR SubIndex = 1 TO DCOUNT(SubName,@AM)
+        DynCall = SubName<SubIndex>
+        
+        * Calling a local subroutine dynamically using a variable
+        CALL @DynCall
+    NEXT SubIndex
+END
+
+SUBROUTINE STARTBIT
+    CRT 'Doing start bit'
+RETURN
+
+SUBROUTINE MIDBIT
+    CRT 'Now in mid bit'
+RETURN
+
+SUBROUTINE ENDBIT
+    CRT 'Doing end bit'
+RETURN

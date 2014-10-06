@@ -1,0 +1,49 @@
+SUBROUTINE redis.get (result, key, retMsg)
+$INCLUDE INCLUDE redis.internal
+
+   retMsg = ''
+
+   IF NOT(redis$connected) THEN result = -9 ; RETURN
+    
+   message = "*2":redis$msg$separator ;* Number of arguments (2 for GET)
+   message := "$3":redis$msg$separator ;* Byte length of command
+   message := "GET":redis$msg$separator ;* Redis Command
+   message :="$":LEN(key):redis$msg$separator ;* Byte length of key name
+   message := key:redis$msg$separator ;* Key name
+
+   result = writeSocket(redis$socket, message, redis$timeout, BLOCKING$MODE, bytes)
+*TODO: compare bytes with LEN(message)
+   result = NOT(result)
+
+   IF result THEN
+      result = readSocket(redis$socket, message.type, 1, redis$timeout, BLOCKING$MODE, bytes)
+      IF NOT(result) OR bytes = -1 THEN
+         result = 0
+      END
+      
+      result = readSocket(redis$socket, message, 0, redis$timeout, BLOCKING$MODE, bytes)
+      *TODO: Need to actually check this later
+      message = message[1,LEN(message)-2]
+      
+      BEGIN CASE
+         CASE message.type = "+"
+            result = 1
+            retMsg = message
+         CASE message.type = "-"
+            result = 0
+            retMsg = message
+         CASE message.type = "$"
+            result = 1
+            valueSize = FIELD(message, CHAR(13), 1)
+            IF valueSize = -1 THEN
+               retMsg = "(nil)"
+            END ELSE
+               retMsg = message[LEN(valueSize)+3, LEN(valueSize) + valueSize + 2]
+            END
+         CASE 1
+            result = 0
+      END CASE
+   END
+
+RETURN
+
