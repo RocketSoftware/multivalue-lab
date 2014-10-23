@@ -1,7 +1,0 @@
-* TimePerForNext is the time for each iteration of a FOR/NEXT loop.
-* This is used to back out this value for each test.
-* AtFileNameOpen tells us if the file handle for @filename is open
-* AtFileName lets us know if we are using the same @filename as last time.
-* fAtFileName is the file handle for AtFileName
-* NumRecords is the number of records selected from SSELECT
-common /profile/ TimePerForNext,AtFileNameOpen,AtFileName,fAtFileName,NumRecords
