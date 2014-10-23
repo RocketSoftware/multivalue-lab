@@ -1,0 +1,115 @@
+SUBROUTINE UDOHANG
+$INCLUDE INCLUDE UDO.H
+*EXECUTE "CREATE.FILE STUDENT 3,1"
+*EXECUTE "SH -c 'loadfile ../STUDENT.u STUDENT'"
+*EXECUTE "SH -c 'loadfile ../D_STUDENT.u D_STUDENT'"
+OPEN "","STUDENT" TO F.STUDENT ELSE 
+    CRT "NO STUDENT FILE"
+    STOP
+END
+*
+   SELCRIT = "SELECT STUDENT BY LNAME"
+EXECUTE SELCRIT CAPTURING JUNK
+IF SYSTEM(11) < 1 THEN
+   CRT "NO ITEMS SELECTED"
+END
+   
+status = UDOCreate(UDO_OBJECT,udo)
+CALL CheckStatus(status)
+PRINT "1 UDOCreate"
+status = UDOCreate(UDO_ARRAY,UDOSTUDENTSARRAY)
+CALL CheckStatus(status)
+PRINT "2 UDOCreate"
+PROP = "Students"
+status = UDOSetProperty(udo,PROP,UDOSTUDENTSARRAY)
+CALL CheckStatus(status)
+
+EOF = 0
+CNT = 0
+LOOP
+ READNEXT ID ELSE EOF = 1
+UNTIL EOF DO
+ READ REC FROM F.STUDENT,ID ELSE CONTINUE
+ CNT += 1
+ status = UDOCreate(UDO_OBJECT,UDOSTUDENT)
+ CALL CheckStatus(status)
+PRINT "3 UDOCreate"
+ * add Lname etc to UDOSTUDENT
+ PROP = "id"
+ VAL = ID
+ status = UDOSetProperty(UDOSTUDENT,PROP,VAL)
+ CALL CheckStatus(status)
+ PROP = "name"
+ VAL = REC<2>:" ":REC<1>
+ status = UDOSetProperty(UDOSTUDENT,PROP,VAL)
+ CALL CheckStatus(status)
+ PROP = "major"
+ VAL = REC<3>
+ status = UDOSetProperty(UDOSTUDENT,PROP,VAL)
+ CALL CheckStatus(status)
+ 
+ status = UDOCreate(UDO_OBJECT,UDOCGA)
+PRINT "4 UDOCreate"
+ CALL CheckStatus(status)
+
+ SEMESTERCNT = DCOUNT(REC<6>,@VM)
+* make udoarray of semesters
+     status = UDOCreate(UDO_ARRAY,UDOSEMESTERSARRAY)
+ 	CALL CheckStatus(status)
+PRINT "5 UDOCreate"
+ FOR JJ = 1 TO SEMESTERCNT
+   VAL = ""
+   status = UDOCreate(UDO_OBJECT,UDOSEMESTER)
+ 	CALL CheckStatus(status)
+PRINT "6 UDOCreate"
+   SEMESTER = REC<6,JJ>
+   PROP = "semester"
+   VAL = SEMESTER
+   status = UDOSetProperty(UDOSEMESTER,PROP,VAL)
+ 	CALL CheckStatus(status)
+   GRADES = REC<8,JJ>
+   GRADESCNT = DCOUNT(GRADES<1>,@SVM)
+   * make udoarray of grades
+PRINT "7 UDOCreate"
+     status = UDOCreate(UDO_ARRAY,UDOGRADESARRAY)
+ 	CALL CheckStatus(status)
+     FOR KK = 1 TO GRADESCNT
+      GRADE = GRADES<1,1,KK>
+      * populate udoarray of grades
+      status = UDOArraySetItem(UDOGRADESARRAY,KK,GRADE)
+      CALL CheckStatus(status)
+     NEXT KK
+     PROP = "grades"
+
+
+* you can get hang if you uncomment the below line!!!!
+PRINT "VAL = UDOGRADEARRAY"
+VAL = UDOGRADESARRAY
+     
+     status = UDOSetProperty(UDOSEMESTER,PROP,UDOGRADESARRAY)
+      CALL CheckStatus(status)
+     * put semester in semesters array
+     status = UDOArraySetItem(UDOSEMESTERSARRAY,JJ,UDOSEMESTER)
+      CALL CheckStatus(status)
+ NEXT JJ
+
+ * put semesters array into UDOCGA assoc
+ PROP = "semesters"
+ status = UDOSetProperty(UDOCGA,PROP,UDOSEMESTERSARRAY)
+ CALL CheckStatus(status)
+ * put UDOCGA association object in UDOSTUDENT
+ PROP = "cga"
+ status = UDOSetProperty(UDOSTUDENT,PROP,UDOCGA)
+ 
+ * put UDOSTUDENT in UDOSTUDENTSARRAY
+ status = UDOArraySetItem(UDOSTUDENTSARRAY,CNT,UDOSTUDENT)
+ CALL CheckStatus(status)
+REPEAT
+
+PRINT "UDO Write ..."
+status = UDOWrite(udo,UDOFORMAT_JSON,JSONOBJ)
+CALL CheckStatus(status)
+PRINT JSONOBJ
+CLOSE STUDENT
+* EXECUTE "DELETE.FILE STUDENT"
+END
