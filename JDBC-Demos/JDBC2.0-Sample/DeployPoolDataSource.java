@@ -69,21 +69,10 @@ public class DeployPoolDataSource {
 		
 		// Register UniJDBCConnectionPoolDataSource Object with Naming Service That Uses JNDI API
 		try {
-			ctx.bind("myCPDS", cpds);
-		} catch (Exception e) {
-			System.out.println("Problem with registering the ConnectionPoolDataSource");
-			e.printStackTrace();
-		}
-		
-		// Register UniJDBCDataSource Object
-		// User Should be Referencing this DataSource Object to Initiate Pooled JDBC Connection
-		try {
-			// Initiatiate a UniJDBCDataSource
-			com.rs.u2.jdbcx.UniJDBCDataSource ds = new com.rs.u2.jdbcx.UniJDBCDataSource();
-			ds.setDataSourceName("myCPDS");
-			ctx.bind(DSName, ds);
+			ctx.bind(DSName, cpds);
 		} catch (Exception e) {
 			System.out.println("Problem with registering the DataSource");
+			e.printStackTrace();
 		}
 	}
 
