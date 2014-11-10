@@ -1,0 +1,26 @@
+$INCLUDE INCLUDE UDO.H
+json='{"":[]}'
+
+status = UDORead(json, UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_JSON, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+
+status = UDOCreate(UDO_ARRAY,MYARRAY)         
+CALL CheckStatus(status)
+
+VAR = "Bugs Bunny"                                                         
+
+PRINT "ArraySetItem into new Array"                                        
+
+status = UDOArraySetItem(MYARRAY,2,VAR)  
+CALL CheckStatus(status)
+*status = UDOArrayInsertItem(MYARRAY,1,VAR)  
+status = UDOWrite(MYARRAY, UDOFORMAT_JSON, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+status = UDOGetLastError(errcode, errmsg)
+CALL CheckStatus(status)
+

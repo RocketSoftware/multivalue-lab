@@ -1,0 +1,8 @@
+*
+* Joe Sine * 2 Dec 2011
+*
+EXECUTE 'BASIC BP udo6a_bas'
+EXECUTE 'BASIC BP udo6b_bas'
+*
+EXECUTE 'RUN BP udo6a_bas'
+EXECUTE 'RUN BP udo6b_bas'

@@ -1,0 +1,52 @@
+*
+* Joe Sine * 24 Feb 2012
+* 
+* Test for UDOSetOption - FORMATTED / COMPACT
+*
+$INCLUDE INCLUDE UDO.H
+UDO.OPT = "FORMATTED"
+CRT "UDOOPTION_OUTPUTMODE = ":UDO.OPT
+status=UDOSetOption(UDOOPTION_OUTPUTMODE, UDO.OPT)
+CALL CheckStatus(status)
+status = UDOCreate(UDO_OBJECT, udoHandle)
+CALL CheckStatus(status)
+GOSUB PRINTOPT
+
+UDO.OPT = "COMPACT"
+CRT "UDOOPTION_OUTPUTMODE = ":UDO.OPT
+status=UDOSetOption(UDOOPTION_OUTPUTMODE, UDO.OPT)
+CALL CheckStatus(status)
+status = UDOCreate(UDO_OBJECT, udoHandle)
+CALL CheckStatus(status)
+GOSUB PRINTOPT
+
+UDO.OPT = "GARBAGE"
+CRT "UDOOPTION_OUTPUTMODE = ":UDO.OPT
+status=UDOSetOption(UDOOPTION_OUTPUTMODE, UDO.OPT)
+CALL CheckStatus(status)
+status = UDOCreate(UDO_OBJECT, udoHandle)
+CALL CheckStatus(status)
+GOSUB PRINTOPT
+
+UDO.OPT = "FORMATTED"
+CRT "UDOOPTION_OUTPUTMODE = ":UDO.OPT
+status=UDOSetOption(UDOOPTION_OUTPUTMODE, UDO.OPT)
+CALL CheckStatus(status)
+status = UDOCreate(UDO_OBJECT, udoHandle)
+CALL CheckStatus(status)
+GOSUB PRINTOPT
+
+STOP
+
+PRINTOPT:
+I = 1521
+status = UDOSetProperty(udoHandle, "count", I)
+CALL CheckStatus(status)
+R = 248
+status = UDOSetProperty(udoHandle, "random", R)
+CALL CheckStatus(status)
+status = UDOWrite(udoHandle, UDOFORMAT_JSON, record)
+CALL CheckStatus(status)
+PRINT record
+RETURN
+
