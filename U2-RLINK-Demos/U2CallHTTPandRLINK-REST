@@ -1,0 +1,169 @@
+$INCLUDE INCLUDE UDO.H
+      EQU TRUE TO 1
+      EQU FALSE TO 0
+      PROMPT ''
+      PROTOCOL = 'https'
+      PRINT 'Enter user name : ': ; INPUT USERNAME
+      PRINT 'Enter password : ': ; INPUT PASSWORD
+      TIMEOUT = 10000
+      IGNORE = ''
+      FOLDER.CONTENTS = ''
+!
+* Display Menu
+      DSP.MENU.OPTS = 'List contents of shared folder U2upload'
+      DSP.MENU.OPTS<-1> = 'Display content of file in shared folder'
+      DSP.MENU.OPTS<-1> = 'Upload file to shared folder'
+      LOOP
+         SILENT.LISTING = FALSE
+         LOOP
+            PRINT ; PRINT
+            FOR DSP = 1 TO DCOUNT(DSP.MENU.OPTS,@AM)
+               PRINT DSP:".  ":DSP.MENU.OPTS<DSP>
+            NEXT DSP
+            PRINT
+            PRINT 'Enter selection or Q to quit: ':
+            INPUT ITEM.SEL
+            CONT = FALSE
+            IF (ITEM.SEL >= 1 AND ITEM.SEL <= DCOUNT(DSP.MENU.OPTS,@AM)) THEN CONT = TRUE
+            IF OCONV(ITEM.SEL,'MCU') = 'Q' THEN CONT = TRUE
+         UNTIL CONT DO
+         REPEAT
+      UNTIL ITEM.SEL = 'Q' DO
+         ON ITEM.SEL GOSUB LIST.FOLDER, DOWNLOAD.FILE, UPLOAD.FILE
+      REPEAT
+      RETURN
+!
+LIST.FOLDER:
+* List content of folder...
+      IF NOT(SILENT.LISTING) THEN PRINT ; PRINT 'Listing content of U2upload folder...'
+      HOST = 'myshare.rocketsoftware.com/myshare/api/List/My Shares/share/U2upload'
+      URL=PROTOCOL:'://':HOST:'?list_contents=true&user_id=':USERNAME:'&password=':PASSWORD
+!
+      STATUS = setHTTPDefault('VERSION', '1.1')
+*
+* use either SSLV3 OR TLSV1 security protocol
+      STATUS = createsecuritycontext(sec_context,"sslv3")
+      STATUS = createSecureRequest(URL, 'GET', restGET,sec_context)
+      STATUS = submitRequest(restGET, TIMEOUT, IGNORE, Header, restData, httpStatus)
+      restData=CHANGE(restData, '{', '{':CHAR(10))
+      restData=CHANGE(restData, ',', ',':CHAR(10))
+      restData=CHANGE(restData, '}', '}':CHAR(10))
+      IF NOT(SILENT.LISTING) THEN
+         PRINT ; PRINT 'URL:':URL
+         PRINT ; PRINT 'Response status: ':httpStatus
+         PRINT 'Response headers:':Header
+         PRINT 'Response data:':CHAR(10):restData
+      END
+      GOSUB PROCESS.LISTING
+      RETURN
+!
+DOWNLOAD.FILE:
+      FOLDER.CONTENTS = ''
+      SILENT.LISTING = TRUE
+      GOSUB LIST.FOLDER
+      IF FOLDER.CONTENTS = '' THEN
+         PRINT 'No items to display in folder'
+         RETURN
+      END
+      LOOP
+         LOOP
+            PRINT ; PRINT
+            FOR FDSP = 1 TO DCOUNT(FOLDER.CONTENTS<1>,@VM)
+               PRINT FDSP:".  ":FOLDER.CONTENTS<1,FDSP>
+            NEXT FDSP
+            PRINT
+            PRINT 'Enter number for the corresponding file to view or <Enter> to return: ':
+            INPUT FILE.SEL
+            CONT = FALSE
+            IF FILE.SEL = '' THEN RETURN
+            IF (FILE.SEL >= 1 AND FILE.SEL <= DCOUNT(FOLDER.CONTENTS<1>,@VM)) THEN CONT = TRUE
+         UNTIL CONT DO
+         REPEAT
+      UNTIL FILE.SEL = '' DO
+         DL.FILE = FOLDER.CONTENTS<1,FILE.SEL>
+         GOSUB GET.FILE
+      REPEAT
+      RETURN
+!
+GET.FILE:
+      PRINT ; PRINT
+* Use FileGet method of R/Link's REST API
+      PATH.OF.FILE = 'myshare.rocketsoftware.com/myshare/api/FileGet':DL.FILE
+      PRINT 'Show content of ':DL.FILE:' using FileGet method...'
+      HOST = PATH.OF.FILE
+*
+      URL=PROTOCOL:'://':HOST:'?user_id=':USERNAME:'&password=':PASSWORD
+      STATUS = setHTTPDefault('VERSION', '1.1')
+*
+* use either SSLV3 OR TLSV1 security protocol
+      STATUS = createsecuritycontext(sec_context,"sslv3")
+      STATUS = createSecureRequest(URL, 'GET', restGET,sec_context)
+      STATUS = submitRequest(restGET, TIMEOUT, IGNORE, Header, restData, httpStatus)
+      restData=CHANGE(restData, '{', '{':CHAR(10))
+      restData=CHANGE(restData, ',', ',':CHAR(10))
+      restData=CHANGE(restData, '}', '}':CHAR(10))
+      PRINT ; PRINT 'URL:':URL
+      PRINT ; PRINT 'Response status: ':httpStatus
+      PRINT 'Response headers:':Header
+      PRINT 'Response data:':CHAR(10):restData
+      RETURN
+!
+PROCESS.LISTING:
+      restData = CHANGE(restData,':false',':0')
+      restData = CHANGE(restData,':true',':1')
+      inputString = restData
+      outputString = "" ; udoHandle = ''
+      STATUS = UDORead(inputString, UDOFORMAT_JSON, udoHandle)
+      IF STATUS = UDO_SUCCESS THEN PRINT "OK" ELSE STOP "NOT OK"
+      myStatus = UDOGetType( udoHandle, THETYPE )
+      BEGIN CASE
+         CASE THETYPE = UDO_OBJECT
+            CALL jsonObjectSub( udoHandle, FOLDER.CONTENTS )
+         CASE THETYPE = UDO_ARRAY
+            CALL jsonArraySub(udoHandle, FOLDER.CONTENTS)
+         CASE 1
+            NULL
+      END CASE
+      FOR FLDR = DCOUNT(FOLDER.CONTENTS<1>,@VM) TO 1 STEP -1
+         IF FOLDER.CONTENTS<2,FLDR> = 1 THEN
+            FOLDER.CONTENTS = DELETE(FOLDER.CONTENTS,1,FLDR)
+            FOLDER.CONTENTS = DELETE(FOLDER.CONTENTS,2,FLDR)
+         END
+      NEXT FLDR
+      RETURN
+!
+UPLOAD.FILE:
+      PRINT 'Specify database file: ':
+      INPUT DB.FILE
+      OPEN '',DB.FILE TO DB.FILE ELSE
+         PRINT 'Cannot open database file'
+         RETURN
+      END
+      PRINT 'Specify the record containing the data: ':
+      INPUT DB.REC
+      READ ITEM FROM DB.FILE, DB.REC ELSE ITEM = ''
+      IF ITEM = '' THEN
+         PRINT 'Either the record does not exist or there is no content'
+         RETURN
+      END
+      HOST = 'myshare.rocketsoftware.com/myshare/api/FilePut/My Shares/share/U2upload'
+      URL=PROTOCOL:'://':HOST:'/':DB.REC:'?user_id=':USERNAME:'&password=':PASSWORD:'&overwrite=false'
+      STATUS = setHTTPDefault('VERSION', '1.1')
+      STATUS = createsecuritycontext(sec_context,"sslv3")
+      STATUS = createSecureRequest(URL, 'POST:application/octet-stream', restPUT,sec_context)
+      IF STATUS # 0 THEN ABORT 'createRequest has failed, code: ':STATUS
+      STATUS = addRequestParameter(restPUT, 'uploadedfile', ITEM, 'Content-Disposition: form-data; filename="':'TestUpload.txt"')
+      IF STATUS # 0 THEN ABORT 'addRequestParameter has failed, code: ':STATUS
+      STATUS = submitRequest(restPUT, TIMEOUT, IGNORE, Header, restData, httpStatus)
+      IF STATUS = 2 AND httpStatus<1,1> = 200 THEN STATUS = 0          ; * ignore
+      IF STATUS # 0 THEN ABORT 'submitRequest failed with code: ':STATUS
+      restData=CHANGE(restData, '{', '{':CHAR(10))
+      restData=CHANGE(restData, ',', ',':CHAR(10))
+      restData=CHANGE(restData, '}', '}':CHAR(10))
+      PRINT ; PRINT 'URL:':URL
+      PRINT ; PRINT 'Response status: ':httpStatus
+      PRINT 'Response headers:':Header
+      PRINT 'Response data:':CHAR(10):restData
+      RETURN
+!
+   END
