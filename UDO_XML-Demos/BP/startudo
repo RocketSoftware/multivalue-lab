@@ -1,3 +1,10 @@
+*
+* Charles Zhang * 21 Nov 2014
+*
+* The whole test suite contains tests for UDO and UDO_XML
+* The whole test suite can be compiled and run using this program
+* Each pa program is an entry point for the related tests
+
 EXECUTE 'BASIC BP udo1_pa'
 EXECUTE 'BASIC BP udo2_pa'
 EXECUTE 'BASIC BP udo3_pa'

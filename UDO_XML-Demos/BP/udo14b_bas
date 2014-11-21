@@ -1,10 +1,8 @@
 
 $INCLUDE INCLUDE UDO.H
 
-
 status = UDORead('{"e": {"@ name": "value",  "#text":  "text"}}', UDOFORMAT_JSON, udo)
 CALL CheckStatus(status)
-*status = UDORead('<e name="value"> text</e>', UDOFORMAT_XML, udo)
 
 status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
 CALL CheckStatus(status)

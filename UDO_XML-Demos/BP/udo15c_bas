@@ -1,6 +1,5 @@
 $INCLUDE INCLUDE UDO.H
 
-*status = UDOSetOption(2, "COMPACT")
 status = UDOSetOption(0, "ATTRIBUTE")
 CALL CheckStatus(status)
 
@@ -36,9 +35,6 @@ IF FAILURES > 0
 THEN
 	DISPLAY 'Total failures: ':FAILURES
 END
-*ELSE
-*	DISPLAY 'Error Handling Test Success!'
-*END
 
 STOP
 
@@ -63,18 +59,6 @@ BEGIN CASE
 		status = UDOSetOption(2, "FORMATTED")
 		CALL CheckStatus(status)
 		MSG = 'EMPTY2NULL On:'
-*	CASE UINDEX = "7"
-*		status = UDOSetOption(7, "ON")
-*		MSG = 'TRIMWHITESPACE On:'
-*	CASE UINDEX = "8"
-*		status = UDOSetOption(4, "ON")
-*		status = UDOSetOption(8, "ON")
-*		MSG = 'CASEINSENSITIVE & INFERBOOLEAN On:'
-*	CASE UINDEX = "9"
-*		status = UDOSetOption(9, "ON")
-*		MSG = 'KEEPROOT On:'
-*	CASE UINDEX = "10"
-*		MSG = 'Default Settings:'
 	CASE 1
 		DISPLAY "INVALID UNIT INDEX"
 		STOP
@@ -85,15 +69,6 @@ LOOP
 UNTIL COUNT = 17 
 	GOSUB JSON2XML
 REPEAT
-
-*IF SUCCESS = XMLS
-*THEN
-*	DISPLAY MSG:' Success!'
-*END
-*ELSE
-*	DISPLAY MSG:'Failures ':(XMLS-SUCCESS)
-*	FAILURES = FAILURES + (XMLS-SUCCESS)
-*END
 
 RETURN
 
@@ -110,14 +85,6 @@ CALL CheckStatus(status)
 
 status = UDOWrite(udo, UDOFORMAT_XML, OUTSTRING(COUNT))
 CALL CheckStatus(status)
-*IF OUTSTRING(COUNT) = JSON.ARR(UINDEX, COUNT)
-*THEN
-*	SUCCESS = SUCCESS +1
-*END
-*ELSE
-*	DISPLAY "From XML -> ":OUTSTRING(COUNT)
-*	DISPLAY "Expect JSON -> ":JSON.ARR(UINDEX, COUNT)
-*END
 DISPLAY OUTSTRING(COUNT)
 
 RETURN

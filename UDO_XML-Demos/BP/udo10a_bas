@@ -7,17 +7,6 @@ COUNTER = 0
 
 DISPLAY "UDO to XML Output"
 
-url = "http://search.twitter.com/search.json?q=rocket%20software&rpp=5&include_entities=true&result_type=mixed"
-method = "GET"
-
-*stat = setHTTPDefault("VERSION", "1.1")
-*stat = createRequest(url, method, restGET)
-*stat = submitRequest(restGET, 5000, "", Header, restData, httpStatus)
-
-*PRINT "Response status: ":httpStatus
-*PRINT "Response header: ":Header
-*PRINT "Response Data: ":restData
-
 DIM restData(40)
 
 restData(1) = '{ "myKey" : "myValue", "myKey1" : "myValue2", "myKey3" : "myValue3", "myKey4" : "myValue4" }'
