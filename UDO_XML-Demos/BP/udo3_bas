@@ -1,0 +1,141 @@
+$INCLUDE INCLUDE UDO.H
+
+json= '{"id": "011", "female": true, "married": false, "age": 32, "children": [{"name": "max"},{"name": "michelle"}], "grandchildren": null}'
+
+PRINT "Read ... "
+inputType = 0
+status = UDORead(json, inputType, udo)
+CALL CheckStatus(status)
+
+PRINT "Write ... "
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT ""
+PRINT "UDOArrayGetSize..."
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+LOOP WHILE status = 0 DO
+	PRINT name
+	PRINT type
+	status2 = UDOIsTypeOf(value, 5)
+	CALL CheckStatus(status2)
+	IF status2 = 0 THEN
+		status1 = UDOArrayGetSize(value, size)
+		CALL CheckStatus(status1)
+		IF status1 = 0 THEN
+			PRINT 'SIZE: ':size
+		END
+	END
+	status = UDOGetNextProperty(udo, name, value, type)
+	CALL CheckStatus(status)
+	PRINT ""
+REPEAT
+STOP
+
+PRINT ""
+PRINT "UDOGetProperty..."
+status=UDOGetProperty(udo, "children", array, type)
+CALL CheckStatus(status)
+PRINT ""
+PRINT "UDOArrayGetItem..."
+status=UDOArrayGetItem(array, 1, item, type)
+CALL CheckStatus(status)
+status=UDOWrite(item, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+status=UDOArrayGetItem(array, 2, item, type)
+CALL CheckStatus(status)
+status=UDOWrite(item, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+status=UDOArrayGetItem(array, 10, item, type)
+CALL CheckStatus(status)
+status = UDOGetLastError(errcode, errmsg)
+CALL CheckStatus(status)
+status=UDOArrayGetItem(array, 0, item, type)
+CALL CheckStatus(status)
+status = UDOGetLastError(errcode, errmsg)
+CALL CheckStatus(status)
+
+PRINT ""
+PRINT "UDOArrayGetNextItem..."
+status = UDOArrayGetNextItem(array, item, type)
+CALL CheckStatus(status)
+LOOP WHILE status = 0 DO
+status=UDOWrite(item, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+PRINT ""
+status = UDOArrayGetNextItem(array, item, type)
+CALL CheckStatus(status)
+REPEAT
+
+PRINT ""
+PRINT "UDOArrayInsertItem..."
+itemvalue = "Hello"
+status = UDOArrayInsertItem(array, 1, itemvalue)
+CALL CheckStatus(status)
+status = UDOArrayInsertItem(array, 10, itemvalue)
+CALL CheckStatus(status)
+status=UDOWrite(array, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+
+PRINT ""
+PRINT "UDOArraySetItem..."
+itemvalue = "Hello Set"
+status = UDOArraySetItem(array, 0, itemvalue)
+CALL CheckStatus(status)
+status = UDOGetLastError(errcode, errmsg)
+CALL CheckStatus(status)
+status = UDOArraySetItem(array, 9, itemvalue)
+CALL CheckStatus(status)
+status = UDOArraySetItem(array, 12, itemvalue)
+CALL CheckStatus(status)
+status=UDOWrite(array, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+
+PRINT ""
+PRINT "UDOArrayAppendItem..."
+itemvalue = "Hello Append"
+status = UDOArrayAppendItem(array, itemvalue)
+CALL CheckStatus(status)
+status=UDOWrite(array, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT ""
+PRINT "UDOArrayDeleteItem..."
+status = UDOArrayDeleteItem(array, 0)
+CALL CheckStatus(status)
+status = UDOArrayDeleteItem(array, 9)
+CALL CheckStatus(status)
+status = UDOArrayDeleteItem(array, 15)
+CALL CheckStatus(status)
+status=UDOWrite(array, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT ""
+PRINT "UDOCreate() ...."
+status = UDOCreate(UDO_ARRAY,array)
+CALL CheckStatus(status)
+PRINT status
+itemvalue = "Hello Set"
+status = UDOArraySetItem(array, 0, itemvalue)
+CALL CheckStatus(status)
+PRINT status
+itemvalue = 0
+LOOP WHILE itemvalue < 20 DO
+status = UDOArrayAppendItem(array, itemvalue)
+CALL CheckStatus(status)
+itemvalue = itemvalue + 1
+REPEAT
+status=UDOWrite(array, 0, jsonout)
+PRINT jsonout
+

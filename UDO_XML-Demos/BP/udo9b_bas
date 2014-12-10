@@ -1,0 +1,12 @@
+$INCLUDE INCLUDE UDO.H
+
+STRING = '<e/>'
+status = UDORead('<e/>', UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+CALL CheckStatus(status)
+
+PRINT STRING
+
+PRINT outstring
+

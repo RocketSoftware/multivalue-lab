@@ -1,0 +1,135 @@
+$INCLUDE INCLUDE UDO.H
+
+json= '{"id": "011", "married": false, "age": 32, "children": [{"name": "max"},{"name": "michelle"}], "grandchildren": null}'
+
+PRINT "Read ... "
+inputType = 0
+status = UDORead(json, inputType, udo)
+CALL CheckStatus(status)
+
+PRINT "Write ... "
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Get value properties ..."
+status = UDOGetProperty(udo, "age", age, type)
+CALL CheckStatus(status)
+PRINT type
+PRINT age
+
+PRINT "Get array properties (children) ..."
+status = UDOGetProperty(udo, "children", children, type)
+CALL CheckStatus(status)
+PRINT type
+
+PRINT "Delete the children property"
+status = UDODeleteProperty(udo, "children")
+CALL CheckStatus(status)
+
+PRINT "Write after delete"
+status = UDOWrite(children, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Add the property back"
+status = UDOSetProperty(udo, "kids", children)
+CALL CheckStatus(status)
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Get the property names"
+status = UDOGetPropertyNames(udo, names)
+CALL CheckStatus(status)
+status = UDOWrite(names, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Get all the properties by calling UDOGetNextProperty"
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+LOOP WHILE status = UDO_SUCCESS DO
+PRINT name
+PRINT type
+IF type = UDO_NUMBER THEN
+	PRINT value
+END ELSE IF type = UDO_STRING THEN
+	PRINT value
+END ELSE
+	status = UDOWrite(value, 0, jsonout)
+	CALL CheckStatus(status)
+	PRINT jsonout
+END
+PRINT ""
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+REPEAT
+
+PRINT "LOOP through UDOGetNextProperty again"
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+LOOP WHILE status = UDO_SUCCESS DO
+PRINT name
+PRINT type
+IF type = UDO_NUMBER THEN
+	PRINT value
+END ELSE IF type = UDO_STRING THEN
+	PRINT value
+END ELSE
+	status = UDOWrite(value, 0, jsonout)
+	CALL CheckStatus(status)
+	PRINT jsonout
+END
+PRINT ""
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+REPEAT
+
+PRINT ""
+PRINT "UDOCreate ..."
+FOR I=0 TO 6
+	status = UDOCreate(I, newudo)
+	CALL CheckStatus(status)
+	IF status <> 0 THEN
+		PRINT "in Create value type ": I
+	END
+NEXT I
+
+PRINT ""
+PRINT "UDOGetType..."
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+LOOP WHILE status = UDO_SUCCESS DO
+PRINT name
+PRINT type
+status = UDOGetType(value, newtype)
+CALL CheckStatus(status)
+IF type <> newtype THEN
+	PRINT "type doesn't match"
+END
+PRINT ""
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+REPEAT
+
+PRINT ""
+PRINT "UDOIsTypeOf..."
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+LOOP WHILE status = UDO_SUCCESS DO
+PRINT name
+PRINT type
+status = UDOIsTypeOf(value, type)
+CALL CheckStatus(status)
+IF status = 0 THEN
+	PRINT "type matches"
+END
+PRINT ""
+status = UDOGetNextProperty(udo, name, value, type)
+CALL CheckStatus(status)
+REPEAT
+

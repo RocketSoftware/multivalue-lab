@@ -1,0 +1,6 @@
+*
+* Joe Sine * 2 Dec 2011
+*
+EXECUTE 'BASIC BP udo3_bas'
+*
+EXECUTE 'RUN BP udo3_bas'

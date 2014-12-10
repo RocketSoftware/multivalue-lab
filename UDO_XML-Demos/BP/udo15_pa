@@ -1,0 +1,17 @@
+*
+* Joe Sine * 11 Sep 2013
+* Charles Zhang * 21 Nov 2014
+*
+EXECUTE 'BASIC BP udo15a_bas'
+EXECUTE 'BASIC BP udo15b_bas'
+EXECUTE 'BASIC BP udo15c_bas'
+EXECUTE 'BASIC BP udo15d_bas'
+EXECUTE 'BASIC BP udo15e_bas'
+EXECUTE 'BASIC BP udo15f_bas'
+*
+EXECUTE 'RUN BP udo15a_bas'
+EXECUTE 'RUN BP udo15b_bas'
+EXECUTE 'RUN BP udo15c_bas'
+EXECUTE 'RUN BP udo15d_bas'
+EXECUTE 'RUN BP udo15e_bas'
+EXECUTE 'RUN BP udo15f_bas'

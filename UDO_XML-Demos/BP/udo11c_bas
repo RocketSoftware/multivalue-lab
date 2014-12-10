@@ -1,0 +1,10 @@
+$INCLUDE INCLUDE UDO.H
+
+STRING = '<?xml-stylesheet href="classic.xsl" type="text/xml"?> <?xml-stylesheet href="funky.xsl" type="text/xml" alternate="yes"?> <article> text <articleinfo> info </articleinfo> </article>'
+status = UDORead(STRING, UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+CALL CheckStatus(status)
+PRINT "XML: ":STRING
+PRINT "FROM XML->":outstring
+

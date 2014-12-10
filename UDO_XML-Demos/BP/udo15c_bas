@@ -1,0 +1,91 @@
+$INCLUDE INCLUDE UDO.H
+
+status = UDOSetOption(0, "ATTRIBUTE")
+CALL CheckStatus(status)
+
+DIM JSON.ARR(20)
+DIM OUTSTRING(20)
+XMLS = 16
+FAILURES = 0
+
+JSON.ARR(1) = '{"#text":""}'
+JSON.ARR(2) = '{"#text":" \t"}'
+JSON.ARR(3) = '{"#text":true}'
+JSON.ARR(4) = '{"#text":"true"}'
+JSON.ARR(5) = '{"#text":1.732000}'
+JSON.ARR(6) = '{"#text":"1.732"}'
+JSON.ARR(7) = '{"#text":null}'
+JSON.ARR(8) = '{"#text":null}'
+JSON.ARR(9) = '{"#text":"text"}'
+JSON.ARR(10) = '{"@name":"value"}'
+JSON.ARR(11) = '{"@name":"value","#text":" text"}'
+JSON.ARR(12) = '{"a":["text1","text"],"b":"text2"}'
+JSON.ARR(13) = '{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}'
+JSON.ARR(14) = '{"#text":["1.618","text4","null"],"a":["text1","false","  "],"b":"3.141593"}'
+JSON.ARR(15) = '{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}'
+JSON.ARR(16) = '{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}'
+
+FOR COUNTER = 1 TO 4 STEP 1
+	UINDEX = COUNTER 
+	GOSUB UNITTEST
+NEXT COUNTER
+
+
+IF FAILURES > 0
+THEN
+	DISPLAY 'Total failures: ':FAILURES
+END
+
+STOP
+
+UNITTEST:
+COUNT = 0
+SUCCESS = 0
+
+BEGIN CASE
+	CASE UINDEX = "1"
+		status = UDOSetOption(0, "ATTRIBUTE")
+		CALL CheckStatus(status)
+		MSG = 'INFERNUMBER On:'
+	CASE UINDEX = "2"
+		status = UDOSetOption(0, "ELEMENT")
+		CALL CheckStatus(status)
+		MSG = 'INFERBOOLEAN On:'
+	CASE UINDEX = "3"
+		status = UDOSetOption(2, "COMPACT")
+		CALL CheckStatus(status)
+		MSG = 'INFERNULL On:'
+	CASE UINDEX = "4"
+		status = UDOSetOption(2, "FORMATTED")
+		CALL CheckStatus(status)
+		MSG = 'EMPTY2NULL On:'
+	CASE 1
+		DISPLAY "INVALID UNIT INDEX"
+		STOP
+END CASE
+
+LOOP
+	COUNT = COUNT + 1
+UNTIL COUNT = 17 
+	GOSUB JSON2XML
+REPEAT
+
+RETURN
+
+JSON2XML:
+status = UDORead(JSON.ARR(COUNT), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+
+status = UDOWrite(udo, UDOFORMAT_JSON, OUTSTRING(COUNT))
+CALL CheckStatus(status)
+DISPLAY OUTSTRING(COUNT)
+
+status = UDORead(JSON.ARR(COUNT), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+
+status = UDOWrite(udo, UDOFORMAT_XML, OUTSTRING(COUNT))
+CALL CheckStatus(status)
+DISPLAY OUTSTRING(COUNT)
+
+RETURN
+

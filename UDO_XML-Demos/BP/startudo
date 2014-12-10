@@ -1,0 +1,41 @@
+*
+* Charles Zhang * 21 Nov 2014
+*
+* The whole test suite contains tests for UDO and UDO_XML
+* The whole test suite can be compiled and run using this program
+* Each pa program is an entry point for the related tests
+
+EXECUTE 'BASIC BP udo1_pa'
+EXECUTE 'BASIC BP udo2_pa'
+EXECUTE 'BASIC BP udo3_pa'
+EXECUTE 'BASIC BP udo4_pa'
+EXECUTE 'BASIC BP udo5_pa'
+EXECUTE 'BASIC BP udo6_pa'
+EXECUTE 'BASIC BP udo7_bas'
+EXECUTE 'BASIC BP udo8_pa'
+EXECUTE 'BASIC BP udo9_pa'
+EXECUTE 'BASIC BP udo10_pa'
+EXECUTE 'BASIC BP udo11_pa'
+EXECUTE 'BASIC BP udo12_pa'
+EXECUTE 'BASIC BP udo13_pa'
+EXECUTE 'BASIC BP udo14_pa'
+EXECUTE 'BASIC BP udo15_pa'
+
+EXECUTE 'BASIC BP CheckStatus'
+EXECUTE 'CATALOG BP CheckStatus FORCE'
+
+EXECUTE 'RUN BP udo1_pa'
+EXECUTE 'RUN BP udo2_pa'
+EXECUTE 'RUN BP udo3_pa'
+EXECUTE 'RUN BP udo4_pa'
+EXECUTE 'RUN BP udo5_pa'
+EXECUTE 'RUN BP udo6_pa'
+EXECUTE 'RUN BP udo7_bas'
+EXECUTE 'RUN BP udo8_pa'
+EXECUTE 'RUN BP udo9_pa'
+EXECUTE 'RUN BP udo10_pa'
+EXECUTE 'RUN BP udo11_pa'
+EXECUTE 'RUN BP udo12_pa'
+EXECUTE 'RUN BP udo13_pa'
+EXECUTE 'RUN BP udo14_pa'
+EXECUTE 'RUN BP udo15_pa'

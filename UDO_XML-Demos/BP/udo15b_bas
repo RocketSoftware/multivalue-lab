@@ -1,0 +1,120 @@
+$INCLUDE INCLUDE UDO.H
+
+status = UDOSetOption(3, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(4, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(5, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(6, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(7, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(9, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(2, "COMPACT")
+CALL CheckStatus(status)
+
+DIM XMLSTR(20)
+DIM JSONSTR(20)
+
+XMLSTR(1) = '<e/>'
+XMLSTR(2) = '<e> 	</e>'
+XMLSTR(3) = '<e>true</e>'
+XMLSTR(4) = '<e>1.732</e>'
+XMLSTR(5) = '<e>null</e>'
+XMLSTR(6) = '<e>text</e>'
+XMLSTR(7) = '<e name="value" />'
+XMLSTR(8) = '<e name="value"> text</e>'
+XMLSTR(9) = '<e> <a>text1</a><b>text2</b> <a>text</a> </e>' 
+XMLSTR(10) = '<e>text3<a>text1</a> <b>text2</b>text4<a>text</a>text5</e>'
+XMLSTR(11) = '<e>1.618<a>text1</a> <b>3.141593</b>text4<a>false</a>null<a>  </a></e>'
+XMLSTR(12) = '<e>tRUe<a>text1</a> <b>text2</b>True<a>text</a>FaLse</e>'
+XMLSTR(13) = '<e>	text3 <a>	text1 </a> <b>text2</b>text4<a>text</a>text5</e>'
+
+JSONSTR(1) = '{"#text":""}'
+JSONSTR(2) = '{"#text":" \t"}'
+JSONSTR(3) = '{"#text":"true"}'
+JSONSTR(4) = '{"#text":"1.732"}'
+JSONSTR(5) = '{"#text":"null"}'
+JSONSTR(6) = '{"#text":"text"}'
+JSONSTR(7) = '{"@name":"value"}'
+JSONSTR(8) = '{"@name":"value","#text":" text"}'
+JSONSTR(9) = '{"a":["text1","text"],"b":"text2"}'
+JSONSTR(10) = '{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}'
+JSONSTR(11) = '{"#text":["1.618","text4","null"],"a":["text1","false","  "],"b":"3.141593"}'
+JSONSTR(12) = '{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}'
+JSONSTR(13) = '{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}'
+
+STARTTIME = TIME()
+FOR COUNTER = 1 TO 2000 STEP 1
+status = UDORead(XMLSTR(1), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(2), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(3), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(4), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(5), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(6), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(7), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(8), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(9), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(10), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(11), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(12), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDORead(XMLSTR(13), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+NEXT COUNTER
+ENDTIME = TIME()
+
+RUNTIME = ENDTIME - STARTTIME 
+
+DISPLAY 'Run XMLRead 26,000 times:':RUNTIME:' S'
+
+STARTTIME = TIME()
+FOR COUNTER = 1 TO 2000 STEP 1
+status = UDORead(JSONSTR(1), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(2), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(3), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(4), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(5), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(6), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(7), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(8), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(9), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(10), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(11), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(12), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDORead(JSONSTR(13), UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+NEXT COUNTER
+ENDTIME = TIME()
+
+RUNTIME = ENDTIME - STARTTIME 
+
+DISPLAY 'Run JSONRead 26,000 times:':RUNTIME:' S'
+
+STOP
+

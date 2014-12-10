@@ -1,0 +1,52 @@
+$INCLUDE INCLUDE UDO.H
+*
+CRT "Started: udo6b_bas"
+status =  UDOCreate(UDO_ARRAY, addressArray)
+CALL CheckStatus(status)
+FOR X = 1 TO 10000
+   status = UDOCreate(UDO_OBJECT, address)
+   CALL CheckStatus(status)
+   addressLine = "4375 Fair Lakes Ct Apt# ":X
+   status = UDOSetProperty(address, "AddressLine", addressLine)
+   CALL CheckStatus(status)
+   city = "Fairfax"
+   status = UDOSetProperty(address, "City", city)
+   CALL CheckStatus(status)
+   state = "Virginia"
+   status = UDOSetProperty(address, "State", state)
+   CALL CheckStatus(status)
+   zip = "22033"
+   status = UDOSetProperty(address, "Zip", zip)
+   CALL CheckStatus(status)
+   * phone number
+   status = UDOCreate(UDO_OBJECT, phone)
+   CALL CheckStatus(status)
+   areaCode = "703"
+   status = UDOSetProperty(phone, "AreaCode", areaCode)
+   CALL CheckStatus(status)
+   phoneNumber = "1234567"
+   status = UDOSetProperty(phone, "PhoneNumber", phoneNumber)
+   CALL CheckStatus(status)
+   status = UDOSetProperty(address, "Phone", phone)   
+   CALL CheckStatus(status)
+   * resident
+   status = UDOCreate(UDO_OBJECT, resident)
+   CALL CheckStatus(status)
+   id = "703"
+   status = UDOSetProperty(resident, "ResidentId", id)
+   CALL CheckStatus(status)
+   moveInDate = "11/11/11"
+   status = UDOSetProperty(resident, "MoveInDate", moveInDate)
+   CALL CheckStatus(status)
+   moveOutDate = "11/11/12"
+   status = UDOSetProperty(resident, "MoveOutDate", moveOutDate)
+   CALL CheckStatus(status)
+   status = UDOSetProperty(address, "Resident", resident)
+   CALL CheckStatus(status)
+   status = UDOArrayAppendItem(addressArray, address)
+   CALL CheckStatus(status)
+NEXT X
+status = UDOFree(addressArray)
+CALL CheckStatus(status)
+CRT "Finished: udo6b_bas"
+RETURN

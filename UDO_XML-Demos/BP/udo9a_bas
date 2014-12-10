@@ -1,0 +1,43 @@
+$INCLUDE INCLUDE UDO.H
+
+
+*status = UDORead('{"e": {"@ name": "value",  "#text":  "text"}}', UDOFORMAT_JSON, udo)
+
+*status = UDORead('<e name="value"> text</e>', UDOFORMAT_XML, udo)
+*status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+
+*PRINT outstring
+
+*status = UDORead('<e/>', UDOFORMAT_XML, udo)
+*status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+
+*status = UDORead('<e>true</e>   or <e>false</e>', UDOFORMAT_XML, udo)
+*status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+
+STRING = '<e>text</e>'
+status = UDORead('<e>text</e>', UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_XML, outstring)
+CALL CheckStatus(status)
+
+PRINT STRING
+
+PRINT outstring
+
+STRING = '<e name="value" />'
+status = UDORead('<e name="value" />', UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+CALL CheckStatus(status)
+
+PRINT STRING
+
+PRINT outstring
+
+*status = UDORead('<e> <a>text1</a><b>text2</b> <a>text</a> </e>', UDOFORMAT_XML, udo)
+*status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+*PRINT "FROM XML->":outstring
+
+*status = UDORead('{"e": { "a": ["text1", "text"], "b": "text2" }}', UDOFORMAT_JSON, udo)
+*status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+*PRINT "FROM JSON->":outstring

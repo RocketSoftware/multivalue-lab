@@ -1,0 +1,23 @@
+$INCLUDE INCLUDE UDO.H
+*
+CRT "Started: udo6a_bas"
+FOR X = 1 TO 100000
+   status = UDOCreate(UDO_OBJECT, address)
+   CALL CheckStatus(status)
+   addressLine = "4375 Fair Lakes Ct Apt# ":X
+   status = UDOSetProperty(address, "AddressLine", addressLine)
+   CALL CheckStatus(status)
+   city = "Fairfax"
+   status = UDOSetProperty(address, "City", city)
+   CALL CheckStatus(status)
+   state = "Virginia"
+   status = UDOSetProperty(address, "State", state)
+   CALL CheckStatus(status)
+   zip = "22033"
+   status = UDOSetProperty(address, "Zip", zip)   
+   CALL CheckStatus(status)
+   status = UDOFree(address)
+   CALL CheckStatus(status)
+NEXT X
+CRT "Finished: udo6a_bas"
+RETURN

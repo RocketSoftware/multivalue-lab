@@ -1,0 +1,17 @@
+*
+* Charles Zhang * 21 Nov 2014
+*
+* This subroutine is used to check the error reasons if it's not UDO_SUCCESS
+
+SUBROUTINE CheckStatus(status)
+$INCLUDE INCLUDE UDO.H
+    IF status <> UDO_SUCCESS THEN
+        IF status = -1 THEN
+        	stat = UDOGetLastError(errcode, errmsg)
+       		PRINT "ERRCODE: ":errcode
+        	PRINT "ERRMSG: ":errmsg
+        END ELSE
+            PRINT "EDO_INVALIDHANDLE"
+        END
+    END
+RETURN

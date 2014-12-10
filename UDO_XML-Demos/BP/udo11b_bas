@@ -1,0 +1,10 @@
+$INCLUDE INCLUDE UDO.H
+
+STRING = '<?xml version="1.0" encoding="UTF-8"?> <e>text3<a>text1</a> <b>text2</b>text4<a>text</a>text5</e>'
+status = UDORead(STRING, UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_JSON, outstring)
+CALL CheckStatus(status)
+PRINT "XML: ":STRING
+PRINT "FROM XML->":outstring
+
