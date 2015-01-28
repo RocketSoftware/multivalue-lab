@@ -1,0 +1,88 @@
+* EXAMPLE-RLINK.STATEMENT.PDF ;* Brian S. Cram - 05/30/14
+*
+* Creates a PDF statement from random fake data as an
+* example of how to post documents generated in D3 to
+* r/link as PDF documents.
+*
+* Uses a freeware Windows utility called
+* WinPCLtoPDF.exe which can be obtained from
+* http://www.columbia.edu/~em36/pcltopdf.html
+*
+* Hostname, port, etc., normally read from configuration file
+*
+  HOST = "irv-vm-bc02"
+  PORT = 8080
+  SERV = "/rlink/api/"
+  USER = "bscram"
+  PASS = "beavis"
+*
+*
+* Create PCL statement image for a random customer
+*
+  CN=1+RND(49)
+*
+* Data normally read from a D3 customer file into
+* a dynamic array: READ CUST FROM F.CUST,CN
+*
+  CUST    = "Acme, Inc."
+  CUST<2> = "123 Any Street"
+  CUST<3> = "Any Town"
+  CUST<4> = "CA"
+  CUST<5> = "90000"
+*
+  ID.STMT="stmt":CN
+  CRT "Creating statement ":ID.STMT:"..."
+  CALL STATEMENT.IMAGE.SUB(CN,CUST,IMAGE)
+  IF IMAGE="" THEN GO ProgramMainExit
+*
+* Write statement image to O/S directory, convert to PDF
+* Copy PDF to upload file, clean up O/S directory
+*
+  OPEN 'NT_BIN:.' TO F.PDF ELSE
+    ABORT 201,"NT_BIN:."
+  END
+  ID.PCL=ID.STMT:".pcl"
+  ID.PDF=ID.STMT:".pdf"
+  CONVERT CHAR(254) TO "" IN IMAGE
+  WRITE IMAGE ON F.PDF,ID.PCL
+*
+* Following shell command is based on using
+* WinPCLtoPDF.exe and would change based on
+* what third-party converter you would use.
+*
+  WCMD ="!winpcltopdf"
+  WCMD:=" ":ID.PCL
+  WCMD:=" ":ID.PDF
+  EXECUTE WCMD CAPTURING ETXT 
+*
+* Copies the PDF to a D3 file. In this example,
+* we're using the MD of the account to make
+* deployment of these examples file-less. In the
+* real world, this is bad practice and you should
+* create a file for this purpose and use it instead
+* of the account MD.
+*
+  UPLOAD.FILENAME="MD"
+  DATA "(":UPLOAD.FILENAME
+  EXECUTE "COPY NT_BIN:. ":ID.PDF CAPTURING ETXT
+  DELETE F.PDF,ID.PCL
+  DELETE F.PDF,ID.PDF
+  CLOSE F.PDF
+*
+* Read PDF binary image from file, base-64 encode
+* 
+  OPEN 'BINX:':UPLOAD.FILENAME TO F.UPLOAD ELSE
+    ABORT 201,'BINX:':UPLOAD.FILENAME
+  END
+  READ IMAGE FROM F.UPLOAD,ID.PDF THEN
+    DELETE F.UPLOAD,ID.PDF
+    CALL BASE.64.ENCODE.HEX.SUB(IMAGE)
+    URLEXT=SERV:"FilePut/My%20Shares/statements/":ID.PDF
+    URLEXT:="?user_id=":USER:"&password=":PASS:"&overwrite=true"
+    CALL HTTP.POST.SUB(HOST,PORT,URLEXT,IMAGE)
+  END
+  CLOSE F.UPLOAD
+*
+ProgramMainExit:
+*
+* End of source

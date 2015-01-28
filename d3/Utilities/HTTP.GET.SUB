@@ -1,0 +1,108 @@
+SUBROUTINE HTTP.GET.SUB(HOST,PORT,REQ.RESP)
+*
+*  Pass    HOST:     URI of host
+*          PORT:     Port on which host is listening
+*          REQ.RESP: Entire GET request with parameters
+*
+*  Return  REQ.RESP: Response served up by the host
+*
+*  Standard D3 stuff to make sockets work
+*
+   CFUNCTION SOCKET.BUILTIN
+   INCLUDE DM,BP,INCLUDES, SYSID.INC
+   PLATFORM = SYSTEM(38)
+   WINDOWS.BASED = (PLATFORM<SYS$IMP> = SYS$NT)
+   AF$INET = 2 + 0; * internetwork: UDP, TCP, etc
+   SOCK$STREAM = 1 + 0; * stream socket
+*
+*  Scrub input variables
+*
+   IF NOT(ASSIGNED(HOST)) THEN
+     REQ.RESP="HOST not defined"
+     GO SubroutineMainExit
+   END
+   IF NOT(ASSIGNED(PORT)) THEN
+     REQ.RESP="PORT not defined"
+     GO SubroutineMainExit
+   END
+   IF NOT(ASSIGNED(REQ.RESP)) THEN
+     REQ.RESP="REQ.RESP not defined"
+     GO SubroutineMainExit
+   END
+*
+   PORT += 0 ;* Ensure that PORT is cast as numeric
+*
+*  Create a socket
+*
+   SOCKFD=%SOCKET( AF$INET, SOCK$STREAM, 0)
+   IF SOCKFD<0 THEN
+     REQ.RESP="%SOCKET error ":SOCKFD
+     GO SubroutineMainExit
+   END
+*
+*  Connect to the host over that socket
+*
+   RCD = %CONNECT( SOCKFD, AF$INET, (CHAR *)HOST, PORT )
+   IF RCD < 0 THEN
+     REQ.RESP="%CONNECT error ":RCD
+     GO SubroutineMainExit
+   END
+*
+*  Form the HTTP GET request
+*
+   REQUEST = "GET " : REQ.RESP : " HTTP/1.0"
+   REQUEST := CHAR(13):CHAR(10):CHAR(13):CHAR(10)
+   REQLEN = LEN(REQUEST) + 0
+*
+*  Send the request
+*
+   SOCKFD += 0
+   IF WINDOWS.BASED THEN
+      RCD = %SEND( SOCKFD, (CHAR *)REQUEST, REQLEN, 0 )
+      TYP = "%SEND"
+   END ELSE
+      RCD = %WRITE( SOCKFD, (CHAR *)REQUEST, REQLEN )
+      TYP = "%WRITE"
+   END
+   IF RCD < 0 THEN
+     REQ.RESP=TYP:" error ":RCD
+     GO SubroutineMainExit
+   END
+*
+*  Receive the results
+*
+*  Set up a big buffer initialized to hex 0's
+*
+   BUFFER = STR(CHAR(0), 128 * 1024)
+*
+*  Set up a buffer length variable cast as numeric
+*
+   BUFLEN = LEN(BUFFER) + 0
+*
+*  Initialize the REQ.RESP variable for return duty
+*
+   REQ.RESP=''
+*
+*  Loop through reading the returned data from the socket. Unless this
+*  is really huge, the loop should only execute once, but it loops to
+*  prevent buffer overrun. Concatenate BUFFER return onto REQ.RESP.
+*
+   LOOP
+     IF WINDOWS.BASED THEN
+       BYTES = %RECV( SOCKFD, (CHAR *)BUFFER, BUFLEN, 0 )
+     END ELSE
+       BYTES = %READ( SOCKFD, (CHAR *)BUFFER, BUFLEN )
+     END
+   WHILE BYTES DO
+     REQ.RESP := BUFFER[1,BYTES]
+   REPEAT
+*
+*  Close the socket (seriously, or you won't be able to open another
+*  socket on that port later).
+*
+   %CLOSESOCKET( SOCKFD )
+*
+SubroutineMainExit:
+  RETURN
+*
+* End of source

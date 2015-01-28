@@ -1,0 +1,50 @@
+SUBROUTINE PCL5.FNT.SUB(FONTNO,SIZE,BOLDITAL,STR)
+*  Laser printer font selection routine
+*
+*  Pass    SIZE         Characters per inch (fixed pitch fonts)
+*                       Points (proportionally spaced fonts)
+*
+*          BOLDITAL     B, BI, I or null turns on bold &/or italic
+*
+*          FONTNO       0  Line printer
+*                       1  Arial
+*                       2  Letter Gothic
+*                       3  Helvetica Narrow
+*                       4  Courier
+*                       5  Times Roman
+*
+*  Return  STR          Printable command string
+*
+   IF NOT(ASSIGNED(SIZE)) THEN SIZE=16.67
+   IF NOT(ASSIGNED(BOLDITAL)) THEN BOLDITAL=0
+   IF NOT(ASSIGNED(FONTNO)) THEN FONTNO=0
+*
+   IF NOT(NUM(SIZE)) THEN SIZE=16.67
+   IF SIZE<0 THEN SIZE=16.67
+   IF NOT(NUM(FONTNO)) THEN FONTNO=0
+   IF FONTNO<0 OR FONTNO>5 THEN FONTNO=0
+*
+   IF INDEX(BOLDITAL,"B",1) THEN BOLD=3 ELSE BOLD=0
+   IF INDEX(BOLDITAL,"I",1) THEN ITAL=1 ELSE ITAL=0
+*
+*    Select font
+*
+   BEGIN CASE
+     CASE FONTNO=1; * Arial
+       STR="(s1p":SIZE:"v":ITAL:"s":BOLD:"b16602T"
+     CASE FONTNO=2; * Letter Gothic
+       STR="(s0p":SIZE:"h":ITAL:"s":BOLD:"b4102T"
+     CASE FONTNO=3; * Helvetica Narrow
+       STR="(s1p":SIZE:"v":ITAL:"s":BOLD:"b24580T"
+     CASE FONTNO=4; * Courier
+       STR="(s0p":SIZE:"h":ITAL:"s":BOLD:"b24579T"
+     CASE FONTNO=5; * Times Roman
+       STR="(s1p":SIZE:"v":ITAL:"s":BOLD:"b25093T"
+     CASE 1       ; * Line printer
+       STR="(s0p16.67h8.5v0s0b0T"
+   END CASE
+   STR=CHAR(27):"(8U":CHAR(27):STR
+*
+   RETURN
+*
+*  End of source

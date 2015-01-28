@@ -1,0 +1,68 @@
+SUBROUTINE PARSE.RLINK.ORDER.SUB(ORDER,FTYPE) ;* Brian S. Cram - 05/29/14
+*
+* Pass:    ORDER - .CSV or .TXT file content
+*          FTYPE - "CSV" or "TXT"
+*
+* Return:  ORDER - tabs or commas converted to value marks,
+*                  quotes removed if present, HTTP header
+*                  and trailing blank lines removed, record
+*                  returned in the normal format of an
+*                  ORDERS file item
+*
+* The program expects a text file that is effectively multiple rows
+* of two columns each. All that is being passed is the Customer#,
+* the date required and one row for each item ordered, each row
+* containing the Product# in column one and the order quantity
+* in column two. Example (csv format):
+*
+*  Customer#,12345
+*  Date Required,06/30/2014
+*  Product#,Quantity
+*  3,1
+*  4,7
+*  10,3
+*
+  IF NOT(ASSIGNED(ORDER)) THEN ORDER=""
+  IF NOT(ASSIGNED(FTYPE)) THEN FTYPE=""
+* If it's not a .csv or .txt file, don't process it
+* Set up the parsing characer as a commma or a tab
+  BEGIN CASE
+    CASE FTYPE="TXT" ; CONVCHAR=CHAR(9)
+    CASE FTYPE="CSV" ; CONVCHAR=","
+    CASE 1
+      FTYPE="Invalid File Type"
+      GO SubroutineMainExit
+  END CASE
+* Move input argument to work field, initialize return argument
+  WORDER=ORDER
+  ORDER=""
+* Initialize indicatore that we've made it to the line item group
+  IN.LINE=0
+* Carriage return/line feeds converted to attribute marks
+  CONVERT CHAR(13):CHAR(10) TO CHAR(254) IN WORDER
+*
+  MAX=DCOUNT(WORDER,CHAR(254))
+  FOR AX=1 TO MAX
+* Extract a single line, make it a dynamic array
+    LINE=WORDER<AX>
+    CONVERT CONVCHAR TO CHAR(254) IN LINE
+    BEGIN CASE
+      CASE IN.LINE ;* In the line item group
+        IF LINE<1>#"" AND LINE<2>#"" THEN
+          ORDER<16,-1>=LINE<1>
+          ORDER<18,-1>=LINE<2>
+        END
+      CASE LINE<1>="Product#" ;* Line item group begins here
+        IN.LINE=1
+      CASE LINE<1>="Customer#"
+        ORDER<1>=LINE<2>
+        ORDER<6>=LINE<2>
+      CASE LINE<1>="Date Required"
+        ORDER<4>=ICONV(LINE<2>,"D")
+    END CASE
+  NEXT AX
+*
+SubroutineMainExit:
+  RETURN
+*
+* End of source

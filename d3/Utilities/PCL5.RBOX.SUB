@@ -1,0 +1,63 @@
+SUBROUTINE PCL5.RBOX.SUB(COL,ROW,WIDE,HIGH,TYPE,STR)
+*  Create laser printer shaded box STR=STR:string
+*
+*  Pass    COL    Horizontal position in dots @ 300/inch
+*
+*          ROW    Vertical position in dots @ 300/inch
+*
+*          WIDE   Box width in dots @ 300/inch
+*
+*          HIGH   Box height in dots @ 300/inch
+*
+*          TYPE   0=No shading
+*                 1=Light shading
+*                 2=Medium shading
+*                 3=Heavier shading
+*
+*  Return  STR    Printable box-drawing printer command string
+*
+   IF NOT(ASSIGNED(COL)) THEN COL=0
+   IF NOT(ASSIGNED(ROW)) THEN ROW=0
+   IF NOT(ASSIGNED(WIDE)) THEN WIDE=300
+   IF NOT(ASSIGNED(HIGH)) THEN HIGH=75
+   IF NOT(ASSIGNED(TYPE)) THEN TYPE=0
+*
+   IF NOT(NUM(COL)) THEN COL=0
+   IF NOT(NUM(ROW)) THEN ROW=0
+   IF NOT(NUM(WIDE)) THEN WIDE=300
+   IF NOT(NUM(HIGH)) THEN HIGH=75
+   IF NOT(NUM(TYPE)) THEN TYPE=0
+*
+   STR=""
+*
+   BEGIN CASE
+     CASE TYPE=1
+       SHADE=2
+     CASE TYPE=2
+       SHADE=7
+     CASE TYPE=3
+       SHADE=15
+     CASE 1
+       SHADE=0
+   END CASE
+*
+*    Position upper-lefthand corner
+*
+   STR=CHAR(27):"*p":COL:"x":ROW:"Y"
+*
+*    Print shaded portion
+*
+   IF SHADE THEN STR=STR:CHAR(27):"*c":WIDE:"a":HIGH:"b":SHADE:"g2P"
+*
+*    Print .01" border
+*
+   STR=STR:CHAR(27):"*c3a":HIGH:"b0P"
+   STR=STR:CHAR(27):"*c":WIDE:"a3b0P"
+   STR=STR:CHAR(27):"*p":(COL+(WIDE-2)):"x":ROW:"Y"
+   STR=STR:CHAR(27):"*c3a":HIGH:"b0P"
+   STR=STR:CHAR(27):"*p":COL:"x":(ROW+(HIGH-2)):"Y"
+   STR=STR:CHAR(27):"*c":WIDE:"a3b0P"
+*
+   RETURN
+*
+*  End of source

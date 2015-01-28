@@ -1,0 +1,22 @@
+SUBROUTINE PCL5.RPOS.SUB(COL,ROW,STR)
+*  Create laser printer positioning string
+*
+*  Pass    COL    Horizontal position in dots @ 300/inch
+*
+*          ROW    Vertical position in dots @ 300/inch
+*
+*  Return  STR    String containing printer positioning command string
+*
+   IF NOT(ASSIGNED(COL)) THEN COL=0
+   IF NOT(ASSIGNED(ROW)) THEN ROW=0
+*
+   IF NOT(NUM(COL)) THEN COL=0
+   IF NOT(NUM(ROW)) THEN ROW=0
+*
+*    Position
+*
+   STR=CHAR(27):"*p":COL:"x":ROW:"Y"
+*
+   RETURN
+*
+*  End of source

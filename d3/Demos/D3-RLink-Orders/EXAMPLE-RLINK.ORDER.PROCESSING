@@ -1,0 +1,100 @@
+* EXAMPLE-RLINK.ORDER.PROCESSING - Brian S. Cram - 05/29/14
+*
+* Example program that processes tab-delimited text or
+* CSV files from an R/Link folder that were created by
+* a user using Excel, notepad or some other tool.
+*
+* Reads .CSV and .TXT files from /My Shares/orders/pending
+* Parses and creates orders in the ORDERS file
+* File then removed from ./orders/pending
+* If success, confirmation placed in ./orders/confirmed
+* Else, error file placed in ./orders/errors
+*
+* Hostname, port, etc., normally read from configuration file
+*
+  HOST = "irv-vm-bc02"
+  PORT = 8080
+  SERV = "/rlink/api/"
+  USER = "bscram"
+  PASS = "beavis"
+*
+  OPEN 'SQLDEMO,ORDERS,' TO F.ORDERS ELSE
+    ABORT 201,'SQLDEMO,ORDERS,'
+  END
+*
+* Create & execute request to list files waiting for processing
+*
+  BASE.URI="http://":HOST:":":PORT:SERV
+  REQ.RESP=BASE.URI:"List/My%20Shares/orders/pending"
+  REQ.RESP:="?user_id=":USER:"&password=":PASS:"&list_contents=true"
+  CALL HTTP.GET.SUB(HOST,PORT,REQ.RESP)
+*
+* Parse response to find file paths
+*   PATH contains the path names
+*   ISCONT contains true or false based on if the path is a folder
+*          and not a file
+*   If ISCONT<> is false, it's a file
+*
+  FILENAMES=""
+  MAX=DCOUNT(REQ.RESP,CHAR(254))
+  RESP=REQ.RESP<MAX>
+  CALL GET.JSON.FIELD.SUB("path",RESP,PATH)
+  CALL GET.JSON.FIELD.SUB("is_container",RESP,ISCONT)
+  MAX=DCOUNT(PATH,CHAR(254))
+  FOR AX=1 TO MAX
+    IF ISCONT<AX>="false" THEN
+      FX=DCOUNT(PATH<AX>,"/")
+      FILENAME=FIELD(PATH<AX>,"/",FX)
+      LOCATE FILENAME IN FILENAMES SETTING IX ELSE
+        FILENAMES<-1>=FILENAME
+      END
+    END
+  NEXT AX
+*
+* Loop through the accumulated file paths to process the files
+* 
+  FILEMAX=DCOUNT(FILENAMES,CHAR(254))
+  FOR FX=1 TO FILEMAX
+    FILENAME=FILENAMES<FX>
+    WLEN=LEN(FILENAME)
+    FILETYPE=FILENAME[WLEN-2,3]
+    PRINT "Processing ":FILENAME:"..."
+    REQ.RESP=BASE.URI:"FileGet/My%20Shares/orders/pending/"
+    REQ.RESP:=FILENAME:"?user_id=":USER:"&password=":PASS
+    CALL HTTP.GET.SUB(HOST,PORT,REQ.RESP)
+    ORDER=REQ.RESP
+    CALL PARSE.RLINK.ORDER.SUB(ORDER,FILETYPE)
+* Do not process files that are not .csv or .txt files
+    IF FILETYPE="Invalid File Type" ELSE
+      CALL GEN.RLINK.ORDER.SUB(ORDER,ERRTXT)
+* If the file ran error free, place the confirmation
+* in the /confirmed folder, else place in /errors
+      IF ERRTXT="" THEN
+        ORDER.ID=SYSTEM(19)
+        WRITE ORDER ON F.ORDERS,ORDER.ID
+        FOLDER="/confirmed/"
+      END ELSE
+        ORDER.ID=""
+        FOLDER="/errors/"
+      END
+* Files were submitted with minimal information
+* Recreate them with more order detail, including error text
+      CALL GEN.RLINK.ORDER.RESPONSE.SUB(ORDER.ID,ORDER,ERRTXT,FILETYPE,REQ.RESP)
+      CALL BASE.64.ENCODE.TXT.SUB(REQ.RESP)
+      URLEXT=SERV:"FilePut/My%20Shares/orders":FOLDER:FILENAME
+      URLEXT:="?user_id=":USER:"&password=":PASS:"&overwrite=true"
+      CALL HTTP.POST.SUB(HOST,PORT,URLEXT,REQ.RESP)
+* If file was successfully posted, delete the source file
+      IF INDEX(REQ.RESP,"200 OK",1) THEN
+        REQ.RESP=BASE.URI:"FileDelete/My%20Shares/orders/pending/":FILENAME
+        REQ.RESP:="?user_id=":USER:"&password=":PASS
+        CALL HTTP.GET.SUB(HOST,PORT,REQ.RESP)
+      END ELSE
+        CRT REQ.RESP
+      END
+    END
+  NEXT FX
+*
+ProgramMainExit:
+*
+* End of source

@@ -1,0 +1,223 @@
+SUBROUTINE STATEMENT.IMAGE.SUB(ID.CUST,CUST,BUF)
+* ETA/bsc - 11/09/01
+*
+* Create fake statement image using PCL5
+*
+*  Pass     ID.CUST Customer file ID
+*
+*           CUST    Customer item dynamic array
+*
+*  Return   BUF     String to be sent to PCL5
+*                   printer with embedded PCL5
+*                   X/Y positioning, font selection
+*                   and boxes around data
+*
+   BUF=""
+   IF NOT(ASSIGNED(ID.CUST)) THEN GO SubroutineMainExit
+   IF NOT(ASSIGNED(CUST)) THEN GO SubroutineMainExit
+   AREF.MAX=5+RND(15)
+*
+   BILL=CUST<1>
+   IF CUST<2,1>#"" THEN BILL<-1>=CUST<2,1>
+   IF CUST<2,2>#"" THEN BILL<-1>=CUST<2,2>
+   BILL<-1>=CUST<3>:", ":CUST<4>:" ":CUST<5>
+*
+   RNAME="Rocket Software, Inc."
+   RADDR="25A Technology Dr., Ste 100"
+   RACSZ="Irvine, CA 92618"
+   RAPHN="949-585-9400"
+   RAFAX="949-261-1875 (Fax)"
+   RAEML="D3MVSupport@rocketsoftware.com (email)"
+*
+   TABLE=""
+   TABLE.MAX=0
+   TOTAL=0:CHAR(254):0:CHAR(254):0:CHAR(254):0:CHAR(254):0
+   FOR AREFX=1 TO AREF.MAX
+     DT.INV=DATE()-RND(120) ;* Invoice date
+     BALANCE=1000+RND(50000)
+     DOC.TYPE="IN"
+     DT.DUE=DT.INV+30
+     BEGIN CASE
+       CASE (DATE()-DT.DUE)<=0; BUCKET=1
+       CASE (DATE()-DT.DUE)<=30;BUCKET=2
+       CASE (DATE()-DT.DUE)<=60;BUCKET=3
+       CASE (DATE()-DT.DUE)<=90;BUCKET=4
+       CASE 1;                  BUCKET=5
+     END CASE
+     TABLE.MAX+=1
+     TABLE<1,TABLE.MAX>=10000+RND(9000)
+     TABLE<2,TABLE.MAX>="PO":(1000+RND(900))
+     TABLE<3,TABLE.MAX>=DT.INV
+     TABLE<4,TABLE.MAX>=BALANCE
+     TABLE<5,TABLE.MAX>=BUCKET
+     TOTAL<BUCKET>+=BALANCE
+   NEXT AREFX
+   IF TABLE.MAX THEN GOSUB StatementDetail
+   GO SubroutineMainExit
+*
+*
+StatementDetail:
+*
+   BUF=""
+   PFEED=""
+   CALL PCL5.RFNT.SUB(3,9,"B",DTXTFNT)
+   CALL PCL5.RFNT.SUB(4,11,"B",DNUMFNT)
+   PAGES=1
+   DET.BASE=860
+   GOSUB CustHeadFoot
+   LINE.BASE=DET.BASE+90
+   LINE.END=DET.BASE+1370
+*
+   FOR TABLEX=1 TO TABLE.MAX
+     LINE.BASE+=40
+     IF LINE.BASE>LINE.END THEN
+       PAGES=PAGES+1
+       CALL PCL5.RPOS.SUB(700,LINE.BASE+10,WW)
+       CALL PCL5.RFNT.SUB(1,11,"B",W)
+         BUF<-1>=WW:W:"(continues on page ":PAGES:")"
+       GOSUB CustHeadFoot
+       LINE.BASE=DET.BASE+130
+     END
+     CALL PCL5.RPOS.SUB(10,LINE.BASE,W)
+       WW=DNUMFNT:W:TABLE<1,TABLEX>
+     CALL PCL5.RPOS.SUB(270,LINE.BASE,W)
+       WW:=W:TABLE<2,TABLEX>
+     CALL PCL5.RPOS.SUB(725,LINE.BASE,W)
+       WW:=W:OCONV(TABLE<3,TABLEX>,"D0/")
+     CALL PCL5.RPOS.SUB(600+TABLE<5,TABLEX>*300,LINE.BASE,W)
+       WW:=W:OCONV(TABLE<4,TABLEX>,"MD2")'R#10'
+     BUF<-1>=WW
+   NEXT TABLEX
+*
+   LINE.BASE+=60
+   IF LINE.BASE>LINE.END THEN
+     PAGES=PAGES+1
+     CALL PCL5.RPOS.SUB(700,LINE.BASE+10,WW)
+     CALL PCL5.RFNT.SUB(1,11,"B",W)
+       BUF<-1>=WW:W:"(continues on page ":PAGES:")"
+     GOSUB CustHeadFoot
+     LINE.BASE=DET.BASE+130
+   END
+   CALL PCL5.RPOS.SUB(300,LINE.BASE,W)
+     WW=DNUMFNT:W:"Totals:"
+   FOR WX=1 TO 5
+     CALL PCL5.RPOS.SUB(600+WX*300,LINE.BASE,W)
+       WW:=W:OCONV(TOTAL<WX>,"MD2")'R#10'
+   NEXT WX
+   BUF<-1>=WW
+*
+   RETURN
+*
+*
+CustHeadFoot:
+*
+   CALL PCL5.RBOX.SUB(1603,560,795,240,0,W)
+   BUF<-1>=PFEED:W
+   PFEED=CHAR(12)
+* Heading information
+   NAME.COL=200
+   CALL PCL5.RFNT.SUB(1,14,"BI",WW)
+   CALL PCL5.RPOS.SUB(200,125,W)
+   BUF<-1>=WW:W:RNAME
+   CALL PCL5.RFNT.SUB(1,22,"BI",WW)
+   CALL PCL5.RPOS.SUB(1700,100,W)
+   BUF<-1>=WW:W:"Statement"
+   CALL PCL5.RFNT.SUB(1,10,"",WW)
+   CALL PCL5.RPOS.SUB(NAME.COL,195,W)
+   BUF<-1>=WW:W:RADDR
+   CALL PCL5.RPOS.SUB(NAME.COL,240,W)
+   BUF<-1>=W:RACSZ
+   CALL PCL5.RPOS.SUB(NAME.COL,285,W)
+   BUF<-1>=W:RAPHN
+   CALL PCL5.RPOS.SUB(NAME.COL,330,W)
+   BUF<-1>=W:RAFAX
+   CALL PCL5.RPOS.SUB(NAME.COL,375,W)
+   BUF<-1>=W:RAEML
+* Bill-to
+   CALL PCL5.RFNT.SUB(1,7,"B",W);BUF<-1>=W
+   CALL PCL5.RPOS.SUB(20,590,W);BUF<-1>=W:"Bill to:"
+   CALL PCL5.RFNT.SUB(1,11,"B",W);BUF<-1>=W
+   CALL PCL5.RPOS.SUB(250,590,W);BUF<-1>=W:BILL<1>
+   CALL PCL5.RPOS.SUB(250,640,W);BUF<-1>=W:BILL<2>
+   CALL PCL5.RPOS.SUB(250,690,W);BUF<-1>=W:BILL<3>
+   CALL PCL5.RPOS.SUB(250,740,W);BUF<-1>=W:BILL<4>
+   CALL PCL5.RPOS.SUB(250,790,W);BUF<-1>=W:BILL<5>
+* Date, invoice#, PO#, etc.
+   CALL PCL5.RFNT.SUB(1,7,"B",WW)
+   CALL PCL5.RPOS.SUB(1700,625,W);BUF<-1>=W:WW:"Customer Number:"
+   CALL PCL5.RPOS.SUB(1700,695,W);BUF<-1>=W:"Statement Date:"
+   CALL PCL5.RPOS.SUB(1700,765,W);BUF<-1>=W:"Page:"
+   CALL PCL5.RFNT.SUB(1,12,"B",WW)
+   CALL PCL5.RPOS.SUB(2000,625,W);BUF<-1>=W:WW:ID.CUST
+   CALL PCL5.RPOS.SUB(2000,695,W);BUF<-1>=W:OCONV(DATE(),"D2/")
+   CALL PCL5.RPOS.SUB(2000,765,W);BUF<-1>=W:PAGES
+*
+   GOSUB DetailHeading
+*
+* Footing
+   CALL PCL5.RBOX.SUB(1900,2260,498,150,0,W);BUF<-1>=W
+   CALL PCL5.RFNT.SUB(1,12,"B",WW)
+   CALL PCL5.RPOS.SUB(1660,2310,W)
+     BUF<-1>=W:WW:"Open"
+   CALL PCL5.RPOS.SUB(1660,2360,W)
+     BUF<-1>=W:WW:"Amount:"
+   CALL PCL5.RFNT.SUB(1,17,"B",WW)
+   CALL PCL5.RPOS.SUB(1925,2350,W)
+     BUF<-1>=W:WW:"$":OCONV(SUM(TOTAL),"MD2,")
+* Remittance advice
+   CALL PCL5.RBOX.SUB(0,2595,2398,60,0,WW)
+   CALL PCL5.RBOX.SUB(0,2595,2398,400,0,W);WW:=W
+   CALL PCL5.RBOX.SUB(1800,2790,598,205,0,W);WW:=W
+   CALL PCL5.RFNT.SUB(1,7,"B",W);WW:=W
+   CALL PCL5.RPOS.SUB(225,2633,W)
+     WW:=W:"Please detach and return with payment.  "
+     WW:="If any of your information has changed, please"
+     BUF<-1>=WW:" make corrections on this remittance advice."
+   CALL PCL5.RFNT.SUB(2,12,"B",WW)
+   CALL PCL5.RPOS.SUB(300,2730,W);BUF<-1>=W:WW:BILL<1>
+   CALL PCL5.RPOS.SUB(300,2785,W);BUF<-1>=W:BILL<2>
+   CALL PCL5.RPOS.SUB(300,2840,W);BUF<-1>=W:BILL<3>
+   CALL PCL5.RPOS.SUB(300,2895,W);BUF<-1>=W:BILL<4>
+   CALL PCL5.RPOS.SUB(300,2950,W);BUF<-1>=W:BILL<5>
+   CALL PCL5.RFNT.SUB(1,7,"B",WW)
+   CALL PCL5.RPOS.SUB(1805,2695,W);BUF<-1>=W:WW:"Customer Number:"
+   CALL PCL5.RPOS.SUB(1805,2750,W);BUF<-1>=W:"Statement Date:"
+   CALL PCL5.RFNT.SUB(1,10,"B",WW)
+   CALL PCL5.RPOS.SUB(1805,2825,W);BUF<-1>=W:WW:"Amount Remitted:"
+   CALL PCL5.RPOS.SUB(2100,2695,W);BUF<-1>=W:DTXTFNT:ID.CUST
+   CALL PCL5.RPOS.SUB(2100,2750,W);BUF<-1>=W:OCONV(DATE(),"D2/")
+*
+   RETURN
+*
+*
+DetailHeading:
+*
+   CALL PCL5.RBOX.SUB(0,DET.BASE,2398,1550,0,WW)
+   CALL PCL5.RBOX.SUB(0,DET.BASE,2398,80,0,W);BUF<-1>=WW:W
+   CALL PCL5.RFNT.SUB(1,7,"B",WW)
+   CALL PCL5.RPOS.SUB(25,DET.BASE+50,W)
+     WW:=W:"Invoice"
+   CALL PCL5.RPOS.SUB(300,DET.BASE+50,W)
+     WW:=W:"PO#"
+   CALL PCL5.RPOS.SUB(710,DET.BASE+50,W)
+     WW:=W:"Invoice Date"
+   CALL PCL5.RPOS.SUB(1060,DET.BASE+50,W)
+     WW:=W:"Current"
+   CALL PCL5.RPOS.SUB(1395,DET.BASE+50,W)
+     WW:=W:"30"
+   CALL PCL5.RPOS.SUB(1695,DET.BASE+50,W)
+     WW:=W:"60"
+   CALL PCL5.RPOS.SUB(1995,DET.BASE+50,W)
+     WW:=W:"90"
+   CALL PCL5.RPOS.SUB(2290,DET.BASE+50,W)
+     WW:=W:"120"
+   BUF<-1>=WW
+*
+   RETURN
+*
+*
+SubroutineMainExit:
+*
+   RETURN
+*
+*  End of source

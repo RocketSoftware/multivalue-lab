@@ -1,0 +1,69 @@
+SUBROUTINE BASE.64.DECODE.HEX.SUB(ITEM)
+*
+*  Pass:    ITEM = Base-64-encoded string of any (reasonable) length
+*
+*  Return:  ITEM = Hex-encoded result string
+*
+*  No text equivalent for the decode since one can't guarantee
+*  non-binary content of the encoded string
+*
+   EQUATE CHR.TBL TO "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+*
+   IF SYSTEM(27) ELSE CASING ON
+*
+   IF NOT(ASSIGNED(ITEM)) THEN
+     ITEM="item unassigned"
+     GO SubroutineMainExit
+   END
+*
+   WITEM=""
+   LMAX=LEN(ITEM)
+   IF MOD(LMAX,4) THEN
+     ITEM="not a valid base-64-encoding"
+     GO SubroutineMainExit
+   END
+*
+   FOR LX=1 TO LMAX STEP 4
+     WS=ITEM[LX,4]
+     BEGIN CASE
+       CASE WS[3,2]="=="
+         DIG1=INDEX(CHR.TBL,WS[1,1],1)
+         DIG2=INDEX(CHR.TBL,WS[2,1],1)
+         IF DIG1=0 OR DIG2=0 THEN
+           ITEM="not a valid base-64-encoding"
+           GO SubroutineMainExit
+         END
+         WITEM:=DTX((DIG1-1)*4+INT((DIG2-1)/16))'R%2'
+       CASE WS[4,1]="="
+         DIG1=INDEX(CHR.TBL,WS[1,1],1)
+         DIG2=INDEX(CHR.TBL,WS[2,1],1)
+         DIG3=INDEX(CHR.TBL,WS[3,1],1)
+         IF DIG1=0 OR DIG2=0 OR DIG3=0 THEN
+           ITEM="not a valid base-64-encoding"
+           GO SubroutineMainExit
+         END
+         WCHAR=DTX((DIG1-1)*4+INT((DIG2-1)/16))'R%2'
+         WITEM:=WCHAR:DTX(MOD(DIG2-1,16)*16+INT((dig3-1)/4))'R%2'
+       CASE 1
+         DIG1=INDEX(CHR.TBL,WS[1,1],1)
+         DIG2=INDEX(CHR.TBL,WS[2,1],1)
+         DIG3=INDEX(CHR.TBL,WS[3,1],1)
+         DIG4=INDEX(CHR.TBL,WS[4,1],1)
+         IF DIG1=0 OR DIG2=0 OR DIG3=0 OR DIG4=0 THEN
+           ITEM="not a valid base-64-encoding"
+           GO SubroutineMainExit
+         END
+         WCHR1=DTX((DIG1-1)*4+INT((DIG2-1)/16))'R%2'
+         WCHR2=DTX(MOD(DIG2-1,16)*16+INT((DIG3-1)/4))'R%2'
+         WITEM:=WCHR1:WCHR2:DTX(MOD(DIG3-1,4)*64+(DIG4-1))'R%2'
+     END CASE
+   NEXT LX
+*
+   ITEM=WITEM
+*
+SubroutineMainExit:
+   IF SYSTEM(27) ELSE CASING OFF
+*
+   RETURN
+*
+* End of source

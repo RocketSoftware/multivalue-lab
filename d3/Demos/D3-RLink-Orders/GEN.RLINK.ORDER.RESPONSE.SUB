@@ -1,0 +1,99 @@
+SUBROUTINE GEN.RLINK.ORDER.RESPONSE.SUB(ORDNO,ORDER,ERRTXT,FTYPE,ORDTXT)
+* Brian S. Cram - 05/29/14
+*
+* Pass:    ORDNO  - Order number assigned
+*
+*          ORDER  - completed ORDERS item
+*
+*          ERRTXT - set to "1" if order was successfully
+*                   completed, set to "0" if there were
+*                   errors encountered
+*
+*          FTYPE  - CSV or TXT
+*
+* Return:  ORDTXT - body of .txt or .csv file to be posted
+*                   to R/Link as an order response, will
+*                   contain ORDER data as a spreadsheet with
+*                   ERRTXT appended to the end of the file
+*                   if it exists
+*
+*          ERRTXT - set to null, populated with any errors
+*                   encountered herein
+*
+  ORDTXT=""
+  IF NOT(ASSIGNED(ORDNO)) THEN ORDNO=""
+  IF NOT(ASSIGNED(ORDER)) THEN ORDER=""
+  IF NOT(ASSIGNED(ERRTXT)) THEN ERRTXT=""
+  IF NOT(ASSIGNED(FTYPE)) THEN
+    ERRTXT="FTYPE unassigned"
+    GO SubroutineMainExit
+  END
+  BEGIN CASE
+    CASE FTYPE="CSV"
+      SEP=","
+    CASE FTYPE="TXT"
+      SEP=CHAR(9)
+    CASE 1
+      ERRTXT="FTYPE ":FTYPE:" invalid"
+      GO SubroutineMainExit
+  END CASE
+  CRLF=CHAR(13):CHAR(10)
+*
+  OPEN 'SQLDEMO,PRODUCTS,' TO F.PRODUCTS ELSE
+    ERRTXT="Cannot open SQLDEMO,PRODUCTS,"
+    GO SubroutineMainExit
+  END
+  OPEN 'SQLDEMO,CUSTOMERS,' TO F.CUSTOMERS ELSE
+    ERRTXT="Cannot open SQLDEMO,CUSTOMERS,"
+    GO SubroutineMainExit
+  END
+*
+OrderInfo:
+  ORDTXT="Order#":SEP:ORDNO:CRLF
+  ORDTXT:="Ordered":SEP:OCONV(ORDER<3>,"D/"):CRLF
+  ORDTXT:="Required":SEP:OCONV(ORDER<4>,"D/"):CRLF
+  ORDTXT:="Promised":SEP:OCONV(ORDER<5>,"D/"):CRLF
+*
+ShiptoInfo:
+  READ CUST FROM F.CUSTOMERS,ORDER<1> ELSE CUST=""
+  CONVERT CHAR(253) TO " " IN CUST
+  ORDTXT:="Customer#":SEP:ORDER<1>:CRLF
+  ORDTXT:="Shipto Name":SEP:CUST<1>:CRLF
+  ORDTXT:="Address":SEP:CUST<2>:CRLF
+  ORDTXT:="City":SEP:CUST<3>:CRLF
+  ORDTXT:="State":SEP:CUST<4>:CRLF
+  ORDTXT:="Postal Code:":SEP:CUST<5>:CRLF
+*
+LineItems:
+  ORDTXT:="Qty":SEP:"Part#":SEP:"Price":SEP:"Ext":SEP:"Description":CRLF
+  ORDTOT=0
+  VMAX=DCOUNT(ORDER<16>,CHAR(253))
+  FOR VX=1 TO VMAX
+    PN=ORDER<16,VX>
+    READ PROD FROM F.PRODUCTS,PN ELSE PROD=""
+    ORDTXT:=ORDER<18,VX>:SEP  
+    ORDTXT:=PN:SEP 
+    ORDTXT:=OCONV(ORDER<21,VX>,"MR20"):SEP
+    ORDEXT=ORDER<18,VX>*ORDER<21,VX>
+    ORDTOT+=ORDEXT
+    ORDTXT:=OCONV(ORDEXT,"MR20"):SEP
+    ORDTXT:=PROD<1>:CRLF
+  NEXT VX
+*
+OrderTotal:
+  ORDTXT:="Order Total":SEP:OCONV(ORDTOT,"MR20"):CRLF
+*
+ErrorText:
+  AMAX=DCOUNT(ERRTXT,CHAR(254))
+  IF AMAX THEN
+    ORDTXT:=CRLF
+    ORDTXT:="<<<< ERROR LISTING >>>>":CRLF
+    FOR AX=1 TO AMAX
+      ORDTXT:=ERRTXT<AX>:CRLF
+    NEXT AX
+  END
+*
+SubroutineMainExit:
+  RETURN
+*
+* End of source
