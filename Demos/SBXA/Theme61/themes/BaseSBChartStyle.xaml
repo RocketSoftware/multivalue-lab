@@ -1,0 +1,151 @@
+﻿
+<!--
+
+       Name    : SBChart.xaml
+       Author  : Alan Buckley
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:g="clr-namespace:System.Globalization;assembly=mscorlib"
+    xmlns:dvchart="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="SBChartNoLegendStyle">
+        <Setter Property="Control.Width" Value="0"/>
+    </Style>
+    
+    <Style x:Key="SBChartFooterStyle" TargetType="{x:Type TextBlock}" >
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="5,0,0,5" />
+    </Style>
+
+    <ControlTemplate x:Key="SBChartTypeBarTemplate" TargetType="{x:Type sbc:SBChart}">
+        <Grid>
+            <dvchart:Chart
+                Title="{Binding Path=ChartTitle, RelativeSource ={RelativeSource TemplatedParent}}"
+                LegendStyle="{StaticResource SBChartNoLegendStyle}"
+                >
+                <!-- In SBXA a bar chart is actually a column series -->
+                <dvchart:ColumnSeries
+                    ItemsSource="{Binding Path=Data, RelativeSource ={RelativeSource TemplatedParent}}"
+                    IndependentValuePath="Key"
+                    DependentValuePath="Value"/>
+
+            </dvchart:Chart>
+            <TextBlock
+                Style="{StaticResource SBChartFooterStyle}"
+                Text="{Binding Path=Footer, RelativeSource ={RelativeSource TemplatedParent}}"
+                />
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SBChartTypeLineTemplate" TargetType="{x:Type sbc:SBChart}">
+        <Grid>
+            <dvchart:Chart
+                Title="{Binding Path=ChartTitle, RelativeSource ={RelativeSource TemplatedParent}}"                
+                LegendStyle="{StaticResource SBChartNoLegendStyle}"
+                >
+                <dvchart:LineSeries
+                    ItemsSource="{Binding Path=Data, RelativeSource ={RelativeSource TemplatedParent}}"
+                    IndependentValuePath="Key"
+                    DependentValuePath="Value"/>
+
+            </dvchart:Chart>
+            <TextBlock
+                Style="{StaticResource SBChartFooterStyle}"
+                Text="{Binding Path=Footer, RelativeSource ={RelativeSource TemplatedParent}}"
+                />
+        </Grid>        
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SBChartTypeAreaTemplate" TargetType="{x:Type sbc:SBChart}">
+        <Grid>
+            <dvchart:Chart
+                Title="{Binding Path=ChartTitle, RelativeSource ={RelativeSource TemplatedParent}}"
+                LegendStyle="{StaticResource SBChartNoLegendStyle}"
+                >
+                <dvchart:AreaSeries
+                    ItemsSource="{Binding Path=Data, RelativeSource ={RelativeSource TemplatedParent}}"
+                    IndependentValuePath="Key"
+                    DependentValuePath="Value"/>
+
+            </dvchart:Chart>
+            <TextBlock
+                Style="{StaticResource SBChartFooterStyle}"
+                Text="{Binding Path=Footer, RelativeSource ={RelativeSource TemplatedParent}}"
+                />
+        </Grid>
+    </ControlTemplate>
+
+
+    <ControlTemplate x:Key="SBChartTypeStepTemplate" TargetType="{x:Type sbc:SBChart}">
+        <Grid>
+            <dvchart:Chart
+                Title="{Binding Path=ChartTitle, RelativeSource ={RelativeSource TemplatedParent}}"
+                LegendStyle="{StaticResource SBChartNoLegendStyle}"
+                >
+                <dvchart:ColumnSeries
+                    ItemsSource="{Binding Path=Data, RelativeSource ={RelativeSource TemplatedParent}}"
+                    IndependentValuePath="Key"
+                    DependentValuePath="Value"/>
+            </dvchart:Chart>
+            <TextBlock
+                Style="{StaticResource SBChartFooterStyle}"
+                Text="{Binding Path=Footer, RelativeSource ={RelativeSource TemplatedParent}}"
+                />
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SBChartTypePieTemplate" TargetType="{x:Type sbc:SBChart}">
+        <Grid>
+            <dvchart:Chart
+                Title="{Binding Path=ChartTitle, RelativeSource ={RelativeSource TemplatedParent}}"
+                >
+                <dvchart:PieSeries
+                    ItemsSource="{Binding Path=Data, RelativeSource ={RelativeSource TemplatedParent}}"
+                    IndependentValuePath="Key"
+                    DependentValuePath="Value"/>
+
+            </dvchart:Chart>
+            <TextBlock
+                Style="{StaticResource SBChartFooterStyle}"
+                Text="{Binding Path=Footer, RelativeSource ={RelativeSource TemplatedParent}}"
+                />
+        </Grid>
+    </ControlTemplate>
+
+
+    <Style x:Key="BaseSBChartStyle" TargetType="{x:Type sbc:SBChart}">
+        <Setter Property="Width" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="Height" Value="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="Margin" Value="{Binding Path=GuiObjectDefinition.Margin, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="sbc:SBUISupport.DoubleClickCommand" Value = "sbc:SBChart.NextChartTypeCommand" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ChartType, RelativeSource={RelativeSource Mode=Self}}" Value="Bar">
+                <Setter Property="Template" Value="{StaticResource SBChartTypeBarTemplate}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ChartType, RelativeSource={RelativeSource Mode=Self}}" Value="Line">
+                <Setter Property="Template" Value="{StaticResource SBChartTypeLineTemplate}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ChartType, RelativeSource={RelativeSource Mode=Self}}" Value="Area">
+                <Setter Property="Template" Value="{StaticResource SBChartTypeAreaTemplate}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ChartType, RelativeSource={RelativeSource Mode=Self}}" Value="Step">
+                <Setter Property="Template" Value="{StaticResource SBChartTypeStepTemplate}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ChartType, RelativeSource={RelativeSource Mode=Self}}" Value="Pie">
+                <Setter Property="Template" Value="{StaticResource SBChartTypePieTemplate}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

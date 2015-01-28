@@ -1,0 +1,393 @@
+﻿<!--
+
+       Name    : BaseSBMultiFormStyle.xaml
+       Author  : Kendrew Peacey
+    
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls" 
+    xmlns:sbs="http://schemas.sbxa.com/Shared"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <!-- *********************************************************************** -->
+    <!--                                 SBMultiForm                             -->
+    <!-- *********************************************************************** -->
+    <!-- BasedOn="{StaticResource BaseSBFormStyle}" -->
+    <Style x:Key="BaseSBMultiFormStyle" TargetType="{x:Type sbc:SBMultiForm}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseSBMultiFormStyle" />
+        <Setter Property="Control.Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="False" />
+        <Setter Property="sbc:SBForm.FormBorderWidth" Value="{x:Static sbs:GenericConstants.DEFAULT_FORM_BORDER_WIDTH}" />
+        <Setter Property="sbc:SBContentControl.CharacterLayoutTemplate" Value="{DynamicResource SBMultiFormCharacterFormTemplate}" />
+        <Setter Property="Control.Background" Value="Transparent" />
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="{Binding Path=FirstForm.(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" />
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBControlBackground}" />
+
+        <!-- Mapping from server attribute names to XUI properties -->
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="(sbc:SBForm.FormBackground)" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="Control.Foreground" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <!-- TODO coordinated aren't working yet -->
+                    <sbc:SBAttribute Name="coordinates"
+                                     GetProperty="(sbc:SBGUIAttribute.SBCoordinates)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBCoordinates)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 x:Name="dimensions"
+                                     GetProperty="Control.Width"
+                                     GetProperty2="Control.Height"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute Name="tile"
+                                     GetProperty="(sbc:SBGUIAttribute.SBTile)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBTile)" />
+                    <sbc:SBAttribute Name="title"
+                                     GetProperty="(sbc:SBGUIAttribute.SBTitle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBTitle)" />
+
+                    <!-- Following attributes are mapped to a SBGUI attribute so they can be used, -->
+                    <!-- but they are not currently used in our styles -->
+                    <sbc:SBAttribute Name="border_color"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderColor)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderColor)" />
+                    <sbc:SBAttribute Name="border_style"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderStyle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderStyle)" />
+                    <sbc:SBAttribute Name="border_width"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderWidth)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderWidth)" />
+
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+        <!-- Top/Left in WPF pixels from left of screen -->
+        <Setter Property="sbc:SBForm.SBTop"
+                Value ="{Binding Path=GuiObjectDefinition.Margin, 
+                                 RelativeSource={RelativeSource Mode=Self},
+                                 Converter={StaticResource SBTopRelativeToMainConverter},
+                                 Mode=OneWay}" />
+        <Setter Property="sbc:SBForm.SBLeft"
+                Value ="{Binding Path=GuiObjectDefinition.Margin,
+                        RelativeSource={RelativeSource Mode=Self},
+                   Converter={StaticResource SBLeftRelativeToMainConverter},
+                   Mode=OneWay}"
+                />
+
+
+        <Setter Property="sbc:SBForm.FormBackground">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.WindowBrush}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBTile)" Mode="OneWay" Converter="{StaticResource SBTileConverter}" RelativeSource="{RelativeSource Mode=Self}" />
+                    <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                    <Binding Path="(sbc:SBControl.SBControlBackground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="sbc:SBForm.FormBorderColor">
+            <Setter.Value>
+                <PriorityBinding >
+                    <PriorityBinding.FallbackValue>
+                        <LinearGradientBrush EndPoint="0.738,0.989" StartPoint="0.279,0.018">
+                            <GradientStop Color="#FF3B9DD1" Offset="1"/>
+                            <GradientStop Color="#FF73C5F0" Offset="0"/>
+                        </LinearGradientBrush>
+                    </PriorityBinding.FallbackValue>
+                    <Binding Path="(sbc:SBGUIAttribute.SBBorderColor)"
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"
+                             />
+                    <Binding Path="GuiObjectDefinition.SBBorderColor" 
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- need to determine if there is a 'fixed' form. -->
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Path=GuiObjectDefinition.BorderWidth, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                <Setter Property="sbc:SBForm.FormBorderWidth" Value="{Binding Path=GuiObjectDefinition.BorderWidth, RelativeSource={RelativeSource Mode=Self}}" />
+            </DataTrigger>
+
+            <!-- if we are using pixel positioning set the form width. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="sbc:SBForm.FormWidth" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+            </MultiDataTrigger>
+
+            <!-- if we are using pixel positioning set the form height. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="sbc:SBForm.FormHeight" Value="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+            </MultiDataTrigger>
+
+            <!-- No Fixed Form. -->
+            <DataTrigger Binding="{Binding Path=MultiFormDefinition.HasFixedForm, RelativeSource={RelativeSource Mode=Self}}" Value="false">
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="NoFixedForm Template" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBMultiForm}">
+                                <ContentControl Grid.Row="1" Grid.Column="1" Template="{DynamicResource SBMultiFormTemplate}">
+                                    <DockPanel LastChildFill="True">
+
+                                        <sbc:SBStatusBar x:Name="PART_FormStatusBar" 
+                                                         Visibility="Collapsed"
+                                                         DockPanel.Dock="Bottom"
+                                                         InputStatusVisibility="Collapsed"
+                                                         OptionsMenuVisibility="Collapsed"
+                                                         ZoomSliderVisibility="Collapsed"
+                                                         ConnectionStatusVisibility="Collapsed"
+                                                         VerticalAlignment="Bottom"
+                                                         IsHelpMessage="False"
+                                                         Message="{Binding Path=ServerStatusBarMessage, Mode=OneWay, Source={x:Static sbc:SBPlus.Current}}"
+                                                         />
+                                        <sbc:SBMenuPresenter DockPanel.Dock="Top"
+                                                         HorizontalAlignment="Stretch"
+                                                         x:Name="PART_SBFormMenuPresenter"
+                                                         MenuBar="{Binding Path=FirstForm.MenuBar, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                         ActiveToolbars="{Binding Path=ActiveToolbars, RelativeSource={RelativeSource Mode=TemplatedParent }, Mode=OneWay}"
+                                                         sbc:SBMenuPresenter.IsActionBarVisible="True"
+                                                         sbc:SBMenuPresenter.IsButtonBarVisible="True"
+                                                     />
+
+                                        <TabControl x:Name="PART_SBTabControl" 
+                                                    DockPanel.Dock="Top" 
+                                                    Style="{DynamicResource SBTabControlStyle}" />
+                                    </DockPanel>
+                                </ContentControl>
+
+                            <ControlTemplate.Triggers>
+                                <!-- Check to see if I am connected, have a SYSID, am running wiht self contained forms and the form is in focus. -->
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=ConnectionStatus, Source={x:Static sbc:SBPlus.Current}}" Value="Connected"/>
+                                        <Condition Binding="{Binding Path=CurrentSystemId, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False"/>
+                                        <Condition Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                                    </MultiDataTrigger.Conditions>
+
+                                    <Setter TargetName="PART_FormStatusBar" Property="Visibility" Value="Visible" />
+                                </MultiDataTrigger>
+
+                                <DataTrigger Binding="{Binding Path=HelpMessage, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                                    <Setter TargetName="PART_FormStatusBar" Property="IsHelpMessage" Value="True" />
+                                    <Setter TargetName="PART_FormStatusBar" Property="Message" Value="{Binding Path=SBPlus.HelpMessage, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBXamlConverter}}" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Path=IsCurrentForm, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                                    <Setter TargetName="PART_FormStatusBar" Property="MessageVisibility" Value="Visible" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Path=IsCurrentForm, RelativeSource={RelativeSource Mode=Self}}" Value="False">
+                                    <Setter TargetName="PART_FormStatusBar" Property="MessageVisibility" Value="Hidden" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Path=SizeToContent,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBWindow}}}"
+                                                            Value="WidthAndHeight">
+                                    <Setter TargetName="PART_FormStatusBar" Property="Width" Value="{Binding Path=MaxTabWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiForm} }, Mode=OneWay}" />
+                                </DataTrigger>
+
+
+                            </ControlTemplate.Triggers>
+
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            
+            <!-- ************* Top - 1 ************* -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.HasFixedForm, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.FixedFormLocation, RelativeSource={RelativeSource Mode=Self}}" Value="1"/>
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBMultiForm}">
+                            <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+                                <Border Style="{DynamicResource SBFormBorderStyle}">
+                                    <Grid ShowGridLines="false">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <TabControl Grid.Row="1"
+                                                Grid.Column="0"
+                                                Style="{DynamicResource SBTabControlStyle}"
+                                                />
+
+                                        <sbc:SBMultiFormItem  x:Name="PART_SBFixedTabForm" 
+                                                              Style="{DynamicResource SBFixedFormStyle}"
+                                                              Grid.Row="0"
+                                                              Grid.Column="0"/>                                        
+                                    </Grid>
+                                </Border>
+                            </ContentControl>
+                                                        
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+            <!-- ************* Left - 2 ************* -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.HasFixedForm, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.FixedFormLocation, RelativeSource={RelativeSource Mode=Self}}" Value="2"/>
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBMultiForm}">
+                            <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+                                <Grid ShowGridLines="true">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <sbc:SBMultiFormItem  x:Name="PART_SBFixedTabForm"
+                                        Style="{DynamicResource SBFixedFormStyle}"
+                                        Grid.Row="0" 
+                                        Grid.Column="0"/>
+
+                                    <TabControl Grid.Row="0"
+                                            Grid.Column="1"
+                                            Style="{DynamicResource SBTabControlStyle}"
+                                                />
+
+                                </Grid>
+                            </ContentControl>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+            <!-- ************* Right - 3 ************* -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.HasFixedForm, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.FixedFormLocation, RelativeSource={RelativeSource Mode=Self}}" Value="3"/>
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBMultiForm}">
+                            <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+                                <Grid ShowGridLines="true">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <sbc:SBMultiFormItem x:Name="PART_SBFixedTabForm"
+                                    Style="{DynamicResource SBFixedFormStyle}"
+                                    Grid.Row="0" 
+                                    Grid.Column="1"/>
+                                    <TabControl Grid.Row="0"
+                                            Grid.Column="0"
+                                            Style="{DynamicResource SBTabControlStyle}"
+                                                />
+
+                                </Grid>
+                            </ContentControl>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+            <!-- ************* Bottom - 4 ************* -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.HasFixedForm, RelativeSource={RelativeSource Mode=Self}}" Value="true"/>
+                    <Condition Binding="{Binding Path=MultiFormDefinition.FixedFormLocation, RelativeSource={RelativeSource Mode=Self}}" Value="4"/>
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type sbc:SBMultiForm}">
+                            <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+                                <Grid ShowGridLines="true">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <sbc:SBMultiFormItem  x:Name="PART_SBFixedTabForm"
+                                    Style="{DynamicResource SBFixedFormStyle}"
+                                    Grid.Row="1" 
+                                    Grid.Column="0"/>
+
+                                    <TabControl Grid.Row="0"
+                                            Grid.Column="0"
+                                            Style="{DynamicResource SBTabControlStyle}"
+                                                />
+                                </Grid>
+                            </ContentControl>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,47 @@
+<!--
+
+       Name    : DefaultLabelStyles.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- *********************************************************************** -->
+    <!--                                 SBLabelStyle                            -->
+    <!-- *********************************************************************** -->
+    <Style x:Key="DefaultSBLabelStyle" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="DefaultSBLabelStyle" />
+        <Setter Property="TextBlock.Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="TextBlock.Background" Value="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Control.Padding" Value="2"/>
+        <Setter Property="Control.Margin" Value="0"/>
+        <Setter Property="Border.BorderThickness" Value="0"/>
+        <Setter Property="Border.CornerRadius" Value="1"/>
+        <!--<Setter Property="Grid.VerticalAlignment" Value="Center"/>-->
+        <Setter Property="TextBlock.TextWrapping" Value="{Binding Path=TextWrapping, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Control.Width" Value="{Binding Path=Width, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Control.MaxWidth" Value="{Binding Path=MaxWidth, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Control.Height" Value="{Binding Path=Height, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Control.MaxHeight" Value="{Binding Path=MaxHeight, RelativeSource={RelativeSource TemplatedParent}}" />
+        <!-- Replaced SBValue with SBValue binding 12864*USA <Setter Property="TextBlock.Text" Value="{Binding Path=SBValue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={StaticResource SBLanguageConverter}}"/>-->
+        <Setter Property="TextBlock.Text" Value="{Binding Path=(sbc:SBGUIAttribute.SBString), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={StaticResource SBLanguageConverter}}"/>
+
+        <Setter Property="TextBlock.TextAlignment" Value="{Binding Path=TextAlignment, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"/>
+        <!--<Setter Property="Control.VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Control.HorizontalAlignment" Value="Stretch"/>-->
+        <Setter Property="Control.HorizontalAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Control.VerticalAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,91 @@
+﻿<!--
+
+       Name    : SBMailXPS.xaml
+       Author  : Alan Buckley
+-->
+<ResourceDictionary 
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/DefaultFieldStyles.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/LocalFormStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate TargetType="{x:Type sbc:SBMailXPS}" x:Key="SBMailXPSFormTemplate">
+            <ContentControl IsTabStop="False" Template="{DynamicResource SBFormWithBorderTemplate}">
+                <Grid Margin="2,2,2,2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <sbc:SBPrompt Grid.Row="0" sbc:SBGUIAttribute.SBString="XPSMailDocNamePmpt" Style="{DynamicResource SBLocalPromptStyle}"/>
+
+                <sbc:SBField SBValue="{Binding Path=DocName, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                             Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1"
+                             x:Name="PART_SBDocName"
+                             MinWidth="200"
+                             Style="{DynamicResource SBEntryFieldStyle}" TabIndex="0"/>
+                    
+                <sbc:SBLabel Margin="0,4" Grid.Row="1" Grid.ColumnSpan ="2" sbc:SBGUIAttribute.SBString="XPSMailLeaveBlank" />
+
+                <Grid Grid.Row="2" Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="OK"
+                                  Grid.Column="0"
+                                  IsDefault="true"
+                                  Command="sbc:SBMailXPS.SendMailCommand"
+                                  sbc:SBControl.SetKeyboardFocus="true"
+                                  TabIndex="1"/>
+
+                    <sbc:SBButton Style="{DynamicResource SBLocalButtonStyle}"
+                                  sbc:SBGUIAttribute.SBString="Cancel"
+                                  TabIndex="2"
+                                  Grid.Column="1"
+                                  Command="sbc:SBCommands.SBCloseWindowCommand"
+                                  />
+                </Grid>
+            </Grid>
+            <ContentControl.InputBindings>
+                <KeyBinding Command="sbc:SBMailXPS.SendMailCommand"       Key="F2"/>
+                <KeyBinding Command="sbc:SBCommands.SBCloseWindowCommand" Key="Escape" />
+            </ContentControl.InputBindings>
+
+        </ContentControl>
+        </ControlTemplate>
+
+
+        <!-- Default template for SBMailXPS -->
+    <Style TargetType="{x:Type sbc:SBMailXPS}" BasedOn="{StaticResource BaseSBFormStyle}">
+        <Setter Property="sbc:SBGUIAttribute.SBObjectName" Value="SBMAILXPS" />
+        <Setter Property="sbc:SBGUIAttribute.SBTitle" Value="Email XPS Report" />
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="False" />
+        <Setter Property="sbc:SBForm.IsClosable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsCachable" Value="False" />
+        <!-- Set template in trigger so it overrides base form style template -->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=WillSendSBCommands, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false">
+                <Setter Property="Template" Value="{StaticResource SBMailXPSFormTemplate}" />
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="SBMailXPSFormTemplate" />
+            </DataTrigger>
+        </Style.Triggers>
+
+
+    </Style>
+
+</ResourceDictionary>    

@@ -1,0 +1,485 @@
+<!--
+
+       Name    : BaseSBMvEditControlStyle.xaml
+       Author  : Kendrew Peacey
+    
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+
+    March 6, 2012   AKP     SBXA-5301   BaseSBMvEditControlStyle    Bound VerticalScrollBarVisibility to SBMvEditControls VerticalScrollBarVisibility.
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbs="http://schemas.sbxa.com/Shared"
+    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBFieldTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="BaseSBMvEditControlStyle" TargetType="{x:Type sbc:SBMvEditControl}">        
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="GridProvider" Value="{Binding Path=SBPlus.SBUserPreferences.GridProvider, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>
+        <Setter Property="sbc:SBField.GuiObjectType" Value="{Binding Path=GuiObjectDefinition.GuiObjectType, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+        <Setter Property="ShowRowSelector" Value="False" />
+        <Setter Property="sbc:SBGUIAttribute.SBDrawable" Value="1" />
+        <Setter Property="sbc:SBControl.Visibility" Value="{Binding Path=(sbc:SBGUIAttribute.SBDrawable), RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay, Converter={StaticResource SBDrawableConverter}}"/>
+        <!--<Setter Property="GridTemplate" Value="{DynamicResource SBXceedDataGridTemplate}" />-->
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Mode=OneWay }"  />
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBControlBackground}" />
+        <Setter Property="ScrollBarWidth" Value="11" /> <!-- Set Scroll bar width to be the same as GUI (SBXA-4225) -->
+
+        <!-- fallback to determine the Grid Cell Width -->
+        <Setter Property="sbc:SBCharacterLayout.ColumnWidth">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static sbs:GenericConstants.DEFAULT_CELL_WIDTH}">
+                    <Binding Path="GuiObjectDefinition.GridCellWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                    <Binding Path="SBPlus.SBUserPreferences.GridCellWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+        
+        <!-- Fallback to determine the height of each row -->
+        <!-- there are two heights - the Row height and then the GridRowHeight-->
+        <Setter Property="sbc:SBCharacterLayout.RowHeight">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static sbs:GenericConstants.DEFAULT_CELL_HEIGHT}">
+                    <Binding Path="GuiObjectDefinition.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                    <Binding Path="SBPlus.SBUserPreferences.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Mapping from server attribute names to XUI properties -->
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute5 Name="font"
+                                     GetProperty="Control.FontFamily"
+                                     GetProperty2="Control.FontSize"
+                                     GetProperty3="Control.FontWeight"
+                                     GetProperty4="Control.FontStyle"
+                                     GetProperty5="(sbc:SBControl.TextDecorations)"
+                                     GetConverter5="{StaticResource SBFontToIDConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBFont)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="Control.Background" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="Control.Foreground" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <sbc:SBAttribute Name="coordinates"
+                                     GetProperty="Control.Margin"
+                                     GetConverter="{StaticResource SBCoordinatesToMarginConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBCoordinates)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 Name="dimensions"
+                                     GetProperty="Control.ActualWidth"
+                                     GetProperty2="Control.ActualHeight"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute2 Name="justification"
+                                     GetProperty="Control.HorizontalContentAlignment"
+                                     GetProperty2="Control.VerticalContentAlignment"
+                                     GetConverter2="{StaticResource SBTextAlignmentMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBJustification)"/>
+                    <sbc:SBAttribute Name="password"
+                                     GetProperty="NoEcho"
+                                     GetConverter="{StaticResource SBBooleanConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBPassword)" />
+
+                    <!-- As above, but they are not currently used in out styles -->
+                    <sbc:SBAttribute Name="border_color"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderColor)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderColor)" />
+                    <sbc:SBAttribute Name="border_style"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderStyle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderStyle)" />
+                    <sbc:SBAttribute Name="border_width"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderWidth)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderWidth)" />
+
+                    <sbc:SBAttribute Name="string"
+                                     GetProperty="(sbc:SBGUIAttribute.SBString)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBString)"/>
+
+                    <sbc:SBAttribute Name="max_chars"
+                                     GetProperty="(sbc:SBGUIAttribute.SBMaxChar)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBMaxChar)"/>
+
+                    <sbc:SBAttribute Name="emphasized"
+                                     GetProperty="(sbc:SBGUIAttribute.SBEmphasized)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBEmphasized)"/>
+                    <!-- Obsolete properties -->
+                    <sbc:SBAttribute Name="input_flag" Supported="Obsolete" />
+
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.Background">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.ControlBrush}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="TwoWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                    <Binding Path="(sbc:SBControl.SBControlBackground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.Foreground">
+            <Setter.Value>
+                <PriorityBinding >
+                    <Binding Path="(sbc:SBGUIAttribute.SBForeground)" Mode="TwoWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Foreground" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontFamily">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Family" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Family" />
+                    <Binding Path="SBPlus.DefaultFontFamily" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBUnsetValueConverter}" />
+               </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontSize">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Size" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Size" />
+                    <Binding Path="SBPlus.DefaultFontSize" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontWeight">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Weight" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Weight" />
+                    <Binding Path="SBPlus.DefaultFontWeight" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBUnsetValueConverter}" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Control.FontStyle">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Style" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Style" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="sbc:SBControl.TextDecorations">
+            <Setter.Value>
+                <PriorityBinding>
+                    <Binding Path="(sbc:SBGUIAttribute.SBFont)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Decorations" />
+                    <Binding Path="GuiObjectDefinition.Font" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBFontConverter}" ConverterParameter="Decorations" />
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <!-- We are using character column and row to position the grid. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false">
+                
+                <Setter Property="Margin"                   Value="0" />
+                <Setter Property="Width"                    Value="NaN"/>
+                <Setter Property="Height"                   Value="NaN"/>
+                <Setter Property="GridWidth"                Value="NaN"/>
+                <Setter Property="GridHeight"               Value="NaN"/>
+                <Setter Property="HorizontalAlignment"      Value="Stretch" />
+                <Setter Property="VerticalAlignment"        Value="Stretch" />
+            </DataTrigger>
+
+            <!-- character layout , interleaved, show headings -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="true" />
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.ShowHeadings, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                
+                <Setter Property="sbx:SBXGridControl.ColumnManagerRowTemplate" Value="{DynamicResource InterleavedColumnManagerRowTemplate}" />
+            </MultiDataTrigger>
+            
+            <!-- if I am using character layout and the grid is interleaved -->
+            <MultiDataTrigger>
+                
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                
+                <!-- figure out the maximum number of columns, so that the heading and rows match. -->
+                <Setter Property="sbc:SBInterleavedGridLayout.ColumnCount" Value="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource SBColumnCounterConverter}}" />
+
+                <Setter Property="InterleavedGridTemplate"  Value="{DynamicResource SBXceedInterleavedDataGridTemplate}" />
+                <Setter Property="sbx:SBXGridControl.DataRowTemplate" Value="{DynamicResource InterleavedDataRowTemplate}" />
+                
+                <!--
+                GuiObjectDefinition.StyleName - set on the field in the form
+                Character Interleaved style - set in HK.CONTROL or SB.PARMS
+                ClassName - generic style for MVEditControl set in HK.CONTROL or SB.PARMS
+                -->
+                <Setter Property="sbc:SBGUIAttribute.SBStyleName">
+                    <Setter.Value>
+                        <PriorityBinding FallbackValue="{x:Static DependencyProperty.UnsetValue}">
+                            <Binding Path="GuiObjectDefinition.StyleName" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" Converter="{StaticResource SBStyleNameConverter}"/>
+                            <Binding Path="." Converter="{StaticResource SBStyleNameConverter}" ConverterParameter="CharInterleavedGridStyle" />
+                            <Binding Path="." Converter="{StaticResource SBStyleNameConverter}" ConverterParameter="SBMvEditControlStyle" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter> 
+            </MultiDataTrigger>
+            
+            <!-- if I am using character layout and the grid is not interleaved -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="false"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                
+                <Setter Property="GridTemplate" Value="{DynamicResource SBXceedDataGridTemplate}" />
+                <Setter Property="Template" Value="{Binding Path=GridTemplate, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>
+
+                <!--
+                GuiObjectDefinition.StyleName - set on the field in the form
+                Character Interleaved style - set in HK.CONTROL or SB.PARMS
+                ClassName - generic style for MVEditControl set in HK.CONTROL or SB.PARMS
+                -->
+                <Setter Property="sbc:SBGUIAttribute.SBStyleName">
+                    <Setter.Value>
+                        <PriorityBinding FallbackValue="{x:Static DependencyProperty.UnsetValue}">
+                            <Binding Path="GuiObjectDefinition.StyleName" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" Converter="{StaticResource SBStyleNameConverter}"/>
+                            <Binding Path="." Converter="{StaticResource SBStyleNameConverter}" ConverterParameter="SBMvEditControlStyle" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+            
+            <!-- if I am using pixel layout and the grid is not interleaved -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="True"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                
+                <Setter Property="GridTemplate" Value="{DynamicResource SBXceedDataGridTemplate}" />
+
+                <!--
+                GuiObjectDefinition.StyleName - set on the field in the form
+                Character Interleaved style - set in HK.CONTROL or SB.PARMS
+                ClassName - generic style for MVEditControl set in HK.CONTROL or SB.PARMS
+                -->
+                <Setter Property="sbc:SBGUIAttribute.SBStyleName">
+                    <Setter.Value>
+                        <PriorityBinding FallbackValue="{x:Static DependencyProperty.UnsetValue}">
+                            <Binding Path="GuiObjectDefinition.StyleName" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" Converter="{StaticResource SBStyleNameConverter}"/>
+                            <Binding Path="." Converter="{StaticResource SBStyleNameConverter}" ConverterParameter="SBMvEditControlStyle" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- if I am using pixel layout and the grid is interleaved -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="True"/>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                
+                <!--
+                GuiObjectDefinition.StyleName - set on the field in the form
+                Character Interleaved style - set in HK.CONTROL or SB.PARMS
+                ClassName - generic style for MVEditControl set in HK.CONTROL or SB.PARMS
+                -->
+                <Setter Property="sbc:SBGUIAttribute.SBStyleName">
+                    <Setter.Value>
+                        <PriorityBinding FallbackValue="{x:Static DependencyProperty.UnsetValue}">
+                            <Binding Path="GuiObjectDefinition.StyleName" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" Converter="{StaticResource SBStyleNameConverter}"/>
+                            <Binding Path="." Converter="{StaticResource SBStyleNameConverter}" ConverterParameter="CardViewStyle" />
+                            <Binding Path="." Converter="{StaticResource SBStyleNameConverter}" ConverterParameter="SBMvEditControlStyle" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+
+            <!-- Pixel layout, Use the margin from the GuiObjectDefinition to position the control. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="true">
+                
+                <Setter Property="InterleavedGridTemplate" Value="{DynamicResource SBXceedCompactCardViewTemplate}" />
+
+                <Setter Property="GridWidth">
+                    <Setter.Value>
+                        <PriorityBinding>
+                            <Binding Path="(sbc:SBGUIAttribute.SBDimensions)" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBDimensionsConverter}"
+                             ConverterParameter="width" />
+                            <Binding Path="GuiObjectDefinition.Width" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="GridHeight">
+                    <Setter.Value>
+                        <PriorityBinding>
+                            <Binding Path="(sbc:SBGUIAttribute.SBDimensions)" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBDimensionsConverter}"
+                             ConverterParameter="height" />
+                            <Binding Path="GuiObjectDefinition.Height" Mode="OneWay" 
+                             RelativeSource="{RelativeSource Mode=Self}" />
+                        </PriorityBinding>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Margin"
+                        Value="{Binding Path=GuiObjectDefinition.PixelCoordinates, 
+                                        RelativeSource={RelativeSource Mode=Self},
+                                        Converter={StaticResource SBMarginConverter},
+                                        Mode=OneWay
+                    }" />
+
+            </DataTrigger>
+
+            <!-- Pixel layout, if this is a grid, and not interleaved, use GridTemplate. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="True" />
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.GuiObjectType, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="MvEdit" />
+                </MultiDataTrigger.Conditions>
+                
+                <Setter Property="Template" Value="{Binding Path=GridTemplate, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>
+            </MultiDataTrigger>
+
+            <!-- Pixel layout, and a grid If this is a grid and interleaved use InterleavedGridTemplate -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.FieldDefinition.IsInterleaved, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding Path=GuiObjectDefinition.GuiObjectType, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="MvEdit" />
+                </MultiDataTrigger.Conditions>
+                
+                <Setter Property="Template" Value="{Binding Path=InterleavedGridTemplate, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>
+            </MultiDataTrigger>
+
+            <!-- Memo field. -->
+            <Trigger Property="sbc:SBField.GuiObjectType" Value="Memo">
+                <Setter Property="sbc:SBGUIAttribute.SBMaxChar" Value="{Binding Path=GuiObjectDefinition.MaxChars, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+                <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBEditTextBoxStyle}" />
+                <Setter Property="sbc:SBField.WordWrap" Value="{Binding Path=GuiObjectDefinition.WordWrap, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+                <Setter Property="Template" Value="{StaticResource SBMemoFieldTemplate}"/>
+            </Trigger>
+
+            <!-- if there are column footers, increase the hieght of the grid by the height of a row. -->
+            <DataTrigger Binding="{Binding Path=GuiObjectDefinition.HasColumnFooters, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="True">
+                <Setter Property="Height">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource SBGridHeightCalculatorConverter}" Mode="OneWay" >
+                            <Binding Path="GridHeight" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" />
+                            <Binding Path="(sbx:SBXGridControl.RowHeight)" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+
+            <!-- no column footers -->
+            <DataTrigger Binding="{Binding Path=GuiObjectDefinition.HasColumnFooters, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }" Value="False">
+                <Setter Property="Height" Value="{Binding Path=GridHeight, RelativeSource={RelativeSource Mode=Self}, Mode=TwoWay}" />
+            </DataTrigger>
+            
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <!-- Change the condition in the trigger below from
+                        <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                 to     <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.IsHourGlassEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
+
+                 and
+            
+                        <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                 to     <Condition Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource Mode=Self}}" Value="Dormant" />
+            
+                 Because blend 3 does not like the Source={x:Static sbc:SBPlus.Current} syntax. 
+            -->
+ 
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.IsHourGlassEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource Mode=Self}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <!-- Change the condition in the trigger below from
+                        <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                 to     <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.IsHourGlassEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
+
+                 and
+            
+                        <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                 to     <Condition Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource Mode=Self}}" Value="Busy" />
+            
+                 Because blend 3 does not like the Source={x:Static sbc:SBPlus.Current} syntax. 
+            -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBPlus.ApplicationDefinition.IsHourGlassEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="true" />
+                    <Condition Binding="{Binding Path=SBPlus.InputState, RelativeSource={RelativeSource Mode=Self}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+
+        <Style.Resources>
+            <!-- Added the following style to control the width of the scroll bars and set them to be the same as the GUI scrollbar widths. (SBXA-4225) -->
+            <Style TargetType="{x:Type ScrollBar}">
+                <Setter Property="sbc:SBUISupport.StyleName" Value="Implicit SB/XA style in BaseSBMvEditControlStyle" />
+                <Style.Triggers>
+                    <Trigger Property="Name" Value="PART_VerticalScrollBar" >
+                        <Setter Property="Width" Value="{Binding Path=ScrollBarWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+                        <Setter Property="MaxWidth" Value="{Binding Path=ScrollBarWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+                        <Setter Property="MinWidth" Value="{Binding Path=ScrollBarWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+                    </Trigger>
+                    <Trigger Property="Name" Value="PART_HorizontalScrollBar" >
+                        <Setter Property="Height" Value="{Binding Path=ScrollBarWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+                        <Setter Property="MinHeight" Value="{Binding Path=ScrollBarWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+                        <Setter Property="MaxHeight" Value="{Binding Path=ScrollBarWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Turned the vertical scroll bar off if it is not required to be more consistent with GUI. -->
+            <Style TargetType="{x:Type xcdg:TableViewScrollViewer}">
+                <Setter Property="sbc:SBUISupport.StyleName" Value="Implicit SB/XA style in BaseSBMvEditControlStyle" />
+                <Setter Property="VerticalScrollBarVisibility" Value="{Binding Path=VerticalScrollBarVisiblity, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMvEditControl}}}" />
+            </Style>
+
+        </Style.Resources>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,294 @@
+﻿<!--
+
+       Name    : SBPlus.Templates.xaml
+       Author  : Kendrew Peacey
+    
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+    <!-- *********************************************************** -->
+    <!-- This file contains the templates used by SBPlus, i.e. those -->
+    <!-- used to layout the main window.                             -->
+    <!-- *********************************************************** -->
+
+    <!-- ************************************************************************************ -->
+    <!-- TEMPLATE: SBPlus                                                                     -->
+    <!-- Name: SBPageNavigationTemplate                                                       -->
+    <!-- Function: This template lays out the controls when the client is using Page mode.    -->
+    <!-- ************************************************************************************ -->
+    <ControlTemplate x:Key="SBPageNavigationTemplate" TargetType="{x:Type sbc:SBPlus}">
+        <!-- Main SB+ Window -->
+
+        <ContentControl x:Name="PART_MainSBPlusContainer"
+                        Opacity="1"
+                        Focusable="False" 
+                        Style="{DynamicResource MainSBPlusContainerStyle}" 
+                        sbc:SBUISupport.TemplateName="SBPageNavigationTemplate"
+                        >
+<!--            HorizontalAlignment="Center" -->
+<!--                        VerticalAlignment="Center"-->
+
+            <Grid x:Name="PART_SBPlusFormLayout"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="False">
+                <WindowsFormsHost x:Name="PART_MSScriptHost" Visibility="Collapsed" />
+                <Control x:Name="PART_SBMainwinBackground" 
+                         Style="{Binding Path=BackgroundStyle, RelativeSource={RelativeSource TemplatedParent}}" 
+                         Focusable="False"
+                         />
+
+                <DockPanel LastChildFill="True">
+                    
+                    <sbc:SBStatusBar x:Name="PART_StatusBar" 
+                                     DockPanel.Dock="Bottom" 
+                                     VerticalAlignment="Bottom"
+                                     Visibility="Visible"
+                                     IsProgressBar="{Binding Path=IsProgressBar, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                     IsHelpMessage="False"
+                                     Message="{Binding Path=ServerStatusBarMessage, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     sbc:SBUISupport.ZoomValue="{Binding Path=(sbc:SBUISupport.ZoomValue), Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                        />
+                    
+                    <Grid DockPanel.Dock="Top">
+
+
+                        <sbc:SBMenuPresenter x:Name="PART_SBMainMenuPresenter"
+                                             VerticalAlignment="Top"
+                                             HorizontalAlignment="Stretch"
+                                             Style="{DynamicResource SBMenuPresenterStyle}"
+                                             />
+                    </Grid>
+
+                    <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Expander x:Name="PART_SBMPXExpander" ExpandDirection="Right"  Grid.Column="0"  ToolTip="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=ClickToOpen}"  Style="{DynamicResource MPXExpanderStyle}">
+                            <Grid x:Name="PART_SBMPXExpanderLayout" Width="Auto" VerticalAlignment="Stretch" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl x:Name="PART_SBMPXTreeContainer"
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                IsTabStop="False"
+                                                sbc:SBForm.IsMaximizable="False"
+                                                sbc:SBForm.IsMinimizable="False"                                              
+                                                Content="{Binding Path=CurrentTree, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPlus} }}"
+                                        />
+
+                                <GridSplitter x:Name="PART_SBMPXTreeSplitter"
+                                              Grid.Column="1"
+                                              Grid.RowSpan="1" 
+                                              HorizontalAlignment="Left" 
+                                              VerticalAlignment="Stretch"
+                                              Background="Black" 
+                                              ShowsPreview="true"
+                                              ResizeDirection="Columns"
+                                              Width="2"/>
+                            </Grid>
+
+                        </Expander>
+
+                        <!-- Added ScrollViewer for eCase 12198*USA kp April 6, 2010. -->
+                        <ScrollViewer Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsTabStop="False"
+                                      VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      >
+                            
+<!--                            <ContentControl x:Name="PART_SBFormContainer"-->
+<!--                                            HorizontalAlignment="Center"-->
+<!--                                            VerticalAlignment="Center"-->
+<!--                                            IsTabStop="False"-->
+<!--                                            Content="{Binding Path=CurrentForm, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPlus} }}"-->
+<!--                                        />-->
+
+
+                            <sbc:SBPageContentManager x:Name="PART_SBFormContainer"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      IsTabStop="False"
+                                                      CurrentForm="{Binding Path=CurrentForm, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPlus} }}"
+                                                      DisplayFormStack="False"
+                                                      />
+                        </ScrollViewer>
+                        <!-- Overlay normal space with location for non modal forms -->
+                        <Grid x:Name="PART_SBNonModalContainer" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                    </Grid>
+
+                </DockPanel>
+            </Grid>
+
+        </ContentControl>
+
+        <ControlTemplate.Triggers>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                    <Condition Binding="{Binding Path=IsCurrentForm, Source={x:Static sbc:SBPlus.Current}}" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_StatusBar" Property="MessageVisibility" Value="Hidden" />
+                <Setter TargetName="PART_StatusBar" Property="ProgressBarVisibility" Value="Hidden" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                    <Condition Binding="{Binding Path=IsCurrentForm, Source={x:Static sbc:SBPlus.Current}}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_StatusBar" Property="ProgressMonitor" Value="{Binding Path=ProgressMonitor, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="false">
+                <Setter TargetName="PART_StatusBar" Property="ProgressMonitor" Value="{Binding Path=ProgressMonitor, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=HelpMessage, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                <Setter TargetName="PART_StatusBar" Property="IsHelpMessage" Value="True" />
+                <Setter TargetName="PART_StatusBar" Property="Message" Value="{Binding Path=SBPlus.HelpMessage, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBXamlConverter}}" />
+            </DataTrigger>
+
+        </ControlTemplate.Triggers>
+        
+    </ControlTemplate>
+
+    <!-- ************************************************************************************ -->
+    <!-- TEMPLATE: SBPlus                                                                     -->
+    <!-- Name: SBWindowNavigationTemplate                                                     -->
+    <!-- Function: This template lays out the controls when the client is using Windows mode. -->
+    <!-- ************************************************************************************ -->
+    <ControlTemplate x:Key="SBWindowNavigationTemplate" TargetType="{x:Type sbc:SBPlus}">
+
+        <ContentControl x:Name="PART_MainSBPlusContainer"
+                        sbc:SBUISupport.TemplateName="SBWindowNavigationTemplate"
+                        Style="{DynamicResource MainSBPlusContainerStyle}"
+                        >
+
+            <Grid x:Name="PART_SBPlusFormLayout" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <WindowsFormsHost x:Name="PART_MSScriptHost" Visibility="Collapsed" />
+                <Control x:Name="PART_SBMainwinBackground" 
+                         Style="{Binding Path=BackgroundStyle, RelativeSource={RelativeSource TemplatedParent}}" 
+                         Focusable="False"/>
+                <!-- TextBlock to display the name of the window. -->
+                <TextBlock x:Name="PART_SBCurrentThemeName"
+                           Text="{Binding Path=CurrentTheme, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" 
+                           Style="{DynamicResource CurrentThemeNameStyle}"
+                           />
+                
+                <DockPanel LastChildFill="True" >
+
+
+
+                    <sbc:SBStatusBar x:Name="PART_StatusBar" 
+                                     DockPanel.Dock="Bottom" 
+                                     VerticalAlignment="Bottom"
+                                     Visibility="Visible"
+                                     IsHelpMessage="False"
+                                     Message="{Binding Path=ServerStatusBarMessage, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     sbc:SBUISupport.ZoomValue="{Binding Path=(sbc:SBUISupport.ZoomValue), Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     />
+
+
+
+                    <sbc:SBMenuPresenter x:Name="PART_SBMenuPresenter"
+                                         DockPanel.Dock="Top" 
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Stretch"
+                                         IsEnabled="{Binding Path=MainMenuPresenterEnabled, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                         />
+                    <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Expander  x:Name="PART_SBMPXExpander" ExpandDirection="Right"  Grid.Column="0"  ToolTip="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=ClickToOpen}"  Style="{DynamicResource MPXExpanderStyle}" >
+
+                            <Grid x:Name="PART_SBMPXExpanderLayout" Width="Auto" VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl x:Name="PART_SBMPXTreeContainer"
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                IsTabStop="False"
+                                                sbc:SBForm.IsMaximizable="False"
+                                                sbc:SBForm.IsMinimizable="False"                                                  
+                                                Content="{Binding Path=CurrentTree, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPlus} }}"
+                                        />
+
+                                <GridSplitter x:Name="PART_SBMPXTreeSplitter"
+                                              Grid.Column="1"
+                                              Grid.RowSpan="1" 
+                                              HorizontalAlignment="Left" 
+                                              VerticalAlignment="Stretch"
+                                              Background="Black" 
+                                              ShowsPreview="true"
+                                              ResizeDirection="Columns"
+                                              Width="2"/>
+                            </Grid>
+                        </Expander>
+                        <!-- Following grid is a placeholder so the code can easily see
+                                 where to position menus -->
+                        <Grid x:Name="PART_SBFormContainer" 
+                                  Grid.Column="1" />
+                    </Grid>
+
+                </DockPanel>
+            </Grid>
+
+        </ContentControl>
+
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=ShowThemeName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="True">
+                <Setter TargetName="PART_SBCurrentThemeName" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=ShowThemeName, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" Value="False">
+                <Setter TargetName="PART_SBCurrentThemeName" Property="Visibility" Value="Hidden" />
+            </DataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                    <Condition Binding="{Binding Path=IsCurrentForm, Source={x:Static sbc:SBPlus.Current}}" Value="false"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_StatusBar" Property="MessageVisibility" Value="Hidden" />
+                <Setter TargetName="PART_StatusBar" Property="ProgressBarVisibility" Value="Hidden" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="true"/>
+                    <Condition Binding="{Binding Path=IsCurrentForm, Source={x:Static sbc:SBPlus.Current}}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_StatusBar" Property="ProgressMonitor" Value="{Binding Path=ProgressMonitor, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding Path=SBUserPreferences.SelfContainedForms, Source={x:Static sbc:SBPlus.Current}}" Value="false">
+                <Setter TargetName="PART_StatusBar" Property="ProgressMonitor" Value="{Binding Path=ProgressMonitor, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=HelpMessage, Source={x:Static sbc:SBPlus.Current}, Converter={StaticResource SBIsNullOrEmptyConverter}}" Value="False">
+                <Setter TargetName="PART_StatusBar" Property="IsHelpMessage" Value="True" />
+                <Setter TargetName="PART_StatusBar" Property="Message" Value="{Binding Path=SBPlus.HelpMessage, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource SBXamlConverter}}" />
+            </DataTrigger>
+
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+</ResourceDictionary>

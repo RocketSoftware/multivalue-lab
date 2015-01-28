@@ -1,0 +1,307 @@
+<!--
+
+       Name    : SBPreRunQuestions.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              
+Date            Name    Tracking #      Style                   Description
+Oct 20, 2011    AKP     SBXA-4588       PreRunQuestionsTemplate Removed width and height settings  
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbs="http://schemas.sbxa.com/Shared"
+    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <!-- *********************************************************************** -->
+    <!--                      CharactLayoutPreRunQuestions                       -->
+    <!-- *********************************************************************** -->
+    <ControlTemplate x:Key="CharactLayoutPreRunQuestions">
+        <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+
+            <!-- Control was not responding to the Tab key. 38195*USA -->
+            <ContentControl.InputBindings>
+                <KeyBinding Command="sbc:SBCommands.SBTabCommand"
+                                        Key="Tab" />
+                <KeyBinding Command="sbc:SBCommands.SBDownCommand"
+                                        Key="Up" />
+                <KeyBinding Command="sbc:SBCommands.SBUpCommand"
+                                        Key="Down" />
+                <KeyBinding Command="sbc:SBCommands.SBPageUpCommand"
+                                        Key="PageUp" />
+                <KeyBinding Command="sbc:SBCommands.SBPageDownCommand"
+                                        Key="PageDown" />
+            </ContentControl.InputBindings>
+
+            <Grid
+                            Width="{Binding Path=WpfCoordinates.Width, RelativeSource={RelativeSource Mode=TemplatedParent }}"
+                            Height="{Binding Path=WpfCoordinates.Height, RelativeSource={RelativeSource Mode=TemplatedParent }}">
+
+                <DockPanel  LastChildFill="True" >
+
+                    <Menu DockPanel.Dock="Top"
+                            Control.FontFamily="{Binding Path=SBPlus.DefaultFontFamily, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPreRunQuestions}}, Converter={StaticResource SBUnsetValueConverter}}"
+                            Control.FontSize="{Binding Path=SBPlus.DefaultFontSize, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPreRunQuestions}}, Converter={StaticResource SBUnsetValueConverter}}"
+                            Control.FontWeight="{Binding Path=SBPlus.DefaultFontWeight, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPreRunQuestions}}, Converter={StaticResource SBUnsetValueConverter}}"
+                          >
+                        <MenuItem Header="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=RecallMenuItem}" Command="sbc:SBCommands.NotImplementedCommand" CommandParameter="PreRun Questions Recall menu option."/>
+                        <MenuItem Header="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=SaveMenuItem}" Command="sbc:SBCommands.NotImplementedCommand" CommandParameter="PreRun Questions Save menu option."/>
+                        <MenuItem Header="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=DeleteMenuItem}" Command="sbc:SBCommands.NotImplementedCommand" CommandParameter="PreRun Questions Delete menu option."/>
+                    </Menu>
+
+                    <sbc:SBButtonBar DockPanel.Dock="Bottom"
+                                                 Definition="{Binding Path=ScreenDefinition.ButtonBarDefinition, RelativeSource={RelativeSource Mode=TemplatedParent }, Mode=OneWay}"
+                               />
+
+                    <ContentControl x:Name="PART_SBPreRunFormContent" 
+                                                DockPanel.Dock="Top" 
+                                                >
+
+                        <ContentControl.InputBindings>
+                            <KeyBinding Command="sbc:SBCommands.SBSaveCommand"
+                                                    Key="F2" />
+                            <KeyBinding Command="sbc:SBCommands.SBIntuitiveHelpCommand"
+                                                    Key="F3" />
+                            <KeyBinding Command="sbc:SBCommands.SBCtrlxCommand"
+                                                    Modifiers="Control"
+                                                    Key="X" />
+                        </ContentControl.InputBindings>
+
+                        <ContentControl.Content>
+
+                            <sbc:SBCharacterLayout x:Name="PART_SBFormLayoutControl"
+                                                               ObjectSource="{Binding Path=(sbc:SBGUIAttribute.SBObjectName), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Converter={StaticResource SBGetChildrenConverter}}"
+                                                               ColumnCount="{Binding Path=ScreenDefinition.MaxColumns, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}}"
+                                                               RowCount="{Binding Path=ScreenDefinition.MaxRows, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}}"
+                                                               >
+
+                                <!-- Fallback to determine the width of each column -->
+                                <sbc:SBCharacterLayout.ColumnWidth>
+                                    <PriorityBinding FallbackValue="{x:Static sbs:GenericConstants.DEFAULT_CELL_WIDTH}">
+                                        <Binding Path="GuiObjectDefinition.GridCellWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                        <Binding Path="SBPlus.SBUserPreferences.GridCellWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                    </PriorityBinding>
+                                </sbc:SBCharacterLayout.ColumnWidth>
+
+                                <!-- Fallback to determine the height of each column -->
+                                <sbc:SBCharacterLayout.RowHeight>
+                                    <!-- Note 19 is used as the Multivalued edit items are taller than the default height (16) on this form -->
+                                    <PriorityBinding FallbackValue="19">
+                                        <Binding Path="GuiObjectDefinition.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                        <Binding Path="SBPlus.SBUserPreferences.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                    </PriorityBinding>
+                                </sbc:SBCharacterLayout.RowHeight>
+
+                            </sbc:SBCharacterLayout>
+
+                        </ContentControl.Content>
+
+                    </ContentControl>
+
+                </DockPanel>
+            </Grid>
+        </ContentControl>
+    </ControlTemplate>
+
+    <!-- *********************************************************************** -->
+    <!--                      PreRunQuestionsTemplate                            -->
+    <!-- *********************************************************************** -->
+    <ControlTemplate x:Key="PreRunQuestionsTemplate">
+        <ContentControl Template="{DynamicResource SBFormWithBorderTemplate}">
+
+            <!-- Control was not responding to the Tab key. 38195*USA -->
+            <ContentControl.InputBindings>
+                <KeyBinding Command="sbc:SBCommands.SBTabCommand"
+                                        Key="Tab" />
+                <KeyBinding Command="sbc:SBCommands.SBDownCommand"
+                                        Key="Up" />
+                <KeyBinding Command="sbc:SBCommands.SBUpCommand"
+                                        Key="Down" />
+                <KeyBinding Command="sbc:SBCommands.SBPageUpCommand"
+                                        Key="PageUp" />
+                <KeyBinding Command="sbc:SBCommands.SBPageDownCommand"
+                                        Key="PageDown" />
+            </ContentControl.InputBindings>
+
+            <Grid Width="{Binding Path=WpfCoordinates.Width, RelativeSource={RelativeSource Mode=TemplatedParent }}"
+                  Height="{Binding Path=WpfCoordinates.Height, RelativeSource={RelativeSource Mode=TemplatedParent }}"
+                >
+
+                <DockPanel  LastChildFill="True" >
+
+<!-- It is unlikely that we are going to implement these as they are so far down on the list of priorities. Therefore I have removed them. If a customer asks, we can always put them back and implement them.
+                    <Menu DockPanel.Dock="Top"
+                          Control.FontFamily="{Binding Path=SBPlus.DefaultFontFamily, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPreRunQuestions}}, Converter={StaticResource SBUnsetValueConverter}}"
+                          Control.FontSize="{Binding Path=SBPlus.DefaultFontSize, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPreRunQuestions}}, Converter={StaticResource SBUnsetValueConverter}}"
+                          Control.FontWeight="{Binding Path=SBPlus.DefaultFontWeight, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBPreRunQuestions}}, Converter={StaticResource SBUnsetValueConverter}}"
+                          >
+                        <MenuItem Header="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=RecallMenuItem}" Command="sbc:SBCommands.NotImplementedCommand" CommandParameter="PreRun Questions Recall menu option."/>
+                        <MenuItem Header="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=SaveMenuItem}" Command="sbc:SBCommands.NotImplementedCommand" CommandParameter="PreRun Questions Save menu option."/>
+                        <MenuItem Header="{Binding Converter={StaticResource SBLanguageConverter}, ConverterParameter=DeleteMenuItem}" Command="sbc:SBCommands.NotImplementedCommand" CommandParameter="PreRun Questions Delete menu option."/>
+                    </Menu>
+-->
+
+                    <sbc:SBButtonBar DockPanel.Dock="Bottom"
+                                     Definition="{Binding Path=ScreenDefinition.ButtonBarDefinition, RelativeSource={RelativeSource Mode=TemplatedParent }, Mode=OneWay}"
+                                     />
+
+                    <ContentControl x:Name="PART_SBPreRunFormContent" 
+                                    DockPanel.Dock="Top" 
+                                    >
+
+                        <ContentControl.InputBindings>
+                            <KeyBinding Command="sbc:SBCommands.SBSaveCommand"
+                                                    Key="F2" />
+                            <KeyBinding Command="sbc:SBCommands.SBIntuitiveHelpCommand"
+                                                    Key="F3" />
+                            <KeyBinding Command="sbc:SBCommands.SBCtrlxCommand"
+                                                    Modifiers="Control"
+                                                    Key="X" />
+                        </ContentControl.InputBindings>
+
+                        <ContentControl.Content>
+
+                            <sbc:SBPixelLayout x:Name="PART_SBFormLayoutControl"
+                                               ObjectSource="{Binding Path=(sbc:SBGUIAttribute.SBObjectName), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Converter={StaticResource SBGetChildrenConverter}}"
+                                               Compress="true"
+                                               sbc:SBItemsControl.ItemsPanelTemplate="{DynamicResource SBPreRunPixelLayoutItemsPanelTemplate}"
+                                               >
+
+                                <!-- Fallback to determine the width of each column -->
+                                <sbc:SBPixelLayout.ColumnWidth>
+                                    <PriorityBinding FallbackValue="{x:Static sbs:GenericConstants.DEFAULT_CELL_WIDTH}">
+                                        <Binding Path="GuiObjectDefinition.GridCellWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                        <Binding Path="SBPlus.SBUserPreferences.GridCellWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                    </PriorityBinding>
+                                </sbc:SBPixelLayout.ColumnWidth>
+
+                                <!-- Fallback to determine the height of each column -->
+                                <sbc:SBPixelLayout.RowHeight>
+                                    <!-- Note 19 is used as the Multivalued edit items are taller than the default height (16) on this form -->
+                                    <PriorityBinding FallbackValue="19">
+                                        <Binding Path="GuiObjectDefinition.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                        <Binding Path="SBPlus.SBUserPreferences.GridCellHeight" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}" Converter="{StaticResource SBUnsetValueConverter}" />
+                                    </PriorityBinding>
+                                    </sbc:SBPixelLayout.RowHeight>
+
+                            </sbc:SBPixelLayout>
+
+                        </ContentControl.Content>
+
+                    </ContentControl>
+
+                </DockPanel>
+            </Grid>
+        </ContentControl>
+    </ControlTemplate>
+
+    <!-- *********************************************************************** -->
+    <!--                                 SBPreRunQuestions                       -->
+    <!-- *********************************************************************** -->
+    <Style TargetType="{x:Type sbc:SBPreRunQuestions}">
+
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMaximizable" Value="False" />
+        <Setter Property="sbc:SBForm.IsMinimizable" Value="False" />
+        <Setter Property="sbc:SBForm.FormBorderWidth" Value="{x:Static sbs:GenericConstants.DEFAULT_FORM_BORDER_WIDTH}" />
+        <Setter Property="MinWidth" Value="{x:Static sbs:GenericConstants.DEFAULT_SEL_FORM_MIN_WIDTH}" />
+<!--        <Setter Property="sbc:SBForm.FormHeight" Value="{Binding Path=GuiObjectDefinition.Height, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />-->
+<!--        <Setter Property="sbc:SBForm.FormWidth" Value="{Binding Path=GuiObjectDefinition.Width, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />-->
+        <Setter Property="IsCachable" Value="False" />
+        <Setter Property="Control.Background" Value="Transparent" />
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBControlBackground}" />
+        <Setter Property="sbc:SBUISupport.StyleName" Value="SBPreRunQuestions (generic)" />
+        <Setter Property="sbc:SBUISupport.TemplateName" Value="SBPreRunQuestions (generic)" />
+        <Setter Property="Template" Value="{StaticResource PreRunQuestionsTemplate}" />
+        <Setter Property="sbc:SBUISupport.TemplateName" Value="PreRunQuestionsTemplate" />
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="true" />
+
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="style_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBStyleName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBStyleName)" />
+                    <sbc:SBAttribute Name="drawable"
+                                     GetProperty="(sbc:SBGUIAttribute.SBDrawable)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDrawable)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="Control.Background" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="Control.Foreground" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <!-- TODO coordinated aren't working yet -->
+                    <sbc:SBAttribute Name="coordinates"
+                                     GetProperty="(sbc:SBGUIAttribute.SBCoordinates)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBCoordinates)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 Name="dimensions"
+                                     GetProperty="Control.ActualWidth"
+                                     GetProperty2="Control.ActualHeight"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute Name="tile"
+                                     GetProperty="(sbc:SBGUIAttribute.SBTile)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBTile)" />
+
+                    <!-- Following attributes are mapped to a SBGUI attribute so they can be used, -->
+                    <!-- but they are not currently used in our styles -->
+                    <sbc:SBAttribute Name="border_color"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderColor)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderColor)" />
+                    <sbc:SBAttribute Name="border_style"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderStyle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderStyle)" />
+                    <sbc:SBAttribute Name="border_width"
+                                     GetProperty="(sbc:SBGUIAttribute.SBBorderWidth)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBorderWidth)" />
+
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="sbc:SBForm.FormBackground">
+            <Setter.Value>
+                <PriorityBinding FallbackValue="{x:Static SystemColors.WindowBrush}">
+                    <Binding Path="(sbc:SBGUIAttribute.SBTile)" Mode="OneWay" Converter="{StaticResource SBTileConverter}" RelativeSource="{RelativeSource Mode=Self}" />
+                    <Binding Path="(sbc:SBGUIAttribute.SBBackground)" Mode="OneWay" Converter="{StaticResource SBColorConverter}" RelativeSource="{RelativeSource Mode=Self}"/>
+                    <Binding Path="GuiObjectDefinition.Background" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}" Converter="{StaticResource SBColorConverter}"/>
+                    <Binding Path="(sbc:SBControl.SBControlBackground)" Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="sbc:SBForm.FormBorderColor">
+            <Setter.Value>
+                <PriorityBinding >
+                    <PriorityBinding.FallbackValue>
+                        <LinearGradientBrush EndPoint="0.738,0.989" StartPoint="0.279,0.018">
+                            <GradientStop Color="#FF3B9DD1" Offset="1"/>
+                            <GradientStop Color="#FF73C5F0" Offset="0"/>
+                        </LinearGradientBrush>
+                    </PriorityBinding.FallbackValue>
+                    <Binding Path="(sbc:SBGUIAttribute.SBBorderColor)"
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"
+                             />
+                    <Binding Path="GuiObjectDefinition.SBBorderColor" 
+                             Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"
+                             Converter="{StaticResource SBColorConverter}"/>
+                </PriorityBinding>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>

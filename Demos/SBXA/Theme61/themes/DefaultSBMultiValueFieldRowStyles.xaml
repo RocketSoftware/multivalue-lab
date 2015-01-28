@@ -1,0 +1,60 @@
+﻿<!--
+
+       Name    : DefaultMultiValueFieldRowStyle.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SbControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="DefaultSBMultiValueFieldRowStyle" TargetType="{x:Type sbc:SBMultiValueFieldRow}">
+        <Setter Property="Width" Value="{Binding Width}"/>
+    </Style>
+
+    <ControlTemplate x:Key="SBMultiValueFieldRowItemsControlTemplate"  TargetType="ItemsControl">
+
+        <Border BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                        Name="Bd"
+                                        Background="{TemplateBinding Panel.Background}"
+                                        SnapsToDevicePixels="True"
+                                        Padding="0"
+                                        Margin="0">
+
+            <ItemsPresenter x:Name="PART_ItemsPresenter"  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+        </Border>
+    </ControlTemplate>
+
+    <ItemsPanelTemplate x:Key="SBMultiValueFieldRowItemsPanelTemplate">
+        <VirtualizingStackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Width="{Binding Width}"/>
+    </ItemsPanelTemplate>
+
+    <Style x:Key="SBMultiValueFieldRowItemContainerStyle">
+        <Setter Property="Control.Width" Value="{Binding GuiObjectDefinition.Width}"/>
+        <Setter Property="Control.Margin" Value="0"/>
+    </Style>
+
+    <DataTemplate x:Key="SBMultiValueFieldRowItemTemplate">
+        <sbc:SBField x:Name="PART_SBField"
+                     Margin="0" 
+                     sbc:SBGUIAttribute.SBObjectName="{Binding Path=(sbc:SBGUIAttribute.SBObjectName)}"
+                     sbc:SBGUIAttribute.SBParentObjectName="{Binding Path=(sbc:SBControl.SBParentObjectName), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBMultiValueField}}}"
+                     GuiObjectDefinition="{Binding Path=GuiObjectDefinition}" 
+                     sbc:SBField.GuiObjectType="Textclass"
+                     />
+    </DataTemplate>
+
+</ResourceDictionary>

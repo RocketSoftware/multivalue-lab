@@ -1,0 +1,15 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbe="clr-namespace:SBXA.Controls;assembly=SBXAEditor"
+    >
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseXEStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type sbc:XE}" BasedOn="{StaticResource BaseXEStyle}" />
+</ResourceDictionary>

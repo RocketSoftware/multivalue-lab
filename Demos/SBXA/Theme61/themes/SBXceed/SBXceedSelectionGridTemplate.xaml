@@ -1,0 +1,139 @@
+<!--
+
+       Name    : SBXceedSelectionGridTemplate.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbe="clr-namespace:SBXA.UI.WPFControls.MarkupExtensions"
+    xmlns:sbx="clr-namespace:SBXA.UI.WPFControls.SBXceed"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    xmlns:sbs="http://schemas.sbxa.com/WPFControls"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:xcdg="http://schemas.xceed.com/wpf/xaml/datagrid"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/SBXGridView/TableView.SBXGridView.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="SBXSCTableViewStyle" BasedOn="{StaticResource DefaultSBXTableViewStyle}" TargetType="{x:Type sbx:SBXGridView}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="SBXSCTableViewStyle" />
+        <Setter Property="ShowRowSelectorPane" Value="{Binding Path=ShowRowSelector, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWay }"/>
+        <Setter Property="ShowFixedColumnSplitter"  Value="False" />
+        <Setter Property="InsertionRowLocation"     Value="None" />
+        <Setter Property="ColumnManagerRowLocation" Value="{Binding Path=GuiObjectDefinition.ShowHeadings, 
+                                                          RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, 
+                                                          Converter={StaticResource SBConverter},
+                                                          Mode=OneWay }" />
+
+    </Style>
+
+    <!-- *********************************************** -->
+    <!-- Select grid template for F3 selection processes -->
+    <!--                                                 -->
+    <!-- SBXceedSelectionGridTemplate                    -->
+    <!-- *********************************************** -->
+    <ControlTemplate x:Key="SBXceedSelectionGridTemplate">
+        <sbx:SBXGridControl x:Name="PART_GridFocusSite"
+                            sbc:SBUISupport.TemplateName="SBXceedSelectionGridTemplate"
+                            SBColumnDefinitions="{Binding Path=SBColumnDefinitions, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWay }"
+                            SBDataSource="{Binding Path=DataSource, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=TwoWay }"
+                            Background="LightGray"
+                            SelectedItem="{Binding Path=SelectedId, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}},
+                                                    Converter={StaticResource SBXceedItemConverter}, ConverterParameter={x:Static sbs:GenericConstants.SEL_ID_COL_NAME}, Mode=TwoWay }"
+                            AutoCreateColumns="True"
+                            EditTriggers="None"
+                            SelectionMode="{Binding Path=SelectionMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWay }"
+                            sbc:SBSelectionControl.SelectedItems="{Binding Path=SelectedItems, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
+                            sbc:SBSelectionControl.CurrentItem="{Binding Path=CurrentItem, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay }"
+                            HideSelection="False"
+                            sbc:SBContentControl.HasSBFocus="{Binding Path=IsSBFocused, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWay }"
+                            ReadOnly="True"
+                            sbc:SBGUIAttribute.SBParentObjectName="{Binding Path=SBObjectName, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWay}"
+                            TextclassCellContentTemplate="{DynamicResource SBXSCTextclassCellContentTemplate}"
+                            sbx:SBXGridControl.RowHeight="{x:Static sbs:GenericConstants.DEFAULT_GRID_ROW_HEIGHT}"
+                            sbx:SBXGridControl.DataRowStyle="{DynamicResource SBXSCGridViewDataRowStyle}"
+                            sbx:SBXGridControl.Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                            sbc:SBGridControl.VerticalScrollBarWidth="{Binding Path=(sbc:SBGridControl.VerticalScrollBarWidth), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWayToSource}"
+                            sbc:SBGridControl.ExtentWidth="{Binding Path=(sbc:SBGridControl.ExtentWidth), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWayToSource}"
+                            sbc:SBGridControl.RowSelectorWidth="{Binding Path=(sbc:SBGridControl.RowSelectorWidth), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Mode=OneWayToSource}"
+                            Control.FontFamily="{Binding Path=SBPlus.DefaultFontFamily, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+                            Control.FontSize="{Binding Path=SBPlus.DefaultFontSize, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+                            Control.FontWeight="{Binding Path=SBPlus.DefaultFontWeight, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}, Converter={StaticResource SBUnsetValueConverter}}"
+            >
+            
+            <sbc:SBGUIAttribute.SBObjectName>
+                <MultiBinding Converter="{StaticResource SBConcatenateConverter}" ConverterParameter="*">
+                    <Binding Path="SBObjectName" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBSelectionControl}}" FallbackValue="SBWIN_0"/>
+                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="0" />
+                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="0" />
+                </MultiBinding>
+            </sbc:SBGUIAttribute.SBObjectName>
+
+            <!--CellContentTemplate="{DynamicResource SBXTextclassCellContentTemplate}"-->
+            <!--
+            <sbx:SBXGridControl.Width>
+                <MultiBinding Converter="{StaticResource SBGridWidthCalculatorConverter}" ConverterParameter="LastIsMinimum">
+                    <Binding Path="(sbc:SBGridControl.VerticalScrollBarWidth)" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" />
+                    <Binding Path="(sbc:SBGridControl.ExtentWidth)" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" />
+                    <Binding Path="(sbc:SBGridControl.RowSelectorWidth)" RelativeSource="{RelativeSource Mode=Self}" Mode="OneWay" /> 
+            -->
+            <!-- I was always off by 2, so I assume it is the width of the border of the extent. -->
+            <!--
+                    <Binding Path="DependencyProperty.UnsetValue" FallbackValue="2"/>
+            -->
+            <!-- minimum value -->
+            <!--
+            <Binding Path="ActualWidth" RelativeSource="{RelativeSource TemplatedParent}" Mode="OneWay" /> 
+                </MultiBinding>
+            </sbx:SBXGridControl.Width>
+            -->
+            <sbx:SBXGridControl.Resources>
+
+                <Style  TargetType="xcdg:GroupByControl">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Style>
+                <!-- removes the extra pixel border at the top of the grid. -->
+                <Style TargetType="{x:Type xcdg:ColumnManagerRow}">
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+                
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Style.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="sbc:SBGridControl.VerticalScrollBarWidth"  Value="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+                <!-- Set the extend width on the grid, so that I can calculate the width of the grid. -->
+                <Style TargetType="{x:Type xcdg:TableViewScrollViewer}">
+                    <Setter Property="sbc:SBGridControl.ExtentWidth"  Value="{Binding Path=ExtentWidth, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}" />
+                </Style>
+                
+            </sbx:SBXGridControl.Resources>
+
+            <xcdg:DataGridControl.View>
+
+                <sbx:SBXGridView Style="{StaticResource SBXSCTableViewStyle}" >
+                    <sbx:SBXGridView.Theme>
+                        <sbx:SBXGridViewTheme/>
+                    </sbx:SBXGridView.Theme>
+                </sbx:SBXGridView>
+
+            </xcdg:DataGridControl.View>
+
+        </sbx:SBXGridControl>
+
+    </ControlTemplate>
+
+</ResourceDictionary>

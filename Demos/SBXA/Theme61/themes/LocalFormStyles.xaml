@@ -1,0 +1,106 @@
+<!--
+
+       Name    : LocalFormStyles.xaml
+       Author  : Kendrew Peacey
+ 
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBButtonStyle.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/DefaultFieldStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ****************** -->
+    <!-- SBLocalButtonStyle -->
+    <!-- ****************** -->
+    <Style x:Key="SBLocalButtonStyle" BasedOn="{StaticResource BaseSBButtonStyle}" TargetType="{x:Type sbc:SBButton}" >
+        <Setter Property="sbc:SBUISupport.StyleName" Value="SBLocalButtonStyle" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="false" />
+        <Setter Property="Margin" Value="2,2,2,2"/>
+        <Setter Property="Padding" Value="4,4,4,4" />
+        <Setter Property="Control.MinWidth"  Value="75"/>
+        <Setter Property="Control.MinHeight"  Value="25"/>
+    </Style>
+
+    <!-- ****************** -->
+    <!-- SBLocalPromptStyle -->
+    <!-- ****************** -->
+    <Style x:Key="SBLocalPromptStyle" TargetType="{x:Type sbc:SBPrompt}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="SBLocalPromptStyle" />
+        <Setter Property="Margin" Value="1,1,4,1"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!-- ****************** -->
+    <!-- EntryFieldStyle    -->
+    <!-- ****************** -->
+    <Style x:Key ="EntryFieldStyle" TargetType="{x:Type sbc:SBField}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="EntryFieldStyle" />
+        <Setter Property="Control.HorizontalAlignment" Value="Left" />
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="false" />
+        <Setter Property="sbc:SBControl.UsePixelPositioning" Value="false" />
+        <Setter Property="Margin" Value="2,2,2,2" />
+    </Style>
+    
+    <!-- ToggleTyle -->
+
+    <!-- ******************** -->
+    <!-- ComboBoxControlStyle -->
+    <!-- ******************** -->
+    <Style x:Key="EditableComboxControlStyle" BasedOn="{StaticResource DefaultSBComboBoxControlStyle}" TargetType="{x:Type ComboBox}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="EditableComboxControlStyle" />
+        <Setter Property="IsEditable" Value="true" />
+        <Setter Property="Text" Value="{Binding Path=SBValue, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+    </Style>
+
+    <!-- ****************************** -->
+    <!-- LogOnOptionsBorderStyle         -->
+    <!-- ****************************** -->
+    <Style x:Key="LogOnOptionsBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="LogOnOptionsBorderStyle" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Blue"  />
+        <Setter Property="Padding" Value="7" />
+        <Setter Property="CornerRadius" Value="2" />
+    </Style>
+
+    <!-- ****************************** -->
+    <!-- SBCredentialPromptStyle         -->
+    <!-- ****************************** -->
+    <Style x:Key="SBCredentialPromptStyle" BasedOn="{StaticResource SBLocalPromptStyle}" TargetType="{x:Type sbc:SBPrompt}"/>
+
+    <!-- ****************************** -->
+    <!-- SBCredentialFieldStyle         -->
+    <!-- ****************************** -->
+    <Style x:Key="SBCredentialFieldStyle" TargetType="{x:Type sbc:SBField}" BasedOn="{StaticResource EntryFieldStyle}">
+        <Setter Property="Width" Value="200"/>
+    </Style>
+
+    <!-- ****************************** -->
+    <!-- SBPasswordFieldStyle           -->
+    <!-- ****************************** -->
+    <Style x:Key="LocalSBPasswordFieldStyle" BasedOn="{StaticResource DefaultSBPasswordFieldStyle}" TargetType="{x:Type sbc:SBField}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="LocalSBPasswordFieldStyle" />
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="sbc:SBControl.ShouldSendSBCommands" Value="False"/>
+    </Style>
+
+    <!-- ****************** -->
+    <!-- SBToggleFieldStyle -->
+    <!-- ****************** -->
+    <Style x:Key="SBToggleFieldStyle" TargetType="{x:Type sbc:SBToggle}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="SBToggleFieldStyle" />
+        <Setter Property="Margin" Value="1,1,4,1"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+</ResourceDictionary>

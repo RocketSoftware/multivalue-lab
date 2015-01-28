@@ -1,0 +1,23 @@
+<!--
+
+       Name    : SbForm.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+    >
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBFormStyle.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+  
+  <Style TargetType="{x:Type sbc:SBForm}" BasedOn="{StaticResource BaseSBFormStyle}"/>
+
+</ResourceDictionary>

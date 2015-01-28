@@ -1,0 +1,99 @@
+﻿<!--
+
+       Name    : BaseSBPlusStyle.generic.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+      
+    <Style x:Key="BaseSBPlusStyle" TargetType="{x:Type sbc:SBPlus}">
+        <Setter Property="sbc:SBUISupport.StyleName" Value="BaseSBPlusStyle" />
+
+        <!-- The following settings were suggested by a customer as they are supposed to improve the quality of the text. They were introduced in .Net 4.0 -->
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+<!--        <Setter Property="DefaultFontFamily" Value="Lucida Console" /> Clear but all the text is Aligned to the top. -->
+<!--        <Setter Property="DefaultFontFamily" Value="Verdana" />-->
+<!--        <Setter Property="DefaultFontSize" Value="12" />-->
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        
+        <Setter Property="Focusable" Value="True" />   <!-- Changed this to be true, so that when returning from a form, SBPlus can get focus so that keystrokes are picked up (kp Jan 12, 2010) -->
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="sbc:SBControl.SBControlBackground" Value="{DynamicResource SBMainWindowBackground}" />
+        <!-- Map from Server attributes to GUI attributes -->
+        <Setter Property="sbc:SBGUIAttribute.SBAttributeMap">
+            <Setter.Value>
+                <sbc:SBAttributeMap>
+                    <sbc:SBAttribute Name="title"
+                                     GetProperty="(sbc:SBGUIAttribute.SBTitle)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBTitle)" />
+                    <sbc:SBAttribute Name="background"
+                                     GetProperty="Control.Background" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBBackground)"/>
+                    <sbc:SBAttribute Name="foreground" 
+                                     GetProperty="Control.Foreground" GetConverter="{StaticResource SBColorConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBForeground)"/>
+                    <sbc:SBAttribute Name="object_name"
+                                     GetProperty="(sbc:SBGUIAttribute.SBObjectName)"
+                                     SetProperty="(sbc:SBGUIAttribute.SBObjectName)" />
+                    <sbc:SBAttribute2 Name="dimensions"
+                                     GetProperty="Control.ActualWidth"
+                                     GetProperty2="Control.ActualWidth"
+                                     GetConverter2="{StaticResource SBDimensionsMultiConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBDimensions)"/>
+                    <sbc:SBAttribute Name="menu_disabled"
+                                     GetProperty="(sbc:SBGUIAttribute.SBMenuDisabled)"
+                                     GetConverter="{StaticResource SBBooleanConverter}"
+                                     SetProperty="(sbc:SBGUIAttribute.SBMenuDisabled)" />
+                </sbc:SBAttributeMap>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            
+            <Trigger Property="NavigationModel" Value="Page" >
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=PageNavigationTemplate" />
+                <Setter Property="Template" Value="{Binding Path=PageNavigationTemplate, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>
+            </Trigger>
+            
+            <Trigger Property="NavigationModel" Value="Window" >
+                <Setter Property="sbc:SBUISupport.TemplateName" Value="Path=WindowNavigationTemplate" />
+                <Setter Property="Template" Value="{Binding Path=WindowNavigationTemplate, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"/>
+            </Trigger>
+            
+            <!-- This trigger will check to see if the server is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Dormant" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+            
+            <!-- This trigger will check to see if the client is busy and if we should show the hour glass, if both are true then the cursor is change to the Wait cursor. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=ApplicationDefinition.IsHourGlassEnabled, Source={x:Static sbc:SBPlus.Current}}" Value="true" />
+                    <Condition Binding="{Binding Path=InputState, Source={x:Static sbc:SBPlus.Current}}" Value="Busy" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="FrameworkElement.Cursor" Value="Wait" />
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

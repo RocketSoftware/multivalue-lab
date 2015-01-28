@@ -1,0 +1,52 @@
+﻿<!--
+
+       Name    : BaseSBRectangleStyle.xaml
+       Author  : Kendrew Peacey
+       
+       ****************************************************************************
+           Maintenence log - insert most recent change descriptions at top
+              Module  %M%     Version %I%     Date    %H%
+              
+-->
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sbc="clr-namespace:SBXA.UI.WPFControls"
+    xmlns:sbp="http://schemas.sbxa.com/WPFControls"
+  >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/Converters.xaml" />
+        <ResourceDictionary Source="/SBXAWinFxControls;component/Themes/BaseSBControlStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+    
+    <Style x:Key="BaseSBRectangleStyle" TargetType="{x:Type sbc:SBRectangle}" BasedOn="{StaticResource BaseSBControlStyle}">
+        <Setter Property="sbc:SBControl.SBControlStyle" Value="{DynamicResource SBRectangleStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type sbc:SBRectangle}">
+                    <Control Style="{Binding Path=SBControlStyle, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+        <Style.Triggers>
+            <!-- If we are using character coloumn and row positioning, I need to set the margin to 0, so as to allow the grid row and column to position the field -->
+            <!-- Use the margin from the GuiObjectDefinition to position the control. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Mode=OneWay }" Value="true">
+                <Setter Property="Control.VerticalAlignment" Value="Top"/>
+                <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+            </DataTrigger>
+
+            <!-- If we are using character column and row, null out th widht and height add derrive the margin from the character layout control which uses the cell width
+                 and height to determin the margin. -->
+            <DataTrigger Binding="{Binding Path=(sbc:SBControl.UsePixelPositioning), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbp:ISBForm}}, Mode=OneWay }" Value="false">
+                <Setter Property="Control.Width" Value="NaN"/>
+                <Setter Property="Control.Height" Value="NaN"/>
+                <!--<Setter Property="Margin" Value="{Binding Path=CellCenterMargin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type sbc:SBCharacterLayout}}}"/>-->
+            </DataTrigger>
+
+        </Style.Triggers>
+    </Style>
+    
+</ResourceDictionary>
