@@ -1,0 +1,19 @@
+SUBROUTINE FILE.OPENS
+	*******************************************************************************
+	*       Program FILE.OPENS
+	*       Copyright (C) 2014
+	*******************************************************************************
+	*  Author: mbyrne
+	*  Created on :Jul 3, 2014 11:54:41 AM
+	*  Description:
+	*****************************************************************************
+	$INCLUDE RTD.INCLUDE RTD.H
+	
+	ERR=0
+	IF NOT(INIT) THEN
+		OPEN 'CUSTOMERS' TO FILES(F.CUSTOMERS) ELSE ERR=1
+		OPEN 'NOTES' TO FILES(F.NOTES) ELSE ERR=1
+		IF NOT(ERR) THEN INIT = 1
+	END
+RETURN
+
