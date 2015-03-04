@@ -1,0 +1,128 @@
+﻿@model WebApplication1.CUSTOMER
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CUSTOMER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FULLNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FULLNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDR1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDR1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDR2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDR2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FULLADDR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FULLADDR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CITY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATENAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATENAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHONE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHONE)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

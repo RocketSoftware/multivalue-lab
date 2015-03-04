@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HS.SALESModel.Store" Provider="U2.Data.Client.4.5" ProviderManifestToken="UNIVERSE, 11.1.14" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="CUSTID" />
+    </Key>
+    <Property Name="CUSTID" Type="integer" Nullable="false" />
+    <Property Name="SAL" Type="varchar" MaxLength="254" />
+    <Property Name="FNAME" Type="varchar" MaxLength="254" />
+    <Property Name="LNAME" Type="varchar" MaxLength="254" />
+    <Property Name="FULLNAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="COMPANY" Type="varchar" MaxLength="254" />
+    <Property Name="ADDR1" Type="varchar" MaxLength="254" />
+    <Property Name="ADDR2" Type="varchar" MaxLength="254" />
+    <Property Name="FULLADDR" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="CITY" Type="varchar" MaxLength="254" />
+    <Property Name="STATE" Type="varchar" MaxLength="254" />
+    <Property Name="STATENAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="ZIP" Type="varchar" MaxLength="254" />
+    <Property Name="PHONE" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="CUSTOMER_ORDERS">
+    <Key>
+      <PropertyRef Name="CUSTID" />
+      <PropertyRef Name="@ASSOC_ROW" />
+    </Key>
+    <Property Name="CUSTID" Type="integer" Nullable="false" />
+    <Property Name="PRODID" Type="varchar" MaxLength="254" />
+    <Property Name="DESCRIPTION" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="SER_NUM" Type="varchar" MaxLength="254" />
+    <Property Name="BUY_DATE" Type="date" />
+    <Property Name="PAID_DATE" Type="date" />
+    <Property Name="LIST_PRICE" Type="integer" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="PRICE" Type="integer" />
+    <Property Name="DISCOUNT" Type="numeric" Precision="4" Scale="1" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="SVC_START" Type="date" />
+    <Property Name="SVC_END" Type="date" />
+    <Property Name="SVC_PRICE" Type="integer" />
+    <Property Name="SVC_PAID_DATE" Type="date" />
+    <Property Name="@ASSOC_ROW" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PRODUCTS">
+    <Key>
+      <PropertyRef Name="PRODID" />
+    </Key>
+    <Property Name="PRODID" Type="varchar" MaxLength="254" Nullable="false" />
+    <Property Name="LIST" Type="integer" />
+    <Property Name="DESCRIPTION" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="STATES">
+    <Key>
+      <PropertyRef Name="CODE" />
+    </Key>
+    <Property Name="CODE" Type="varchar" MaxLength="254" Nullable="false" />
+    <Property Name="NAME" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <Association Name="CUSTOMER_CUSTOMER_ORDERS">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CUSTOMER_ORDERS" Type="Self.CUSTOMER_ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUSTID" />
+      </Principal>
+      <Dependent Role="CUSTOMER_ORDERS">
+        <PropertyRef Name="CUSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="f_" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="" StoreFunctionName="%" />
+  <EntityContainer Name="HSSALESModelStoreContainer">
+    <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="UVACCT" store:Type="Tables" />
+    <EntitySet Name="CUSTOMER_ORDERS" EntityType="Self.CUSTOMER_ORDERS" Schema="UVACCT" store:Type="Tables" />
+    <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="UVACCT" store:Type="Tables" />
+    <EntitySet Name="STATES" EntityType="Self.STATES" Schema="UVACCT" store:Type="Tables" />
+    <AssociationSet Name="CUSTOMER_CUSTOMER_ORDERS" Association="Self.CUSTOMER_CUSTOMER_ORDERS">
+      <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+      <End Role="CUSTOMER_ORDERS" EntitySet="CUSTOMER_ORDERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

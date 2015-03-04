@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HSSALESModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="CUSTOMERs">
+      <EntityTypeMapping TypeName="HS.SALESModel.CUSTOMER">
+        <MappingFragment StoreEntitySet="CUSTOMER">
+          <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+          <ScalarProperty Name="SAL" ColumnName="SAL" />
+          <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+          <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+          <ScalarProperty Name="ADDR1" ColumnName="ADDR1" />
+          <ScalarProperty Name="ADDR2" ColumnName="ADDR2" />
+          <ScalarProperty Name="FULLADDR" ColumnName="FULLADDR" />
+          <ScalarProperty Name="CITY" ColumnName="CITY" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="STATENAME" ColumnName="STATENAME" />
+          <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUSTOMER_ORDERS">
+      <EntityTypeMapping TypeName="HS.SALESModel.CUSTOMER_ORDERS">
+        <MappingFragment StoreEntitySet="CUSTOMER_ORDERS">
+          <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+          <ScalarProperty Name="PRODID" ColumnName="PRODID" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="SER_NUM" ColumnName="SER_NUM" />
+          <ScalarProperty Name="BUY_DATE" ColumnName="BUY_DATE" />
+          <ScalarProperty Name="PAID_DATE" ColumnName="PAID_DATE" />
+          <ScalarProperty Name="LIST_PRICE" ColumnName="LIST_PRICE" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+          <ScalarProperty Name="SVC_START" ColumnName="SVC_START" />
+          <ScalarProperty Name="SVC_END" ColumnName="SVC_END" />
+          <ScalarProperty Name="SVC_PRICE" ColumnName="SVC_PRICE" />
+          <ScalarProperty Name="SVC_PAID_DATE" ColumnName="SVC_PAID_DATE" />
+          <ScalarProperty Name="C_ASSOC_ROW" ColumnName="@ASSOC_ROW" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUCTS">
+      <EntityTypeMapping TypeName="HS.SALESModel.PRODUCT">
+        <MappingFragment StoreEntitySet="PRODUCTS">
+          <ScalarProperty Name="PRODID" ColumnName="PRODID" />
+          <ScalarProperty Name="LIST" ColumnName="LIST" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STATES">
+      <EntityTypeMapping TypeName="HS.SALESModel.STATE">
+        <MappingFragment StoreEntitySet="STATES">
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

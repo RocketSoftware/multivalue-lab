@@ -1,0 +1,105 @@
+﻿@model IEnumerable<WebApplication1.CUSTOMER>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Customers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SAL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FULLNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COMPANY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ADDR1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ADDR2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FULLADDR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CITY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATENAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ZIP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PHONE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SAL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FULLNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMPANY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ADDR1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ADDR2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FULLADDR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CITY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATENAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ZIP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PHONE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CUSTID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CUSTID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CUSTID })
+        </td>
+    </tr>
+}
+
+</table>
