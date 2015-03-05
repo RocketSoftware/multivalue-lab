@@ -1,4 +1,4 @@
-project-pylon
+project-python
 =============
 
-Project Pylon examples
+Project Python examples
