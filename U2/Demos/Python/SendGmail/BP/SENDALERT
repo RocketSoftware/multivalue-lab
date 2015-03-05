@@ -1,0 +1,59 @@
+*****************************************************************************
+*
+*  Program:     SENDALERT
+*  Desc:           This sample program sends a hardware failure notification to 
+*                      a system administrator with the use of Python’s smtplib and 
+*                      Google Gmail SMTP server. 
+*                      The U2 Basic program prompts the user for sender’s and recipient’s 
+*                       email addresses, message subject and body, Gmail username 
+*                       and password.
+*                       It demonstrates the use of the new function in U2 Basic, 
+*                       PyCallFunction(), by calling the Python function sendalert().
+*
+*                       Python function SendAlert() uses input parameters received from 
+*                       SENDALERT_PYFUNC to construct the email message text
+*                       and sends it through GMail server.
+*
+*****************************************************************************
+
+ModuleName = "notification"
+FuncName = "sendalert"
+* import the module
+pymodule = PyImport(ModuleName)
+* provide exception information on failure to import
+IF @PYEXCEPTIONTYPE NE '' THEN
+
+	PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+	PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+	PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+END
+
+PRINT "Enter Sender's Address: "; INPUT fromaddr
+
+PRINT "Enter Recipient's Address: "; INPUT toaddrs
+
+PRINT "Enter Message Subject: "; INPUT subject
+
+PRINT "Enter Message Body: "; INPUT msgtext
+
+ECHO OFF
+
+PRINT "(Authentication) enter gmail username: "; INPUT username
+PRINT "(Authentication) enter user password: "; INPUT password
+
+ECHO ON
+
+* call the Python function
+pyresult = PyCallFunction(ModuleName, FuncName, fromaddr, toaddrs, |
+		subject, msgtext, username, password)
+
+* check the outcome and print exception and traceback information 
+* if an exception was raised
+IF @PYEXCEPTIONTYPE = '' THEN
+	PRINT "Successfully sent the message to ":toaddrs
+END ELSE
+	PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+	PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+	PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+END
+*********************************************************************************************
