@@ -39,6 +39,7 @@
                 width: 800,
                 modal: true
             });
+            
         });
     </script>
 </head>
@@ -79,17 +80,6 @@
 
     <div class="container">
 
-  <!-- Modal1 -->
-  <style>
-  .modal {
-	width:500px;
-	height:400px;
-	background-color:white;
-	margin-top:100px;
-	margin-left:25%;
-  }
-  </style>
-
         <!-- Breadcrumb -->
         <div class="row">
 
@@ -111,7 +101,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" ng-model="filterText">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                            <button class="btn btn-default" type="button" ng-click="SampleSubroutine()"><i class="fa fa-search"></i>
+                                Use Server Subroutine
                             </button>
                         </span>
                     </div>
@@ -141,6 +132,11 @@
     </div>
     <!-- /.container -->
 
+    <!-- Modal message form for utility -->
+	<div id="dialog-message" title="Information" style="display:none;" class="container">
+        <span>{{ messageText }}</span>
+    </div>
+    
     <!-- Modal CUSTOMER edit form -->
 	<div id="dialog-form" title="Customer Maintenance" style="display:none;" class="container">
 	  <div ng-form="frmCustomer">
@@ -227,7 +223,6 @@
 	  </div>
 	</div>
 
-
     <!-- Footer -->
     <div class="container">
 
@@ -243,8 +238,5 @@
 
     </div>
     <!-- /.container -->
-
-
-</body>
-
+    </body>
 </html>
