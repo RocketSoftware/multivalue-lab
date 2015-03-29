@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="DataSource2">
+  <ConnectionProperties>
+    <Extension>U2</Extension>
+    <ConnectString>Database=demo;User ID=admin;Password=u2;Server=192.168.102.132;Persist Security Info=True;ServerType=UNIDATA;AccessMode=Native;RpcServiceType=udcs</ConnectString>
+    <IntegratedSecurity>true</IntegratedSecurity>
+  </ConnectionProperties>
+  <DataSourceID>468af6f4-8736-414c-9204-54bc8cd5329a</DataSourceID>
+</RptDataSource>
