@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>U2 Demo</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body ng-app="" ng-controller="customersController">
+    <h3>Load Customers using Node.js/Edge.js (Server) and Angular.js (Client)</h3>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Edit</th>
+                    <th>ID</th>
+                    <th>FNAME</th>
+                    <th>LNAME</th>
+                    <!--<th>BUY_DATE</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="name in names">
+                    <td>
+                        <button class="btn" ng-click="editUser(name)">
+                            <span class="glyphicon glyphicon-pencil"></span>  Edit
+                        </button>
+                    </td>
+                    <td>{{ name.CUSTID }}</td>
+                    <td>{{ name.FNAME }}</td>
+                    <td>{{ name.LNAME }}</td>
+                    <!--<td>{{ name.BUY_DATE }}</td>-->
+                </tr>
+            </tbody>
+        </table>
+        
+       
+        <h3 ng-hide="edit">Edit User:</h3>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">ID:</label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="CUSTID" ng-disabled="edit" placeholder="ID">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="FNAME" ng-disabled="edit" placeholder="First Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Last Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="LNAME" ng-disabled="edit" placeholder="Last Name">
+                </div>
+            </div>
+            <hr />
+
+            <button class="btn btn-success" ng-click="saveUser(name)" >
+                <span class="glyphicon glyphicon-save"></span>  Save Changes
+            </button>
+            
+        </form>
+
+    </div>
+    <script>
+        function customersController($scope, $http) {
+           
+            $http.get("/api/list")
+            .success(function (response) {
+                $scope.names = response;
+                
+            });
+            $scope.editUser = function (cust) {
+                $scope.CUSTID = cust.CUSTID;
+                $scope.FNAME = cust.FNAME;
+                $scope.LNAME = cust.LNAME;
+            };
+            $scope.saveUser = function (cust) {
+                var id2 = $scope.CUSTID;
+                var cust2 = $scope.names[id2 - 1];
+                cust2.FNAME = $scope.FNAME;
+                cust2.LNAME = $scope.LNAME;
+                var t1 = 'api/list/' + id2;
+                $http.put(t1,cust2 );
+               
+            };
+
+        }
+       
+    </script>
+</body>
+</html>
