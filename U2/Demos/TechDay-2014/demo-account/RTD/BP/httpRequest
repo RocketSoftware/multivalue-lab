@@ -1,0 +1,43 @@
+*******************************************************************************
+*       Program httpRequest
+*       Copyright (C) 2014
+*******************************************************************************
+*  Author: Michael Byrne
+*  Created on :Jul 9, 2014
+*  Description:
+*
+*****************************************************************************
+SUBROUTINE httpRequest(url, method, postData, header, response, httpStatus, status) 
+	DEBUG = 0
+	LOG.FILE = "rlinkpost_":INT(TIME()):".log"
+	IF DEBUG THEN status = protocolLogging(LOG.FILE,"ON","10")
+	
+	IF DEBUG THEN PRINT "Creating request..."
+	status = createRequest(url, method, hRequest)
+
+	IF status THEN
+		response = 'createRequest error: ':status
+		RETURN
+	END ELSE
+		IF method = "POST" THEN
+			IF DEBUG THEN PRINT "Setting Content-Type..."
+			status = setRequestHeader(hRequest, "Content-Type", "application/octet-stream")
+			IF status#0 THEN
+				response = 'addRequestParameter error: ':status
+				RETURN
+			END
+		end
+				
+		IF DEBUG THEN PRINT "Submitting request..."
+		status = submitRequest(hRequest, 5000, postData, header, response, httpStatus)
+		IF status THEN
+			response = 'submitRequest error: ':status
+			RETURN
+		END
+	END
+
+
+	IF DEBUG THEN status = protocolLogging(LOG.FILE,"OFF","10")
+	
+RETURN
+

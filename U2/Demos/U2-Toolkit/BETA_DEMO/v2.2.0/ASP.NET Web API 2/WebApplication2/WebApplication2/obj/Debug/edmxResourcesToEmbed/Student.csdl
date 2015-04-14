@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="STUDENT_CGA_MS_SUB">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CGA_MV_KEY" />
+      <PropertyRef Name="CGA_MS_KEY" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CGA_MV_KEY" Type="Int32" Nullable="false" />
+    <Property Name="CGA_MS_KEY" Type="Int32" Nullable="false" />
+    <Property Name="COURSE_NBR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="COURSE_HOURS" Type="String" MaxLength="254" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="COURSE_NAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="TEACHER" Type="String" MaxLength="254" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="COURSE_GRD" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="STUDENT_CGA_MV_SUB" Relationship="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" FromRole="STUDENT_CGA_MS_SUB" ToRole="STUDENT_CGA_MV_SUB" />
+  </EntityType>
+  <EntityType Name="STUDENT_CGA_MV_SUB">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CGA_MV_KEY" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CGA_MV_KEY" Type="Int32" Nullable="false" />
+    <Property Name="SEMESTER" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="STUDENT_CGA_MS_SUB" Relationship="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" FromRole="STUDENT_CGA_MV_SUB" ToRole="STUDENT_CGA_MS_SUB" />
+    <NavigationProperty Name="STUDENT_NF_SUB" Relationship="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" FromRole="STUDENT_CGA_MV_SUB" ToRole="STUDENT_NF_SUB" />
+  </EntityType>
+  <EntityType Name="STUDENT_NF_SUB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="FNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="MAJOR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="MINOR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="ADVISOR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="GPA1" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="STUDENT_CGA_MV_SUB" Relationship="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" FromRole="STUDENT_NF_SUB" ToRole="STUDENT_CGA_MV_SUB" />
+  </EntityType>
+  <Association Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+    <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STUDENT_CGA_MS_SUB" Type="Self.STUDENT_CGA_MS_SUB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT_CGA_MV_SUB">
+        <PropertyRef Name="ID" />
+        <PropertyRef Name="CGA_MV_KEY" />
+      </Principal>
+      <Dependent Role="STUDENT_CGA_MS_SUB">
+        <PropertyRef Name="ID" />
+        <PropertyRef Name="CGA_MV_KEY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+    <End Role="STUDENT_NF_SUB" Type="Self.STUDENT_NF_SUB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT_NF_SUB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STUDENT_CGA_MV_SUB">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="demoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="STUDENT_CGA_MS_SUB" EntityType="Self.STUDENT_CGA_MS_SUB" />
+    <EntitySet Name="STUDENT_CGA_MV_SUB" EntityType="Self.STUDENT_CGA_MV_SUB" />
+    <EntitySet Name="STUDENT_NF_SUB" EntityType="Self.STUDENT_NF_SUB" />
+    <AssociationSet Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" Association="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+      <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+      <End Role="STUDENT_CGA_MS_SUB" EntitySet="STUDENT_CGA_MS_SUB" />
+    </AssociationSet>
+    <AssociationSet Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" Association="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+      <End Role="STUDENT_NF_SUB" EntitySet="STUDENT_NF_SUB" />
+      <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

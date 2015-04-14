@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Customer List</title>
+
+    <link href="jquery-ui-1.11.2/jquery-ui.css" rel="stylesheet" />
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+	<link href="css/modern-business.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- jQuery, Angular, Bootstrap -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="lib/angular/angular.js" type="text/javascript" language="javascript"></script>
+    <script src="lib/angular/angular-route.js" type="text/javascript" language="javascript"></script>
+    <script src="lib/angular/angular-resource.js" type="text/javascript" language="javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" language="javascript"></script>
+    <script src="js/modern-business.js" type="text/javascript" language="javascript"></script>
+    <script src="js/jquery-ui-1.11.0.js"></script>
+
+    <!-- Angular Core JS -->
+    <script src="js/app.js" type="text/javascript" language="javascript"></script>
+
+    <!-- Controllers -->
+    <script src="js/controllers.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript" language="JavaScript">
+        $(function() {
+            $("#dialog-form").dialog({
+                autoOpen: false,
+                height: 550,
+                width: 800,
+                modal: true
+            });
+            
+        });
+    </script>
+</head>
+
+<body ng-controller="CustController">
+
+    <!-- Nav bar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Rocket MV Tech Day</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tech Day Menu <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="customers.html">Customer Maintenance</a>
+                            </li>
+                            <li><a href="dashboard.html">Executive Dashboard</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <div class="row">
+
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Customer List</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <!-- Filter div -->
+		<div class="row">
+            <div class="col-lg-8">
+                <div class="well">
+                    <h4>Filter Results</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="filterText">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="SampleSubroutine()"><i class="fa fa-search"></i>
+                                Use Server Subroutine
+                            </button>
+                        </span>
+                    </div>
+                    <small class="text-muted">
+                        Typing in the filter box will use client-side Angular filtering real-time.
+                        To call a subroutine on the backend, click the button.
+                    </small>
+                </div>
+            </div>
+		</div>
+
+        <!-- Customer list -->
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <h1><a href="#">Customer List</a></h1>
+                <table class="table table-striped">
+                    <tr ng-repeat="customer in customers | filter:filterText">
+                        <td><a ng-click="EditCustomer(customer._id)" style="cursor:default;">{{ customer._id }}</a></td>
+                        <td>{{ customer.first_name }}</td>
+                        <td>{{ customer.last_name }}</td>
+                        <td>{{ customer.city }}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Modal message form for utility -->
+	<div id="dialog-message" title="Information" style="display:none;" class="container">
+        <span>{{ messageText }}</span>
+    </div>
+    
+    <!-- Modal CUSTOMER edit form -->
+	<div id="dialog-form" title="Customer Maintenance" style="display:none;" class="container">
+	  <div ng-form="frmCustomer">
+		<div class="row">
+            <div class="form-group col-lg-6">
+                <label for="code">First Name</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.first_name"  />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="code">Last Name</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.last_name" />
+            </div>
+        </div>
+		<div class="row">
+		</div>
+		<div class="row">
+            <div class="form-group col-lg-12">
+                <label for="code">Address</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.address" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-lg-6">
+                <label for="code">City</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.city" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">State</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.state" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Zip</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.zip" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-sm-4">
+                <label for="code">Email Address</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.email_address" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="code">Home Phone</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.home_phone" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="code">Cell Phone</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.cell_phone" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-lg-3">
+                <label for="code">Birthdate</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.birthdate" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Status</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.status" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Sales</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.sales" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Cost</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.cost" />
+            </div>
+        </div>
+		<hr />
+		<div class="row">
+            <div class="form-group col-lg-12">
+                <label for="code">Notes</label>
+				<table class="table table-striped">
+					<tr ng-repeat="note in selectedCustomer.notes_list.notes">
+						<td>{{note.note_date}}</td>
+                        <td>{{note.note_text}}</td>
+					</tr>
+				</table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="btn btn-primary pull-right" ng-click="CancelCustomer()" style="margin-right:10px;">Cancel</div>
+            <div class="btn btn-primary pull-right" ng-click="SaveCustomer()" style="margin-right:10px;">Save</div>
+        </div>
+	  </div>
+	</div>
+
+    <!-- Footer -->
+    <div class="container">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Rocket Software 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    </body>
+</html>

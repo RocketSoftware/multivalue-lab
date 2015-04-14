@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel.Store" Provider="U2.Data.Client.4.5" ProviderManifestToken="UNIDATA, 7.3.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="STUDENT_CGA_MS_SUB">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CGA_MV_KEY" />
+      <PropertyRef Name="CGA_MS_KEY" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="254" Nullable="false" />
+    <Property Name="CGA_MV_KEY" Type="int" Nullable="false" />
+    <Property Name="CGA_MS_KEY" Type="int" Nullable="false" />
+    <Property Name="COURSE_NBR" Type="varchar" MaxLength="254" />
+    <Property Name="COURSE_HOURS" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+    <Property Name="COURSE_NAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+    <Property Name="TEACHER" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+    <Property Name="COURSE_GRD" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="STUDENT_CGA_MV_SUB">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CGA_MV_KEY" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="254" Nullable="false" />
+    <Property Name="CGA_MV_KEY" Type="int" Nullable="false" />
+    <Property Name="SEMESTER" Type="varchar" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="STUDENT_NF_SUB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="254" Nullable="false" />
+    <Property Name="LNAME" Type="varchar" MaxLength="254" />
+    <Property Name="FNAME" Type="varchar" MaxLength="254" />
+    <Property Name="MAJOR" Type="varchar" MaxLength="254" />
+    <Property Name="MINOR" Type="varchar" MaxLength="254" />
+    <Property Name="ADVISOR" Type="varchar" MaxLength="254" />
+    <Property Name="GPA1" Type="float" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <Association Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+    <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STUDENT_CGA_MS_SUB" Type="Self.STUDENT_CGA_MS_SUB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT_CGA_MV_SUB">
+        <PropertyRef Name="ID" />
+        <PropertyRef Name="CGA_MV_KEY" />
+      </Principal>
+      <Dependent Role="STUDENT_CGA_MS_SUB">
+        <PropertyRef Name="ID" />
+        <PropertyRef Name="CGA_MV_KEY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+    <End Role="STUDENT_NF_SUB" Type="Self.STUDENT_NF_SUB" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT_NF_SUB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STUDENT_CGA_MV_SUB">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="demoModelStoreContainer">
+    <EntitySet Name="STUDENT_CGA_MS_SUB" EntityType="Self.STUDENT_CGA_MS_SUB" Schema="RKumar" store:Type="Tables" />
+    <EntitySet Name="STUDENT_CGA_MV_SUB" EntityType="Self.STUDENT_CGA_MV_SUB" Schema="RKumar" store:Type="Tables" />
+    <EntitySet Name="STUDENT_NF_SUB" EntityType="Self.STUDENT_NF_SUB" Schema="RKumar" store:Type="Tables" />
+    <AssociationSet Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" Association="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+      <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+      <End Role="STUDENT_CGA_MS_SUB" EntitySet="STUDENT_CGA_MS_SUB" />
+    </AssociationSet>
+    <AssociationSet Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" Association="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+      <End Role="STUDENT_NF_SUB" EntitySet="STUDENT_NF_SUB" />
+      <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="demoModel.Store" Provider="U2.Data.Client.4.5" ProviderManifestToken="UNIDATA, 7.3.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="STUDENT_CGA_MS_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="CGA_MV_KEY" />
+            <PropertyRef Name="CGA_MS_KEY" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="CGA_MV_KEY" Type="int" Nullable="false" />
+          <Property Name="CGA_MS_KEY" Type="int" Nullable="false" />
+          <Property Name="COURSE_NBR" Type="varchar" MaxLength="254" />
+          <Property Name="COURSE_HOURS" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="COURSE_NAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="TEACHER" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" />
+          <Property Name="COURSE_GRD" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="STUDENT_CGA_MV_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="CGA_MV_KEY" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="CGA_MV_KEY" Type="int" Nullable="false" />
+          <Property Name="SEMESTER" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="STUDENT_NF_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="LNAME" Type="varchar" MaxLength="254" />
+          <Property Name="FNAME" Type="varchar" MaxLength="254" />
+          <Property Name="MAJOR" Type="varchar" MaxLength="254" />
+          <Property Name="MINOR" Type="varchar" MaxLength="254" />
+          <Property Name="ADVISOR" Type="varchar" MaxLength="254" />
+          <Property Name="GPA1" Type="float" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+          <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STUDENT_CGA_MS_SUB" Type="Self.STUDENT_CGA_MS_SUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT_CGA_MV_SUB">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="CGA_MV_KEY" />
+            </Principal>
+            <Dependent Role="STUDENT_CGA_MS_SUB">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="CGA_MV_KEY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+          <End Role="STUDENT_NF_SUB" Type="Self.STUDENT_NF_SUB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT_NF_SUB">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="STUDENT_CGA_MV_SUB">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="demoModelStoreContainer">
+          <EntitySet Name="STUDENT_CGA_MS_SUB" EntityType="Self.STUDENT_CGA_MS_SUB" Schema="RKumar" store:Type="Tables" />
+          <EntitySet Name="STUDENT_CGA_MV_SUB" EntityType="Self.STUDENT_CGA_MV_SUB" Schema="RKumar" store:Type="Tables" />
+          <EntitySet Name="STUDENT_NF_SUB" EntityType="Self.STUDENT_NF_SUB" Schema="RKumar" store:Type="Tables" />
+          <AssociationSet Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" Association="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+            <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+            <End Role="STUDENT_CGA_MS_SUB" EntitySet="STUDENT_CGA_MS_SUB" />
+          </AssociationSet>
+          <AssociationSet Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" Association="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+            <End Role="STUDENT_NF_SUB" EntitySet="STUDENT_NF_SUB" />
+            <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="demoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="STUDENT_CGA_MS_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="CGA_MV_KEY" />
+            <PropertyRef Name="CGA_MS_KEY" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CGA_MV_KEY" Type="Int32" Nullable="false" />
+          <Property Name="CGA_MS_KEY" Type="Int32" Nullable="false" />
+          <Property Name="COURSE_NBR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="COURSE_HOURS" Type="String" MaxLength="254" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COURSE_NAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TEACHER" Type="String" MaxLength="254" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COURSE_GRD" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="STUDENT_CGA_MV_SUB" Relationship="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" FromRole="STUDENT_CGA_MS_SUB" ToRole="STUDENT_CGA_MV_SUB" />
+        </EntityType>
+        <EntityType Name="STUDENT_CGA_MV_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="CGA_MV_KEY" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CGA_MV_KEY" Type="Int32" Nullable="false" />
+          <Property Name="SEMESTER" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="STUDENT_CGA_MS_SUB" Relationship="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" FromRole="STUDENT_CGA_MV_SUB" ToRole="STUDENT_CGA_MS_SUB" />
+          <NavigationProperty Name="STUDENT_NF_SUB" Relationship="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" FromRole="STUDENT_CGA_MV_SUB" ToRole="STUDENT_NF_SUB" />
+        </EntityType>
+        <EntityType Name="STUDENT_NF_SUB">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="FNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="MAJOR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="MINOR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="ADVISOR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="GPA1" Type="Double" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="STUDENT_CGA_MV_SUB" Relationship="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" FromRole="STUDENT_NF_SUB" ToRole="STUDENT_CGA_MV_SUB" />
+        </EntityType>
+        <Association Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+          <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STUDENT_CGA_MS_SUB" Type="Self.STUDENT_CGA_MS_SUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT_CGA_MV_SUB">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="CGA_MV_KEY" />
+            </Principal>
+            <Dependent Role="STUDENT_CGA_MS_SUB">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="CGA_MV_KEY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+          <End Role="STUDENT_NF_SUB" Type="Self.STUDENT_NF_SUB" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="STUDENT_CGA_MV_SUB" Type="Self.STUDENT_CGA_MV_SUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT_NF_SUB">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="STUDENT_CGA_MV_SUB">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="demoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="STUDENT_CGA_MS_SUB" EntityType="Self.STUDENT_CGA_MS_SUB" />
+          <EntitySet Name="STUDENT_CGA_MV_SUB" EntityType="Self.STUDENT_CGA_MV_SUB" />
+          <EntitySet Name="STUDENT_NF_SUB" EntityType="Self.STUDENT_NF_SUB" />
+          <AssociationSet Name="STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB" Association="Self.STUDENT_CGA_MV_SUB_STUDENT_CGA_MS_SUB">
+            <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+            <End Role="STUDENT_CGA_MS_SUB" EntitySet="STUDENT_CGA_MS_SUB" />
+          </AssociationSet>
+          <AssociationSet Name="STUDENT_NF_SUB_STUDENT_CGA_MV_SUB" Association="Self.STUDENT_NF_SUB_STUDENT_CGA_MV_SUB">
+            <End Role="STUDENT_NF_SUB" EntitySet="STUDENT_NF_SUB" />
+            <End Role="STUDENT_CGA_MV_SUB" EntitySet="STUDENT_CGA_MV_SUB" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="demoModelStoreContainer" CdmEntityContainer="demoEntities">
+          <EntitySetMapping Name="STUDENT_CGA_MS_SUB">
+            <EntityTypeMapping TypeName="demoModel.STUDENT_CGA_MS_SUB">
+              <MappingFragment StoreEntitySet="STUDENT_CGA_MS_SUB">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CGA_MV_KEY" ColumnName="CGA_MV_KEY" />
+                <ScalarProperty Name="CGA_MS_KEY" ColumnName="CGA_MS_KEY" />
+                <ScalarProperty Name="COURSE_NBR" ColumnName="COURSE_NBR" />
+                <ScalarProperty Name="COURSE_HOURS" ColumnName="COURSE_HOURS" />
+                <ScalarProperty Name="COURSE_NAME" ColumnName="COURSE_NAME" />
+                <ScalarProperty Name="TEACHER" ColumnName="TEACHER" />
+                <ScalarProperty Name="COURSE_GRD" ColumnName="COURSE_GRD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENT_CGA_MV_SUB">
+            <EntityTypeMapping TypeName="demoModel.STUDENT_CGA_MV_SUB">
+              <MappingFragment StoreEntitySet="STUDENT_CGA_MV_SUB">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CGA_MV_KEY" ColumnName="CGA_MV_KEY" />
+                <ScalarProperty Name="SEMESTER" ColumnName="SEMESTER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENT_NF_SUB">
+            <EntityTypeMapping TypeName="demoModel.STUDENT_NF_SUB">
+              <MappingFragment StoreEntitySet="STUDENT_NF_SUB">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="MAJOR" ColumnName="MAJOR" />
+                <ScalarProperty Name="MINOR" ColumnName="MINOR" />
+                <ScalarProperty Name="ADVISOR" ColumnName="ADVISOR" />
+                <ScalarProperty Name="GPA1" ColumnName="GPA1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

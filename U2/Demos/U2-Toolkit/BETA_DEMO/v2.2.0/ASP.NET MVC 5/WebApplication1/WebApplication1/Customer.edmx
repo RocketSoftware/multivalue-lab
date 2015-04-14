@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HS.SALESModel.Store" Provider="U2.Data.Client.4.5" ProviderManifestToken="UNIVERSE, 11.1.14" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+          </Key>
+          <Property Name="CUSTID" Type="integer" Nullable="false" />
+          <Property Name="SAL" Type="varchar" MaxLength="254" />
+          <Property Name="FNAME" Type="varchar" MaxLength="254" />
+          <Property Name="LNAME" Type="varchar" MaxLength="254" />
+          <Property Name="FULLNAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="COMPANY" Type="varchar" MaxLength="254" />
+          <Property Name="ADDR1" Type="varchar" MaxLength="254" />
+          <Property Name="ADDR2" Type="varchar" MaxLength="254" />
+          <Property Name="FULLADDR" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="CITY" Type="varchar" MaxLength="254" />
+          <Property Name="STATE" Type="varchar" MaxLength="254" />
+          <Property Name="STATENAME" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="ZIP" Type="varchar" MaxLength="254" />
+          <Property Name="PHONE" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="CUSTOMER_ORDERS">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+            <PropertyRef Name="@ASSOC_ROW" />
+          </Key>
+          <Property Name="CUSTID" Type="integer" Nullable="false" />
+          <Property Name="PRODID" Type="varchar" MaxLength="254" />
+          <Property Name="DESCRIPTION" Type="varchar" MaxLength="254" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="SER_NUM" Type="varchar" MaxLength="254" />
+          <Property Name="BUY_DATE" Type="date" />
+          <Property Name="PAID_DATE" Type="date" />
+          <Property Name="LIST_PRICE" Type="integer" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="PRICE" Type="integer" />
+          <Property Name="DISCOUNT" Type="numeric" Precision="4" Scale="1" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="SVC_START" Type="date" />
+          <Property Name="SVC_END" Type="date" />
+          <Property Name="SVC_PRICE" Type="integer" />
+          <Property Name="SVC_PAID_DATE" Type="date" />
+          <Property Name="@ASSOC_ROW" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="PRODID" />
+          </Key>
+          <Property Name="PRODID" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="LIST" Type="integer" />
+          <Property Name="DESCRIPTION" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="STATES">
+          <Key>
+            <PropertyRef Name="CODE" />
+          </Key>
+          <Property Name="CODE" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <Association Name="CUSTOMER_CUSTOMER_ORDERS">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CUSTOMER_ORDERS" Type="Self.CUSTOMER_ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUSTID" />
+            </Principal>
+            <Dependent Role="CUSTOMER_ORDERS">
+              <PropertyRef Name="CUSTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="f_" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="" StoreFunctionName="%" />
+        <EntityContainer Name="HSSALESModelStoreContainer">
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="UVACCT" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER_ORDERS" EntityType="Self.CUSTOMER_ORDERS" Schema="UVACCT" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="UVACCT" store:Type="Tables" />
+          <EntitySet Name="STATES" EntityType="Self.STATES" Schema="UVACCT" store:Type="Tables" />
+          <AssociationSet Name="CUSTOMER_CUSTOMER_ORDERS" Association="Self.CUSTOMER_CUSTOMER_ORDERS">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="CUSTOMER_ORDERS" EntitySet="CUSTOMER_ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HS.SALESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+          </Key>
+          <Property Name="CUSTID" Type="Int32" Nullable="false" />
+          <Property Name="SAL" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="FNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="LNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="FULLNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COMPANY" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="ADDR1" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="ADDR2" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="FULLADDR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CITY" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="STATE" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="STATENAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="ZIP" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="PHONE" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CUSTOMER_ORDERS" Relationship="Self.CUSTOMER_CUSTOMER_ORDERS" FromRole="CUSTOMER" ToRole="CUSTOMER_ORDERS" />
+        </EntityType>
+        <EntityType Name="CUSTOMER_ORDERS">
+          <Key>
+            <PropertyRef Name="CUSTID" />
+            <PropertyRef Name="C_ASSOC_ROW" />
+          </Key>
+          <Property Name="CUSTID" Type="Int32" Nullable="false" />
+          <Property Name="PRODID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SER_NUM" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="BUY_DATE" Type="DateTime" />
+          <Property Name="PAID_DATE" Type="DateTime" />
+          <Property Name="LIST_PRICE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="PRICE" Type="Int32" />
+          <Property Name="DISCOUNT" Type="Decimal" Precision="4" Scale="1" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SVC_START" Type="DateTime" />
+          <Property Name="SVC_END" Type="DateTime" />
+          <Property Name="SVC_PRICE" Type="Int32" />
+          <Property Name="SVC_PAID_DATE" Type="DateTime" />
+          <Property Name="C_ASSOC_ROW" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.CUSTOMER_CUSTOMER_ORDERS" FromRole="CUSTOMER_ORDERS" ToRole="CUSTOMER" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="PRODID" />
+          </Key>
+          <Property Name="PRODID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LIST" Type="Int32" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="STATE">
+          <Key>
+            <PropertyRef Name="CODE" />
+          </Key>
+          <Property Name="CODE" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="CUSTOMER_CUSTOMER_ORDERS">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CUSTOMER_ORDERS" Type="Self.CUSTOMER_ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUSTID" />
+            </Principal>
+            <Dependent Role="CUSTOMER_ORDERS">
+              <PropertyRef Name="CUSTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CUSTOMERs" EntityType="Self.CUSTOMER" />
+          <EntitySet Name="CUSTOMER_ORDERS" EntityType="Self.CUSTOMER_ORDERS" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCT" />
+          <EntitySet Name="STATES" EntityType="Self.STATE" />
+          <AssociationSet Name="CUSTOMER_CUSTOMER_ORDERS" Association="Self.CUSTOMER_CUSTOMER_ORDERS">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="CUSTOMER_ORDERS" EntitySet="CUSTOMER_ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HSSALESModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="HS.SALESModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+                <ScalarProperty Name="SAL" ColumnName="SAL" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+                <ScalarProperty Name="ADDR1" ColumnName="ADDR1" />
+                <ScalarProperty Name="ADDR2" ColumnName="ADDR2" />
+                <ScalarProperty Name="FULLADDR" ColumnName="FULLADDR" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="STATENAME" ColumnName="STATENAME" />
+                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMER_ORDERS">
+            <EntityTypeMapping TypeName="HS.SALESModel.CUSTOMER_ORDERS">
+              <MappingFragment StoreEntitySet="CUSTOMER_ORDERS">
+                <ScalarProperty Name="CUSTID" ColumnName="CUSTID" />
+                <ScalarProperty Name="PRODID" ColumnName="PRODID" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="SER_NUM" ColumnName="SER_NUM" />
+                <ScalarProperty Name="BUY_DATE" ColumnName="BUY_DATE" />
+                <ScalarProperty Name="PAID_DATE" ColumnName="PAID_DATE" />
+                <ScalarProperty Name="LIST_PRICE" ColumnName="LIST_PRICE" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+                <ScalarProperty Name="SVC_START" ColumnName="SVC_START" />
+                <ScalarProperty Name="SVC_END" ColumnName="SVC_END" />
+                <ScalarProperty Name="SVC_PRICE" ColumnName="SVC_PRICE" />
+                <ScalarProperty Name="SVC_PAID_DATE" ColumnName="SVC_PAID_DATE" />
+                <ScalarProperty Name="C_ASSOC_ROW" ColumnName="@ASSOC_ROW" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS">
+            <EntityTypeMapping TypeName="HS.SALESModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCTS">
+                <ScalarProperty Name="PRODID" ColumnName="PRODID" />
+                <ScalarProperty Name="LIST" ColumnName="LIST" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATES">
+            <EntityTypeMapping TypeName="HS.SALESModel.STATE">
+              <MappingFragment StoreEntitySet="STATES">
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="demoModelStoreContainer" CdmEntityContainer="demoEntities">
+    <EntitySetMapping Name="STUDENT_CGA_MS_SUB">
+      <EntityTypeMapping TypeName="demoModel.STUDENT_CGA_MS_SUB">
+        <MappingFragment StoreEntitySet="STUDENT_CGA_MS_SUB">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CGA_MV_KEY" ColumnName="CGA_MV_KEY" />
+          <ScalarProperty Name="CGA_MS_KEY" ColumnName="CGA_MS_KEY" />
+          <ScalarProperty Name="COURSE_NBR" ColumnName="COURSE_NBR" />
+          <ScalarProperty Name="COURSE_HOURS" ColumnName="COURSE_HOURS" />
+          <ScalarProperty Name="COURSE_NAME" ColumnName="COURSE_NAME" />
+          <ScalarProperty Name="TEACHER" ColumnName="TEACHER" />
+          <ScalarProperty Name="COURSE_GRD" ColumnName="COURSE_GRD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STUDENT_CGA_MV_SUB">
+      <EntityTypeMapping TypeName="demoModel.STUDENT_CGA_MV_SUB">
+        <MappingFragment StoreEntitySet="STUDENT_CGA_MV_SUB">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CGA_MV_KEY" ColumnName="CGA_MV_KEY" />
+          <ScalarProperty Name="SEMESTER" ColumnName="SEMESTER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STUDENT_NF_SUB">
+      <EntityTypeMapping TypeName="demoModel.STUDENT_NF_SUB">
+        <MappingFragment StoreEntitySet="STUDENT_NF_SUB">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+          <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+          <ScalarProperty Name="MAJOR" ColumnName="MAJOR" />
+          <ScalarProperty Name="MINOR" ColumnName="MINOR" />
+          <ScalarProperty Name="ADVISOR" ColumnName="ADVISOR" />
+          <ScalarProperty Name="GPA1" ColumnName="GPA1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
