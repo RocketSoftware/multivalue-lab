@@ -1,0 +1,47 @@
+Sep 30, 2011 12:57:49 PM org.apache.coyote.http11.Http11AprProtocol pause
+INFO: Pausing Coyote HTTP/1.1 on http-8080
+Sep 30, 2011 12:57:49 PM org.apache.coyote.ajp.AjpAprProtocol pause
+INFO: Pausing Coyote AJP/1.3 on ajp-8009
+Sep 30, 2011 12:57:50 PM org.apache.catalina.core.StandardService stop
+INFO: Stopping service Catalina
+Sep 30, 2011 12:57:53 PM org.apache.coyote.http11.Http11AprProtocol destroy
+INFO: Stopping Coyote HTTP/1.1 on http-8080
+Sep 30, 2011 12:57:53 PM org.apache.coyote.ajp.AjpAprProtocol destroy
+INFO: Stopping Coyote AJP/1.3 on ajp-8009
+Sep 30, 2011 12:59:19 PM org.apache.catalina.core.AprLifecycleListener init
+INFO: Loaded APR based Apache Tomcat Native library 1.1.20.
+Sep 30, 2011 12:59:19 PM org.apache.catalina.core.AprLifecycleListener init
+INFO: APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+Sep 30, 2011 12:59:21 PM org.apache.coyote.http11.Http11AprProtocol init
+INFO: Initializing Coyote HTTP/1.1 on http-8080
+Sep 30, 2011 12:59:21 PM org.apache.coyote.ajp.AjpAprProtocol init
+INFO: Initializing Coyote AJP/1.3 on ajp-8009
+Sep 30, 2011 12:59:21 PM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 2520 ms
+Sep 30, 2011 12:59:21 PM org.apache.catalina.core.StandardService start
+INFO: Starting service Catalina
+Sep 30, 2011 12:59:21 PM org.apache.catalina.core.StandardEngine start
+INFO: Starting Servlet Engine: Apache Tomcat/6.0.32
+Sep 30, 2011 12:59:21 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deploying configuration descriptor host-manager.xml
+Sep 30, 2011 12:59:22 PM org.apache.catalina.startup.HostConfig deployDescriptor
+INFO: Deploying configuration descriptor manager.xml
+Sep 30, 2011 12:59:22 PM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive U2DataVu.war
+Sep 30, 2011 12:59:44 PM java.util.jar.Attributes read
+WARNING: Duplicate name in Manifest: Bundle-Localization.
+Ensure that the manifest does not have duplicate entries, and
+that blank lines separate individual sections in both your
+manifest and in the META-INF/MANIFEST.MF entry in the jar file.
+Sep 30, 2011 1:01:24 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory docs
+Sep 30, 2011 1:01:26 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory examples
+Sep 30, 2011 1:01:34 PM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory ROOT
+Sep 30, 2011 1:01:34 PM org.apache.coyote.http11.Http11AprProtocol start
+INFO: Starting Coyote HTTP/1.1 on http-8080
+Sep 30, 2011 1:01:34 PM org.apache.coyote.ajp.AjpAprProtocol start
+INFO: Starting Coyote AJP/1.3 on ajp-8009
+Sep 30, 2011 1:01:34 PM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 133609 ms

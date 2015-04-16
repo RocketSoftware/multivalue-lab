@@ -1,0 +1,24 @@
+SUBROUTINE RB.GET.NOTES
+********************************************************************************
+*   Program name :- RB.GET.NOTES
+*   Created:- 7/3/2014
+*------------------------------------------------------------------------------*
+*
+
+* In Properties:
+* --------------
+* ID
+*
+********************************************************************************
+$INCLUDE WWINSERT RBO.H
+
+err = RBO.getProperty('', "ID", ID)
+
+OPEN 'CUSTOMERS' TO F.CUST ELSE err=1
+OPEN 'NOTES' TO F.NOTES ELSE err=1
+
+NOTES = "Custom notes for customer ":ID
+
+err = RBO.setProperty('', "NOTES", NOTES)
+
+RETURN

@@ -1,0 +1,212 @@
+$INCLUDE UNIVERSE.INCLUDE UDO.H
+$INCLUDE UNIVERSE.INCLUDE SSL.H
+
+PROMPT ''
+EQU CRLF TO CHAR(13):CHAR(10)
+
+authstrength = "generous"
+svrclnt = 2
+BASE.RLINK = "http://localhost:8080/RLink/api"
+
+CALL HEADING("R/Link Demo Program")
+PRINT "User ID: ":
+INPUT UID
+IF UID = "" THEN UID = "u2"
+PRINT "Password: ":
+ECHO OFF
+INPUT PASS
+ECHO ON
+IF PASS = "" THEN PASS = "password"
+
+IF UID="" OR PASS="" THEN
+	PRINT "Invalid credentials"
+	STOP
+END
+
+LOOP
+	GOSUB MAIN.MENU
+	BEGIN CASE
+		CASE OPTION=1
+			CALL HEADING("Application Files")
+			GOSUB LIST.FILES
+		CASE OPTION=2
+			FILE.READ.SUCCESS = 1
+			CALL HEADING("Upload an existing file")
+			GOSUB LIST.FILES
+			GOSUB READ.FILE
+			IF FILE.READ.SUCCESS THEN
+				REMOTE.FILENAME = LOCAL.FILENAME
+				GOSUB UPLOAD.FILE
+			END
+		CASE OPTION=3
+			CALL HEADING("Upload data from U2 to file")
+			GOSUB DYNAMIC.FILE
+			PRINT "Name for file on remote: ":; INPUT REMOTE.FILENAME 
+			GOSUB UPLOAD.FILE
+		CASE OPTION=4
+			CALL HEADING("Remote R/Link Files")
+			GOSUB LIST.RLINK.FOLDER
+		CASE OPTION=""
+			EXIT
+	END CASE
+	GOSUB DO.PAUSE
+REPEAT
+PRINT @(-1)
+STOP
+* Main Program Ends
+
+MAIN.MENU:
+	CALL HEADING("R/Link Demo Program")
+	PRINT "1. List application files"
+	PRINT "2. Upload application file to R/Link"
+	PRINT "3. Create/Upload dynamic file to R/Link"
+	PRINT "4. List remote R/Link files"
+	PRINT
+	PRINT "Select Option (press enter to quit): ":
+	INPUT OPTION
+RETURN
+
+LIST.FILES:
+	OPEN "APPFILES" TO FILES ELSE
+		PRINT "UNABLE TO OPEN FILES DIRECTORY"
+	END
+
+
+	PRINT "Files in C:\DATA\accts\uv\RTD\APPFILES:";PRINT
+	SELECT FILES
+	LOOP
+		READNEXT ID ELSE EXIT
+		PRINT ID
+	REPEAT
+	CLOSE FILES
+	PRINT
+RETURN
+
+DO.PAUSE:
+	PRINT
+	PRINT "Press any key to continue...":
+	INPUT JUNK,1
+RETURN
+
+DYNAMIC.FILE:
+	POST.DATA = ""
+	POST.DATA := "10,Neckraiser C-1 FR Electric Guitar Black,$955.00,$1419.00"
+	POST.DATA := CRLF:"11,Guitar Slide for Dobro,$29.99,$40.49"
+	POST.DATA := CRLF:"12,DI Accoustic Guitar Preamp,$139.99,$186.19"
+	POST.DATA := CRLF:"13,Studded Guitar Strap,$11.99,$15.71"
+	POST.DATA := CRLF:"14,Bronze Trigger Style Capo,$14.99,$20.24"
+	POST.DATA := CRLF:"15,Custom Guitar Pickup in Nickel,$61.99,$86.17"
+	POST.DATA := CRLF:"16,Soundhole Magnetic Pickup,$89.49,$125.49"
+	POST.DATA := CRLF:"17,#1 Pick Pack 10,$4.98,$6.92"
+	POST.DATA := CRLF:"18,Electronic Energy Bow,$34.98,$46.52"
+
+	PRINT "Created the following CSV data in code:"
+	PRINT POST.DATA
+	PRINT
+	PRINT "Press any key to upload to R/Link...":; INPUT JUNK
+	
+RETURN
+
+READ.FILE:
+	PRINT "Filename to upload: ":; INPUT LOCAL.FILENAME
+	*** Read the file into a variable
+	FILEPATH = 'C:\DATA\TechDay\RTD\APPFILES\':LOCAL.FILENAME
+	OPENSEQ FILEPATH TO F.PDF ELSE
+		PRINT "Unable to open file: ":FILEPATH
+		FILE.READ.SUCCESS = 0
+		RETURN
+	END
+
+	POST.DATA = ""
+	BUFFER.SIZE = 2048
+	BYTES.READ = 2048
+
+	LOOP
+	WHILE BYTES.READ = BUFFER.SIZE
+		READBLK CHUNK FROM F.PDF, BUFFER.SIZE THEN
+			BYTES.READ = LEN(CHUNK)
+			POST.DATA := CHUNK
+		END
+	REPEAT
+
+	CLOSESEQ F.PDF
+RETURN
+
+*
+* UPLOAD.FILE: Submit the REST request.
+*
+UPLOAD.FILE:
+	
+	REQUEST.URL = BASE.RLINK:"/FilePut/My Shares/upload/":REMOTE.FILENAME
+	QS = "?user_id=":UID:"&password=":PASS:"&overwrite=true"
+	REQUEST.URL := QS
+	HTTP.METHOD = 'POST'
+
+	Header = ""; RESPONSE=""; httpStatus=""; status=""
+	CALL httpRequest(REQUEST.URL, HTTP.METHOD, POST.DATA, Header, RESPONSE, httpStatus, status)
+	
+
+	PRINT; PRINT
+	PRINT "---- HTTP Status ----":CRLF:httpStatus; PRINT
+	PRINT "---- Status ----":CRLF:status; PRINT
+	PRINT "---- Headers ----":CRLF:Header; PRINT
+	PRINT "---- Response ----":CRLF:RESPONSE; PRINT
+	
+RETURN
+
+LIST.RLINK.FOLDER:
+	REQUEST.URL = BASE.RLINK:"/List/My Shares/upload/?user_id=":UID:"&password=":PASS:"&list_contents=true"
+	HTTP.METHOD = 'GET'
+
+	Header = ""; RESPONSE=""; httpStatus=""; status=""
+	CALL httpRequest(REQUEST.URL, HTTP.METHOD, "", Header, RESPONSE, httpStatus, status)
+	RESPONSE = CHANGE(RESPONSE,"{",CRLF:"{")
+	RESPONSE = CHANGE(RESPONSE,",",CRLF:",")
+	PRINT "---- Response ----":CRLF:RESPONSE; PRINT
+	
+RETURN
+
+SUBROUTINE httpRequest(url, method, postData, header, response, httpStatus, status) 
+	DEBUG = 1
+	LOG.FILE = "rlinkpost_":INT(TIME()):".log"
+	IF DEBUG THEN status = protocolLogging(LOG.FILE,"ON","9")
+	
+	IF DEBUG THEN PRINT "Creating request..."
+	status = createRequest(url, method, hRequest)
+
+	IF status THEN
+		response = 'createRequest error: ':status
+		RETURN
+	END ELSE
+		IF method = "POST" THEN
+			IF DEBUG THEN PRINT "Setting Content-Type..."
+			status = setRequestHeader(hRequest, "Content-Type", "application/octet-stream")
+			IF status#0 THEN
+				response = 'addRequestParameter error: ':status
+				RETURN
+			END
+		end
+				
+		IF DEBUG THEN PRINT "Submitting request..."
+		status = submitRequest(hRequest, 5000, postData, header, response, httpStatus)
+		IF status THEN
+			response = 'submitRequest error: ':status
+			RETURN
+		END
+	END
+
+
+	IF DEBUG THEN status = protocolLogging(LOG.FILE,"OFF","9")
+	
+RETURN
+
+SUBROUTINE HEADING(H1)
+	HLEN = LEN(H1)+2
+	PRINT @(-1)
+	PRINT STR("*",HLEN)
+	PRINT " ":H1
+	PRINT STR("*",HLEN)
+	PRINT
+RETURN
+
+

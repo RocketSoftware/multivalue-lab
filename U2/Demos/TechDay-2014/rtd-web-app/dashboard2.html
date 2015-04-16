@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Customer List</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>    
+	<link href="css/modern-business.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	
+</head>
+
+<body ng-controller="CustController">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Rocket MV Tech Day</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tech Day Menu <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="customers.html">Customer Maintenance</a>
+                            </li>
+                            <li><a href="dashboard.html">Executive Dashboard</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+  <!-- Modal1 -->
+  <style>
+  .modal {
+	width:500px;
+	height:400px;
+	background-color:white;
+	margin-top:100px;
+	margin-left:25%;
+  }
+  </style>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Customer List</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+				<iframe width="1200" height="650" src="http://localhost:8080/CorVu/getObject?repository=Tech%20Day%20Connection&key=rsbi:/.workspaces/Demo1/CustomerDashPretty&toolbar=0" id="frame1" name="frame1" scrolling="yes" frameborder="0" align="left">
+				</iframe>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+	<div id="dialog-form" title="Customer Maintenance" style="display:none;">
+	  <div ng-form="frmCustomer">
+		<div class="row">
+            <div class="form-group col-lg-6">
+                <label for="code">First Name</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.first_name" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="code">Last Name</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.last_name" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-lg-12">
+                <label for="code">Address</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.address" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-lg-6">
+                <label for="code">City</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.city" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">State</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.state" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Zip</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.zip" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-lg-12">
+                <label for="code">Email Address</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.email_address" />
+            </div>
+        </div>
+		<hr />
+		<div class="row">
+            <div class="form-group col-lg-4">
+                <label for="code">Home Phone</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.home_phone" />
+            </div>
+            <div class="form-group col-lg-4">
+                <label for="code">Cell Phone</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.cell_phone" />
+            </div>
+        </div>
+		<div class="row">
+            <div class="form-group col-lg-3">
+                <label for="code">Birthdate</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.birthdate" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Status</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.status" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Sales</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.sales" />
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="code">Cost</label>
+                <input type="text" class="form-control input-sm" ng-model="selectedCustomer.cost" />
+            </div>
+        </div>
+		<hr />
+		<div class="row">
+            <div class="form-group col-lg-12">
+                <label for="code">Notes</label>
+				<table class="table table-striped">
+					<tr ng-repeat="note in selectedCustomer.notes">
+						<td>{{note}}</td>
+					</tr>
+				</table>
+            </div>
+        </div>
+	  </div>
+	</div>
+
+
+    <div class="container">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Rocket Software 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- JavaScript -->
+    <!--<script src="js/jquery-1.10.2.js" type="text/javascript" language="javascript"></script>-->
+    <script src="lib/angular/angular.js" type="text/javascript" language="javascript"></script>
+    <script src="lib/angular/angular-route.js" type="text/javascript" language="javascript"></script>
+    <script src="lib/angular/angular-resource.js" type="text/javascript" language="javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript" language="javascript"></script>
+    <script src="js/modern-business.js" type="text/javascript" language="javascript"></script>
+    <script src="js/app.js" type="text/javascript" language="javascript"></script>
+    <script src="js/filters.js" type="text/javascript" language="javascript"></script>
+    <script src="js/services/CustomerData.js" type="text/javascript" language="javascript"></script>
+    <script src="js/directives.js" type="text/javascript" language="javascript"></script>
+    <script src="js/controllers.js" type="text/javascript" language="javascript"></script>
+	
+</body>
+
+</html>

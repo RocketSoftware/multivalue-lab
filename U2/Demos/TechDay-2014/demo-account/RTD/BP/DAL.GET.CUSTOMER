@@ -1,0 +1,24 @@
+*******************************************************************************
+*       Program DAL.GET.CUSTOMER
+*       Copyright (C) 2014
+*******************************************************************************
+*  Author: Michael Byrne
+*  Created on :Jul 8, 2014
+*  Description:
+*
+*****************************************************************************
+SUBROUTINE DAL.GET.CUSTOMER( CUSTID, RTNVAL, RTNSTAT)
+	***
+	*** Common RTD code and variables
+	***
+	$INCLUDE RTD.INCLUDE RTD.H
+	CALL FILE.OPENS
+	
+	***	Main subroutine start ***
+	READ RTNVAL FROM FILES(F.CUSTOMERS),CUSTID THEN
+		RTNSTAT = 1
+	END ELSE
+		RTNSTAT = -1
+	END
+RETURN
+

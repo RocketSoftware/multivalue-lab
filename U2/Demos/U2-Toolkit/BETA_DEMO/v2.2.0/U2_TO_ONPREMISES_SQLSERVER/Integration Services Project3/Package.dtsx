@@ -1,0 +1,445 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/12/2015 4:36:39 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DEN-L-RK03"
+  DTS:CreatorName="ROCKET1\rkumar"
+  DTS:DTSID="{5B2BF3DA-21AF-4294-A124-CDA8853D3A07}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2344.23"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{EAB755C6-B6AC-4007-82CE-B8017CFA93B0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[192.168.102.132.HS.SALES.admin]"
+      DTS:CreationName="ADO.NET:U2.Data.Client.U2Connection, U2.Data.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=e2387a1682b4f882"
+      DTS:DTSID="{B2A04C56-B5B2-4A96-A53E-B407FE854A16}"
+      DTS:ObjectName="192.168.102.132.HS.SALES.admin">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=192.168.102.132;User ID=admin;Database=HS.SALES;Persist Security Info=True;ServerType=UNIVERSE;AccessMode=Uci;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">***</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.U2_DEMO]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{10D53416-DBF2-49B6-9120-37871B4746DD}"
+      DTS:ObjectName="LocalHost.U2_DEMO">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=U2_DEMO;Integrated Security=True;Application Name=SSIS-Package-{10D53416-DBF2-49B6-9120-37871B4746DD}LocalHost.U2_DEMO;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\U2_TO_SQLSERVER"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{70107F01-F6C9-4E68-B83C-3A22C31C90FB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="U2_TO_SQLSERVER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="SQL SERVER Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"CUSTOMER7"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.U2_DEMO]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.U2_DEMO]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].Columns[CUSTID]"
+                      cachedDataType="i4"
+                      cachedName="CUSTID"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[CUSTID]"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[CUSTID]" />
+                    <inputColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].Columns[SAL]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="SAL"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[SAL]"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[SAL]" />
+                    <inputColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].Columns[FNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="FNAME"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[FNAME]"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[FNAME]" />
+                    <inputColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].Columns[LNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="254"
+                      cachedName="LNAME"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[LNAME]"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[LNAME]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[CUSTID]"
+                      dataType="i4"
+                      name="CUSTID" />
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[SAL]"
+                      dataType="wstr"
+                      length="254"
+                      name="SAL" />
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[FNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="FNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input].ExternalColumns[LNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="LNAME" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\U2_TO_SQLSERVER\UNIVERSE Source"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="UNIVERSE Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT        CUSTID, SAL, FNAME, LNAME
+FROM            CUSTOMER</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[192.168.102.132.HS.SALES.admin]"
+                  connectionManagerRefId="Package.ConnectionManagers[192.168.102.132.HS.SALES.admin]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[CUSTID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[CUSTID]"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[CUSTID]"
+                      name="CUSTID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[SAL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[SAL]"
+                      length="254"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[SAL]"
+                      name="SAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[FNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[FNAME]"
+                      length="254"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[FNAME]"
+                      name="FNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[LNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[LNAME]"
+                      length="254"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].Columns[LNAME]"
+                      name="LNAME"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[CUSTID]"
+                      dataType="i4"
+                      name="CUSTID" />
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[SAL]"
+                      dataType="wstr"
+                      length="254"
+                      name="SAL" />
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[FNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="FNAME" />
+                    <externalMetadataColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output].ExternalColumns[LNAME]"
+                      dataType="wstr"
+                      length="254"
+                      name="LNAME" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[CUSTID]"
+                      dataType="i4"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[CUSTID]"
+                      name="CUSTID" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[SAL]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[SAL]"
+                      name="SAL" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[FNAME]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[FNAME]"
+                      name="FNAME" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[LNAME]"
+                      dataType="wstr"
+                      length="254"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[LNAME]"
+                      name="LNAME" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\U2_TO_SQLSERVER.Paths[ADO NET Source Output]"
+              endId="Package\U2_TO_SQLSERVER\SQL SERVER Destination.Inputs[ADO NET Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\U2_TO_SQLSERVER\UNIVERSE Source.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="174,42"
+          Id="Package\U2_TO_SQLSERVER"
+          TopLeft="42,86" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\U2_TO_SQLSERVER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\U2_TO_SQLSERVER\UNIVERSE Source"
+          TopLeft="140,24" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\U2_TO_SQLSERVER\SQL SERVER Destination"
+          TopLeft="266,249" />
+        <EdgeLayout
+          Id="Package\U2_TO_SQLSERVER.Paths[ADO NET Source Output]"
+          TopLeft="221.5,66">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="142,183"
+              Start="0,0"
+              End="142,175.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,87.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,87.5"
+                    Point2="0,91.5"
+                    Point3="4,91.5" />
+                  <mssgle:LineSegment
+                    End="138,91.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="138,91.5"
+                    Point2="142,91.5"
+                    Point3="142,95.5" />
+                  <mssgle:LineSegment
+                    End="142,175.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\U2_TO_SQLSERVER\UNIVERSE Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\U2_TO_SQLSERVER\SQL SERVER Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

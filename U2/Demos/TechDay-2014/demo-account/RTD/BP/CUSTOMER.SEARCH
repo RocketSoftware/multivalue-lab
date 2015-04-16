@@ -1,0 +1,147 @@
+SUBROUTINE CUSTOMER.SEARCH
+	$INCLUDE UNIVERSE.INCLUDE ATFUNCTIONS.H
+	$INCLUDE RTD.INCLUDE RTD.H
+	CALL FILE.OPENS
+	
+	PROMPT ""
+	ERR.MSG = ""
+	PAGE.SIZE = 15
+	PAGE.NUM = 1
+	EXIT.SUB = 0
+	
+	*********************
+	* Main program loop *
+	*********************
+	LOOP
+	WHILE 1
+		PRINT CLS
+		GOSUB DISP.NAV
+		GOSUB GET.FILTER
+		IF EXIT.SUB THEN EXIT
+		IF FILTER="" THEN EXIT
+		GOSUB GET.RECORDS
+		GOSUB DISP.RESULTS
+		IF EXIT.SUB THEN EXIT
+	REPEAT
+	
+	PRINT CLS
+RETURN
+	
+*******************************************************************************
+* Retrieve the records from the database
+*******************************************************************************
+GET.RECORDS:
+	IDS = ""
+	CONTACTS = ""
+	STMT = 'SELECT CUSTOMERS WITH UPNAME = "[':UPCASE(FILTER):']" BY LAST_NAME'
+	EXECUTE STMT CAPTURING OUT
+	READLIST IDS THEN
+		ITEM.CNT = DCOUNT(IDS,@AM)
+		FOR I1 = 1 TO ITEM.CNT
+			ID = IDS<I1>
+			READ CONTACT FROM FILES(F.CUSTOMERS),ID THEN
+				*
+				* Build list with format ID:@VM:First Last City
+				*
+				CONTACTS<-1> = IDS<I1>:@VM:FMT(ID,"7L"):FMT(CONTACT<2>,"15L"):FMT(CONTACT<1>,"15L"):FMT(CONTACT<6>,"15L")
+			END ELSE
+				* Not great code, added these to demonstrate possible issues
+				PRINT @(5,20):"Unable to read member ID ":IDS<I1>
+				STOP
+			END
+		NEXT
+	END ELSE
+		ITEM.CNT = 0
+	END
+	*
+	******
+	* To use the extracted data subroutine, comment above code in GET.RECORDS
+	* and uncomment the following 4 lines
+	*******
+	* RTNVAL = 0
+	* CONTACTS = ''
+	* CALL DAL.CUST.SEARCH(FILTER, CONTACTS, RTNVAL, 0)
+	* ITEM.CNT = DCOUNT(CONTACTS,@AM)
+	*
+RETURN
+
+*******************************************************************************
+* Display the returned records
+*******************************************************************************
+DISP.RESULTS:
+	VPOS = 4
+	CUR.ROW = VPOS
+	IF ITEM.CNT > 0 THEN
+		IF PAGE.NUM=1 THEN 
+			START=1 
+		END ELSE 
+			START=(PAGE.NUM*PAGE.SIZE)+1
+		END
+		HPOS = 40-(LEN(CONTACTS<1,2>)/2)
+		FOR I1 = START TO START+PAGE.SIZE
+			IF CUR.ROW = VPOS THEN PRINT @(IT$SREV):
+			PRINT @(HPOS,VPOS):CONTACTS<I1,2>
+			IF CUR.ROW = VPOS THEN PRINT @(IT$EREV):
+			VPOS += 1
+		NEXT
+
+		WAIT.FOR.CMD = 1
+		LOOP
+			PRINT @(0,22):@(IT$CLEOL)
+			PRINT @(10,22):"Input ID, (Q)uit, (N)ew search: ":
+		WHILE WAIT.FOR.CMD
+			INPUT USER.INPUT
+			BEGIN CASE
+				CASE UPCASE(USER.INPUT) = "Q"
+					WAIT.FOR.CMD = 0
+					EXIT.SUB = 1
+				CASE UPCASE(USER.INPUT) = "N"
+					WAIT.FOR.CMD = 0
+				CASE USER.INPUT MATCHES "4N"
+					RTN = ""
+					CALL CUSTOMER.MAINT(USER.INPUT, RTN)
+					WAIT.FOR.CMD = 0
+				CASE 1
+					PRINT @(0,22):@(IT$CLEOL)
+					PRINT @(10,22):"Invalid choice. Press any key...":
+					INPUT JUNK,1
+			END CASE
+		REPEAT
+	END ELSE
+		* Display no results message
+		PRINT @(15,VPOS):"No results found, press Enter to search again...":
+		INPUT JUNK,1
+	END
+RETURN
+	
+*******************************************************************************
+* Paint the navigation
+*******************************************************************************
+DISP.NAV:
+	PRINT @(IT$SREV)
+	TITLE = " CUSTOMER SEARCH "
+	TLEFT = 40-(LEN(TITLE)/2)
+	PRINT @(TLEFT,0):TITLE
+	PRINT @(IT$EREV)
+	PRINT @(IT$SBOLD)
+	PRINT @(0,0):"100.1"
+	PRINT @(0,23):"Esc-Main Menu":
+	PRINT @(IT$EBOLD):
+RETURN
+
+*******************************************************************************
+* Get the user key input
+*******************************************************************************
+GET.FILTER:
+	KEYEDIT (1,27)
+	KEYTRAP (1,27)
+	PRINT @(IT$SBOLD):@(10,2):"Name Search:  ":@(IT$EBOLD):
+	INPUT @(24,2):FILTER
+	X = STATUS()
+	IF X=1 THEN EXIT.SUB=1
+RETURN
+
+GO.BACK:
+	EXIT.SUB = 1
+RETURN
+

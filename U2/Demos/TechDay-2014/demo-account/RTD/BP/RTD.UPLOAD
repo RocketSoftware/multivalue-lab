@@ -1,0 +1,53 @@
+*******************************************************************************
+*       Program RTD.UPLOAD
+*       Copyright (C) 2014
+*******************************************************************************
+*  Author:		Michael Byrne
+*  Created on:	Jun 16, 2014
+*  Description:	Demo program to upload files via R/Link API
+*****************************************************************************
+SUBROUTINE RTD.CUST.UPLOAD(STATES, SALESVAL, RTNVAL)
+	$INCLUDE RTD.INCLUDE RTD.H
+	CALL FILE.OPENS
+	
+	RTNVAL = ''
+	rlinkbase = "http://localhost:8080/RLink/api/" 
+	querystring = "?user_id=u2&password=password&overwrite=true" 
+
+	FOR IDX = 1 TO DCOUNT(STATES,AM)
+		STATEVAL = STATES<IDX>
+		filename = "My Shares/upload/":STATEVAL:"_lowsales.xml"
+
+		**
+		**	Create the file and upload
+		**	
+		cmd = "FilePut/"
+		url = rlinkbase:cmd:filename:querystring
+		httpMethod = 'POST'
+	
+		STMT = "LIST CUSTOMERS WITH STATE=":STATEVAL:" AND SALES<":SALESVAL:" FULL_NAME CITY STATE SALES COST TOXML"
+		EXECUTE STMT CAPTURING postData
+		CONVERT AM TO '' IN postData
+		CONVERT CRLF TO '' IN postData
+		postData = postData[7,LEN(postData)]
+	
+		Header = ""; response=""; httpStatus=""; status=""
+		CALL httpRequest(url, httpMethod, postData, Header, response, httpStatus, status)
+		RTNVAL<IDX,1> = response
+	
+		**
+		**	Now create a clickable link to that file
+		**
+		cmd = "FileLink/"
+		url = rlinkbase:cmd:filename:querystring
+		httpMethod = 'GET'
+		postData = ''
+	
+		Header = ""; response=""; httpStatus=""; status=""
+		CALL httpRequest(url, httpMethod, postData, Header, response, httpStatus, status)
+		RTNVAL<IDX,2> = response
+	
+	NEXT	
+RETURN
+
+
