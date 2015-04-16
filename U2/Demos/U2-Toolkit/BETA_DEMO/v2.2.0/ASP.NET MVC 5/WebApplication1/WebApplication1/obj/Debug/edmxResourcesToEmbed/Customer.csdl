@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HS.SALESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="CUSTID" />
+    </Key>
+    <Property Name="CUSTID" Type="Int32" Nullable="false" />
+    <Property Name="SAL" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="FNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="LNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="FULLNAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="COMPANY" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="ADDR1" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="ADDR2" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="FULLADDR" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="CITY" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="STATE" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="STATENAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="ZIP" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="PHONE" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CUSTOMER_ORDERS" Relationship="Self.CUSTOMER_CUSTOMER_ORDERS" FromRole="CUSTOMER" ToRole="CUSTOMER_ORDERS" />
+  </EntityType>
+  <EntityType Name="CUSTOMER_ORDERS">
+    <Key>
+      <PropertyRef Name="CUSTID" />
+      <PropertyRef Name="C_ASSOC_ROW" />
+    </Key>
+    <Property Name="CUSTID" Type="Int32" Nullable="false" />
+    <Property Name="PRODID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="SER_NUM" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+    <Property Name="BUY_DATE" Type="DateTime" />
+    <Property Name="PAID_DATE" Type="DateTime" />
+    <Property Name="LIST_PRICE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="PRICE" Type="Int32" />
+    <Property Name="DISCOUNT" Type="Decimal" Precision="4" Scale="1" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="SVC_START" Type="DateTime" />
+    <Property Name="SVC_END" Type="DateTime" />
+    <Property Name="SVC_PRICE" Type="Int32" />
+    <Property Name="SVC_PAID_DATE" Type="DateTime" />
+    <Property Name="C_ASSOC_ROW" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.CUSTOMER_CUSTOMER_ORDERS" FromRole="CUSTOMER_ORDERS" ToRole="CUSTOMER" />
+  </EntityType>
+  <EntityType Name="PRODUCT">
+    <Key>
+      <PropertyRef Name="PRODID" />
+    </Key>
+    <Property Name="PRODID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LIST" Type="Int32" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="STATE">
+    <Key>
+      <PropertyRef Name="CODE" />
+    </Key>
+    <Property Name="CODE" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="CUSTOMER_CUSTOMER_ORDERS">
+    <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CUSTOMER_ORDERS" Type="Self.CUSTOMER_ORDERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMER">
+        <PropertyRef Name="CUSTID" />
+      </Principal>
+      <Dependent Role="CUSTOMER_ORDERS">
+        <PropertyRef Name="CUSTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CUSTOMERs" EntityType="Self.CUSTOMER" />
+    <EntitySet Name="CUSTOMER_ORDERS" EntityType="Self.CUSTOMER_ORDERS" />
+    <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCT" />
+    <EntitySet Name="STATES" EntityType="Self.STATE" />
+    <AssociationSet Name="CUSTOMER_CUSTOMER_ORDERS" Association="Self.CUSTOMER_CUSTOMER_ORDERS">
+      <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+      <End Role="CUSTOMER_ORDERS" EntitySet="CUSTOMER_ORDERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

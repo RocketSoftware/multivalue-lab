@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <CommandText>SELECT * FROM MEMBERS</CommandText>
+      <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+    </Query>
+    <Fields>
+      <Field Name="MEMBERS_PK">
+        <DataField>MEMBERS_PK</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SURNAME">
+        <DataField>SURNAME</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FIRST_NAME">
+        <DataField>FIRST_NAME</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="INITIAL">
+        <DataField>INITIAL</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TITLE">
+        <DataField>TITLE</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CITY">
+        <DataField>CITY</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="GENDER">
+        <DataField>GENDER</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="STATE_CODE">
+        <DataField>STATE_CODE</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ZIP">
+        <DataField>ZIP</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="EMAIL_ADDRESS">
+        <DataField>EMAIL.ADDRESS</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="HOME_PHONE">
+        <DataField>HOME.PHONE</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CELL_PHONE">
+        <DataField>CELL.PHONE</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PASSWORD">
+        <DataField>PASSWORD</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="IMAGE_ID">
+        <DataField>IMAGE.ID</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="STATUS">
+        <DataField>STATUS</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ITEMS_OUT_COUNT">
+        <DataField>ITEMS_OUT_COUNT</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FULL_NAME">
+        <DataField>FULL_NAME</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

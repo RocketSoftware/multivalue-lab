@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Test_NodejsWebApp", "Test_NodejsWebApp.njsproj", "{7C00D7F9-6E02-4022-ACCB-276DCD39FF82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_NodeJS_NativeAccess", "..\Test_NodeJS_NativeAccess\Test_NodeJS_NativeAccess.csproj", "{B6959103-4D06-46D6-995B-7D7204C691EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C00D7F9-6E02-4022-ACCB-276DCD39FF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C00D7F9-6E02-4022-ACCB-276DCD39FF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C00D7F9-6E02-4022-ACCB-276DCD39FF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C00D7F9-6E02-4022-ACCB-276DCD39FF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6959103-4D06-46D6-995B-7D7204C691EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6959103-4D06-46D6-995B-7D7204C691EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6959103-4D06-46D6-995B-7D7204C691EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6959103-4D06-46D6-995B-7D7204C691EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

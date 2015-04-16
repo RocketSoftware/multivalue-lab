@@ -1,0 +1,95 @@
+$INCLUDE UNIVERSE.INCLUDE UDO.H
+$INCLUDE UNIVERSE.INCLUDE SSL.H
+
+authstrength = "generous"
+svrclnt = 2
+LOG.FILE = "rlinkpost_":TIME():".log"
+
+*** Read the file into a variable
+* OPENSEQ 'C:\DATA\ACCTS\UV\RTD\sample.txt' TO F.PDF ELSE ABORT "Unable to open file"
+OPENSEQ 'C:\DATA\ACCTS\UV\RTD\BasicRef.pdf' TO F.PDF ELSE ABORT "Unable to open file"
+
+POST.DATA = ""
+BUFFER.SIZE = 2048
+BYTES.READ = 2048
+
+LOOP
+WHILE BYTES.READ = BUFFER.SIZE
+	READBLK CHUNK FROM F.PDF, BUFFER.SIZE THEN
+		BYTES.READ = LEN(CHUNK)
+		POST.DATA := CHUNK
+	END
+REPEAT
+
+CLOSESEQ F.PDF
+
+GOSUB SUBMIT.FILE
+
+STOP
+* Main Program Ends
+
+* Subroutines
+
+*
+* SUBMIT.FILE: Submit the REST request.
+*
+SUBMIT.FILE:
+	*** Following lines for debug proxy through Fiddler
+	*Ret = setHTTPDefault("VERSION","1.1")
+	*Ret = setHTTPDefault("PROXY_NAME","127.0.0.1")
+	*Ret = setHTTPDefault("PROXY_PORT","8888")
+
+	status = protocolLogging(LOG.FILE,"ON","10")
+	
+	REQUEST.URL = "https://myshare.rocketsoftware.com/myshare/api/FilePut/My Shares/rest/test.pdf"
+	*REQUEST.URL = "https://myshare.rocketsoftware.com/myshare/api/List/My Shares"
+	REQUEST.URL := "?user_id=MByrne&password=Rocket33"
+	HTTP.METHOD = 'POST'
+	PRINT "Creating security context..."
+	status = createSecurityContext(ctx, SSL_SSLV3)
+	IF status <> 0 THEN
+		PRINT "cannot create SCR"
+		STOP
+	END
+
+	* set auth rules
+	* set auth strength
+	PRINT "Adding authentication rule..."
+	status = addAuthenticationRule(ctx, svrclnt, SSL_RULE_STRENGTH, authstrength) 
+	IF status <> 0 THEN
+		PRINT "cannot set auth strength ":authstrength
+		STOP
+	END
+
+	PRINT "Creating secure request..."
+	status = createSecureRequest(REQUEST.URL, HTTP.METHOD, REQUEST, ctx)
+
+	IF status # 0 THEN
+		PRINT 'createSecureRequest error: ':status
+		STOP
+	END
+
+	PRINT "Setting Content-Type..."
+	status = setRequestHeader(REQUEST, "Content-Type", "application/octet-stream")
+	IF status # 0 THEN
+		PRINT 'addRequestParameter error: ':status
+		STOP
+	END
+	
+	PRINT "Submitting request..."
+	status = submitRequest(REQUEST, 5000, POST.DATA, Header, RESPONSE, httpStatus)
+
+	status = protocolLogging(LOG.FILE,"OFF","10")
+
+	PRINT "Status: ":status
+	PRINT "Header: ":Header
+	PRINT "Response: ":RESPONSE
+	PRINT "HTTP Status: ":httpStatus
+	
+	IF status # 0 THEN
+		PRINT 'submitRequest error: ':status
+		STOP
+	END
+	RETURN
+
+END

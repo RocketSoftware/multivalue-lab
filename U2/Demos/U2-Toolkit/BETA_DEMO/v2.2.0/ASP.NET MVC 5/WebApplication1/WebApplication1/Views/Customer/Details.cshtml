@@ -1,0 +1,148 @@
+﻿@model WebApplication1.CUSTOMER
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CUSTOMER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FULLNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FULLNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDR1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDR1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADDR2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADDR2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FULLADDR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FULLADDR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CITY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATENAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATENAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PHONE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PHONE)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CUSTOMER_ORDERS)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Product ID</th>
+                    <th>Description</th>
+                    <th>Discount</th>
+                </tr>
+                @foreach (var item in Model.CUSTOMER_ORDERS)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PRODID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISCOUNT)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CUSTID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

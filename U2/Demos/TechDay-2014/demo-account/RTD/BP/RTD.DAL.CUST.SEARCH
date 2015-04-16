@@ -1,0 +1,39 @@
+*******************************************************************************
+*       Program RTD.DAL.CUST.SEARCH
+*       Copyright (C) 2014
+*******************************************************************************
+*  Author: Michael Byrne
+*  Created on :Jul 10, 2014
+*  Description:
+*
+*****************************************************************************
+SUBROUTINE RTD.DAL.CUST.SEARCH(SEARCHVAL, CUSTLIST, RTNVAL)
+	***
+	*** Common RTD code and variables
+	***
+	$INCLUDE RTD.INCLUDE RTD.H
+	CALL FILE.OPENS
+	***	End RTD template code ***
+
+	IDS = ""
+	CONTACTS = ""
+	STMT = 'SELECT CUSTOMERS WITH UPNAME = "[':UPCASE(SEARCHVAL):']" BY LAST_NAME'
+	EXECUTE STMT CAPTURING OUT
+	READLIST IDS THEN
+		ITEM.CNT = DCOUNT(IDS,@AM)
+		FOR I1 = 1 TO ITEM.CNT
+			ID = IDS<I1>
+			READ CONTACT FROM FILES(F.CUSTOMERS),ID THEN
+				CONTACTS<-1> = IDS<I1>:@VM:FMT(ID,"7L"):FMT(CONTACT<2>,"15L"):FMT(CONTACT<1>,"15L"):FMT(CONTACT<6>,"15L")
+			END ELSE
+				ERR.MSG = "Unable to read member ID ":IDS<I1>
+				*PRINT ERR.MSG
+			END
+		NEXT
+	END ELSE
+		ITEM.CNT = 0
+	END
+	CUSTLIST = CONTACTS
+	
+RETURN
+
