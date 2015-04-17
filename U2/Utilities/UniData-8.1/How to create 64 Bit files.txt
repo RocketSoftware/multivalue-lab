@@ -1,0 +1,28 @@
+Starting at UniData 8.1 64BIT files are now supported and the syntax of the CREATE.FILE command has been expanded to include a 32BIT or 64BIT keyword. If no keyword is defined the previous default of a 32BIT file will be created.
+
+Starting at UniData 8.1 on Unix the CREATE.FILE syntax is now
+CREATE.FILE [DICT | DATA] [DIR | MULTIFILE | MULTIDIR] filename [,subfile] [modulo [,block.size.multiplier]] [TYPE [0 | 1 | 3] [DYNAMIC [KEYONLY | KEYDATA
+| WHOLEFILE] [PARTTBL part_tbl]][RECOVERABLE] [OVERFLOW] [64BIT|32BIT]
+
+On Windows it is
+CREATE.FILE [DICT | DATA] [DIR | MULTIFILE | MULTIDIR] filename [,subfile] [modulo [,block.size.multiplier]] [TYPE [0 | 1 | 3] [DYNAMIC [KEYONLY | KEYDATA
+| WHOLEFILE] ][RECOVERABLE] [OVERFLOW] [64BIT|32BIT]
+
+To create a 64BIT static file using the new HASHTYPE of 3 with a modulo of 35023 and a block size of 32K the syntax would be
+
+CREATE.FILE NEWFILE 35023,32 TYPE 3 64BIT
+
+Or
+
+CREATE.FILE NEWFILE 35023,32 64BIT (This will also work as long as the default value for  DEFAULT_HASH_TYPE has not been altered in the udtconfig)
+
+To create a 64BIT dynamic file using the new HASHTYPE of 3 and the new WHOLEFILE splitting algorithm with an initial modulo of 35023 and a block size of 32K the syntax would be
+
+CREATE.FILE NEWFILE 35023,32 TYPE 3 DYNAMIC WHOLEFILE 64BIT
+
+Or
+
+CREATE.FILE NEWFILE 35023,32 DYNAMIC 64BIT (This will also work as long as the default values for  DEFAULT_HASH_TYPE and DEFAULT_SPLIT_TYPE have not been altered in the udtconfig)
+
+
+
