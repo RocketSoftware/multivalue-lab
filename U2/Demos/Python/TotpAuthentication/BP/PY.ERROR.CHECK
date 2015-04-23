@@ -1,0 +1,28 @@
+$BASICTYPE "P"
+FUNCTION PY.ERROR.CHECK
+*
+* @copyright  CACI Ltd 2015 - All rights reserved
+*
+* @summary  Checks whether Python error has occured, displays message, and
+*           returns error text.
+*
+* Use
+* ETXT = PYERR(); IF ETXT THEN RETURN
+* after using Python function.
+*
+***
+*
+* CALL O.OPEN("AA",AA,0,0)
+*
+IF @PYEXCEPTIONTYPE THEN
+  CRT "Python Error @ ":@PYEXCEPTIONTRACEBACK
+  CALL GET.BASIC.STACK('',STACK.TXT)
+  CRT "Stack=":STACK.TXT
+  CRT "ErrorType=":@PYEXCEPTIONTYPE
+  CRT "ErrorMessage=":@PYEXCEPTIONMSG
+  RETURN 'PythonError type=':@PYEXCEPTIONTYPE:' message=':@PYEXCEPTIONMSG
+END
+*
+RETURN ''
+
+END

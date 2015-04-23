@@ -1,0 +1,36 @@
+$BASICTYPE "P"
+PROGRAM TOTP.TEST
+*
+* @copyright  CACI Ltd 2015 - All rights reserved
+*
+* @summary  Test program for Time Based One-Time-Passcodes
+*
+***
+*
+ISSUER = 'Example Corp'
+USERNAME = 'user@examplecorp.example'
+*
+SECRET = ''
+CALL TOTP.TWO.FACTOR.AUTH('Q',ISSUER,USERNAME,SECRET,'',QRCODE.PATH,ETXT)
+IF ETXT THEN CRT ETXT; RETURN
+*
+CRT
+CRT "Account = ":ISSUER:":":USERNAME
+CRT
+CRT "Key (For Manual Entry) = ":SECRET
+CRT
+CRT "QRCODE saved as ":QRCODE.PATH
+CRT
+CRT "Scan the image or enter the key manually in eg Google Authenticator"
+CRT
+*
+CRT "Enter to show new One Time Passcode; X to quit..."
+LOOP
+  CALL TOTP.TWO.FACTOR.AUTH('N',ISSUER,USERNAME,SECRET,'',OTP,ETXT)
+  IF ETXT THEN CRT ETXT; RETURN
+  CRT TIMEDATE():" OTP=":OTP:" ":
+  INPUT ANS
+  IF UPCASE(ANS) EQ 'X' THEN EXIT
+REPEAT
+*
+END
