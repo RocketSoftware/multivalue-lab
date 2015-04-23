@@ -5,6 +5,7 @@ myApp.controller('CustController', function CustController($scope, $log, $http) 
     $scope.sortOrder = "last_name";
     $scope.customers = [];
     $scope.selectedCustomer = {};
+    $scope.messageText = "Message";
 
     $scope.LoadCustomers = function () {
 		$http.get('http://localhost:9191/api/Customers?max=500').
@@ -50,6 +51,29 @@ myApp.controller('CustController', function CustController($scope, $log, $http) 
 
     $scope.CancelCustomer = function () {
         $("#dialog-form").dialog("close");
+    };
+
+    $scope.SampleSubroutine = function () {
+        var CurrentSearchValue = $scope.filterText;
+        var params = {"SearchVal": CurrentSearchValue, "ApiFlag": 1 };
+        $http.post('http://us-l-mb02:9191/api/subroutine/DAL.CUST.SEARCH', params).
+            success(function(data, status, headers, config) {
+                // The following syntax traverses down levels, returning a value for
+                // data.CustList.Customer if found, otherwise returning an empty object {}
+                var rtnList = (((data || {}).CustList || {}).Customer || {});
+                $scope.messageText = JSON.stringify(rtnList);
+                $("#dialog-message").dialog({
+                    autoOpen: false,
+                    height: 550,
+                    width: 800,
+                    title: "Subroutine results:",
+                    modal: true
+                });
+                $("#dialog-message").dialog("open");
+            }).
+            error(function(data, status, headers, config) {
+                alert(data);
+            });
     };
 
     // Call the function to load the customer list

@@ -1,0 +1,15 @@
+{
+  "name": "Test_NodejsWebApp",
+  "version": "0.0.0",
+  "description": "Test_NodejsWebApp",
+  "main": "server.js",
+  "author": {
+    "name": "rkumar",
+    "email": ""
+  },
+  "dependencies": {
+    "body-parser": "^1.10.0",
+    "edge": "^0.9.3",
+    "express": "^4.10.6"
+  }
+}
