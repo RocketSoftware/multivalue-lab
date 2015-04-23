@@ -1,0 +1,67 @@
+$INCLUDE UNIDATA.INCLUDE UDO.H
+      MODULENAME = 'FakeWrapper'
+      FUNCNAME1 = 'get_one_fake'
+      FUNCNAME2 = 'get_many_fake'
+      pymodule = PyImport(MODULENAME)
+      IF @PYEXCEPTIONTYPE <> '' THEN
+         PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+         PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+         PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+         STOP
+      END
+      pyfake = PyCallFunction(MODULENAME, FUNCNAME1)
+      IF @PYEXCEPTIONTYPE <> '' THEN
+         PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+         PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+         PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+         STOP
+      END
+      U2name = pyfake ;* PyStr(pyfake)
+      IF @PYEXCEPTIONTYPE <> '' THEN
+         PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+         PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+         PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+         STOP
+      END
+      PRINT U2name
+      pyfakes = PyCallFunction(MODULENAME, FUNCNAME2, 10)
+      IF @PYEXCEPTIONTYPE <> '' THEN
+         PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+         PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+         PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+         STOP
+      END
+      U2names = pyfakes ;* PyStr(pyfakes)
+      IF @PYEXCEPTIONTYPE <> '' THEN
+         PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE
+         PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+         PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+         STOP
+      END
+      PRINT U2names
+      status = UDORead(U2names, UDOFORMAT_JSON, udo)
+      IF status = UDO_ERROR THEN
+         status = UDOGetLastError(errcode, errmsg)
+         PRINT errcode
+         PRINT errmsg
+         STOP
+      END
+*
+      status = UDOWrite(udo, 0, jsonout)
+      IF status = UDO_ERROR THEN
+         status = UDOGetLastError(errcode, errmsg)
+         PRINT errcode
+         PRINT errmsg
+      END
+
+      status = UDOGetType(udo, THETYPE)
+      BEGIN CASE
+         CASE THETYPE = UDO_OBJECT
+            PRINT "Process the object "
+            CALL jsonObjectSub(udo)
+         CASE THETYPE = UDO_ARRAY
+            PRINT "Process the Array "
+            CALL jsonArraySub(udo)
+         CASE 1
+            PRINT "NOT OF TYPE ARRAY OR OBJECT"
+      END CASE
