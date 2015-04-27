@@ -1,0 +1,29 @@
+$BASICTYPE "P"
+SUBROUTINE PY.CHECK.MODULES(MODULES,ETXT)
+*
+* @copyright  CACI Ltd 2015 - All rights reserved
+*
+* @summary    Checks that required Python modules can be loaded
+*
+* @arg        pass        MODULES  Space or @AM delimited list of modules to check can import
+* @arg        return      ETXT     Non-null if error
+*
+***
+*
+ETXT = ''
+*
+UMODULES = CONVERT(' ',@AM,MODULES)
+DC = DCOUNT(UMODULES,@AM)
+FOR I = 1 TO DC
+  MODULE = UMODULES<I>
+  DUMMY = PyImport(MODULE)
+  IF @PYEXCEPTIONTYPE THEN
+    CALL GET.BASIC.STACK(1,STACK.TXT)
+    ETXT = 'Required Python Module ':SQUOTE(MODULE):' not found.'
+    ETXT := ' (':@PYEXCEPTIONMSG:'. @ ':STACK.TXT:')'
+    RETURN
+  END
+NEXT I
+*
+RETURN
+END

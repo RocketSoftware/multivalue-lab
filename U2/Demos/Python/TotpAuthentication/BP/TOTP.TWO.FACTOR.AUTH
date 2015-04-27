@@ -1,0 +1,126 @@
+$BASICTYPE "P"
+SUBROUTINE TOTP.TWO.FACTOR.AUTH(ACT,ISSUER,USERNAME,SECRET,PASS,RTN,ETXT)
+*
+* @copyright  CACI Ltd 2015 - All rights reserved
+*
+* @summary
+*
+* Functions for working with TOTP two-factor authentication - to  use with
+* eg Google Authenticator.
+*
+* 1) Generate QRCODE image using 'Q' action and save SECRET against user
+* record. Path to image returned in RTN. You should delete the image after
+* using.
+* 2) User scans QRCODE in Google Authenticator to set up account.
+* 3) Validate OTP from Google Authenticator using 'V' option.
+*
+* Requires Python modules:
+* spookyotp (https://pypi.python.org/pypi/SpookyOTP / https://github.com/steveherrin/SpookyOTP)
+* pillow
+*
+* @arg        pass        ACT       <1> Action:
+*                                       'N': Get current password
+*                                       'Q': Get QRCODE image (PASS = Optional Image Path, RTN = Image Path)
+*                                       'U': Get URI (as encoded to QRCODE) RTN = URI
+*                                       'V': Validate - PASS = OTP, RTN = 1 (Valid) or 0 (Invalid)
+* @arg        pass        ISSUER    eg 'CACI'
+* @arg        pass        USERNAME  eg 'fred@caci.com'
+* @arg        passreturn  SECRET    16 char base32 string (Generated if not passed)
+* @arg        pass        PASS      Depends on action
+* @arg        return      RTN       Depends on action
+* @arg        return      ETXT      Non-null if error
+*
+***
+*
+INCLUDE BP PY.INCLUDE
+*
+RTN = ''
+ETXT = ''
+*
+GOSUB doit
+*
+IF ETXT THEN
+  CALL PY.CHECK.MODULES('spookyotp PIL',METXT)
+  IF METXT THEN ETXT = METXT
+END
+*
+RETURN
+
+doit:
+*
+spookyotp = PyImport('spookyotp')
+ETXT = PYERR(); IF ETXT THEN RETURN
+*
+IF UNASSIGNED(SECRET) THEN SECRET = ''
+IF SECRET EQ '' THEN
+  IF INDEX(ACT<1>,'N',1) OR INDEX(ACT<1>,'V',1) THEN
+    ETXT = 'Secret must be passed'
+    RETURN
+  END
+  GOSUB generate_secret
+  IF ETXT THEN RETURN
+END
+*
+totp = PyCallMethod(spookyotp, 'TOTP', SECRET, ISSUER, USERNAME)
+ETXT = PYERR(); IF ETXT THEN RETURN
+*
+BEGIN CASE
+  CASE INDEX(ACT<1>,'N',1)
+    * Get current one-time-password
+    OTP = PyCallMethod(totp, 'get_otp')
+    ETXT = PYERR(); IF ETXT THEN RETURN
+    RTN = OTP
+  CASE INDEX(ACT<1>,'Q',1)
+    * Get QR code image
+    IF UNASSIGNED(PASS) THEN
+      FILENAME = ''
+    END ELSE
+      FILENAME = PASS
+    END
+    IF FILENAME EQ '' THEN
+      OPEN "_HOLD_" TO F.HOLD ELSE ETXT = 'Cannot open _HOLD_ file.'; RETURN
+      PATH = FILEINFO(F.HOLD,2)
+      IF INDEX(PATH,'\',1) THEN DLM = '\' ELSE DLM = '/'
+      FILENAME = PATH:DLM:'temp':@UDTNO:'.png'
+    END
+    PFILENAME = FILENAME
+    SWAP '\' WITH '\\' IN PFILENAME
+    DUMMY = PyCallMethod(totp, 'save_qr_code', PFILENAME)
+    ETXT = PYERR(); IF ETXT THEN RETURN
+    RTN = FILENAME
+  CASE INDEX(ACT<1>,'U',1)
+    * Get URI
+    URI = PyCallMethod(totp, 'get_uri')
+    ETXT = PYERR(); IF ETXT THEN RETURN
+    RTN = URI
+  CASE INDEX(ACT<1>,'V',1)
+    * Validate One Time Password
+    * PASS should be code from authenticator
+    OK = PyCallMethod(totp, 'compare', PASS)
+    IF @PYEXCEPTIONTYPE = 'ValueError' THEN
+      RTN = 0
+      ETXT = @PYEXCEPTIONMSG
+      RETURN
+    END
+    ETXT = PYERR(); IF ETXT THEN RETURN
+    RTN = OK
+  CASE 1
+    ETXT = 'Un-recognized action ':ACT<1>
+END CASE
+*
+RETURN
+
+generate_secret:
+*
+secret_bytes = PyCallMethod(spookyotp, 'get_random_secret')
+ETXT = PYERR(); IF ETXT THEN RETURN
+*
+secret_b2 = PyCallFunction('base64','b32encode',secret_bytes)
+ETXT = PYERR(); IF ETXT THEN RETURN
+*
+SECRET = PyCallMethod(secret_b2,'decode')
+ETXT = PYERR(); IF ETXT THEN RETURN
+*
+RETURN
+
+END

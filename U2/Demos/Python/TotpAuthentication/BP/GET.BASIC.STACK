@@ -1,0 +1,59 @@
+$BASICTYPE "P"
+SUBROUTINE GET.BASIC.STACK(OPTS,STACK.TXT)
+*
+* @copyright  Tech Computer Office 2003 - All rights reserved
+*
+* @summary  Returns basic call stack - useful for debugging
+*
+* @arg        pass        OPTS        <1> = Number of subs to skip (usually one to skip current)
+*                                     <2> = delimiter - if blank then ' <- ' used
+* @arg        return      STACK.TXT   Basic call stack
+*
+***
+*
+STACK.TXT=''
+*
+SKIP=OPTS<1>"MCN"
+OPTS1=CONVERT(SKIP,'',OPTS<1>)
+SKIP+=2
+DLM=OPTS<2>; IF DLM='' THEN DLM=' <- '
+*
+CRT.STACK=INDEX(OPTS1,'C',1)
+*
+DC=DCOUNT(SYSTEM(49),@AM)
+DIM PATHS(DC)
+MATPARSE PATHS FROM SYSTEM(49),@AM
+*
+SB.SUBS=CONVERT(' ',@AM,'SB.PROCESS SB.DISP SB.INPUT WEB.SB.DISP O.DISP4 O.DISP O.DISP1')
+EXIT.SUBS=CONVERT(' ',@AM,'SB.MENU.SELECT SH.TCL UT.MPX SB.INTERP.I WEB.WWRPC.SUB.EXEC')
+*
+LASTSUB=''
+*
+FOR I=DC-SKIP TO 1 STEP -1
+  *
+  SUB=CONVERT('\/',@AM:@AM,PATHS(I)<1,2>)
+  LNO=PATHS(I)<1,3>
+  SUB=SUB<DCOUNT(SUB,@AM)>
+  IF SUB[1,1]='_' THEN SUB[1,1]='' ELSE SUB='*':SUB
+  *
+  LOCATE(SUB,EXIT.SUBS;DUMMY) THEN EXIT
+  *
+  LOCATE(SUB,SB.SUBS;DUMMY) THEN
+    SUB = FIELD(SUB,'.',DCOUNT(SUB,'.'))[1,1] ;* 'I','P' or 'D'
+    IF SUB NE LASTSUB THEN
+      STACK.TXT<-1>=SUB
+    END
+  END ELSE
+    STACK.TXT<-1>=SUB:':':LNO
+  END
+  *
+  LASTSUB=SUB
+  *
+NEXT I
+*
+SWAP @AM WITH DLM IN STACK.TXT
+*
+IF CRT.STACK THEN CRT STACK.TXT
+*
+RETURN
+END
