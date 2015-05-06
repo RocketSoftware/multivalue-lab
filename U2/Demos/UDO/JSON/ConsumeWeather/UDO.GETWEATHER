@@ -1,0 +1,64 @@
+*******************************************************************************
+*       Program UDO.GETWEATHER
+*       Copyright (C) 2013
+*******************************************************************************
+*  Author: MByrne
+*  Created on :Mar 7, 2013 1:28:34 AM
+*  Desc:  This program demonstrates using U2 Dynamic Objects (UDO) to parse
+*         an incoming REST service.  It uses a publicly available web service API
+*         from wunderground.com to retrieve weather details.
+*         Details on The Weather API: http://www.wunderground.com/weather/api/
+*****************************************************************************
+$INCLUDE UNIVERSE.INCLUDE UDO.H
+
+** IMPORTANT ** You must get your own API key to call the service **
+city = "CO/Denver"
+apiKey = "01ab23cd01ab23cd"
+url = "http://api.wunderground.com/api/":apiKey:"/forecast/q/":city:".json"
+method = "GET"
+hr = ""
+
+st = createRequest(url,method,hr)
+st = submitRequest(hr, 3600, "", headers, data, httpstatus)
+IF UDORead(data, UDOFORMAT_JSON, RESTMSG) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+
+IF UDOGetProperty(RESTMSG, "forecast", forecast, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+IF UDOGetProperty(forecast, "simpleforecast", simple, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+IF UDOGetProperty(simple, "forecastday", arrDays, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+
+PRINT; PRINT
+heading = "Weather Forecast for ":city
+PRINT heading
+PRINT STR("-",LEN(heading))
+
+GETSTAT = UDO_SUCCESS
+i = 0
+LOOP
+	GETSTAT = UDOArrayGetNextItem(arrDays, W.UDO, W.TYPE)
+WHILE GETSTAT = UDO_SUCCESS DO
+	i = i + 1
+	IF UDOGetProperty(W.UDO, "date", UDO.DATE, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(UDO.DATE, "monthname", F.MONTH, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(UDO.DATE, "day", F.DAY, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(UDO.DATE, "year", F.YEAR, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(W.UDO, "high", UDO.HIGH, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(UDO.HIGH, "fahrenheit", HF, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(W.UDO, "low", UDO.LOW, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(UDO.LOW, "fahrenheit", LF, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	IF UDOGetProperty(W.UDO, "conditions", CONDITIONS, UDOTYPE) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+	PRINT F.MONTH:" ":F.DAY:", ":F.YEAR
+	PRINT "  High: ":HF:"    Low: ":LF
+	PRINT "  Conditions: ":CONDITIONS
+	PRINT
+REPEAT
+
+IF UDOFree(RESTMSG) NE UDO_SUCCESS THEN GOSUB ERR.HANDLER
+
+STOP
+
+ERR.HANDLER:
+  ERRCODE = ""; ERRMSG = ""
+  S = UDOGetLastError(ERRCODE, ERRMSG)
+  PRINT "UDO ERROR: (":ERRCODE:") ":ERRMSG
+  STOP
+RETURN
