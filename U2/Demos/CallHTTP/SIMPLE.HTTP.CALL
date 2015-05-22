@@ -1,0 +1,34 @@
+*
+*   Desc:   Program to test a simple HTTP connection
+*   Author: Michael Byrne
+*   Date:   July 25, 2012
+*
+
+TIME.OUT = 15000
+HTTP.POST = ""
+HTTP.HEAD = ""
+HTTP.RESP = ""
+HTTP.STAT = ""
+LOG.FILE = "simpleHTTP"
+
+Ret = setHTTPDefault("VERSION","1.1")
+Ret = createRequest("http://www.rocketsoftware.com","GET", hndReq)
+
+* Uncomment protocolLogging if you need to log
+* RCODE=protocolLogging(LOG.FILE,"ON","10")
+Ret = submitRequest(hndReq,TIME.OUT, HTTP.POST, HTTP.HEAD, HTTP.RESP, HTTP.STAT)
+* RCODE=protocolLogging(LOG.FILE,"OFF","10")
+
+IF Ret THEN
+  CRT "submitRequest error: ":Ret
+END ELSE
+  CRT "---HTTP status----"
+  CRT HTTP.STAT
+  CRT
+  CRT "---HTTP headers----"
+  CRT HTTP.HEAD
+  CRT
+  CRT "---HTTP body (abbr)----"
+  CRT HTTP.RESP[1,500]
+  CRT
+END

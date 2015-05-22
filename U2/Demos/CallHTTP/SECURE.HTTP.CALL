@@ -1,0 +1,56 @@
+*
+*   Desc:   Program to test secure connection
+*   Author: Michael Byrne
+*   Date:   July 25, 2012
+*
+$INCLUDE UNIVERSE.INCLUDE SSL.H
+
+PROMPT ""
+URL="https://www.wellsfargo.com"
+METHOD="GET"
+HTTP.TIMEOUT=15000
+HTTP.POSTDATA="";HTTP.HEADER="";HTTP.PAGE="";HTTP.STATUS="";HTTP.HANDLE=""
+*
+RCODE = setHTTPDefault("VERSION", "1.1")
+IF RCODE THEN CRT "Unable to set HTTP version - Error Code (":RCODE:")"; STOP
+*
+* CREATE SECURITY CONTEXT FROM SCRATCH
+*  - This method requires that you add the CA cert manually
+*
+RCODE = createSecurityContext(ctx, "TLSv1")
+IF RCODE THEN CRT "Unable to create SCR - Error Code (":RCODE:")"; STOP
+*
+* Add strict verification and authentication rule for PeerName that we are expecting
+*
+*************************
+*** Verification Strength ***
+*************************
+RCODE = addAuthenticationRule(ctx, 2, "VerificationStrength", "strict")
+IF RCODE THEN CRT "Unable to set verification strength - Error Code (":RCODE:")"; STOP
+
+*************************
+*** CA certificate (you could add more than one)***
+*************************
+RCODE = addCertificate("Verisign.cer", SSL_CERT_CA, SSL_FMT_PEM, SSL_KEY_RSA, ctx)
+IF RCODE THEN CRT "Unable to add Wells Fargo Verisign certificate - Error Code (":RCODE:")"; STOP
+
+*************************
+* CREATE REQUEST HANDLE
+*************************
+RCODE=createSecureRequest(URL, METHOD, HTTP.HANDLE, ctx)
+IF RCODE THEN STOP "CreateSecureRequest error (":RCODE:")"
+
+* Uncomment protocolLogging if you need to log
+ret1 = protocolLogging("secureCallLog.LOG","ON","10")
+RCODE=submitRequest(HTTP.HANDLE, HTTP.TIMEOUT, HTTP.POSTDATA, HTTP.HEADER, HTTP.PAGE, HTTP.STATUS)
+ret1 = protocolLogging("secureCallLog.LOG","OFF","10")
+IF RCODE THEN CRT; CRT "submitRequest error (":RCODE:") , HTTP Status: ":HTTP.STATUS; STOP
+
+CRT "RESULTS"
+CRT ":--------HTTP RCODE----:"
+CRT HTTP.STATUS
+CRT ":--------HEADER---------:"
+CRT HTTP.HEADER
+CRT ":--------PAGE-----------:"
+CRT HTTP.PAGE[1,500]
+CRT
