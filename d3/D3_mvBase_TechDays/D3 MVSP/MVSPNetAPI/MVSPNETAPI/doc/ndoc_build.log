@@ -1,0 +1,178 @@
+Memory before build: 5540824
+Initializing Workspace
+Creating Help Project Resources
+Analyzing Assemblies & Merging XML Documentation
+Memory making xml: 5901600
+AssemblyLoader: Loading "C:\TL\source\mvsp\client\vbnet\Rocket.MVSP\bin\Release\RocketMVSP.dll".
+XmlDocCommentLoader: Loaded 'C:\TL\source\mvsp\client\vbnet\Rocket.MVSP\bin\Release\RocketMVSP.xml' (0.625 sec.)
+XmlDocCommentLoader: Cache 84
+Docs found : C:\Windows\Microsoft.NET\Framework64\v2.0.50727\mscorlib.xml
+XmlDocCommentLoader: Loaded 'C:\Windows\Microsoft.NET\Framework64\v2.0.50727\mscorlib.xml' (1.758 sec.)
+XmlDocCommentLoader: Cache 14092
+XmlDocCommentLoader: Loaded 'C:\downloads\ndoc\NDoc2-Alpha3u\Configuration\Supplemental Docs\en\mscorlib.xml' (0.160 sec.)
+XmlDocCommentLoader: Cache 15114
+AssemblyLoader: Attempting to resolve "Microsoft.VisualBasic, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+AssemblyLoader: Loaded "C:/Windows/assembly/GAC_MSIL/Microsoft.VisualBasic/8.0.0.0__b03f5f7f11d50a3a/Microsoft.VisualBasic.dll"
+AssemblyLoader: Attempting to resolve "System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089".
+AssemblyLoader: Loaded "C:/Windows/assembly/GAC_MSIL/System/2.0.0.0__b77a5c561934e089/System.dll"
+Writing namespace rocketsoftware.MVSP...
+    Wrote 4 classes.
+Completed RocketMVSP, Version=1.0.2.0, Culture=neutral, PublicKeyToken=037ab483eb3b9efd
+0.453 sec.
+MakeXML : 3.682 sec.
+Determining Document Structure
+Load Docs for Structure Production: 4.664 msec.
+Building File Map: 0.926 msec.
+Structure Production: 3.002 msec.
+Initializing Documenter
+xslt-preprocess.xslt
+retrieved xslt-preprocess.xslt from Style2005
+    topics_main.xslt
+    retrieved topics_main.xslt from common
+    retrieved common.xslt from common
+    retrieved tags.xslt from Style2005
+    retrieved blank.xslt from common
+    retrieved indices.xslt from common
+    retrieved XLinks.xslt from common
+    retrieved style-common.xslt from Style2005
+    retrieved see-also.xslt from common
+    retrieved syntax.xslt from Style2005
+    retrieved syntax-common.xslt from common
+    retrieved syntax-map.xslt from common
+    retrieved memberscommon.xslt from Style2005
+    retrieved allmembers.xslt from Style2005
+    retrieved event.xslt from common
+    retrieved field.xslt from common
+    retrieved individualmembers.xslt from Style2005
+    retrieved member.xslt from common
+    retrieved memberoverload.xslt from Style2005
+    retrieved namespace.xslt from Style2005
+    retrieved namespacehierarchy.xslt from common
+    retrieved property.xslt from common
+    retrieved type.xslt from Style2005
+    retrieved typehierarchy.xslt from Style2005
+    1.169
+    toc_htmlhelp1.xslt
+    retrieved toc_htmlhelp1.xslt from common
+    0.007
+    toc_htmlhelp2.xslt
+    retrieved toc_htmlhelp2.xslt from common
+    0.011
+    toc_web.xslt
+    retrieved toc_web.xslt from common
+    0.006
+Building stylesheets 1.205
+Building Table-of-Contents
+Building Topic Pages
+764.430   namespace   N_rocketsoftware_MVSP.html
+108.011   namespacehierarchy   Hier_N_rocketsoftware_MVSP.html
+969.481   type   T_rocketsoftware_MVSP_Functions.html
+294.138   allmembers   T_rocketsoftware_MVSP_Functions_Members.html
+32.928   individualmembers   T_rocketsoftware_MVSP_Functions_Methods.html
+218.684   member   C_rocketsoftware_MVSP_Functions_ctor.html
+161.028   member   M_rocketsoftware_MVSP_Functions_Count.html
+20.867   member   M_rocketsoftware_MVSP_Functions_Dcount.html
+224.383   memberoverload   O_T_rocketsoftware_MVSP_Functions_Delete.html
+3.119   member   M_rocketsoftware_MVSP_Functions_Delete_843a3b0f.html
+4.061   member   M_rocketsoftware_MVSP_Functions_Delete_1c9576da.html
+4.816   member   M_rocketsoftware_MVSP_Functions_Delete_e380a1ef.html
+2.520   memberoverload   O_T_rocketsoftware_MVSP_Functions_Extract.html
+4.601   member   M_rocketsoftware_MVSP_Functions_Extract_843a3b0f.html
+5.680   member   M_rocketsoftware_MVSP_Functions_Extract_1c9576da.html
+6.056   member   M_rocketsoftware_MVSP_Functions_Extract_e380a1ef.html
+3.855   member   M_rocketsoftware_MVSP_Functions_Field.html
+2.749   memberoverload   O_T_rocketsoftware_MVSP_Functions_Insert.html
+3.522   member   M_rocketsoftware_MVSP_Functions_Insert_666a853d.html
+3.861   member   M_rocketsoftware_MVSP_Functions_Insert_c78f68e8.html
+4.418   member   M_rocketsoftware_MVSP_Functions_Insert_4fc2e51d.html
+2.213   memberoverload   O_T_rocketsoftware_MVSP_Functions_Replace.html
+14.392   member   M_rocketsoftware_MVSP_Functions_Replace_666a853d.html
+4.468   member   M_rocketsoftware_MVSP_Functions_Replace_c78f68e8.html
+5.350   member   M_rocketsoftware_MVSP_Functions_Replace_4fc2e51d.html
+4.593   member   M_rocketsoftware_MVSP_Functions_Swap.html
+2.333   type   T_rocketsoftware_MVSP_Pick.html
+13.576   allmembers   T_rocketsoftware_MVSP_Pick_Members.html
+5.110   individualmembers   T_rocketsoftware_MVSP_Pick_Properties.html
+11.420   individualmembers   T_rocketsoftware_MVSP_Pick_Methods.html
+1.984   member   C_rocketsoftware_MVSP_Pick_ctor.html
+262.462   property   P_rocketsoftware_MVSP_Pick_ConnectionTimeout.html
+37.754   property   P_rocketsoftware_MVSP_Pick_MVSPClientVersion.html
+2.251   property   P_rocketsoftware_MVSP_Pick_NegotiationTimeout.html
+2.225   property   P_rocketsoftware_MVSP_Pick_capturing.html
+2.352   property   P_rocketsoftware_MVSP_Pick_connectedPib.html
+2.240   property   P_rocketsoftware_MVSP_Pick_data.html
+3.238   property   P_rocketsoftware_MVSP_Pick_dbConnected.html
+4.978   property   P_rocketsoftware_MVSP_Pick_eol.html
+21.899   property   P_rocketsoftware_MVSP_Pick_errorMsgBox.html
+2.384   property   P_rocketsoftware_MVSP_Pick_platform.html
+2.282   property   P_rocketsoftware_MVSP_Pick_returning.html
+2.688   property   P_rocketsoftware_MVSP_Pick_ruleModule.html
+2.874   property   P_rocketsoftware_MVSP_Pick_serverEnvironment.html
+2.844   property   P_rocketsoftware_MVSP_Pick_serverVersion.html
+4.423   property   P_rocketsoftware_MVSP_Pick_softwareSerialNo.html
+3.328   property   P_rocketsoftware_MVSP_Pick_statusCode.html
+2.798   property   P_rocketsoftware_MVSP_Pick_statusMessage.html
+3.082   member   M_rocketsoftware_MVSP_Pick_CloseConnection.html
+7.312   memberoverload   O_T_rocketsoftware_MVSP_Pick_Connect.html
+4.803   member   M_rocketsoftware_MVSP_Pick_Connect_9cf79b2f.html
+3.873   member   M_rocketsoftware_MVSP_Pick_Connect_7071e0cf.html
+3.556   member   M_rocketsoftware_MVSP_Pick_ConnectionTimer_tick.html
+2.667   member   M_rocketsoftware_MVSP_Pick_Execute.html
+2.321   memberoverload   O_T_rocketsoftware_MVSP_Pick_ExecuteQuery.html
+4.792   member   M_rocketsoftware_MVSP_Pick_ExecuteQuery_dd6529c8.html
+5.156   member   M_rocketsoftware_MVSP_Pick_ExecuteQuery_b50b827a.html
+2.603   member   M_rocketsoftware_MVSP_Pick_FileCacheRelease.html
+3.333   member   M_rocketsoftware_MVSP_Pick_FileDelete.html
+3.145   member   M_rocketsoftware_MVSP_Pick_FileRead.html
+2.381   member   M_rocketsoftware_MVSP_Pick_FileReadNext.html
+3.191   member   M_rocketsoftware_MVSP_Pick_FileReadu.html
+3.474   member   M_rocketsoftware_MVSP_Pick_FileReadv.html
+3.470   member   M_rocketsoftware_MVSP_Pick_FileReadvu.html
+16.835   member   M_rocketsoftware_MVSP_Pick_FileRelease.html
+3.233   member   M_rocketsoftware_MVSP_Pick_FileRoot.html
+2.598   member   M_rocketsoftware_MVSP_Pick_FileSelect.html
+4.356   member   M_rocketsoftware_MVSP_Pick_FileWrite.html
+3.733   member   M_rocketsoftware_MVSP_Pick_FileWriteu.html
+3.918   member   M_rocketsoftware_MVSP_Pick_FileWritev.html
+4.025   member   M_rocketsoftware_MVSP_Pick_FileWritevu.html
+3.049   member   M_rocketsoftware_MVSP_Pick_Logto.html
+1.995   member   M_rocketsoftware_MVSP_Pick_MVResultSetClose.html
+2.092   member   M_rocketsoftware_MVSP_Pick_MVResultSetFirst.html
+2.644   member   M_rocketsoftware_MVSP_Pick_MVResultSetGetColumn.html
+2.380   member   M_rocketsoftware_MVSP_Pick_MVResultSetGetCurrentRow.html
+2.897   member   M_rocketsoftware_MVSP_Pick_MVResultSetGetRow.html
+2.590   member   M_rocketsoftware_MVSP_Pick_MVResultSetGetRowCount.html
+3.834   member   M_rocketsoftware_MVSP_Pick_MVResultSetGetRows.html
+2.232   member   M_rocketsoftware_MVSP_Pick_MVResultSetNext.html
+3.260   member   M_rocketsoftware_MVSP_Pick_MvCall.html
+3.360   member   M_rocketsoftware_MVSP_Pick_MvSub.html
+6.791   member   M_rocketsoftware_MVSP_Pick_NegotiationTimer_tick.html
+9.520   member   M_rocketsoftware_MVSP_Pick_OnCertificateValidation.html
+2.559   member   M_rocketsoftware_MVSP_Pick_TransactionBegin.html
+2.804   member   M_rocketsoftware_MVSP_Pick_TransactionCommit.html
+3.500   member   M_rocketsoftware_MVSP_Pick_TransactionRollback.html
+2.917   member   M_rocketsoftware_MVSP_Pick_TransactionStatus.html
+2.136   member   M_rocketsoftware_MVSP_Pick_clearselect.html
+3.697   type   T_rocketsoftware_MVSP_Pick_mvIndex.html
+4.895   allmembers   T_rocketsoftware_MVSP_Pick_mvIndex_Members.html
+1.734   individualmembers   T_rocketsoftware_MVSP_Pick_mvIndex_Properties.html
+5.135   individualmembers   T_rocketsoftware_MVSP_Pick_mvIndex_Methods.html
+3.232   member   C_rocketsoftware_MVSP_Pick_mvIndex_ctor.html
+2.726   property   P_rocketsoftware_MVSP_Pick_mvIndex_indexKey.html
+3.293   property   P_rocketsoftware_MVSP_Pick_mvIndex_itemId.html
+2.790   member   M_rocketsoftware_MVSP_Pick_mvIndex_FileCloseRoot.html
+24.517   member   M_rocketsoftware_MVSP_Pick_mvIndex_FileKey.html
+103.457   type   T_rocketsoftware_MVSP_Pick_mvSubroutine.html
+5.750   allmembers   T_rocketsoftware_MVSP_Pick_mvSubroutine_Members.html
+2.947   individualmembers   T_rocketsoftware_MVSP_Pick_mvSubroutine_Properties.html
+5.403   individualmembers   T_rocketsoftware_MVSP_Pick_mvSubroutine_Methods.html
+3.010   member   C_rocketsoftware_MVSP_Pick_mvSubroutine_ctor.html
+2.291   property   P_rocketsoftware_MVSP_Pick_mvSubroutine_GetName.html
+2.880   member   M_rocketsoftware_MVSP_Pick_mvSubroutine_GetArgs.html
+2.255   member   M_rocketsoftware_MVSP_Pick_mvSubroutine_MvCall.html
+3.088   member   M_rocketsoftware_MVSP_Pick_mvSubroutine_SetArgs.html
+It took 5 seconds to make the html
+Completing Help Project Resources
+Writing documentation to output path
+Build Completed.
+The build took a total of 10 seconds

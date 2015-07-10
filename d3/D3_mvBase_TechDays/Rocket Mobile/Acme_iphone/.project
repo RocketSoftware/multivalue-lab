@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Acme_iphone</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.seagullsw.eclipse.project.mobile.app.pageFileChecker</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.seagullsw.eclipse.project.mobile.app.projectChecker</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.seagullsw.eclipse.project.mobile.app.specialPageChecker</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.seagullsw.eclipse.project.mobile.app.widgetTemplateChecker</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.seagullsw.eclipse.project.mobile.app.MobileApplicationProjectNature</nature>
+	</natures>
+</projectDescription>

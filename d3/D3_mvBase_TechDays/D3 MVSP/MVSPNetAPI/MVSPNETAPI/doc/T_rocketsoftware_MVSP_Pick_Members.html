@@ -1,0 +1,729 @@
+<html dir="LTR" xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:ndoc="urn:ndoc-preprocess">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <title>Pick Members</title>
+    <link rel="stylesheet" type="text/css" href="ndoc.css"> </link>
+    <link rel="stylesheet" type="text/css" href="user.css"> </link>
+    <script type="text/javascript" src="ndoc.js"> </script>
+  </head>
+  <body style="display: none;">
+    <input type="hidden" id="userDataCache" class="userDataStyle" />
+    <input type="hidden" id="hiddenScrollOffset" />
+    <img id="dropDownImage" style="display:none; height:0; width:0;" src="drpdown.gif" />
+    <img id="dropDownHoverImage" style="display:none; height:0; width:0;" src="drpdown_orange.gif" />
+    <img id="collapseImage" style="display:none; height:0; width:0;" src="collapse.gif" />
+    <img id="expandImage" style="display:none; height:0; width:0;" src="exp.gif" />
+    <img id="collapseAllImage" style="display:none; height:0; width:0;" src="collall.gif" />
+    <img id="expandAllImage" style="display:none; height:0; width:0;" src="expall.gif" />
+    <img id="copyImage" style="display:none; height:0; width:0;" src="copycode.gif" />
+    <img id="copyHoverImage" style="display:none; height:0; width:0;" src="copycodeHighlight.gif" />
+    <div id="header">
+      <table width="100%" id="topTable">
+        <tr id="headerTableRow1">
+          <td align="left">
+            <span id="runningHeaderText">Rocket MVSP .NET Client API</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow2">
+          <td align="left">
+            <span id="nsrTitle">Pick Members</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow3">
+          <td>
+            <a id="seeAlsoSectionLink" href="#seeAlsoToggle" onclick="OpenSection(seeAlsoToggle)">See Also</a>
+            <a id="exampleSectionLink" href="#codeExampleToggle" onclick="OpenSection(codeExampleToggle)">Example</a>
+            <a href="#PublicConstructorsToggle" onclick="OpenSection(PublicConstructorsToggle)">Constructors</a>
+            <a href="#PublicPropertiesToggle" onclick="OpenSection(PublicPropertiesToggle)">Properties</a>
+            <a href="#PublicMethodsToggle" onclick="OpenSection(PublicMethodsToggle)">Methods</a>
+          </td>
+        </tr>
+      </table>
+      <table width="100%" id="bottomTable" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <span onclick="ExpandCollapseAll(toggleAllImage)" style="cursor:default;" onkeypress="ExpandCollapseAll_CheckKey(toggleAllImage)" tabindex="0">
+              <img ID="toggleAllImage" class="toggleAll" src="collall.gif" />
+              <label id="collapseAllLabel" for="toggleAllImage" style="display: none;">
+							Collapse All
+						</label>
+              <label id="expandAllLabel" for="toggleAllImage" style="display: none;">
+							Expand All
+						</label>
+            </span>
+            <span id="membersOptionsFilterToolTip" style="cursor:default;" onmouseover="membersOptionsFilterImage.src=dropDownHoverImage.src;" onfocusin="membersOptionsFilterImage.src=dropDownHoverImage.src;" onmouseout="membersOptionsFilterImage.src=dropDownImage.src;" onfocusout="membersOptionsFilterImage.src=dropDownImage.src;" tabindex="0">
+              <img id="membersOptionsFilterImage" src="drpdown.gif" />
+              <label id="showAllMembersLabel" for="membersOptionsFilterImage" style="display: none;">
+				Members Options: Show All
+			</label>
+              <label id="filteredMembersLabel" for="membersOptionsFilterImage" style="display: none;">
+				Members Options: Filtered
+			</label>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <span style="display:none" id="membersOptionsSpan">
+        <input id="inheritedCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="inheritedCheckbox">
+				Include Inherited Members
+			</label>
+        <br />
+        <input id="protectedCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="protectedCheckbox">
+				Include Protected Members
+			</label>
+        <br />
+        <input id="assemblyCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="assemblyCheckbox">
+				Include Internal Members
+			</label>
+        <br />
+        <input id="privateCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="privateCheckbox">
+				Include Private Members
+			</label>
+        <br />
+        <input id="netcfCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="netcfCheckbox">
+				.NET Compact Framework Members Only
+			</label>
+        <br />
+      </span>
+    </div>
+    <div id="mainSection">
+      <div id="mainBody">
+        <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()" />
+        <p>This class provides the connection to the Multivalue server.</p>
+        <br />
+        <p>The following tables list the members exposed by <a href="T_rocketsoftware_MVSP_Pick.html">Pick</a>.</p>
+        <h1 class="heading">
+          <span style="cursor:default;" tabindex="0" onclick="ExpandCollapse(PublicConstructorsToggle)" onkeypress="ExpandCollapse_CheckKey(PublicConstructorsToggle)">
+            <img class="toggle" name="toggleSwitch" src="collapse.gif" id="PublicConstructorsToggle" />Public Constructors</span>
+        </h1>
+        <div class="section" name="collapseableSection" id="PublicConstructorsSection">
+          <table width="100%" class="memberListTable">
+            <col width="10%" />
+            <col width="30%" />
+            <col width="60%" />
+            <tr>
+              <th style="border-right-style: none;"> </th>
+              <th align="left" style="border-left-style: none; border-right-style: none;">Name</th>
+              <th align="left" style="border-left-style: none;">Description</th>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="C_rocketsoftware_MVSP_Pick_ctor.html">Pick</a>
+              </td>
+              <td>Initializes a new instance of the <nobr><b>Pick</b></nobr> class.</td>
+            </tr>
+          </table>
+          <a href="#mainBody">Top</a>
+        </div>
+        <h1 class="heading">
+          <span style="cursor:default;" tabindex="0" onclick="ExpandCollapse(PublicPropertiesToggle)" onkeypress="ExpandCollapse_CheckKey(PublicPropertiesToggle)">
+            <img class="toggle" name="toggleSwitch" src="collapse.gif" id="PublicPropertiesToggle" />Public Properties</span>
+        </h1>
+        <div class="section" name="collapseableSection" id="PublicPropertiesSection">
+          <table width="100%" class="memberListTable">
+            <col width="10%" />
+            <col width="30%" />
+            <col width="60%" />
+            <tr>
+              <th style="border-right-style: none;"> </th>
+              <th align="left" style="border-left-style: none; border-right-style: none;">Name</th>
+              <th align="left" style="border-left-style: none;">Description</th>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_capturing.html">capturing</a>
+              </td>
+              <td>Captured output from an Executed TCL command.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_connectedPib.html">connectedPib</a>
+              </td>
+              <td>Client Pib number.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_ConnectionTimeout.html">ConnectionTimeout</a>
+              </td>
+              <td>Connection timeout value in seconds</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_data.html">data</a>
+              </td>
+              <td>Sets up data to be passed into an Executed TCL command.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_dbConnected.html">dbConnected</a>
+              </td>
+              <td>This property returns whether the client is connected to the database.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_eol.html">eol</a>
+              </td>
+              <td>Indicates whether the end of the list has been reached</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_errorMsgBox.html">errorMsgBox</a>
+              </td>
+              <td>Controls whether the internal error handler throws an exception or displays a message box (default)</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_MVSPClientVersion.html">MVSPClientVersion</a>
+              </td>
+              <td>MVSP .NET Client Version</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_NegotiationTimeout.html">NegotiationTimeout</a>
+              </td>
+              <td>Negotiation timeout value in seconds</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_platform.html">platform</a>
+              </td>
+              <td>Database platform.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_returning.html">returning</a>
+              </td>
+              <td>Error messages numbers from an Executed TCL command.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_ruleModule.html">ruleModule</a>
+              </td>
+              <td>Contains the name of the rule module (subroutine) to call on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_serverEnvironment.html">serverEnvironment</a>
+              </td>
+              <td>Environment information of the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_serverVersion.html">serverVersion</a>
+              </td>
+              <td>Version number for the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_softwareSerialNo.html">softwareSerialNo</a>
+              </td>
+              <td>Software serial number for the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_statusCode.html">statusCode</a>
+              </td>
+              <td>Returns the status code from the last operation performed.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_statusMessage.html">statusMessage</a>
+              </td>
+              <td>Returns the text for the last status code generated.</td>
+            </tr>
+          </table>
+          <a href="#mainBody">Top</a>
+        </div>
+        <h1 class="heading">
+          <span style="cursor:default;" tabindex="0" onclick="ExpandCollapse(PublicMethodsToggle)" onkeypress="ExpandCollapse_CheckKey(PublicMethodsToggle)">
+            <img class="toggle" name="toggleSwitch" src="collapse.gif" id="PublicMethodsToggle" />Public Methods</span>
+        </h1>
+        <div class="section" name="collapseableSection" id="PublicMethodsSection">
+          <table width="100%" class="memberListTable">
+            <col width="10%" />
+            <col width="30%" />
+            <col width="60%" />
+            <tr>
+              <th style="border-right-style: none;"> </th>
+              <th align="left" style="border-left-style: none; border-right-style: none;">Name</th>
+              <th align="left" style="border-left-style: none;">Description</th>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_clearselect.html">clearselect</a>
+              </td>
+              <td>The clearselect method clears the active select list on the server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_CloseConnection.html">CloseConnection</a>
+              </td>
+              <td>Closes the connection to the MVSP Server.</td>
+            </tr>
+            <tr>
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="O_T_rocketsoftware_MVSP_Pick_Connect.html">Connect</a>
+              </td>
+              <td>Overloaded. This function is used to connect to the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_ConnectionTimer_tick.html">ConnectionTimer_tick</a>
+              </td>
+              <td> </td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell"><a href="http://msdn2.microsoft.com/en-us/library/System.Object.Equals" target="_top">Equals</a></td>
+              <td>Determines whether the specified <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a></nobr> is equal to the current <nobr><b>Object</b></nobr>. (inherited from <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a>)</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_Execute.html">Execute</a>
+              </td>
+              <td>This function allows the client application to execute a TCL command in the current database account.</td>
+            </tr>
+            <tr>
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="O_T_rocketsoftware_MVSP_Pick_ExecuteQuery.html">ExecuteQuery</a>
+              </td>
+              <td>Overloaded. This method allows you to execute an AQL query on the multivalue server and get a structured array returned containing the results.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileCacheRelease.html">FileCacheRelease</a>
+              </td>
+              <td>The <b xmlns="">FileCacheRelease</b> function releases the associated file cache entry for the specified opened file on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileDelete.html">FileDelete</a>
+              </td>
+              <td>The <b xmlns="">FileDelete</b> function delets an item from the specified file on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileRead.html">FileRead</a>
+              </td>
+              <td>The <b xmlns="">FileRead</b> function reads an item from the specified file on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileReadNext.html">FileReadNext</a>
+              </td>
+              <td>The <b xmlns="">FileReadNext</b> function allows the client application to get the next available item id from a previously generated select. The select could be either an executed select or generated using the FileSelect function.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileReadu.html">FileReadu</a>
+              </td>
+              <td>The <b xmlns="">FileReadu</b> function reads an item from the specified file on the MVSP Server and locks it.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileReadv.html">FileReadv</a>
+              </td>
+              <td>The <b xmlns="">FileReadv</b> function returns the attribute specified from the item, from the specified file on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileReadvu.html">FileReadvu</a>
+              </td>
+              <td>The <b xmlns="">FileReadvu</b> function returns the attribute specified from the item, from the specified file on the MVSP Server and locks the record.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileRelease.html">FileRelease</a>
+              </td>
+              <td>The <b xmlns="">FileRelease</b> function releases an item lock for the specified item on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileRoot.html">FileRoot</a>
+              </td>
+              <td>The <b xmlns="">FileRoot</b> method opens an index on the server.<seealso cref="M:rocketsoftware.MVSP.Pick.mvIndex.FileKey(System.Char)" xmlns="">Key method</seealso></td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileSelect.html">FileSelect</a>
+              </td>
+              <td>The <b xmlns="">FileSelect</b> function selects all the items in the specified file on the MVSP Server. The FileSelect function is the same as the select statement in Pick Basic.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileWrite.html">FileWrite</a>
+              </td>
+              <td>The <b xmlns="">FileWrite</b> function writes the specified item into the specified file on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileWriteu.html">FileWriteu</a>
+              </td>
+              <td>The <b xmlns="">FileWriteu</b> function writes the specified item into the specified file on the MVSP Server and maintains the item lock.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileWritev.html">FileWritev</a>
+              </td>
+              <td>The <b xmlns="">FileWritev</b> function writes the specified attribute on the item into the specified file on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_FileWritevu.html">FileWritevu</a>
+              </td>
+              <td>The <b xmlns="">FileWritevu</b> function writes the specified attribute on the item into the specified file on the MVSP Server and maintains the lock.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell"><a href="http://msdn2.microsoft.com/en-us/library/System.Object.GetHashCode" target="_top">GetHashCode</a></td>
+              <td>Serves as a hash function for a particular type. <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.Object.GetHashCode" target="_top">GetHashCode</a></nobr> is suitable for use in hashing algorithms and data structures like a hash table. (inherited from <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a>)</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell"><a href="http://msdn2.microsoft.com/en-us/library/System.Object.GetType" target="_top">GetType</a></td>
+              <td>Gets the <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.Type" target="_top">Type</a></nobr> of the current instance. (inherited from <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a>)</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_Logto.html">Logto</a>
+              </td>
+              <td>The Logto function allows to client application to move between database accounts.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MvCall.html">MvCall</a>
+              </td>
+              <td>
+                <seealso cref="M:rocketsoftware.MVSP.Pick.mvSubroutine.MvCall" xmlns="" /> Calls the previously defined rule module on the MVSP Server.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetClose.html">MVResultSetClose</a>
+              </td>
+              <td>This method will close (clear) the current MVResultSet</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetFirst.html">MVResultSetFirst</a>
+              </td>
+              <td>This method resets the current row pointer back to the first row</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetGetColumn.html">MVResultSetGetColumn</a>
+              </td>
+              <td>This method return the column names for the current result set</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetGetCurrentRow.html">MVResultSetGetCurrentRow</a>
+              </td>
+              <td>This method returns the current row from the result set</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetGetRow.html">MVResultSetGetRow</a>
+              </td>
+              <td>This method returns the current row number</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetGetRowCount.html">MVResultSetGetRowCount</a>
+              </td>
+              <td>This method returns the total number of rows in the result set</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetGetRows.html">MVResultSetGetRows</a>
+              </td>
+              <td>This method returns the entire result set as an arraylist</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MVResultSetNext.html">MVResultSetNext</a>
+              </td>
+              <td>This method moves the current row pointer onto the next row in the result set</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_MvSub.html">MvSub</a>
+              </td>
+              <td>Creates a mvSubroutine</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_NegotiationTimer_tick.html">NegotiationTimer_tick</a>
+              </td>
+              <td> </td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_OnCertificateValidation.html">OnCertificateValidation</a>
+              </td>
+              <td> </td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell"><a href="http://msdn2.microsoft.com/en-us/library/System.Object.ToString" target="_top">ToString</a></td>
+              <td>Returns a <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a></nobr> that represents the current <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a></nobr>. (inherited from <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a>)</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_TransactionBegin.html">TransactionBegin</a>
+              </td>
+              <td>The TransactionBegin method begins a transaction within D3.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_TransactionCommit.html">TransactionCommit</a>
+              </td>
+              <td>The TransactionCommit commits a transaction within the database.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_TransactionRollback.html">TransactionRollback</a>
+              </td>
+              <td>The TransactionRollback method rolls back a transaction within the database.</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubmethod.gif" alt="Public method" />
+              </td>
+              <td class="nameCell">
+                <a href="M_rocketsoftware_MVSP_Pick_TransactionStatus.html">TransactionStatus</a>
+              </td>
+              <td>Returns whether a transaction is currently active.</td>
+            </tr>
+          </table>
+          <a href="#mainBody">Top</a>
+        </div>
+        <h1 class="heading">
+          <span style="cursor:default;" tabindex="0" onclick="ExpandCollapse(FamilyMethodsToggle)" onkeypress="ExpandCollapse_CheckKey(FamilyMethodsToggle)">
+            <img class="toggle" name="toggleSwitch" src="collapse.gif" id="FamilyMethodsToggle" />Protected Methods</span>
+        </h1>
+        <div class="section" name="collapseableSection" id="FamilyMethodsSection">
+          <table width="100%" class="memberListTable">
+            <col width="10%" />
+            <col width="30%" />
+            <col width="60%" />
+            <tr>
+              <th style="border-right-style: none;"> </th>
+              <th align="left" style="border-left-style: none; border-right-style: none;">Name</th>
+              <th align="left" style="border-left-style: none;">Description</th>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="protmethod.gif" alt="Family method" />
+              </td>
+              <td class="nameCell"><a href="http://msdn2.microsoft.com/en-us/library/System.Object.Finalize" target="_top">Finalize</a></td>
+              <td>Allows an <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a></nobr> to attempt to free resources and perform other cleanup operations before the <nobr><b>Object</b></nobr> is reclaimed by garbage collection. (inherited from <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a>)</td>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="protmethod.gif" alt="Family method" />
+              </td>
+              <td class="nameCell"><a href="http://msdn2.microsoft.com/en-us/library/System.Object.MemberwiseClone" target="_top">MemberwiseClone</a></td>
+              <td>Creates a shallow copy of the current <nobr><a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a></nobr>. (inherited from <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a>)</td>
+            </tr>
+          </table>
+          <a href="#mainBody">Top</a>
+        </div>
+        <h1 class="heading">
+          <span style="cursor:default;" onclick="ExpandCollapse(seeAlsoToggle)" onkeypress="ExpandCollapse_CheckKey(seeAlsoToggle)" tabindex="0">
+            <img id="seeAlsoToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />See Also</span>
+        </h1>
+        <div id="seeAlsoSection" class="section" name="collapseableSection">
+          <a href="T_rocketsoftware_MVSP_Pick.html">Pick Class</a>
+          <br />
+          <a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP Namespace</a>
+        </div>
+      </div>
+      <DIV CLASS="footer">
+        <p>
+          <center>
+            <font color="red">
+              <i>
+                Syntax based on .NET Framework version 2.0.<br />
+                Documentation version 2.0.0.0.
+              </i>
+            </font>
+          </center>
+        </p>
+      </DIV><!--[if gte IE 5]><tool:tip element="membersOptionsFilterToolTip" avoidmouse="false" /><![endif]--></div>
+  </body>
+</html>

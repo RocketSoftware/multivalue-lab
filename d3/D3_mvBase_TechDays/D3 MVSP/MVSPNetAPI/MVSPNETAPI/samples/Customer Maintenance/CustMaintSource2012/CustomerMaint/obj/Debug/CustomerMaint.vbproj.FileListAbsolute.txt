@@ -1,0 +1,14 @@
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\bin\Debug\CustomerMaint.exe.config
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\bin\Debug\CustomerMaint.exe
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\bin\Debug\CustomerMaint.pdb
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\bin\Debug\CustomerMaint.xml
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\bin\Debug\RocketMVSP.dll
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\bin\Debug\TIGR.MVSP.dll
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.vbprojResolveAssemblyReference.cache
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.CustomerMaintenancefrm.resources
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.Resources.resources
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.OrderDisplay.resources
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.vbproj.GenerateResource.Cache
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.exe
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.xml
+C:\D3 MVSP\MVSPNetAPI\MVSPNETAPI\samples\Customer Maintenance\CustMaintSource2012\CustomerMaint\obj\Debug\CustomerMaint.pdb

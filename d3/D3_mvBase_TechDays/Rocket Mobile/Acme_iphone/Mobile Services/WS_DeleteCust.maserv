@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201503110919" modelVersion="1.0" ?>
+<service useProxy="true">
+   <uri>${HOST}/Invoices/delete_cust_item</uri>
+   <query>CUSTID=${CUST_ACCT}</query>
+   <method>GET</method>
+   <timeout>5000</timeout>
+   <username/>
+   <password/>
+   <request>
+      <type>
+         <structure>
+            <member name="CUSTID"/>
+         </structure>
+      </type>
+   </request>
+   <requestText/>
+   <response>
+      <type>
+         <structure>
+            <member name="delete_cust_item">
+               <type>
+                  <structure>
+                     <member name="STATUS"/>
+                  </structure>
+               </type>
+            </member>
+         </structure>
+      </type>
+   </response>
+   <responseText>{ &quot;delete_cust_item&quot;: { &quot;STATUS&quot;: &quot;&quot; } }</responseText>
+   <http-headers>
+      <header
+            name="Accept"
+            value="application/json"/>
+      <header
+            name="Content-Type"
+            value="application/json"/>
+   </http-headers>
+</service>

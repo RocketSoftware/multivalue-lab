@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201503110919" modelVersion="1.0" ?>
+<service useProxy="true">
+   <uri>${HOST}/Invoices/getInvoice</uri>
+   <query>INVOICE_NO=${INVOICE_NO}</query>
+   <method>GET</method>
+   <timeout>5000</timeout>
+   <username/>
+   <password/>
+   <requestText/>
+   <response>
+      <type>
+         <structure>
+            <member name="getInvoice">
+               <type>
+                  <structure>
+                     <member name="INVOICE_ITEM">
+                        <type>
+                           <structure>
+                              <member name="TERR_NO"/>
+                              <member name="billtoAddress"/>
+                              <member name="billtoCity"/>
+                              <member name="billtoCompanyName"/>
+                              <member name="billtoContactName"/>
+                              <member name="billtoState"/>
+                              <member name="billtoZip"/>
+                              <member name="comment"/>
+                              <member name="custAccount"/>
+                              <member name="invoiceDate"/>
+                              <member name="invoiceDiscount"/>
+                              <member name="invoiceGross"/>
+                              <member name="invoiceNet"/>
+                              <member name="invoiceNo"/>
+                              <member name="line">
+                                 <type>
+                                    <array>
+                                       <type>
+                                          <structure>
+                                             <member name="lineDescription"/>
+                                             <member name="lineDiscount"/>
+                                             <member name="lineExtNet"/>
+                                             <member name="lineGross"/>
+                                             <member name="lineProductNo"/>
+                                             <member name="lineQty"/>
+                                             <member name="lineUnitPrice"/>
+                                          </structure>
+                                       </type>
+                                    </array>
+                                 </type>
+                              </member>
+                              <member name="orderDate"/>
+                              <member name="salesRepName"/>
+                              <member name="salesRepPhone"/>
+                              <member name="shiptoAddress"/>
+                              <member name="shiptoCity"/>
+                              <member name="shiptoName"/>
+                              <member name="shiptoState"/>
+                              <member name="shiptoZip"/>
+                              <member name="terms"/>
+                           </structure>
+                        </type>
+                     </member>
+                  </structure>
+               </type>
+            </member>
+         </structure>
+      </type>
+   </response>
+   <responseText>{ &quot;getInvoice&quot;: { &quot;INVOICE_ITEM&quot;: { &quot;billtoCity&quot;: &quot;PHOENIX&quot;, &quot;shiptoAddress&quot;: &quot;2720 W SAHUARO DR&quot;, &quot;invoiceDate&quot;: &quot;08-06-2014&quot;, &quot;billtoZip&quot;: &quot;85009&quot;, &quot;orderDate&quot;: &quot;06-26-2014&quot;, &quot;invoiceNet&quot;: &quot;11695.24&quot;, &quot;terms&quot;: &quot;Net 30&quot;, &quot;shiptoName&quot;: &quot;ALCON LABORATORIES, INC.&quot;, &quot;line&quot;: [ { &quot;lineGross&quot;: &quot;7999.96&quot;, &quot;lineDiscount&quot;: &quot;3%&quot;, &quot;lineExtNet&quot;: &quot;240.00&quot;, &quot;lineUnitPrice&quot;: &quot;1999.99&quot;, &quot;lineProductNo&quot;: &quot;1&quot;, &quot;lineQty&quot;: &quot;4&quot;, &quot;lineDescription&quot;: &quot;ACME GUIDED MISSLE LAUNCHER&quot; }, { &quot;lineGross&quot;: &quot;2319.96&quot;, &quot;lineDiscount&quot;: &quot;3%&quot;, &quot;lineExtNet&quot;: &quot;69.60&quot;, &quot;lineUnitPrice&quot;: &quot;579.99&quot;, &quot;lineProductNo&quot;: &quot;2&quot;, &quot;lineQty&quot;: &quot;4&quot;, &quot;lineDescription&quot;: &quot;ACME REPLACEMENT GUIDED MISSLES (3 PACK)&quot; }, { &quot;lineGross&quot;: &quot;499.95&quot;, &quot;lineDiscount&quot;: &quot;3%&quot;, &quot;lineExtNet&quot;: &quot;15.00&quot;, &quot;lineUnitPrice&quot;: &quot;99.99&quot;, &quot;lineProductNo&quot;: &quot;3&quot;, &quot;lineQty&quot;: &quot;5&quot;, &quot;lineDescription&quot;: &quot;ACME ROCKET POWERED ROLLER SKATES (PAIR)&quot; }, { &quot;lineGross&quot;: &quot;1199.97&quot;, &quot;lineDiscount&quot;: &quot;&quot;, &quot;lineExtNet&quot;: &quot;0.00&quot;, &quot;lineUnitPrice&quot;: &quot;399.99&quot;, &quot;lineProductNo&quot;: &quot;5&quot;, &quot;lineQty&quot;: &quot;3&quot;, &quot;lineDescription&quot;: &quot;ACME DO-IT-YOURSELF TORNADO KIT&quot; } ], &quot;billtoState&quot;: &quot;AZ&quot;, &quot;billtoCompanyName&quot;: &quot;ROADRUNNER ABATEMENT SERVICES&quot;, &quot;invoiceNo&quot;: &quot;1044033&quot;, &quot;salesRepName&quot;: &quot;Robin Barclay&quot;, &quot;TERR_NO&quot;: &quot;01&quot;, &quot;billtoAddress&quot;: &quot;2520 GRAND AVE&quot;, &quot;invoiceGross&quot;: &quot;12019.84&quot;, &quot;billtoContactName&quot;: &quot;WILE E COYOTE&quot;, &quot;invoiceDiscount&quot;: &quot;324.60&quot;, &quot;shiptoCity&quot;: &quot;IRVINE&quot;, &quot;comment&quot;: &quot;NMI&quot;, &quot;shiptoState&quot;: &quot;CA&quot;, &quot;custAccount&quot;: &quot;1003940&quot;, &quot;shiptoZip&quot;: &quot;92623&quot;, &quot;salesRepPhone&quot;: &quot;&quot; } } }</responseText>
+   <http-headers>
+      <header
+            name="Accept"
+            value="application/json"/>
+      <header
+            name="Content-Type"
+            value="application/json"/>
+   </http-headers>
+</service>

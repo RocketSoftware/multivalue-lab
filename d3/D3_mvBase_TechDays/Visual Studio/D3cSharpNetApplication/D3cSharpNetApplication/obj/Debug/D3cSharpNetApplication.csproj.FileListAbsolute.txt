@@ -1,0 +1,13 @@
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Debug\D3cSharpNetApplication.exe.config
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Debug\D3cSharpNetApplication.exe
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Debug\D3cSharpNetApplication.pdb
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Debug\RocketMVSP.dll
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.csprojResolveAssemblyReference.cache
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.CustomerSearch.resources
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.Properties.Resources.resources
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.csproj.GenerateResource.Cache
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.exe
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.pdb
+c:\users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.CustList.resources
+C:\Users\dgardner\Documents\Visual Studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.Invoices.resources
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Debug\D3cSharpNetApplication.Invoice.resources

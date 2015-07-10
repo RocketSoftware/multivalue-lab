@@ -1,0 +1,143 @@
+<html dir="LTR" xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:ndoc="urn:ndoc-preprocess">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <title>Properties</title>
+    <link rel="stylesheet" type="text/css" href="ndoc.css"> </link>
+    <link rel="stylesheet" type="text/css" href="user.css"> </link>
+    <script type="text/javascript" src="ndoc.js"> </script>
+  </head>
+  <body style="display: none;">
+    <input type="hidden" id="userDataCache" class="userDataStyle" />
+    <input type="hidden" id="hiddenScrollOffset" />
+    <img id="dropDownImage" style="display:none; height:0; width:0;" src="drpdown.gif" />
+    <img id="dropDownHoverImage" style="display:none; height:0; width:0;" src="drpdown_orange.gif" />
+    <img id="collapseImage" style="display:none; height:0; width:0;" src="collapse.gif" />
+    <img id="expandImage" style="display:none; height:0; width:0;" src="exp.gif" />
+    <img id="collapseAllImage" style="display:none; height:0; width:0;" src="collall.gif" />
+    <img id="expandAllImage" style="display:none; height:0; width:0;" src="expall.gif" />
+    <img id="copyImage" style="display:none; height:0; width:0;" src="copycode.gif" />
+    <img id="copyHoverImage" style="display:none; height:0; width:0;" src="copycodeHighlight.gif" />
+    <div id="header">
+      <table width="100%" id="topTable">
+        <tr id="headerTableRow1">
+          <td align="left">
+            <span id="runningHeaderText">Rocket MVSP .NET Client API</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow2">
+          <td align="left">
+            <span id="nsrTitle">Pick.mvSubroutine Properties</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow3">
+          <td>
+            <a id="seeAlsoSectionLink" href="#seeAlsoToggle" onclick="OpenSection(seeAlsoToggle)">See Also</a>
+            <a id="exampleSectionLink" href="#codeExampleToggle" onclick="OpenSection(codeExampleToggle)">Example</a>
+          </td>
+        </tr>
+      </table>
+      <table width="100%" id="bottomTable" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <span onclick="ExpandCollapseAll(toggleAllImage)" style="cursor:default;" onkeypress="ExpandCollapseAll_CheckKey(toggleAllImage)" tabindex="0">
+              <img ID="toggleAllImage" class="toggleAll" src="collall.gif" />
+              <label id="collapseAllLabel" for="toggleAllImage" style="display: none;">
+							Collapse All
+						</label>
+              <label id="expandAllLabel" for="toggleAllImage" style="display: none;">
+							Expand All
+						</label>
+            </span>
+            <span id="membersOptionsFilterToolTip" style="cursor:default;" onmouseover="membersOptionsFilterImage.src=dropDownHoverImage.src;" onfocusin="membersOptionsFilterImage.src=dropDownHoverImage.src;" onmouseout="membersOptionsFilterImage.src=dropDownImage.src;" onfocusout="membersOptionsFilterImage.src=dropDownImage.src;" tabindex="0">
+              <img id="membersOptionsFilterImage" src="drpdown.gif" />
+              <label id="showAllMembersLabel" for="membersOptionsFilterImage" style="display: none;">
+				Members Options: Show All
+			</label>
+              <label id="filteredMembersLabel" for="membersOptionsFilterImage" style="display: none;">
+				Members Options: Filtered
+			</label>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <span style="display:none" id="membersOptionsSpan">
+        <input id="inheritedCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="inheritedCheckbox">
+				Include Inherited Members
+			</label>
+        <br />
+        <input id="protectedCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="protectedCheckbox">
+				Include Protected Members
+			</label>
+        <br />
+        <input id="assemblyCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="assemblyCheckbox">
+				Include Internal Members
+			</label>
+        <br />
+        <input id="privateCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="privateCheckbox">
+				Include Private Members
+			</label>
+        <br />
+        <input id="netcfCheckbox" type="checkbox" name="membersOptionsFilter" onClick="SetMembersOptions(this)" />
+        <label class="membersOptionsFilter" for="netcfCheckbox">
+				.NET Compact Framework Members Only
+			</label>
+        <br />
+      </span>
+    </div>
+    <div id="mainSection">
+      <div id="mainBody">
+        <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()" />
+        <h1 class="heading">
+          <span style="cursor:default;" tabindex="0" onclick="ExpandCollapse(PublicPropertiesToggle)" onkeypress="ExpandCollapse_CheckKey(PublicPropertiesToggle)">
+            <img class="toggle" name="toggleSwitch" src="collapse.gif" id="PublicPropertiesToggle" />Public Properties</span>
+        </h1>
+        <div class="section" name="collapseableSection" id="PublicPropertiesSection">
+          <table width="100%" class="memberListTable">
+            <col width="10%" />
+            <col width="30%" />
+            <col width="60%" />
+            <tr>
+              <th style="border-right-style: none;"> </th>
+              <th align="left" style="border-left-style: none; border-right-style: none;">Name</th>
+              <th align="left" style="border-left-style: none;">Description</th>
+            </tr>
+            <tr VALIGN="top">
+              <td class="imageCell">
+                <img src="pubproperty.gif" alt="Public property" />
+              </td>
+              <td class="nameCell">
+                <a href="P_rocketsoftware_MVSP_Pick_mvSubroutine_GetName.html">GetName</a>
+              </td>
+              <td>This property get the name of the subroutine</td>
+            </tr>
+          </table>
+          <a href="#mainBody">Top</a>
+        </div>
+        <h1 class="heading">
+          <span style="cursor:default;" onclick="ExpandCollapse(seeAlsoToggle)" onkeypress="ExpandCollapse_CheckKey(seeAlsoToggle)" tabindex="0">
+            <img id="seeAlsoToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />See Also</span>
+        </h1>
+        <div id="seeAlsoSection" class="section" name="collapseableSection">
+          <a href="T_rocketsoftware_MVSP_Pick_mvSubroutine.html">Pick.mvSubroutine Class</a>
+          <br />
+          <a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP Namespace</a>
+        </div>
+      </div>
+      <DIV CLASS="footer">
+        <p>
+          <center>
+            <font color="red">
+              <i>
+                Syntax based on .NET Framework version 2.0.<br />
+                Documentation version 2.0.0.0.
+              </i>
+            </font>
+          </center>
+        </p>
+      </DIV><!--[if gte IE 5]><tool:tip element="membersOptionsFilterToolTip" avoidmouse="false" /><![endif]--></div>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+                <FORM>
+					<b>Customer Search Results:</b>
+					
+					<div>
+						<a class="btn btn-primary btn-sm" href="#/">
+          				<span class="glyphicon glyphicon-search"></span> New Search</a>
+                        
+          				<!--<button type="button" class="btn btn-info btn-sm" ng-click="addNewCust()">
+          				<span class="glyphicon glyphicon-plus-sign"></span> Add Customer 
+          				</button>-->
+					<button type="button" class="btn btn-info btn-sm" ng-click=!editableForm.$visible>
+                        <span class="glyphicon glyphicon-plus-sign"></span> Add Customer 
+                    </button>
+					</div>
+					
+				</FORM>
+         </div>
+            </br>
+		
+    
+        <Form editable-form name="editableForm" >
+        <div class="col-md-6">
+            <div>
+        <!-- editable accountno (text with validation) -->
+                <span class="title">Account:  </span>
+                <span class="form-control" editable-number="NewCust.AcctNo" e-name="NewCust.AcctNo" e-required>{{ newCust.AcctNo || 'Number Required' }}</span>
+            </div> 
+            
+            <div>
+        <!-- editable Customer Name -->
+                <span class="title">Name:     </span>
+                <span class="form-control" editable-text="NewCust.Name" e-name="newCust.Name" e-required>{{ newCust.Name || 'empty' }}</span>
+            </div>
+            
+            <div>
+        <!-- editable Customer Address -->
+                <span class="title">Address:  </span>
+                <span class="form-control" editable-text="newCust.Address" e-name="newCust.Address" e-required>{{ newCust.Address  || 'empty' }}</span>
+            </div>
+        
+            <div>
+        <!-- editable Customer City -->
+                <span class="title">City:     </span>
+                <span class="form-control"  editable-text="NewCust.City" e-name="newCust.City" e-required>{{ newCust.City  || 'empty' }}</span>
+            </div>
+
+            <div>
+        <!-- editable Customer State -->
+                <span class="title">State:    </span>
+                <span class="form-control"  editable-select="newCust.State" buttons="no" e-ng-options="state in states"></span>
+            </div>
+            
+            <div>
+        <!-- editable Customer Zip -->
+                <span class="title">Zip:      </span>
+                <span class="form-control"  editable-text="newCust.Zip" e-name="newCust.Zip" e-required>{{ newCust.Zip || 'empty' }}</span>
+            </div>
+            
+            <div>
+        <!-- editable Customer Phone -->
+                <span class="title">Phone:    </span>
+                <span class="form-control" editable-tel="NewCust.Phone" e-pattern="\d{3}\-\d{3}\-\d{4}" e-title="xxx-xxx-xxxx" e-required>{{ newCust.Phone || 'xxx-xxx-xxxx' }}</span>
+            </div>
+            <!-- buttons to submit / cancel form -->
+            <span ng-show="editableForm.$visible">
+            <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                Save
+            </button>
+                <button type="button" class="btn btn-info" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                Cancel
+            </button>
+            </span>
+
+
+            </div>
+        </Form>
+    
+
+    <br Clear></br>
+    <br></br>
+        Filter: <input type="text" ng-model="CustFilter.foundName"/>
+		<div class="table-responsive" >
+            
+		<table class="table  table-compressed table-striped table-bordered table-hover">
+            
+            <tr><th  ng-click="doSort('foundAcctNo')">Account#</th>
+            	<th  ng-click="doSort('foundName')">Name</th>
+                <th  ng-click="doSort('foundAddress')">Address</th>   
+                <th  ng-click="doSort('foundCity')">City</th>
+                <th  ng-click="doSort('foundState')">State</th>
+				<th  ng-click="doSort('foundState')">Zip</th>
+				<th  ng-click="doSort('foundPhone')">Phone</th>
+                <th>Edit</th>
+			</tr>
+                <tr ng-repeat="cust in customerList | filter:CustFilter | orderBy:sortBy:reverse" class="repeat-animation input-sm">
+                    <div class="col-xs-1" style="width:10%">
+                        <td><a href="#/CustInvoices/{{ cust.foundAcctNo }}">{{ cust.foundAcctNo }}</a></td>
+                    </div> 
+                    <div class="col-xs-4" style="width:25%">
+                        <td>{{ cust.foundName }}\</td>
+                        <td>{{ cust.foundAddress }}</td>
+                    </div>
+                    <div class="col-xs-3" style="width:20%">
+                        <td>{{ cust.foundCity }}</td>
+                    </div>
+                    <div class="col-xs-1" style="width:5%">
+                        <td>{{ cust.foundState }}</td>
+                    </div>
+                    <div class="col-xs-2" style="width:15%">
+                        <td>{{ cust.foundZip }}</td>
+                        <td>{{ cust.foundPhone }}</td>
+                    </div>
+                    <div class="col-xs-4" style="width:10%">
+                        <td> <button class="btn btn-danger" ng-click="deleteCustomer(cust.foundAcctNo)"><span class="glyphicon glyphicon-minus-sign"></span> Delete</button>
+                    </div>
+                    </td>
+                </tr>
+
+        </table>
+            
+	   </div>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201505221723" modelVersion="1.0" ?>
+<page>
+   <id>index</id>
+   <title>Customer Search</title>
+   <backgroundColor>9</backgroundColor>
+   <actionbutton value="true">
+      <id>actionbutton1</id>
+      <iconPosition>Right</iconPosition>
+      <textColor>1</textColor>
+      <label>Settings</label>
+      <icon>Resources/32x32/settings-3.png</icon>
+      <handlers>
+         <event
+               desc="actionbutton1_OnForward"
+               name="forward">
+            <handler>
+               <action
+                     target="pg_Config"
+                     type="OPEN_PAGE">
+                  <transition>fade</transition>
+               </action>
+            </handler>
+         </event>
+      </handlers>
+   </actionbutton>
+   <controls>
+      <ToolBar>
+         <id>ToolBar1</id>
+         <backgroundColor>16</backgroundColor>
+         <controls>
+            <Button>
+               <id>Button1</id>
+               <show>Icon</show>
+               <icon>Resources/32x32/nope.png</icon>
+               <backgroundColor>16</backgroundColor>
+               <handlers>
+                  <event
+                        desc="Button1_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="txt_CustAddr.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_CustName.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_CustPhone.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_CustTerr.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>Button2</id>
+               <show>Icon</show>
+               <icon>Resources/32x32/arrow-right.png</icon>
+               <backgroundColor>16</backgroundColor>
+               <handlers>
+                  <event
+                        desc="Button2_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="Search_Cust_ADDRS"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_CustAddr.value}"/>
+                        </action>
+                        <action
+                              target="Search_Cust_NAMES"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_CustName.value}"/>
+                        </action>
+                        <action
+                              target="Search_Cust_PHONE"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_CustPhone.value}"/>
+                        </action>
+                        <action
+                              target="Search_Cust_STERR"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_CustTerr.value}"/>
+                        </action>
+                        <action
+                              target="WS_CustList"
+                              type="SERVICE_CALL"/>
+                        <action
+                              target="pg_CustList"
+                              type="OPEN_PAGE">
+                           <transition>slide</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+         </controls>
+      </ToolBar>
+      <Image>
+         <id>Image1</id>
+         <source>Resources/acme.png</source>
+         <scale value="true"/>
+      </Image>
+      <FormComposite>
+         <id>frm_CustSearch</id>
+         <controls>
+            <TextField>
+               <id>txt_CustName</id>
+               <formLabel>Name:</formLabel>
+            </TextField>
+            <TextField>
+               <id>txt_CustAddr</id>
+               <formLabel>Addr:</formLabel>
+            </TextField>
+            <TextField>
+               <id>txt_CustPhone</id>
+               <labelPosition>Top</labelPosition>
+               <formLabel>Phone: (Last 4 Digits)</formLabel>
+            </TextField>
+            <TextField>
+               <id>txt_CustTerr</id>
+               <formLabel>Terr#:</formLabel>
+            </TextField>
+         </controls>
+      </FormComposite>
+   </controls>
+   <handlers>
+      <event
+            desc="pg_CustSearch_OnLoad"
+            name="load">
+         <handler>
+            <action
+                  target="Scripts/initialize.js"
+                  type="CUSTOM_SCRIPT"/>
+         </handler>
+      </event>
+   </handlers>
+</page>

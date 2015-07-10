@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201503110919" modelVersion="1.0" ?>
+<service useProxy="true">
+   <uri>${HOST}/Invoices/getCustList</uri>
+   <query>NAMES=${Search_Cust_NAMES}&amp;ADDRS=${Search_Cust_ADDRS}&amp;PHONE=${Search_Cust_PHONE}&amp;STERR=${Search_Cust_STERR}</query>
+   <method>GET</method>
+   <timeout>5000</timeout>
+   <username/>
+   <password/>
+   <request>
+      <type>
+         <structure>
+            <member name="NAMES"/>
+            <member name="ADDRS"/>
+            <member name="PHONE"/>
+            <member name="STERR"/>
+         </structure>
+      </type>
+   </request>
+   <requestText/>
+   <response>
+      <type>
+         <structure>
+            <member name="getCustList">
+               <type>
+                  <structure>
+                     <member name="CUSTLIST">
+                        <type>
+                           <structure>
+                              <member name="foundCustomers">
+                                 <type>
+                                    <array>
+                                       <type>
+                                          <structure>
+                                             <member name="foundAcctNo"/>
+                                             <member name="foundName"/>
+                                             <member name="foundAddress"/>
+                                             <member name="foundCity"/>
+                                             <member name="foundState"/>
+                                             <member name="foundZip"/>
+                                             <member name="foundPhone"/>
+                                          </structure>
+                                       </type>
+                                    </array>
+                                 </type>
+                              </member>
+                           </structure>
+                        </type>
+                     </member>
+                  </structure>
+               </type>
+            </member>
+         </structure>
+      </type>
+   </response>
+   <responseText>{ &quot;getCustList&quot;: { &quot;CUSTLIST&quot;: { &quot;foundCustomers&quot;: [ { &quot;foundPhone&quot;: &quot;&quot;, &quot;foundZip&quot;: &quot;&quot;, &quot;foundName&quot;: &quot;&quot;, &quot;foundCity&quot;: &quot;&quot;, &quot;foundAcctNo&quot;: &quot;All search fields are empty&quot;, &quot;foundState&quot;: &quot;&quot;, &quot;foundAddress&quot;: &quot;&quot; } ] } } }</responseText>
+   <http-headers>
+      <header
+            name="Accept"
+            value="application/json"/>
+      <header
+            name="Content-Type"
+            value="application/json"/>
+   </http-headers>
+</service>

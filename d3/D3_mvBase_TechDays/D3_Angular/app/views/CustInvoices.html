@@ -1,0 +1,32 @@
+                        <FORM>					
+
+					 		<br>List of Invoices for: {{invoicesList.custName}}</br>
+							 <a class="btn btn-primary btn-sm" href="#/">
+          				      <span class="glyphicon glyphicon-search"></span> New Search</a>
+						</FORM>
+
+                        <div class="table-responsive"> 
+			<!-- Create table HTML Table Headers for the Customer invoices -->
+				<table class="table table-condensed table-striped table-bordered table-hover">
+		              
+                    <tr><th>Invoice#</th>
+                        <th>Invoice Date</th>
+                        <th>Order Date</th>
+                        <th>Terms</th>
+                        <th>Gross</th>
+                        <th>Discount</th>
+                        <th>Net Invoice</th>
+				        <th>Comments</th>
+				    </tr>
+            <!-- Loop though the jason structure object returned from the factory -->      
+                        <tr ng-repeat="invoice in invoicesList.invoice" | orderBy:invoice.invoiceDate class="repeat-animation">
+                            <td><a href="#/Invoice/{{ invoice.invoiceNo }}"><small>{{ invoice.invoiceNo }}</small></a></td>
+                            <td class='text-center'><small>{{ invoice.invoiceDate }}</small></td>
+                            <td class='text-center'><small>{{ invoice.orderDate }}</small></td>
+                            <td class='text-center'><small>{{ invoice.terms }}</small></td>
+                            <td class='text-right'><small>{{ invoice.totalGross | currency }}</small></td>
+                            <td class='text-right'><small>{{ invoice.totalDiscount | currency}}</small></td>
+                            <td class='text-right'><small>{{ invoice.totalNet | currency}}</small></td>
+                            <td class='text-left'><small>{{ invoice.InvoiceComments }}</small></td>
+                        </tr>
+                </table>

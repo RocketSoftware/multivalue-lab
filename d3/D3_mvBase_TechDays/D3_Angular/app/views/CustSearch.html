@@ -1,0 +1,30 @@
+<b>Customer Search:</b>
+    
+    
+<div class="form-group form-group-sm" "col-md-4">
+    <form>
+    
+  		
+    		<label for="InputName"><strong>Name:</strong></label>
+    		<input type="text" class="form-control" ng-model="CustName">      <!-- define Angular data model for Customer Name -->
+		
+		
+    		<label><strong>Address:</strong></label>
+    		<input type="text" class="form-control" ng-model="CustAddress">   <!-- define Angular data model for Customer Address -->
+    	
+    	
+    		<label><stron>Phone:   (Last 4 Digits)</stron></label>
+    		<input type="text" class="form-control" ng-model="CustPhone">     <!-- define Angular data model for Customer Phone -->
+    	
+    		
+    		<label><strong>Terr#:</strong></label>
+    		<input type="text" class="form-control" ng-model="CustTerrNo" >   <!-- define Angular data model for Customer Territory -->
+    	
+            <a class="btn btn-primary btn-sm" href="#/CustList/{{CustName}}/{{CustAddress}}/{{CustPhone}}/{{CustTerrNo}}">
+          				<span class="glyphicon glyphicon-search"></span> Search</a>
+          		</button>
+				<button type="reset" class="btn btn-info btn-sm">
+          				<span class="glyphicon glyphicon-refresh"></span> Clear
+          		</button> 	
+	</form>
+</div>

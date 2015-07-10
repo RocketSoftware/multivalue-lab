@@ -1,0 +1,74 @@
+                <FORM>
+					<b>Customer Search Results:</b>
+					
+					<div>
+						<a class="btn btn-primary btn-sm" href="#/">
+          				<span class="glyphicon glyphicon-search"></span> New Search</a>
+
+                        <!-- create button that allows user to add a new empty row to enter new customer info into -->
+                        
+          				<button type="button" class="btn btn-info btn-sm" id = "btn_addCust" name="Add Customer" ng-Click= "addNewRow()">
+          				<span class="glyphicon glyphicon-plus-sign"></span> Add Customer 
+          				</button>
+					
+					</div>
+					
+				</FORM>
+         </div>
+            </br>
+		
+        Filter: <input type="text" ng-model="CustFilter.foundName"/> <!-- create Angular Filter to filter the table data -->
+		<div>
+        
+        <!-- create html table header and add angular sort capabiliyties to each column  -->
+		<table id="Cust_Table" class="table table-responsive table-condensed table-striped table-bordered table-hover col-md-12">
+            
+            <tr><th  width="10%" ng-click="doSort('foundAcctNo')">Account#</th>
+            	<th  width="20%" ng-click="doSort('foundName')">Name</th>
+                <th  width="20%" ng-click="doSort('foundAddress')">Address</th>
+                <th  width="15%" ng-click="doSort('foundCity')">City</th>
+                <th  width="5%"  ng-click="doSort('foundState')">State</th>
+				<th  width="10%" ng-click="doSort('foundZip')">Zip</th>
+				<th  width="10%" ng-click="doSort('foundPhone')">Phone</th>
+                <th  width="10%">Edit</th>
+			</tr>
+            <!-- loop through the results provided from factory and map filter to table row set -->
+            
+                <tr ng-repeat="cust in customerList | filter:CustFilter | orderBy:sortBy:reverse" class="repeat-animation">
+                    <td><a href="#/CustInvoices/{{ cust.foundAcctNo }}"><small><span editable-text="cust.foundAcctNo" e-name="AcctNo" e-form="rowform"  e-required>{{ cust.foundAcctNo }}</small></a></td>
+                    <td><span editable-text="cust.foundName" e-name="Name" e-form="rowform"  e-required>{{ cust.foundName || 'empty' }}
+                    </span></td>
+                    <td><span editable-text="cust.foundAddress" e-name="Address" e-form="rowform"  e-required>{{ cust.foundAddress || 'empty' }}
+                    </span></td>
+                    <td><span editable-text="cust.foundCity" e-name="City" e-form="rowform"  e-required>{{ cust.foundCity || 'empty' }}
+                    </span></td>
+                    <td><span editable-text="cust.foundState" e-name="State" e-form="rowform"  e-required>{{ cust.foundState || 'empty' }}
+                    </span></td>
+                    <td><span editable-text="cust.foundZip" e-name="Zip" e-form="rowform"  e-required>{{ cust.foundZip || 'empty' }}
+                    </span></td>
+                    <td><span editable-text="cust.foundPhone" e-name="Phone" e-form="rowform"  e-required>{{ cust.foundPhone || 'empty' }}
+                    </span></td>
+                    <td style="white-space: nowrap">
+                    
+                    <!-- create and only show form if editing the table (or entering data in new row ) -->
+                        
+                    <form editable-form name="rowform" onbeforesave="addCustomer($data)" ng-show="rowform.$visible" 
+                                                                     class="form-buttons form-inline" shown="inserted == cust">
+                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                            save
+                        </button>
+
+                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">cancel</button>
+                    </form>
+                        
+                    <!-- create buttone (shown by default unless ng-show is called when an edit or addrow action occurs) -->
+
+                    <div class="buttons" ng-show="!rowform.$visible">
+                        <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
+                        <input class= "btn btn-danger btn-sm" type= button value= "Delete" ng-click= "deleteCustomer(cust.foundAcctNo)"/></td>
+                    </div>  
+                    </td>
+                    </tr>
+        </table>
+            
+	   </div>

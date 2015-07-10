@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201505221723" modelVersion="1.0" ?>
+<page>
+   <id>pg_Config</id>
+   <title>Configure Host Path</title>
+   <backgroundColor>9</backgroundColor>
+   <controls>
+      <ToolBar>
+         <id>ToolBar1</id>
+         <backgroundColor>16</backgroundColor>
+         <controls>
+            <Button>
+               <id>Button2</id>
+               <show>Icon</show>
+               <backgroundColor>16</backgroundColor>
+               <icon>Resources/32x32/nope.png</icon>
+               <handlers>
+                  <event
+                        desc="Button2_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="txt_IP_Port.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>Button1</id>
+               <show>Icon</show>
+               <backgroundColor>16</backgroundColor>
+               <icon>Resources/32x32/database-add.png</icon>
+               <handlers>
+                  <event
+                        desc="Button1_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="HOST"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_IP_Port.value}"/>
+                        </action>
+                        <action
+                              target="index"
+                              type="OPEN_PAGE">
+                           <transition>fade</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+         </controls>
+      </ToolBar>
+      <Image>
+         <id>Image1</id>
+         <source>Resources/acme.png</source>
+         <scale value="true"/>
+      </Image>
+      <FormComposite>
+         <id>FormComposite1</id>
+         <controls>
+            <Label>
+               <id>Label1</id>
+               <textColor>9</textColor>
+               <value>Enter Host IP and Port Address</value>
+            </Label>
+            <TextField>
+               <id>txt_IP_Port</id>
+               <labelPosition>None</labelPosition>
+               <value>${HOST}</value>
+            </TextField>
+         </controls>
+      </FormComposite>
+   </controls>
+</page>

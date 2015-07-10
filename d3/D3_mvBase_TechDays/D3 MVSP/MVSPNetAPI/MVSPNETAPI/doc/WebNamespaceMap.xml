@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	This file specifies the managed namespace to help namespace mapping
+	that will be used when creating XLinks to managed types that are not
+	part of the documentation set being processed.
+	
+	Each helpNamespace entry can contain 1..n managedNamespace entries.
+	
+	When resolving the help namespace of a managed type, the most specific
+	managedNamespace entry will be used to select the appropriate help namespace.
+	
+	For example, given the following map file:
+	
+	<namespaceMap xmlns="urn:ndoc-sourceforge-net:documenters.NativeHtmlHelp2.schemas.namespaceMap">
+		<helpNamespace ns="ms-help://companyX.sharedhelpcollection">
+			<managedNamespace ns="CompanyX"/>
+		</helpNamespace>
+		<helpNamespace ns="ms-help://companyX.producthelpcollection">
+			<managedNamespace ns="CompanyX.Product1"/>
+			<managedNamespace ns="CompanyX.Product2"/>
+		</helpNamespace>	
+	</namespaceMap>
+	
+	The managed type CompanyX.Product2.Class1 would map to ms-help://companyX.producthelpcollection,
+	while CompanyX.Core.Class1 would map to ms-help://companyX.sharedhelpcollection
+-->
+<namespaceMap xmlns="urn:ndoc2.schemas.namespaceMap">
+	<!-- 
+		In addition to your custom mapping file, the NativeHtmlHelp2 documenter uses this 
+		file as a default map in order to include links to the Microsoft .NET SDK. 
+		There is no need to include System or Microsoft namespaces in your custom mapping file.
+	-->
+	<helpNamespace ns="http://msdn2.microsoft.com/en-us/library/">
+		<managedNamespace ns="Accessibility" />
+		<managedNamespace ns="IEHost.Execute" />
+		<managedNamespace ns="Microsoft.Aspnet.Snapin" />
+		<managedNamespace ns="Microsoft.Build.BuildEngine" />
+		<managedNamespace ns="Microsoft.Build.Framework" />
+		<managedNamespace ns="Microsoft.Build.Tasks" />
+		<managedNamespace ns="Microsoft.Build.Tasks.Deployment.Bootstrapper" />
+		<managedNamespace ns="Microsoft.Build.Tasks.Deployment.ManifestUtilities" />
+		<managedNamespace ns="Microsoft.Build.Tasks.Hosting" />
+		<managedNamespace ns="Microsoft.Build.Utilities" />
+		<managedNamespace ns="Microsoft.CLRAdmin" />
+		<managedNamespace ns="Microsoft.CSharp" />
+		<managedNamespace ns="Microsoft.IE" />
+		<managedNamespace ns="Microsoft.JScript" />
+		<managedNamespace ns="Microsoft.JScript.Vsa" />
+		<managedNamespace ns="Microsoft.SqlServer.Server" />
+		<managedNamespace ns="Microsoft.VisualBasic" />
+		<managedNamespace ns="Microsoft.VisualBasic.ApplicationServices" />
+		<managedNamespace ns="Microsoft.VisualBasic.CompilerServices" />
+		<managedNamespace ns="Microsoft.VisualBasic.Devices" />
+		<managedNamespace ns="Microsoft.VisualBasic.FileIO" />
+		<managedNamespace ns="Microsoft.VisualBasic.Logging" />
+		<managedNamespace ns="Microsoft.VisualBasic.MyServices" />
+		<managedNamespace ns="Microsoft.VisualBasic.MyServices.Internal" />
+		<managedNamespace ns="Microsoft.VisualBasic.Vsa" />
+		<managedNamespace ns="Microsoft.VisualC" />
+		<managedNamespace ns="Microsoft.Vsa" />
+		<managedNamespace ns="Microsoft.Vsa.Vb.CodeDOM" />
+		<managedNamespace ns="Microsoft.Win32" />
+		<managedNamespace ns="Microsoft.Win32.SafeHandles" />
+		<managedNamespace ns="Microsoft.WindowsCE.Forms" />
+		<managedNamespace ns="Microsoft.WindowsMobile.DirectX" />
+		<managedNamespace ns="Microsoft.WindowsMobile.DirectX.Direct3D" />
+		<managedNamespace ns="Microsoft_VsaVb" />
+		<managedNamespace ns="RegCode" />
+		<managedNamespace ns="System" />
+		<managedNamespace ns="System.CodeDom" />
+		<managedNamespace ns="System.CodeDom.Compiler" />
+		<managedNamespace ns="System.Collections" />
+		<managedNamespace ns="System.Collections.Generic" />
+		<managedNamespace ns="System.Collections.ObjectModel" />
+		<managedNamespace ns="System.Collections.Specialized" />
+		<managedNamespace ns="System.ComponentModel" />
+		<managedNamespace ns="System.ComponentModel.Design" />
+		<managedNamespace ns="System.ComponentModel.Design.Data" />
+		<managedNamespace ns="System.ComponentModel.Design.Serialization" />
+		<managedNamespace ns="System.Configuration" />
+		<managedNamespace ns="System.Configuration.Assemblies" />
+		<managedNamespace ns="System.Configuration.Install" />
+		<managedNamespace ns="System.Configuration.Internal" />
+		<managedNamespace ns="System.Configuration.Provider" />
+		<managedNamespace ns="System.Data" />
+		<managedNamespace ns="System.Data.Common" />
+		<managedNamespace ns="System.Data.Design" />
+		<managedNamespace ns="System.Data.Odbc" />
+		<managedNamespace ns="System.Data.OleDb" />
+		<managedNamespace ns="System.Data.OracleClient" />
+		<managedNamespace ns="System.Data.Sql" />
+		<managedNamespace ns="System.Data.SqlClient" />
+		<managedNamespace ns="System.Data.SqlServerCe" />
+		<managedNamespace ns="System.Data.SqlTypes" />
+		<managedNamespace ns="System.Deployment.Application" />
+		<managedNamespace ns="System.Deployment.Internal" />
+		<managedNamespace ns="System.Diagnostics" />
+		<managedNamespace ns="System.Diagnostics.CodeAnalysis" />
+		<managedNamespace ns="System.Diagnostics.Design" />
+		<managedNamespace ns="System.Diagnostics.SymbolStore" />
+		<managedNamespace ns="System.DirectoryServices" />
+		<managedNamespace ns="System.DirectoryServices.ActiveDirectory" />
+		<managedNamespace ns="System.DirectoryServices.Protocols" />
+		<managedNamespace ns="System.Drawing" />
+		<managedNamespace ns="System.Drawing.Design" />
+		<managedNamespace ns="System.Drawing.Drawing2D" />
+		<managedNamespace ns="System.Drawing.Imaging" />
+		<managedNamespace ns="System.Drawing.Printing" />
+		<managedNamespace ns="System.Drawing.Text" />
+		<managedNamespace ns="System.EnterpriseServices" />
+		<managedNamespace ns="System.EnterpriseServices.CompensatingResourceManager" />
+		<managedNamespace ns="System.EnterpriseServices.Internal" />
+		<managedNamespace ns="System.Globalization" />
+		<managedNamespace ns="System.IO" />
+		<managedNamespace ns="System.IO.Compression" />
+		<managedNamespace ns="System.IO.IsolatedStorage" />
+		<managedNamespace ns="System.IO.Ports" />
+		<managedNamespace ns="System.Management" />
+		<managedNamespace ns="System.Management.Instrumentation" />
+		<managedNamespace ns="System.Media" />
+		<managedNamespace ns="System.Messaging" />
+		<managedNamespace ns="System.Messaging.Design" />
+		<managedNamespace ns="System.Net" />
+		<managedNamespace ns="System.Net.Cache" />
+		<managedNamespace ns="System.Net.Configuration" />
+		<managedNamespace ns="System.Net.Mail" />
+		<managedNamespace ns="System.Net.Mime" />
+		<managedNamespace ns="System.Net.NetworkInformation" />
+		<managedNamespace ns="System.Net.Security" />
+		<managedNamespace ns="System.Net.Sockets" />
+		<managedNamespace ns="System.Reflection" />
+		<managedNamespace ns="System.Reflection.Emit" />
+		<managedNamespace ns="System.Resources" />
+		<managedNamespace ns="System.Resources.Tools" />
+		<managedNamespace ns="System.Runtime" />
+		<managedNamespace ns="System.Runtime.CompilerServices" />
+		<managedNamespace ns="System.Runtime.ConstrainedExecution" />
+		<managedNamespace ns="System.Runtime.Hosting" />
+		<managedNamespace ns="System.Runtime.InteropServices" />
+		<managedNamespace ns="System.Runtime.InteropServices.ComTypes" />
+		<managedNamespace ns="System.Runtime.InteropServices.CustomMarshalers" />
+		<managedNamespace ns="System.Runtime.InteropServices.Expando" />
+		<managedNamespace ns="System.Runtime.Remoting" />
+		<managedNamespace ns="System.Runtime.Remoting.Activation" />
+		<managedNamespace ns="System.Runtime.Remoting.Channels" />
+		<managedNamespace ns="System.Runtime.Remoting.Channels.Http" />
+		<managedNamespace ns="System.Runtime.Remoting.Channels.Ipc" />
+		<managedNamespace ns="System.Runtime.Remoting.Channels.Tcp" />
+		<managedNamespace ns="System.Runtime.Remoting.Contexts" />
+		<managedNamespace ns="System.Runtime.Remoting.Lifetime" />
+		<managedNamespace ns="System.Runtime.Remoting.Messaging" />
+		<managedNamespace ns="System.Runtime.Remoting.Metadata" />
+		<managedNamespace ns="System.Runtime.Remoting.Metadata.W3cXsd2001" />
+		<managedNamespace ns="System.Runtime.Remoting.MetadataServices" />
+		<managedNamespace ns="System.Runtime.Remoting.Proxies" />
+		<managedNamespace ns="System.Runtime.Remoting.Services" />
+		<managedNamespace ns="System.Runtime.Serialization" />
+		<managedNamespace ns="System.Runtime.Serialization.Formatters" />
+		<managedNamespace ns="System.Runtime.Serialization.Formatters.Binary" />
+		<managedNamespace ns="System.Runtime.Serialization.Formatters.Soap" />
+		<managedNamespace ns="System.Runtime.Versioning" />
+		<managedNamespace ns="System.Security" />
+		<managedNamespace ns="System.Security.AccessControl" />
+		<managedNamespace ns="System.Security.Authentication" />
+		<managedNamespace ns="System.Security.Cryptography" />
+		<managedNamespace ns="System.Security.Cryptography.Pkcs" />
+		<managedNamespace ns="System.Security.Cryptography.X509Certificates" />
+		<managedNamespace ns="System.Security.Cryptography.Xml" />
+		<managedNamespace ns="System.Security.Permissions" />
+		<managedNamespace ns="System.Security.Policy" />
+		<managedNamespace ns="System.Security.Principal" />
+		<managedNamespace ns="System.ServiceProcess" />
+		<managedNamespace ns="System.ServiceProcess.Design" />
+		<managedNamespace ns="System.Text" />
+		<managedNamespace ns="System.Text.RegularExpressions" />
+		<managedNamespace ns="System.Threading" />
+		<managedNamespace ns="System.Timers" />
+		<managedNamespace ns="System.Transactions" />
+		<managedNamespace ns="System.Transactions.Configuration" />
+		<managedNamespace ns="System.Web" />
+		<managedNamespace ns="System.Web.Caching" />
+		<managedNamespace ns="System.Web.Compilation" />
+		<managedNamespace ns="System.Web.Configuration" />
+		<managedNamespace ns="System.Web.Configuration.Internal" />
+		<managedNamespace ns="System.Web.Handlers" />
+		<managedNamespace ns="System.Web.Hosting" />
+		<managedNamespace ns="System.Web.Mail" />
+		<managedNamespace ns="System.Web.Management" />
+		<managedNamespace ns="System.Web.Mobile" />
+		<managedNamespace ns="System.Web.Profile" />
+		<managedNamespace ns="System.Web.RegularExpressions" />
+		<managedNamespace ns="System.Web.Security" />
+		<managedNamespace ns="System.Web.Services" />
+		<managedNamespace ns="System.Web.Services.Configuration" />
+		<managedNamespace ns="System.Web.Services.Description" />
+		<managedNamespace ns="System.Web.Services.Discovery" />
+		<managedNamespace ns="System.Web.Services.Protocols" />
+		<managedNamespace ns="System.Web.SessionState" />
+		<managedNamespace ns="System.Web.UI" />
+		<managedNamespace ns="System.Web.UI.Adapters" />
+		<managedNamespace ns="System.Web.UI.Design" />
+		<managedNamespace ns="System.Web.UI.Design.MobileControls" />
+		<managedNamespace ns="System.Web.UI.Design.MobileControls.Converters" />
+		<managedNamespace ns="System.Web.UI.Design.WebControls" />
+		<managedNamespace ns="System.Web.UI.Design.WebControls.WebParts" />
+		<managedNamespace ns="System.Web.UI.HtmlControls" />
+		<managedNamespace ns="System.Web.UI.MobileControls" />
+		<managedNamespace ns="System.Web.UI.MobileControls.Adapters" />
+		<managedNamespace ns="System.Web.UI.MobileControls.Adapters.XhtmlAdapters" />
+		<managedNamespace ns="System.Web.UI.WebControls" />
+		<managedNamespace ns="System.Web.UI.WebControls.Adapters" />
+		<managedNamespace ns="System.Web.UI.WebControls.WebParts" />
+		<managedNamespace ns="System.Web.Util" />
+		<managedNamespace ns="System.Windows.Forms" />
+		<managedNamespace ns="System.Windows.Forms.ComponentModel.Com2Interop" />
+		<managedNamespace ns="System.Windows.Forms.Design" />
+		<managedNamespace ns="System.Windows.Forms.Design.Behavior" />
+		<managedNamespace ns="System.Windows.Forms.Layout" />
+		<managedNamespace ns="System.Windows.Forms.PropertyGridInternal" />
+		<managedNamespace ns="System.Windows.Forms.VisualStyles" />
+		<managedNamespace ns="System.Xml" />
+		<managedNamespace ns="System.Xml.Schema" />
+		<managedNamespace ns="System.Xml.Serialization" />
+		<managedNamespace ns="System.Xml.Serialization.Advanced" />
+		<managedNamespace ns="System.Xml.Serialization.Configuration" />
+		<managedNamespace ns="System.Xml.XPath" />
+		<managedNamespace ns="System.Xml.Xsl" />
+		<managedNamespace ns="System.Xml.Xsl.Runtime" />
+	</helpNamespace>
+</namespaceMap>

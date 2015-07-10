@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.qualifier" modelVersion="1.0" ?>
+<page>
+   <id>Slider</id>
+   <title>${App.ApplicationTitle}</title>
+   <controls>
+      <Slider>
+         <id>Slider1</id>
+      </Slider>
+   </controls>
+</page>

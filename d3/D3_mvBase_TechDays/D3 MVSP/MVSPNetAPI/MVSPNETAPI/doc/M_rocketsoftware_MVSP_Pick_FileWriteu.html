@@ -1,0 +1,157 @@
+<html dir="LTR" xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:ndoc="urn:ndoc-preprocess">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <title>FileWriteu Method</title>
+    <link rel="stylesheet" type="text/css" href="ndoc.css"> </link>
+    <link rel="stylesheet" type="text/css" href="user.css"> </link>
+    <script type="text/javascript" src="ndoc.js"> </script>
+  </head>
+  <body style="display: none;">
+    <input type="hidden" id="userDataCache" class="userDataStyle" />
+    <input type="hidden" id="hiddenScrollOffset" />
+    <img id="dropDownImage" style="display:none; height:0; width:0;" src="drpdown.gif" />
+    <img id="dropDownHoverImage" style="display:none; height:0; width:0;" src="drpdown_orange.gif" />
+    <img id="collapseImage" style="display:none; height:0; width:0;" src="collapse.gif" />
+    <img id="expandImage" style="display:none; height:0; width:0;" src="exp.gif" />
+    <img id="collapseAllImage" style="display:none; height:0; width:0;" src="collall.gif" />
+    <img id="expandAllImage" style="display:none; height:0; width:0;" src="expall.gif" />
+    <img id="copyImage" style="display:none; height:0; width:0;" src="copycode.gif" />
+    <img id="copyHoverImage" style="display:none; height:0; width:0;" src="copycodeHighlight.gif" />
+    <div id="header">
+      <table width="100%" id="topTable">
+        <tr id="headerTableRow1">
+          <td align="left">
+            <span id="runningHeaderText">Rocket MVSP .NET Client API</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow2">
+          <td align="left">
+            <span id="nsrTitle">Pick.FileWriteu Method</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow3">
+          <td>
+            <a id="seeAlsoSectionLink" href="#seeAlsoToggle" onclick="OpenSection(seeAlsoToggle)">See Also</a>
+            <a id="exampleSectionLink" href="#codeExampleToggle" onclick="OpenSection(codeExampleToggle)">Example</a>
+          </td>
+        </tr>
+      </table>
+      <table width="100%" id="bottomTable" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <span onclick="ExpandCollapseAll(toggleAllImage)" style="cursor:default;" onkeypress="ExpandCollapseAll_CheckKey(toggleAllImage)" tabindex="0">
+              <img ID="toggleAllImage" class="toggleAll" src="collall.gif" />
+              <label id="collapseAllLabel" for="toggleAllImage" style="display: none;">
+							Collapse All
+						</label>
+              <label id="expandAllLabel" for="toggleAllImage" style="display: none;">
+							Expand All
+						</label>
+            </span>
+            <span id="languageFilterToolTip" style="cursor:default;" onmouseover="languageFilterImage.src=dropDownHoverImage.src;" onfocusin="languageFilterImage.src=dropDownHoverImage.src;" onmouseout="languageFilterImage.src=dropDownImage.src;" onfocusout="languageFilterImage.src=dropDownImage.src;" tabindex="0">
+              <img id="languageFilterImage" src="drpdown.gif" />
+              <label id="showAllLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: All
+			</label>
+              <label id="multipleLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: Multiple
+			</label>
+              <label id="vbLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: Visual Basic
+			</label>
+              <label id="csLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: C#
+			</label>
+              <label id="cLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: C++
+			</label>
+              <label id="jsharpLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: J#
+			</label>
+              <label id="jsLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: JScript
+			</label>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <span style="display:none" id="languageSpan">
+        <input id="vbDeclarationCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="vbDeclarationCheckbox">
+				Visual Basic (Declaration)
+			</label>
+        <br />
+        <input id="vbUsageCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="vbUsageCheckbox">
+				Visual Basic (Usage)
+			</label>
+        <br />
+        <input id="csCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="csCheckbox">
+				C#
+			</label>
+        <br />
+        <input id="cCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="cCheckbox">
+				C++
+			</label>
+        <br />
+        <input id="jsharpCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="jsharpCheckbox">
+				J#
+			</label>
+        <br />
+        <input id="jsCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="jsCheckbox">
+				JScript
+			</label>
+        <br />
+      </span>
+    </div>
+    <div id="mainSection">
+      <div id="mainBody">
+        <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()" />
+        <p>The <b xmlns="">FileWriteu</b> function writes the specified item into the specified file on the MVSP Server and maintains the item lock.</p>
+        <br />
+        <b>Namespace: </b>
+        <a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP</a>
+        <br />
+        <b>Assembly: </b>RocketMVSP (in RocketMVSP.dll)
+		<br /><h1 class="heading"><span onclick="ExpandCollapse(syntaxToggle)" style="cursor:default;" onkeypress="ExpandCollapse_CheckKey(syntaxToggle)" tabindex="0"><img id="syntaxToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />Syntax</span></h1><div id="syntaxSection" class="section" name="collapseableSection"><div id="syntaxCodeBlocks" class="code"><span codeLanguage="VisualBasicDeclaration"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">Visual Basic (Declaration)</th></tr><tr><td class="syntax">Public Function FileWriteu( _ <br />   ByVal filePath As <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a>,  _ <br />   ByVal itemId As <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a>,  _ <br />   ByVal itemBody As <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> _ <br />) As <a href="http://msdn2.microsoft.com/en-us/library/System.Boolean" target="_top">Boolean</a></td></tr></table></span><span codeLanguage="CSharp"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">C#</th></tr><tr><td class="syntax">public <a href="http://msdn2.microsoft.com/en-us/library/System.Boolean" target="_top">bool</a> FileWriteu(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> filePath, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> itemId, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> itemBody<br />)</td></tr></table></span><span codeLanguage="ManagedCPlusPlus"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">C++</th></tr><tr><td class="syntax">public:<br /> <a href="http://msdn2.microsoft.com/en-us/library/System.Boolean" target="_top">bool</a> FileWriteu(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> filePath, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> itemId, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> itemBody<br />) sealed </td></tr></table></span><span codeLanguage="JSharp"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">J#</th></tr><tr><td class="syntax">public <a href="http://msdn2.microsoft.com/en-us/library/System.Boolean" target="_top">bool</a> FileWriteu(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> filePath, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> itemId, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> itemBody<br />)</td></tr></table></span><span codeLanguage="JScript"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">JScript</th></tr><tr><td class="syntax">public 
+				function FileWriteu(<br />   filePath : <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a>, <br />   itemId : <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a>, <br />   itemBody : <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a><br />) : <a href="http://msdn2.microsoft.com/en-us/library/System.Boolean" target="_top">bool</a></td></tr></table></span></div><h4 class="subHeading">
+					Parameters
+				</h4><dl paramName="filePath"><dt><i>filePath</i></dt><dd>is the name of the file that you wish to write the item to</dd></dl><dl paramName="itemId"><dt><i>itemId</i></dt><dd>is the Itemid that you wish to write</dd></dl><dl paramName="itemBody"><dt><i>itemBody</i></dt><dd>is the item data</dd></dl><h4 class="subHeading">
+          Return Value
+        </h4><p>True</p></div><h1 class="heading"><span style="cursor:default;" onclick="ExpandCollapse(remarksDataToggle)" onkeypress="ExpandCollapse_CheckKey(remarksDataToggle)" tabindex="0"><img id="remarksDataToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />Remarks</span></h1><div id="remarksDataSection" class="section" name="collapseableSection"><p>If the item could not be written then statuscode and statusmessage properties will be set with the correct error message number and text<br /><br /><example xmlns=""> Example connects and writes a record <b>100</b> to the <b>CUSTOMERS</b> file and maintains the lock <div class="code"><table width="100%" cellspacing="0" cellpadding="0"><tr><th> </th><th><span class="copyCode" onclick="CopyCode(this)" onkeypress="CopyCode_CheckKey(this)" onmouseover="ChangeCopyCodeIcon(this)" onfocusin="ChangeCopyCodeIcon(this)" onmouseout="ChangeCopyCodeIcon(this)" onfocusout="ChangeCopyCodeIcon(this)" tabindex="0"><img class="copyCodeImage" name="ccImage" align="absmiddle" src="copycode.gif" />Copy Code
+						</span></th></tr><tr><td colspan="2"><pre>
+ Dim returncode as boolean
+ Dim mvsp as new rocketsoftware.MVSP.Pick
+ Dim params as string = ""
+ Dim itemid as string = ""
+ Dim itembody as string = ""
+ Dim am as string = chr(254)
+ returncode = mvsp.Connect("localhost",9000,"dm","")
+ If returncode = True then
+    returncode = mvsp.Logto("MVDEMO","")
+    If returncode = True then
+       itemid = "100" ' Itemid
+       itembody = "Lucky Computers" &amp; am &amp; am &amp; am &amp; am &amp; am &amp; "Fred Smith" &amp; am &amp; "Order Entry Clerk"
+       returncode = mvsp.FileWriteu("CUSTOMERS", itemid, itembody)       
+    End if
+ End if
+ returncode = mvsp.CloseConnection()
+ </pre></td></tr></table></div></example></p></div><h1 class="heading"><span style="cursor:default;" onclick="ExpandCollapse(seeAlsoToggle)" onkeypress="ExpandCollapse_CheckKey(seeAlsoToggle)" tabindex="0"><img id="seeAlsoToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />See Also</span></h1><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="T_rocketsoftware_MVSP_Pick.html">Pick Class</a><br /><a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP Namespace</a></div></div>
+      <DIV CLASS="footer">
+        <p>
+          <center>
+            <font color="red">
+              <i>
+                Syntax based on .NET Framework version 2.0.<br />
+                Documentation version 2.0.0.0.
+              </i>
+            </font>
+          </center>
+        </p>
+      </DIV><!--[if gte IE 5]><tool:tip element="languageFilterToolTip" avoidmouse="false" /><![endif]--></div>
+  </body>
+</html>

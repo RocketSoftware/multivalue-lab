@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201505221723" modelVersion="1.0" ?>
+<page>
+   <id>pg_CustList</id>
+   <title>Customer List</title>
+   <backgroundColor>9</backgroundColor>
+   <controls>
+      <ToolBar>
+         <id>ToolBar1</id>
+         <backgroundColor>16</backgroundColor>
+         <controls>
+            <Button>
+               <id>btn_CustList_NewSearch</id>
+               <show>Icon</show>
+               <icon>Resources/32x32/search.png</icon>
+               <backgroundColor>16</backgroundColor>
+               <marginCustom value="true">
+                  <marginTop>0</marginTop>
+                  <marginRight>0</marginRight>
+                  <marginLeft>300</marginLeft>
+               </marginCustom>
+               <iconPosition>Right</iconPosition>
+               <handlers>
+                  <event
+                        desc="btn_CustList_NewSearch_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="index"
+                              type="OPEN_PAGE">
+                           <transition>fade</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+         </controls>
+      </ToolBar>
+      <Image>
+         <id>Image1</id>
+         <source>Resources/acme.png</source>
+         <scale value="true"/>
+      </Image>
+      <List>
+         <id>lst_CustList</id>
+         <listItems>
+            <listItem>
+               <title>${WS_CustList.response.getCustList.CUSTLIST.foundCustomers.foundName}</title>
+               <subtitle>${WS_CustList.response.getCustList.CUSTLIST.foundCustomers.foundAcctNo}</subtitle>
+            </listItem>
+         </listItems>
+         <marginCustom value="true">
+            <marginTop>10</marginTop>
+         </marginCustom>
+         <handlers>
+            <event
+                  desc="lst_CustList_OnItemSelected"
+                  name="itemSelected">
+               <handler>
+                  <action
+                        target="CUST_ACCT"
+                        type="SET_VARIABLE_VALUE">
+                     <actionValue value="${lst_CustList.itemSubtitles[${lst_CustList.selectedIndex}]}"/>
+                  </action>
+                  <action
+                        target="CUST_SELECTION"
+                        type="SET_VARIABLE_VALUE">
+                     <actionValue value="${lst_CustList.selectedIndex}"/>
+                  </action>
+                  <action
+                        target="pg_CustDetail"
+                        type="OPEN_PAGE">
+                     <transition>slide</transition>
+                  </action>
+               </handler>
+            </event>
+         </handlers>
+      </List>
+   </controls>
+   <handlers/>
+</page>

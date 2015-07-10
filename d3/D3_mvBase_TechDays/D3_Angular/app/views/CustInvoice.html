@@ -1,0 +1,128 @@
+					
+					   <FORM>					
+
+							 <a class="btn btn-primary btn-sm" href="#/">
+          				      <span class="glyphicon glyphicon-search"></span> New Search</a>
+						</FORM>
+				
+        </div>
+ 
+		<div class="row">
+		
+        	<div class="col-md-6">
+			
+				<table class= "table table-condensed table-striped table-bordered table-hover">
+
+        	
+                <tr><td><small>Bill to:</small></td>
+                 <td>
+                     <small>{{Thisinvoice.billtoCompanyName}}</small>
+                 </td></tr>
+        	   <tr><td></td>
+                 <td>
+                     <small>{{Thisinvoice.billtoAddress}}</small>
+                 </td></tr>
+                <tr><td></td>
+                 <td>
+                 <small>{{Thisinvoice.billtoCity}},    {{Thisinvoice.billtoState}}    {{Thisinvoice.billtoZip}}
+                 </td></tr>
+        	 <tr><td><small>Ship to:</small></td>
+                 <td>
+                 <small>{{Thisinvoice.shiptoName}}</small>
+                 </td></tr>
+        	 <tr><td></td>
+                 <td>
+                     <small>{{Thisinvoice.shiptoAddress}}</small>
+                 </td></tr>
+        	 <tr><td></td>
+                 <td>
+                 <small>{{Thisinvoice.shiptoCity}},   {{Thisinvoice.shiptoState}}    {{Thisinvoice.shiptoZip}}</small>
+                 </td></tr>
+        	 <tr><td><small>Contact:</small></td>
+                 <td>
+                 <small>{{Thisinvoice.billtoContactName}}</small>
+                 </td></tr>
+        	 <tr><td><small>Sales Rep:</small></td>
+                 <td>
+                 <small>{{Thisinvoice.salesRepName}}</small>
+                 </td></tr>
+        	 <tr><td><small>Rep Phone:</small></td>
+                 <td>
+                 <small>{{Thisinvoice.salesRepPhone}}</small>
+                 </td></tr>
+
+        	</table>
+        </div>
+        
+        <div class="col-md-6">
+        
+        <table class="table table-condensed table-striped table-bordered table-hover">
+
+        	 <tr><td><small>Invoice#:</small></td>
+                 <td>
+                 <small>{{Thisinvoice.invoiceNo}}</small>
+                 </td></tr>
+        	 <tr><td><small>Account#:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.custAccount}}</small>
+                 </td></tr>
+        	 <tr><td><small>Ordered:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.orderDate}}</small>
+                 </td></tr>
+        	 <tr><td><small>Invoiced:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.invoiceDate}}</small>
+                 </td></tr>
+        	 <tr><td><small>Terms:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.terms}}</small>
+                 </td></tr>
+        	 <tr><td><small>Note:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.comment}}</small>
+                 </td></tr>
+        	 <tr><td><small>Gross:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.invoiceGross | currency:"$":0}}</small>
+                 </td></tr>
+        	 <tr><td><small>Discount:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.invoiceDiscount | currency:"$":0}}</small>
+                 </td></tr>
+        	 <tr><td><small>Net:</small></td>
+                  <td>
+                 <small>{{Thisinvoice.invoiceNet | currency:"$":0}}</small>
+                 </td></tr>
+
+        </table></td></tr>
+       </div>
+</div>
+<br>
+	<div class="col-md-12">
+        
+        <table class="table table-condensed table-striped table-bordered table-hover">
+        <tr><th>Ln</th>
+                <th>Qty</th>
+                <th>Item#</th>
+                <th>Description</th>
+                <th>Unit Price</th>
+                <th>Ext Price</th>
+                <th>Disc</th>
+                <th>Ext</th>
+        </tr>
+
+            
+            <tr ng-repeat="InvLine in Thisinvoice.line" class="repeat-animation">
+                 <td class='text-center'><small>{{$index +1 }}</small></td>
+                 <td class='text-center'><small>{{InvLine.lineQty}}</small></td>
+                 <td class='text-center'><small>{{InvLine.lineProductNo}}</small></td>
+                 <td class='text-left'><small>{{InvLine.lineDescription}}</small></td>
+                 <td class='text-right'><small>{{InvLine.lineUnitPrice | currency:"$":0}}</small></td>
+                 <td class='text-right'><small>{{InvLine.lineGross | currency:"$":0}}</small></td>
+                 <td class='text-right'><small>{{InvLine.lineDiscount}}</small></td>
+                 <td class='text-right'><small>{{InvLine.lineExtNet | currency:"$":0}}</small></td>
+            </tr>
+        
+
+        </table>

@@ -1,0 +1,149 @@
+<html dir="LTR" xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:ndoc="urn:ndoc-preprocess">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <title>Insert Method (String, Int32, String)</title>
+    <link rel="stylesheet" type="text/css" href="ndoc.css"> </link>
+    <link rel="stylesheet" type="text/css" href="user.css"> </link>
+    <script type="text/javascript" src="ndoc.js"> </script>
+  </head>
+  <body style="display: none;">
+    <input type="hidden" id="userDataCache" class="userDataStyle" />
+    <input type="hidden" id="hiddenScrollOffset" />
+    <img id="dropDownImage" style="display:none; height:0; width:0;" src="drpdown.gif" />
+    <img id="dropDownHoverImage" style="display:none; height:0; width:0;" src="drpdown_orange.gif" />
+    <img id="collapseImage" style="display:none; height:0; width:0;" src="collapse.gif" />
+    <img id="expandImage" style="display:none; height:0; width:0;" src="exp.gif" />
+    <img id="collapseAllImage" style="display:none; height:0; width:0;" src="collall.gif" />
+    <img id="expandAllImage" style="display:none; height:0; width:0;" src="expall.gif" />
+    <img id="copyImage" style="display:none; height:0; width:0;" src="copycode.gif" />
+    <img id="copyHoverImage" style="display:none; height:0; width:0;" src="copycodeHighlight.gif" />
+    <div id="header">
+      <table width="100%" id="topTable">
+        <tr id="headerTableRow1">
+          <td align="left">
+            <span id="runningHeaderText">Rocket MVSP .NET Client API</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow2">
+          <td align="left">
+            <span id="nsrTitle">Functions.Insert Method (String, Int32, String)</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow3">
+          <td>
+            <a id="seeAlsoSectionLink" href="#seeAlsoToggle" onclick="OpenSection(seeAlsoToggle)">See Also</a>
+            <a id="exampleSectionLink" href="#codeExampleToggle" onclick="OpenSection(codeExampleToggle)">Example</a>
+          </td>
+        </tr>
+      </table>
+      <table width="100%" id="bottomTable" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <span onclick="ExpandCollapseAll(toggleAllImage)" style="cursor:default;" onkeypress="ExpandCollapseAll_CheckKey(toggleAllImage)" tabindex="0">
+              <img ID="toggleAllImage" class="toggleAll" src="collall.gif" />
+              <label id="collapseAllLabel" for="toggleAllImage" style="display: none;">
+							Collapse All
+						</label>
+              <label id="expandAllLabel" for="toggleAllImage" style="display: none;">
+							Expand All
+						</label>
+            </span>
+            <span id="languageFilterToolTip" style="cursor:default;" onmouseover="languageFilterImage.src=dropDownHoverImage.src;" onfocusin="languageFilterImage.src=dropDownHoverImage.src;" onmouseout="languageFilterImage.src=dropDownImage.src;" onfocusout="languageFilterImage.src=dropDownImage.src;" tabindex="0">
+              <img id="languageFilterImage" src="drpdown.gif" />
+              <label id="showAllLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: All
+			</label>
+              <label id="multipleLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: Multiple
+			</label>
+              <label id="vbLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: Visual Basic
+			</label>
+              <label id="csLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: C#
+			</label>
+              <label id="cLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: C++
+			</label>
+              <label id="jsharpLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: J#
+			</label>
+              <label id="jsLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: JScript
+			</label>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <span style="display:none" id="languageSpan">
+        <input id="vbDeclarationCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="vbDeclarationCheckbox">
+				Visual Basic (Declaration)
+			</label>
+        <br />
+        <input id="vbUsageCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="vbUsageCheckbox">
+				Visual Basic (Usage)
+			</label>
+        <br />
+        <input id="csCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="csCheckbox">
+				C#
+			</label>
+        <br />
+        <input id="cCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="cCheckbox">
+				C++
+			</label>
+        <br />
+        <input id="jsharpCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="jsharpCheckbox">
+				J#
+			</label>
+        <br />
+        <input id="jsCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="jsCheckbox">
+				JScript
+			</label>
+        <br />
+      </span>
+    </div>
+    <div id="mainSection">
+      <div id="mainBody">
+        <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()" />
+        <p>Inserts "value" into a specific attribute, value or subvalue location in the dynamic array specified by "instr"</p>
+        <br />
+        <b>Namespace: </b>
+        <a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP</a>
+        <br />
+        <b>Assembly: </b>RocketMVSP (in RocketMVSP.dll)
+		<br /><h1 class="heading"><span onclick="ExpandCollapse(syntaxToggle)" style="cursor:default;" onkeypress="ExpandCollapse_CheckKey(syntaxToggle)" tabindex="0"><img id="syntaxToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />Syntax</span></h1><div id="syntaxSection" class="section" name="collapseableSection"><div id="syntaxCodeBlocks" class="code"><span codeLanguage="VisualBasicDeclaration"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">Visual Basic (Declaration)</th></tr><tr><td class="syntax">Public Function Insert( _ <br />   ByVal instr As <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a>,  _ <br />   ByVal amc As <a href="http://msdn2.microsoft.com/en-us/library/System.Int32" target="_top">Integer</a>,  _ <br />   ByVal value As <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> _ <br />) As <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a></td></tr></table></span><span codeLanguage="CSharp"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">C#</th></tr><tr><td class="syntax">public <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> Insert(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> instr, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.Int32" target="_top">int</a> amc, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> value<br />)</td></tr></table></span><span codeLanguage="ManagedCPlusPlus"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">C++</th></tr><tr><td class="syntax">public:<br /> <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> Insert(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> instr, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.Int32" target="_top">int</a> amc, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a> value<br />) sealed </td></tr></table></span><span codeLanguage="JSharp"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">J#</th></tr><tr><td class="syntax">public <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> Insert(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> instr, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.Int32" target="_top">int</a> amc, <br />   <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">string</a> value<br />)</td></tr></table></span><span codeLanguage="JScript"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">JScript</th></tr><tr><td class="syntax">public 
+				function Insert(<br />   instr : <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a>, <br />   amc : <a href="http://msdn2.microsoft.com/en-us/library/System.Int32" target="_top">int</a>, <br />   value : <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a><br />) : <a href="http://msdn2.microsoft.com/en-us/library/System.String" target="_top">String</a></td></tr></table></span></div><h4 class="subHeading">
+					Parameters
+				</h4><dl paramName="instr"><dt><i>instr</i></dt><dd /></dl><dl paramName="amc"><dt><i>amc</i></dt><dd /></dl><dl paramName="value"><dt><i>value</i></dt><dd /></dl><h4 class="subHeading">
+          Return Value
+        </h4><p>Returns a string containing the value inserted at the specified location</p></div><h1 class="heading"><span style="cursor:default;" onclick="ExpandCollapse(remarksDataToggle)" onkeypress="ExpandCollapse_CheckKey(remarksDataToggle)" tabindex="0"><img id="remarksDataToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />Remarks</span></h1><div id="remarksDataSection" class="section" name="collapseableSection"><p><example xmlns=""><div class="code"><table width="100%" cellspacing="0" cellpadding="0"><tr><th> </th><th><span class="copyCode" onclick="CopyCode(this)" onkeypress="CopyCode_CheckKey(this)" onmouseover="ChangeCopyCodeIcon(this)" onfocusin="ChangeCopyCodeIcon(this)" onmouseout="ChangeCopyCodeIcon(this)" onfocusout="ChangeCopyCodeIcon(this)" tabindex="0"><img class="copyCodeImage" name="ccImage" align="absmiddle" src="copycode.gif" />Copy Code
+						</span></th></tr><tr><td colspan="2"><pre>
+ Dim mvspfunctions as new rocketsoftware.MVSP.Functions
+ Dim am as chr(254)
+ Dim txt as string
+ Dim result as string
+ txt = "abc" &amp; am &amp; "def" &amp; am &amp; "ghi"
+ result = mvspfunctions.Insert(txt,2,"xyz")
+ 
+ result would now contain "abc^xyz^def^ghi"
+</pre></td></tr></table></div></example></p></div><h1 class="heading"><span style="cursor:default;" onclick="ExpandCollapse(seeAlsoToggle)" onkeypress="ExpandCollapse_CheckKey(seeAlsoToggle)" tabindex="0"><img id="seeAlsoToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />See Also</span></h1><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="T_rocketsoftware_MVSP_Functions.html">Functions Class</a><br /><a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP Namespace</a><br /><a href="O_T_rocketsoftware_MVSP_Functions_Insert.html">Functions.Insert Overload List</a></div></div>
+      <DIV CLASS="footer">
+        <p>
+          <center>
+            <font color="red">
+              <i>
+                Syntax based on .NET Framework version 2.0.<br />
+                Documentation version 2.0.0.0.
+              </i>
+            </font>
+          </center>
+        </p>
+      </DIV><!--[if gte IE 5]><tool:tip element="languageFilterToolTip" avoidmouse="false" /><![endif]--></div>
+  </body>
+</html>

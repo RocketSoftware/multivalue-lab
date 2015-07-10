@@ -1,0 +1,32 @@
+
+<html>
+<link href="acme.css" rel="stylesheet" type="text/css" />
+<head>
+    <title>Customer Search Results</title>
+</head>
+<body marginwidth="0"
+      marginheight="0">
+    <div>
+        <img align="left" src="/img/acme.png" border="0">
+    </div>
+    <br clear="all">
+    <b>Customer Search:</b>
+    <br>
+    <form action="custlist.php" method="post">
+        <table border="0">
+            <tr>
+                <td widgh="250px" border="1" valign="top" align="Right">
+                       Name:<input type="text" name="custName"><br>
+                    Address:<input type="text" name="custAddress"><br>
+                      Phone:<input type="text" name="custPhone" maxlength="6" size="6">         (Last 4 Digits)<br>
+                      Terr#:<input type="text" name="custTerrNo"><br>
+                    <br>
+                    <input type="submit" value="Search">
+					<input type="reset" value="Clear">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+

@@ -1,0 +1,26 @@
+
+#CustActions {float: Right;
+Position: absolute; width:100%; padding-left: 1035px; height: 20px;}
+
+#CustTopDiv {height: 190px;}
+
+#Cust_Table{margin-top: 20px;}
+table {table-layout: fixed;}
+
+#InvoicesActions {float: Right;
+Position: absolute; width:100%; padding-left: 785px;}
+
+#InvoiceListTopDiv{height: 190px;}
+
+#InvoiceList_Table{margin-top: 20px;}
+
+#InvoiceActions {float: Right;
+Position: absolute; width:100%; padding-left: 715px; height: 20px}
+
+#InvoiceTopDiv{height: 190px;}
+
+tr {font-size: 10pt; background-color: #FFFFCC;}
+
+th{font-size: 11pt; background-color: White;}
+
+

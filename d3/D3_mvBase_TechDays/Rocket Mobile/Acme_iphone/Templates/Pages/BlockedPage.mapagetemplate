@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0" modelVersion="1.0" ?>
+<page>
+   <id>Blocked</id>
+   <title>Blocked</title>
+   <controls>
+      <VerticalComposite>
+         <id>VerticalComposite</id>
+         <marginCustom value="true">
+            <marginTop>50</marginTop>
+         </marginCustom>
+         <alignX>Center</alignX>
+         <controls>
+            <Label>
+               <id>BlockMessage</id>
+               <value>&lt;h2&gt;Authorization attempts limit exceeded&lt;/h2&gt;</value>
+            </Label>
+            <Button>
+               <id>Retry</id>
+               <marginCustom value="true">
+                  <marginTop>10</marginTop>
+               </marginCustom>
+               <label>Retry</label>
+            </Button>
+         </controls>
+      </VerticalComposite>
+   </controls>
+</page>

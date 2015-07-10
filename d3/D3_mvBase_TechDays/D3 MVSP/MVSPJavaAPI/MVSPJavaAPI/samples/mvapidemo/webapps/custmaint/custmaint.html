@@ -1,0 +1,56 @@
+<html>
+<head>
+<script type="text/javascript" src="./custmaint.js">
+</script>
+</head>
+<body>
+<table border=0 width="100%">
+<tr>
+<td nowrap><b>Customer maintenance using javascript and servlets</b></td>
+<td align="right"><img src="images/rocketlogo.gif" hspace="5"></td>
+</tr>
+</table>
+<table border=0 width="100%">
+<tr>
+<td>
+Username:
+</td>
+<td>
+<input type="text" id="user">
+</td>
+<td>
+Hostname:
+</td>
+<td>
+<input type="text" id="hostname">
+</td>
+</tr>
+<tr>
+<td>
+Password:
+</td>
+<td>
+ <input type="password" id="pwd">
+</td>
+<td>
+Port:
+</td>
+<td>
+ <input type="text" id="port">
+</td>
+</tr>
+</table>
+<hr>
+<div id="CustomerList"></div>
+<div id="CustomerInfo"></div>
+<div id="status"></div>
+
+<input type="button" onclick="GetCustomers()" id="btnConnect" style="display:inline" value="Connect"/>
+<input type="button" onclick="GetOrders()" id="btnOrders" style="display:none" value="Orders"/>
+<input type="button" onclick="TCL()" id="btnExecute" style="display:none" value="Execute"/>
+<input type="button" onclick="New()" id="btnNew" style="display:none" value="New"/>
+<input type="button" onclick="Save()" id="btnSave" style="display:none" value="Save"/>
+
+</body>
+</html>
+
