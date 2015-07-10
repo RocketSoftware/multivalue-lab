@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201505221723" modelVersion="1.0" ?>
+<page_set>
+   <DeviceType>8</DeviceType>
+   <DefaultPage>index</DefaultPage>
+   <DefaultPageTemplate/>
+   <ScreenOrientation>0</ScreenOrientation>
+   <Theme>flat(Themes/Acme_theme.css)</Theme>
+</page_set>

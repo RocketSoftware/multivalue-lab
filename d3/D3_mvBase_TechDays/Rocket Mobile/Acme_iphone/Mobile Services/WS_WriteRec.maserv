@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201504141623" modelVersion="1.0" ?>
+<service useProxy="true">
+   <uri>${HOST}/Invoices/writecustitem</uri>
+   <query/>
+   <method>POST</method>
+   <timeout>5000</timeout>
+   <username/>
+   <password/>
+   <request>
+      <type>
+         <structure>
+            <member name="CUSTID"/>
+            <member name="NAME"/>
+            <member name="ADDR"/>
+            <member name="CITY"/>
+            <member name="STATE"/>
+            <member name="ZIP"/>
+            <member name="PHONE"/>
+         </structure>
+      </type>
+   </request>
+   <requestText/>
+   <response>
+      <type>
+         <structure>
+            <member name="writecustitem">
+               <type>
+                  <structure>
+                     <member name="STATUS"/>
+                  </structure>
+               </type>
+            </member>
+         </structure>
+      </type>
+   </response>
+   <responseText>{ &quot;writecustitem&quot;: { &quot;STATUS&quot;: &quot;Item Added&quot; } }</responseText>
+   <http-headers>
+      <header
+            name="Accept"
+            value="application/json"/>
+      <header
+            name="Content-Type"
+            value="application/json"/>
+   </http-headers>
+</service>

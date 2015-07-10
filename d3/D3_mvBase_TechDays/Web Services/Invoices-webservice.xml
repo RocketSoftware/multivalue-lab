@@ -1,0 +1,410 @@
+
+<MVToolExport>
+  <web-service-provider-descriptor xmlns="http://www.rocketsoftware.com/namespaces/ws" xmlns:mvtk="http://www.rocketsoftware.com/namespaces/ws">
+    <name>den-vm-dg02_mvs</name>
+    <user>admin</user>
+    <password>8D7FE347540ECAB1 </password>
+    <host>den-vm-dg02</host>
+    <port>3410</port>
+    <SSL>true</SSL>
+    <wshost>localhost</wshost>
+    <wsport>8181</wsport>
+    <web-service>
+      <name>Invoices</name>
+      <end-point>Invoices</end-point>
+      <is-soap>false</is-soap>
+      <is-rest>true</is-rest>
+      <is-http-get>true</is-http-get>
+      <is-http-post>true</is-http-post>
+      <provider-name>den-vm-dg02_mvs</provider-name>
+      <is-http-put>true</is-http-put>
+      <is-http-delete>true</is-http-delete>
+      <authentication-name-password>false</authentication-name-password>
+      <authentication-x509>false</authentication-x509>
+      <embed-wsdl-imports>false</embed-wsdl-imports>
+      <web-service-operation>
+        <name>delete_cust_item</name>
+        <mvConnection>
+          <name>D3Server</name>
+          <host>den-vm-dg02</host>
+          <port>9000</port>
+          <type>D3</type>
+          <user>DM</user>
+          <password/>
+          <min-connections>1</min-connections>
+          <max-connections>10</max-connections>
+          <idle-time-out>300</idle-time-out>
+          <use-ssl>false</use-ssl>
+          <connection-options/>
+        </mvConnection>
+        <mvAccount>Acme</mvAccount>
+        <mvAccountPassword/>
+        <operation-type>SUB</operation-type>
+        <statement/>
+        <subroutine>
+          <name>delete_cust_item.sub</name>
+          <account-name>Acme</account-name>
+          <file-name>pgm</file-name>
+          <argument>
+            <number>1</number>
+            <name>CUSTID</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>2</number>
+            <name>STATUS</name>
+            <usage>output</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+        </subroutine>
+        <provider-name>den-vm-dg02_mvs</provider-name>
+        <service-name>Invoices</service-name>
+        <default-content-type>application/json</default-content-type>
+      </web-service-operation>
+      <web-service-operation>
+        <name>getCustList</name>
+        <mvConnection>
+          <name>D3Server</name>
+          <host>den-vm-dg02</host>
+          <port>9000</port>
+          <type>D3</type>
+          <user>DM</user>
+          <password/>
+          <min-connections>3</min-connections>
+          <max-connections>10</max-connections>
+          <idle-time-out>0</idle-time-out>
+          <use-ssl>false</use-ssl>
+          <connection-options/>
+        </mvConnection>
+        <mvAccount>Acme</mvAccount>
+        <mvAccountPassword/>
+        <operation-type>SUB</operation-type>
+        <statement/>
+        <subroutine>
+          <name>cust_lookup.sub</name>
+          <account-name>Acme</account-name>
+          <file-name>PGM</file-name>
+          <argument>
+            <number>1</number>
+            <name>NAMES</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>2</number>
+            <name>ADDRS</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>3</number>
+            <name>PHONE</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>4</number>
+            <name>STERR</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>5</number>
+            <name>CUSTLIST</name>
+            <usage>output</usage>
+            <binding-mode>dynamic-array</binding-mode>
+            <type>string</type>
+            <dynamic-array-name>foundCustomers</dynamic-array-name>
+          </argument>
+        </subroutine>
+        <provider-name>den-vm-dg02_mvs</provider-name>
+        <service-name>Invoices</service-name>
+        <default-content-type>application/json</default-content-type>
+      </web-service-operation>
+      <web-service-operation>
+        <name>getInvoice</name>
+        <mvConnection>
+          <name>D3Server</name>
+          <host>den-vm-dg02</host>
+          <port>9000</port>
+          <type>D3</type>
+          <user>DM</user>
+          <password/>
+          <min-connections>3</min-connections>
+          <max-connections>10</max-connections>
+          <idle-time-out>0</idle-time-out>
+          <use-ssl>false</use-ssl>
+          <connection-options/>
+        </mvConnection>
+        <mvAccount>Acme</mvAccount>
+        <mvAccountPassword/>
+        <operation-type>SUB</operation-type>
+        <statement/>
+        <subroutine>
+          <name>get_invoice.sub</name>
+          <account-name>Acme</account-name>
+          <file-name>pgm</file-name>
+          <argument>
+            <number>1</number>
+            <name>INVOICE_NO</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>2</number>
+            <name>INVOICE_ITEM</name>
+            <usage>output</usage>
+            <binding-mode>dynamic-array</binding-mode>
+            <type>string</type>
+            <dynamic-array-name>Invoice</dynamic-array-name>
+          </argument>
+        </subroutine>
+        <provider-name>den-vm-dg02_mvs</provider-name>
+        <service-name>Invoices</service-name>
+        <default-content-type>application/json</default-content-type>
+      </web-service-operation>
+      <web-service-operation>
+        <name>getInvoice_Mobile</name>
+        <mvConnection>
+          <name>D3Server</name>
+          <host>den-vm-dg02</host>
+          <port>9000</port>
+          <type>D3</type>
+          <user>DM</user>
+          <password/>
+          <min-connections>3</min-connections>
+          <max-connections>10</max-connections>
+          <idle-time-out>0</idle-time-out>
+          <use-ssl>false</use-ssl>
+          <connection-options/>
+        </mvConnection>
+        <mvAccount>Acme</mvAccount>
+        <mvAccountPassword/>
+        <operation-type>SUB</operation-type>
+        <statement/>
+        <subroutine>
+          <name>get_invoice.sub</name>
+          <account-name>Acme</account-name>
+          <file-name>pgm</file-name>
+          <argument>
+            <number>1</number>
+            <name>INVOICE_NO</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>2</number>
+            <name>INVOICE_ITEM</name>
+            <usage>output</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+        </subroutine>
+        <provider-name>den-vm-dg02_mvs</provider-name>
+        <service-name>Invoices</service-name>
+        <default-content-type>application/json</default-content-type>
+      </web-service-operation>
+      <web-service-operation>
+        <name>getInvoiceList</name>
+        <mvConnection>
+          <name>D3Server</name>
+          <host>den-vm-dg02</host>
+          <port>9000</port>
+          <type>D3</type>
+          <user>DM</user>
+          <password/>
+          <min-connections>3</min-connections>
+          <max-connections>10</max-connections>
+          <idle-time-out>0</idle-time-out>
+          <use-ssl>false</use-ssl>
+          <connection-options/>
+        </mvConnection>
+        <mvAccount>Acme</mvAccount>
+        <mvAccountPassword/>
+        <operation-type>SUB</operation-type>
+        <statement/>
+        <subroutine>
+          <name>get_cust_invoices.sub</name>
+          <account-name>Acme</account-name>
+          <file-name>pgm</file-name>
+          <argument>
+            <number>1</number>
+            <name>CUST_ACCT</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>2</number>
+            <name>INVOICE_LIST</name>
+            <usage>output</usage>
+            <binding-mode>dynamic-array</binding-mode>
+            <type>string</type>
+            <dynamic-array-name>InvoiceList</dynamic-array-name>
+          </argument>
+        </subroutine>
+        <provider-name>den-vm-dg02_mvs</provider-name>
+        <service-name>Invoices</service-name>
+        <default-content-type>application/json</default-content-type>
+      </web-service-operation>
+      <web-service-operation>
+        <name>writecustitem</name>
+        <mvConnection>
+          <name>D3Server</name>
+          <host>den-vm-dg02</host>
+          <port>9000</port>
+          <type>D3</type>
+          <user>DM</user>
+          <password/>
+          <min-connections>3</min-connections>
+          <max-connections>10</max-connections>
+          <idle-time-out>0</idle-time-out>
+          <use-ssl>false</use-ssl>
+          <connection-options/>
+        </mvConnection>
+        <mvAccount>acme</mvAccount>
+        <mvAccountPassword/>
+        <operation-type>SUB</operation-type>
+        <statement/>
+        <subroutine>
+          <name>WriteCustItem.sub</name>
+          <account-name>acme</account-name>
+          <file-name>pgm</file-name>
+          <argument>
+            <number>1</number>
+            <name>CUSTID</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>2</number>
+            <name>NAME</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>3</number>
+            <name>ADDR</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>4</number>
+            <name>CITY</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>5</number>
+            <name>STATE</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>6</number>
+            <name>ZIP</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>7</number>
+            <name>PHONE</name>
+            <usage>input</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+          <argument>
+            <number>8</number>
+            <name>STATUS</name>
+            <usage>output</usage>
+            <binding-mode>simple</binding-mode>
+            <type>string</type>
+          </argument>
+        </subroutine>
+        <provider-name>den-vm-dg02_mvs</provider-name>
+        <service-name>Invoices</service-name>
+        <default-content-type>application/json</default-content-type>
+      </web-service-operation>
+    </web-service>
+  </web-service-provider-descriptor>
+  <dynamic-array service="Invoices" operation="getCustList">
+    <MVDynamic-array-descriptor name="foundCustomers" xmlns="http://www.rocketsoftware.com/namespaces/ws" xmlns:mvtk="http://www.rocketsoftware.com/namespaces/ws">
+      <multi-value name="foundCustomers">
+        <value name="foundAcctNo" type="xs:string" attribute-number="1"/>
+        <value name="foundName" type="xs:string" attribute-number="2"/>
+        <value name="foundAddress" type="xs:string" attribute-number="3"/>
+        <value name="foundCity" type="xs:string" attribute-number="4"/>
+        <value name="foundState" type="xs:string" attribute-number="5"/>
+        <value name="foundZip" type="xs:string" attribute-number="6"/>
+        <value name="foundPhone" type="xs:string" attribute-number="7"/>
+      </multi-value>
+    </MVDynamic-array-descriptor>
+  </dynamic-array>
+  <dynamic-array service="Invoices" operation="getInvoice">
+    <MVDynamic-array-descriptor name="Invoice" xmlns="http://www.rocketsoftware.com/namespaces/ws" xmlns:mvtk="http://www.rocketsoftware.com/namespaces/ws">
+      <attribute name="custAccount" type="xs:string" attribute-number="1"/>
+      <attribute name="billtoCompanyName" type="xs:string" attribute-number="2"/>
+      <attribute name="billtoAddress" type="xs:string" attribute-number="3"/>
+      <attribute name="billtoCity" type="xs:string" attribute-number="4"/>
+      <attribute name="billtoState" type="xs:string" attribute-number="5"/>
+      <attribute name="billtoZip" type="xs:string" attribute-number="6"/>
+      <attribute name="billtoContactName" type="xs:string" attribute-number="7"/>
+      <attribute name="invoiceNo" type="xs:string" attribute-number="8"/>
+      <attribute name="shiptoName" type="xs:string" attribute-number="9"/>
+      <attribute name="shiptoAddress" type="xs:string" attribute-number="10"/>
+      <attribute name="shiptoCity" type="xs:string" attribute-number="11"/>
+      <attribute name="shiptoState" type="xs:string" attribute-number="12"/>
+      <attribute name="shiptoZip" type="xs:string" attribute-number="13"/>
+      <attribute name="TERR_NO" type="xs:string" attribute-number="14"/>
+      <attribute name="salesRepName" type="xs:string" attribute-number="15"/>
+      <attribute name="salesRepPhone" type="xs:string" attribute-number="16"/>
+      <attribute name="orderDate" type="xs:string" attribute-number="17"/>
+      <attribute name="invoiceDate" type="xs:string" attribute-number="18"/>
+      <attribute name="terms" type="xs:string" attribute-number="19"/>
+      <attribute name="comment" type="xs:string" attribute-number="20"/>
+      <attribute name="invoiceGross" type="xs:string" attribute-number="21"/>
+      <attribute name="invoiceDiscount" type="xs:string" attribute-number="22"/>
+      <attribute name="invoiceNet" type="xs:string" attribute-number="23"/>
+      <multi-value name="line">
+        <value name="lineQty" type="xs:string" attribute-number="24"/>
+        <value name="lineProductNo" type="xs:string" attribute-number="25"/>
+        <value name="lineDescription" type="xs:string" attribute-number="26"/>
+        <value name="lineUnitPrice" type="xs:string" attribute-number="27"/>
+        <value name="lineGross" type="xs:string" attribute-number="28"/>
+        <value name="lineDiscount" type="xs:string" attribute-number="29"/>
+        <value name="lineExtNet" type="xs:string" attribute-number="30"/>
+      </multi-value>
+    </MVDynamic-array-descriptor>
+  </dynamic-array>
+  <dynamic-array service="Invoices" operation="getInvoiceList">
+    <MVDynamic-array-descriptor name="InvoiceList" xmlns="http://www.rocketsoftware.com/namespaces/ws" xmlns:mvtk="http://www.rocketsoftware.com/namespaces/ws">
+      <attribute name="custName" type="xs:string" attribute-number="1"/>
+      <multi-value name="invoice">
+        <value name="invoiceNo" type="xs:string" attribute-number="2"/>
+        <value name="invoiceDate" type="xs:date" attribute-number="3"/>
+        <value name="orderDate" type="xs:date" attribute-number="4"/>
+        <value name="salesRep" type="xs:string" attribute-number="5"/>
+        <value name="terms" type="xs:string" attribute-number="6"/>
+        <value name="totalGross" type="xs:decimal" attribute-number="7"/>
+        <value name="totalDiscount" type="xs:decimal" attribute-number="8"/>
+        <value name="totalNet" type="xs:decimal" attribute-number="9"/>
+        <value name="InvoiceComments" type="xs:string" attribute-number="10"/>
+      </multi-value>
+    </MVDynamic-array-descriptor>
+  </dynamic-array>
+</MVToolExport>

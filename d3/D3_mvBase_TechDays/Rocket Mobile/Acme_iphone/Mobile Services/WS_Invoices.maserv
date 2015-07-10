@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201503110919" modelVersion="1.0" ?>
+<service useProxy="true">
+   <uri>${HOST}/Invoices/getInvoiceList</uri>
+   <query>CUST_ACCT=${CUST_ACCT}</query>
+   <method>GET</method>
+   <timeout>5000</timeout>
+   <username/>
+   <password/>
+   <request>
+      <type>
+         <structure/>
+      </type>
+   </request>
+   <requestText/>
+   <response>
+      <type>
+         <structure>
+            <member name="getInvoiceList">
+               <type>
+                  <structure>
+                     <member name="INVOICE_LIST">
+                        <type>
+                           <structure>
+                              <member name="custName"/>
+                              <member name="invoice">
+                                 <type>
+                                    <array>
+                                       <type>
+                                          <structure>
+                                             <member name="InvoiceComments"/>
+                                             <member name="invoiceDate"/>
+                                             <member name="invoiceNo"/>
+                                             <member name="orderDate"/>
+                                             <member name="salesRep"/>
+                                             <member name="terms"/>
+                                             <member name="totalDiscount"/>
+                                             <member name="totalGross"/>
+                                             <member name="totalNet"/>
+                                          </structure>
+                                       </type>
+                                    </array>
+                                 </type>
+                              </member>
+                           </structure>
+                        </type>
+                     </member>
+                  </structure>
+               </type>
+            </member>
+         </structure>
+      </type>
+   </response>
+   <responseText>{ &quot;getInvoiceList&quot;: { &quot;INVOICE_LIST&quot;: { &quot;invoice&quot;: [ { &quot;totalGross&quot;: &quot;12019.84&quot;, &quot;salesRep&quot;: &quot;Robin Barclay&quot;, &quot;terms&quot;: &quot;Net 30&quot;, &quot;totalDiscount&quot;: &quot;324.60&quot;, &quot;invoiceNo&quot;: &quot;1044033&quot;, &quot;invoiceDate&quot;: &quot;08-06-2014&quot;, &quot;orderDate&quot;: &quot;06-26-2014&quot;, &quot;totalNet&quot;: &quot;11695.24&quot;, &quot;InvoiceComments&quot;: &quot;NMI&quot; }, { &quot;totalGross&quot;: &quot;3019.82&quot;, &quot;salesRep&quot;: &quot;Robin Barclay&quot;, &quot;terms&quot;: &quot;Net 30&quot;, &quot;totalDiscount&quot;: &quot;33.20&quot;, &quot;invoiceNo&quot;: &quot;1031319&quot;, &quot;invoiceDate&quot;: &quot;09-18-2013&quot;, &quot;orderDate&quot;: &quot;09-10-2013&quot;, &quot;totalNet&quot;: &quot;2986.62&quot;, &quot;InvoiceComments&quot;: &quot;&quot; }, { &quot;totalGross&quot;: &quot;599.97&quot;, &quot;salesRep&quot;: &quot;Robin Barclay&quot;, &quot;terms&quot;: &quot;Net 30&quot;, &quot;totalDiscount&quot;: &quot;6.00&quot;, &quot;invoiceNo&quot;: &quot;1026934&quot;, &quot;invoiceDate&quot;: &quot;07-26-2013&quot;, &quot;orderDate&quot;: &quot;07-26-2013&quot;, &quot;totalNet&quot;: &quot;593.97&quot;, &quot;InvoiceComments&quot;: &quot;&quot; }, { &quot;totalGross&quot;: &quot;1619.88&quot;, &quot;salesRep&quot;: &quot;Robin Barclay&quot;, &quot;terms&quot;: &quot;Net 30&quot;, &quot;totalDiscount&quot;: &quot;54.00&quot;, &quot;invoiceNo&quot;: &quot;1011231&quot;, &quot;invoiceDate&quot;: &quot;04-08-2012&quot;, &quot;orderDate&quot;: &quot;04-03-2012&quot;, &quot;totalNet&quot;: &quot;1565.88&quot;, &quot;InvoiceComments&quot;: &quot;SEE P.O.&quot; } ], &quot;custName&quot;: &quot;ROADRUNNER ABATEMENT SERVICES&quot; } } }</responseText>
+   <http-headers>
+      <header
+            name="Accept"
+            value="application/json"/>
+      <header
+            name="Content-Type"
+            value="application/json"/>
+   </http-headers>
+</service>

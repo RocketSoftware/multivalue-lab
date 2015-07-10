@@ -1,0 +1,114 @@
+.list-item-title{
+	font-size: 10pt;
+}
+
+.list-item-subtitle{
+	font-size: 8pt;
+	color: darkblue;
+}
+
+#lst_InvoiceItems{font-size: 7pt;}
+#frm_CustSearch{
+	font-size: 10pt;
+	font-weight: bolder;
+}
+
+#txt_CustName{
+	font-size: 10pt;
+	color: darkblue;
+	}
+#txt_CustAddr{
+	font-size: 10pt;
+	color: darkblue;
+	}
+#txt_CustPhone{
+	font-size: 10pt;
+	color: darkblue;
+	}
+#txt_CustTerr{
+	font-size: 10pt;
+	color: darkblue;
+	}
+		
+#frm_CustDetail{
+	font-size: 10pt;
+	font-weight: bolder;
+}
+#txt_InvoiceLines{
+	font-size: 9pt;
+}
+
+#txt_Billto{
+	font-size: 9pt;	
+	resize: none;
+	max-height: 225px;
+	min-height: 225px;
+	
+}
+
+#txt_InvoiceData{
+	font-size: 9pt;
+	resize: none;
+	max-height: 225px;
+	min-height: 225px;
+}
+
+#txt_InvoiceHeaders{
+	font-size: 9pt;
+	font-weight: bolder;
+	resixe: none;
+	max-height: 225px;
+	min-height: 225px;
+	
+}
+#txt_InvoiceLinesTitles{
+	font-size: 9pt;
+	font-weight: bolder;
+	color: white;
+	background-color: darkblue;
+}
+
+#txt_InvoiceLineDetails{
+	font-size: 9pt;
+	color: yellow;
+	background-color: darkblue;	
+}
+#txt_InvoiceDetail{
+	font-size: 10pt;
+}
+
+#txt_Acctno{
+	font-size: 10pt;
+	color: darkblue;
+}
+
+#txt_Name{
+	font-size: 10pt;
+	color: darkblue;
+
+}
+#txt_Addr{
+	font-size: 10pt;
+	color: darkblue;
+}
+#txt_City{
+	font-size: 10pt;
+	color: darkblue;
+}
+#txt_State{
+	font-size: 10pt;
+	color: darkblue;
+}
+#txt_Zip{
+	font-size: 10pt;
+	color: darkblue;
+}
+#txt_Phone{
+	font-size: 10pt;
+	color: darkblue;
+}
+
+#lbl_InvoiceDetailList{
+	font-size: 9pt;
+}
+

@@ -1,0 +1,168 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>SDK Link Manager</title>
+</head>
+    <link rel="stylesheet" type="text/css" href="ndoc.css"> </link>
+<style>
+input
+{
+	background: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+/*	font-size: 100%;*/
+	font-style: normal;
+	font-weight: normal;
+	margin: 0px;
+	width: 90%;
+/*	border: 1px solid black;*/
+}
+</style>
+<script language="jscript">
+window.onload=LoadPage;
+window.onunload=Window_Unload;
+
+
+function LoadPage()
+{
+	if(IsEvilUrl())
+	{
+		ReloadEvilUrlAsGoodUrl();
+		return;	// in just a moment, page will reload.
+	}
+	LoadNamespace();
+}
+function Window_Unload()
+{
+    if (IsGoodUrl())
+    {
+    SaveNamespace();
+    }
+}
+
+var sdkNamespace="ms-help://MS.NETDEVFX.v20.en";
+function LoadNamespace()
+{
+    var ns = Load("sdkNamespace");
+    if (ns!=null)
+    {
+        if(sdkNamespace!=ns) sdkNamespace=ns;
+    }
+    var ele = document.getElementById("Text1");
+    ele.value=sdkNamespace;
+}
+
+function SaveNamespace()
+{
+    var ele = document.getElementById("Text1");
+    var ns = ele.value;
+    if(sdkNamespace!=ns)
+    {
+        if (ns=="" || ns=="ms-help://MS.NETDEVFX.v20.en")
+        {
+            Remove("sdkNamespace");
+        }
+        else
+        {
+            sdkNamespace=ns;
+            Save("sdkNamespace",sdkNamespace);
+        }
+    }
+
+}
+
+
+function Load(key)
+{
+    try
+    {
+	userDataCache.load("docSettings");
+	var value = userDataCache.getAttribute(key);
+	return value;
+	}
+	catch(e)
+	{
+	}
+	return null;
+}
+
+function Save(key, value)
+{
+    try
+    {
+	userDataCache.setAttribute(key, value);
+	userDataCache.save("docSettings");
+	}
+	catch(e)
+	{
+	}
+}
+function Remove(key)
+{
+    try
+    {
+	userDataCache.removeAttribute(key);
+	userDataCache.save("docSettings");
+	}
+	catch(e)
+	{
+	}
+}
+
+function IsEvilUrl()
+{
+	var url = "" + document.location + ".";
+	var r = url.indexOf("mk:@MSITStore") != -1;
+	return r;
+}
+
+function IsGoodUrl()
+{
+	return !IsEvilUrl();
+}
+
+function ReloadEvilUrlAsGoodUrl()
+{
+	var url = "" + document.location + ".";
+	var i = url.indexOf("mk:@MSITStore");
+	if(i != -1)
+	{
+		url = "ms-its:" + url.substring(14, url.length - 1);
+		document.location.replace(url);
+	}
+}
+</script>
+<body>
+    <input type="hidden" id="userDataCache" class="userDataStyle" />
+    <div id="header">
+      <table width="100%" id="topTable">
+        <tr id="headerTableRow1">
+          <td align="left">
+            <span id="runningHeaderText">NDoc Utilities</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow2">
+          <td align="left">
+            <span id="nsrTitle">SDK Link Manager</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow3">
+          <td>
+            &nbsp;
+          </td>
+        </tr>
+      </table>
+      </div>
+    <div id="mainSection">
+      <div id="mainBody">
+        <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()" />
+        <p />
+    <h1 class="heading">SDK Link Namespace</h1>
+    <input id="Text1" type="text" size="80"/>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="SDK Link Manager" />
+      </object>
+      </div>
+      </div>
+
+</body>
+</html>

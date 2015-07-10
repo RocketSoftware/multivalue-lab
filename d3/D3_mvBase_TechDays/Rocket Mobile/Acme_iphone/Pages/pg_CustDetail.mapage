@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201505221723" modelVersion="1.0" ?>
+<page>
+   <id>pg_CustDetail</id>
+   <navigationBarHidden>true</navigationBarHidden>
+   <backgroundColor>9</backgroundColor>
+   <controls>
+      <TabBar>
+         <id>TabBar1</id>
+         <position>Top</position>
+         <controls/>
+      </TabBar>
+      <ToolBar>
+         <id>ToolBar1</id>
+         <backgroundColor>16</backgroundColor>
+         <controls>
+            <Button>
+               <id>bnt_CustDet_PreviousPage</id>
+               <iconPosition>Right</iconPosition>
+               <show>Icon</show>
+               <icon>Resources/32x32/arrow-left.png</icon>
+               <backgroundColor>16</backgroundColor>
+               <flex>1</flex>
+               <handlers>
+                  <event
+                        desc="bnt_CustDet_PreviousPage_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="WS_CustList"
+                              type="SERVICE_CALL"/>
+                        <action
+                              target="pg_CustList"
+                              type="OPEN_PAGE">
+                           <transition>slide</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_Goto_InvoiceList</id>
+               <show>Icon</show>
+               <backgroundColor>16</backgroundColor>
+               <icon>Resources/32x32/arrow-right.png</icon>
+               <handlers>
+                  <event
+                        desc="btn_Goto_InvoiceList_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="CUST_ACCT"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Acctno.value}"/>
+                        </action>
+                        <action
+                              target="WS_Invoices"
+                              type="SERVICE_CALL"/>
+                        <action
+                              target="pg_CustInvoices"
+                              type="OPEN_PAGE">
+                           <transition>slide</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_UpdateCust</id>
+               <backgroundColor>16</backgroundColor>
+               <show>Icon</show>
+               <icon>Resources/32x32/database-add.png</icon>
+               <handlers>
+                  <event
+                        desc="Button2_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="cont_UpdateItem.transparency"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value="0"/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_NewCust</id>
+               <backgroundColor>16</backgroundColor>
+               <show>Icon</show>
+               <icon>Resources/32x32/nope.png</icon>
+               <handlers>
+                  <event
+                        desc="btn_NewCust_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="txt_Acctno.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_Name.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_Addr.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_City.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_State.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_Zip.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                        <action
+                              target="txt_Phone.value"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value=""/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_CustDelete</id>
+               <icon>Resources/32x32/database-remove.png</icon>
+               <show>Icon</show>
+               <backgroundColor>16</backgroundColor>
+               <handlers>
+                  <event
+                        desc="btn_CustDelete_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="cont_DeleteItem.transparency"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value="0"/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_CustList_NewSearch</id>
+               <show>Icon</show>
+               <icon>Resources/32x32/search.png</icon>
+               <backgroundColor>16</backgroundColor>
+               <iconPosition>Right</iconPosition>
+               <handlers>
+                  <event
+                        desc="btn_CustList_NewSearch_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="index"
+                              type="OPEN_PAGE">
+                           <transition>fade</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+               <flex>1</flex>
+            </Button>
+         </controls>
+      </ToolBar>
+      <FormComposite>
+         <id>frm_CustDetail</id>
+         <controls>
+            <TextField>
+               <id>txt_Acctno</id>
+               <formLabel>Acct#:</formLabel>
+               <inputType>number</inputType>
+               <maxLength>10</maxLength>
+            </TextField>
+            <TextField>
+               <id>txt_Name</id>
+               <formLabel>Name:</formLabel>
+               <maxLength>200</maxLength>
+               <labelPosition>Top</labelPosition>
+            </TextField>
+            <TextField>
+               <id>txt_Addr</id>
+               <formLabel>Address:</formLabel>
+               <maxLength>250</maxLength>
+               <labelPosition>Top</labelPosition>
+            </TextField>
+            <TextField>
+               <id>txt_City</id>
+               <formLabel>City:</formLabel>
+               <maxLength>200</maxLength>
+            </TextField>
+            <TextField>
+               <id>txt_State</id>
+               <maxLength>2</maxLength>
+               <formLabel>State:</formLabel>
+            </TextField>
+            <TextField>
+               <id>txt_Zip</id>
+               <maxLength>10</maxLength>
+               <formLabel>Zip:</formLabel>
+            </TextField>
+            <TextField>
+               <id>txt_Phone</id>
+               <maxLength>14</maxLength>
+               <formLabel>Phone:</formLabel>
+            </TextField>
+         </controls>
+         <marginCustom value="true">
+            <marginTop>3</marginTop>
+         </marginCustom>
+         <flex>1</flex>
+      </FormComposite>
+      <HorizontalComposite>
+         <id>cont_UpdateItem</id>
+         <controls>
+            <Label>
+               <id>lbl_UpdateItem</id>
+               <value>Update Item?</value>
+               <textColor>16</textColor>
+               <marginCustom value="true">
+                  <marginTop>5</marginTop>
+               </marginCustom>
+            </Label>
+            <Button>
+               <id>btn_UpdateItem</id>
+               <show>Label</show>
+               <label>YES</label>
+               <backgroundColor>9</backgroundColor>
+               <textColor>16</textColor>
+               <marginCustom value="true">
+                  <marginLeft>20</marginLeft>
+               </marginCustom>
+               <handlers>
+                  <event
+                        desc="btn_UpdateItem_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="CUST_ACCT"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Acctno.value}"/>
+                        </action>
+                        <action
+                              target="CUST_ADDR"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Addr.value}"/>
+                        </action>
+                        <action
+                              target="CUST_CITY"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_City.value}"/>
+                        </action>
+                        <action
+                              target="CUST_NAME"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Name.value}"/>
+                        </action>
+                        <action
+                              target="CUST_PHONE"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Phone.value}"/>
+                        </action>
+                        <action
+                              target="CUST_STATE"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_State.value}"/>
+                        </action>
+                        <action
+                              target="CUST_ZIP"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Zip.value}"/>
+                        </action>
+                        <action
+                              target="cont_UpdateItem.transparency"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value="100"/>
+                        </action>
+                        <action
+                              target="WS_WriteRec.request"
+                              target-type="Structure"
+                              type="SERVICE_PROPERTY">
+                           <actionValue>
+                              <mapping field="ADDR">${txt_Addr.value}</mapping>
+                              <mapping field="CITY">${txt_City.value}</mapping>
+                              <mapping field="CUSTID">${txt_Acctno.value}</mapping>
+                              <mapping field="NAME">${txt_Name.value}</mapping>
+                              <mapping field="PHONE">${txt_Phone.value}</mapping>
+                              <mapping field="STATE">${txt_State.value}</mapping>
+                              <mapping field="ZIP">${txt_Zip.value}</mapping>
+                           </actionValue>
+                        </action>
+                        <action
+                              target="WS_WriteRec"
+                              type="SERVICE_CALL"/>
+                        <action
+                              target="Button1.transparency"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value="0"/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_CancelUpdate</id>
+               <show>Label</show>
+               <textColor>16</textColor>
+               <backgroundColor>9</backgroundColor>
+               <label>CANCEL</label>
+               <marginCustom value="true">
+                  <marginLeft>40</marginLeft>
+               </marginCustom>
+               <handlers>
+                  <event
+                        desc="btn_CancelUpdate_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="cont_UpdateItem"
+                              type="WIDGET_HIDE"/>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+         </controls>
+         <transparency>100</transparency>
+      </HorizontalComposite>
+      <HorizontalComposite>
+         <id>cont_DeleteItem</id>
+         <controls>
+            <Label>
+               <id>lbl_deleteItem</id>
+               <value>Delete Item?</value>
+               <textColor>16</textColor>
+               <marginCustom value="true">
+                  <marginTop>5</marginTop>
+               </marginCustom>
+            </Label>
+            <Button>
+               <id>btn_DeleteItem</id>
+               <show>Label</show>
+               <label>YES</label>
+               <backgroundColor>9</backgroundColor>
+               <textColor>16</textColor>
+               <marginCustom value="true">
+                  <marginLeft>20</marginLeft>
+               </marginCustom>
+               <handlers>
+                  <event
+                        desc="btn_DeleteItem_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="CUST_ACCT"
+                              type="SET_VARIABLE_VALUE">
+                           <actionValue value="${txt_Acctno.value}"/>
+                        </action>
+                        <action
+                              target="cont_DeleteItem.transparency"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value="100"/>
+                        </action>
+                        <action
+                              target="WS_DeleteCust"
+                              type="SERVICE_CALL"/>
+                        <action
+                              target="pg_CustList"
+                              type="OPEN_PAGE">
+                           <transition>slide</transition>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+            <Button>
+               <id>btn_CancelDelete</id>
+               <show>Label</show>
+               <textColor>16</textColor>
+               <backgroundColor>9</backgroundColor>
+               <label>CANCEL</label>
+               <marginCustom value="true">
+                  <marginLeft>40</marginLeft>
+               </marginCustom>
+               <handlers>
+                  <event
+                        desc="btn_CancelDelete_OnTap"
+                        name="tap">
+                     <handler>
+                        <action
+                              target="cont_DeleteItem.transparency"
+                              target-type="Simple"
+                              type="WIDGET_PROPERTY">
+                           <actionValue value="100"/>
+                        </action>
+                     </handler>
+                  </event>
+               </handlers>
+            </Button>
+         </controls>
+         <transparency>100</transparency>
+      </HorizontalComposite>
+      <Button>
+         <id>Button1</id>
+         <label>${WS_WriteRec.response.writecustitem.STATUS}</label>
+         <backgroundColor>1</backgroundColor>
+         <marginCustom value="true">
+            <marginTop>5</marginTop>
+         </marginCustom>
+         <show>Label</show>
+         <transparency>100</transparency>
+         <handlers>
+            <event
+                  desc="Button1_OnTap"
+                  name="tap">
+               <handler>
+                  <action
+                        target="Button1.transparency"
+                        target-type="Simple"
+                        type="WIDGET_PROPERTY">
+                     <actionValue value="100"/>
+                  </action>
+               </handler>
+            </event>
+         </handlers>
+      </Button>
+   </controls>
+   <handlers>
+      <event
+            desc="pg_CustDetail_OnLoad"
+            name="load">
+         <handler>
+            <action
+                  target="txt_Acctno.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${CUST_ACCT}"/>
+            </action>
+            <action
+                  target="txt_City.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${WS_CustList.response.getCustList.CUSTLIST.foundCustomers[${CUST_SELECTION}].foundCity}"/>
+            </action>
+            <action
+                  target="txt_State.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${WS_CustList.response.getCustList.CUSTLIST.foundCustomers[${CUST_SELECTION}].foundState}"/>
+            </action>
+            <action
+                  target="txt_Zip.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${WS_CustList.response.getCustList.CUSTLIST.foundCustomers[${CUST_SELECTION}].foundZip}"/>
+            </action>
+            <action
+                  target="txt_Phone.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${WS_CustList.response.getCustList.CUSTLIST.foundCustomers[${CUST_SELECTION}].foundPhone}"/>
+            </action>
+            <action
+                  target="txt_Addr.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${WS_CustList.response.getCustList.CUSTLIST.foundCustomers[${CUST_SELECTION}].foundAddress}"/>
+            </action>
+            <action
+                  target="txt_Name.value"
+                  target-type="Simple"
+                  type="WIDGET_PROPERTY">
+               <actionValue value="${WS_CustList.response.getCustList.CUSTLIST.foundCustomers[${CUST_SELECTION}].foundName}"/>
+            </action>
+         </handler>
+      </event>
+   </handlers>
+</page>

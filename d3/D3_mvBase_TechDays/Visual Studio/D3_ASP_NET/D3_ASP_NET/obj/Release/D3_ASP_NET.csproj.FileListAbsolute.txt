@@ -1,0 +1,132 @@
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\D3_ASP_NET.dll.config
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\D3_ASP_NET.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\D3_ASP_NET.pdb
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\AjaxControlToolkit.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\AjaxMin.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\HtmlAgilityPack.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.Edm.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.OData.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Configuration.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Storage.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\RocketMVSP.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\System.Spatial.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\HtmlAgilityPack.pdb
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\HtmlAgilityPack.xml
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.Edm.xml
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.OData.xml
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Storage.xml
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\System.Spatial.xml
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ar\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\cs\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\de\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\es\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\fr\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\he\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\hi\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\it\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ja\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ko\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\nl\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\pl\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\pt\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ru\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\tr-TR\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-CHS\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-CHT\AjaxControlToolkit.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\de\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\es\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\fr\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\it\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ja\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ko\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ru\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\de\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\es\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\fr\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\it\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ja\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ko\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ru\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\de\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\es\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\fr\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\it\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ja\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ko\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\ru\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-Hans\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\obj\Release\D3_ASP_NET.csprojResolveAssemblyReference.cache
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\obj\Release\D3_ASP_NET.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3_ASP_NET\D3_ASP_NET\obj\Release\D3_ASP_NET.pdb
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\D3_ASP_NET.dll.config
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\D3_ASP_NET.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\D3_ASP_NET.pdb
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\AjaxControlToolkit.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\AjaxMin.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\HtmlAgilityPack.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.Edm.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.OData.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Configuration.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Storage.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\RocketMVSP.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\System.Spatial.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\HtmlAgilityPack.pdb
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\HtmlAgilityPack.xml
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.Edm.xml
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.Data.OData.xml
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\Microsoft.WindowsAzure.Storage.xml
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\System.Spatial.xml
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ar\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\cs\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\de\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\es\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\fr\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\he\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\hi\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\it\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ja\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ko\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\nl\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\pl\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\pt\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ru\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\tr-TR\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-CHS\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-CHT\AjaxControlToolkit.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\de\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\es\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\fr\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\it\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ja\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ko\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ru\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\de\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\es\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\fr\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\it\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ja\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ko\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ru\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\de\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\es\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\fr\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\it\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ja\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ko\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\ru\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-Hans\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\bin\zh-Hant\System.Spatial.resources.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\obj\Release\D3_ASP_NET.csprojResolveAssemblyReference.cache
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\obj\Release\D3_ASP_NET.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3_ASP_NET\D3_ASP_NET\obj\Release\D3_ASP_NET.pdb

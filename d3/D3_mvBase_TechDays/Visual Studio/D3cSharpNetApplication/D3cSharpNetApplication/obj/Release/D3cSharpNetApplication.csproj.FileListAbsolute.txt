@@ -1,0 +1,34 @@
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.exe.config
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.exe.manifest
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.application
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.exe
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.pdb
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\RocketMVSP.dll
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.CustList.resources
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.CustomerSearch.resources
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.Invoice.resources
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.Invoices.resources
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.Properties.Resources.resources
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.csproj.GenerateResource.Cache
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.exe.manifest
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.application
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.exe
+C:\Users\dgardner\documents\visual studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.pdb
+C:\Users\dgardner\Documents\Visual Studio 2013\Projects\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.csprojResolveAssemblyReference.cache
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.exe.config
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.exe
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.pdb
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.exe.manifest
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.application
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.exe
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\D3cSharpNetApplication.pdb
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\bin\Release\RocketMVSP.dll
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.csprojResolveAssemblyReference.cache
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.CustList.resources
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.CustomerSearch.resources
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.Invoice.resources
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.Invoices.resources
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.Properties.Resources.resources
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.csproj.GenerateResource.Cache
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.exe.manifest
+C:\D3_mvBase_TechDay_Samples\Visual Studio\D3cSharpNetApplication\D3cSharpNetApplication\obj\Release\D3cSharpNetApplication.application

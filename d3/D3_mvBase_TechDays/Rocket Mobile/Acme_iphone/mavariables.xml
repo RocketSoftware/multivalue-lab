@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?VersionInfo exeName="LegaSuite.exe" exeVersion="1.0.0.201503270201" modelVersion="1.0" ?>
+<variables>
+   <variable
+         name="Search_Cust_NAMES"
+         persistent="true"/>
+   <variable
+         name="Search_Cust_ADDRS"
+         persistent="true"/>
+   <variable
+         name="Search_Cust_PHONE"
+         persistent="true"/>
+   <variable
+         name="Search_Cust_STERR"
+         persistent="true"/>
+   <variable
+         name="HOST"
+         persistent="true"
+         scope="User"
+         storage="local">
+      <value
+            target="HOST"
+            type="Simple">http://den-vm-dg02:8181</value>
+   </variable>
+   <variable
+         name="CUST_SELECTION"
+         persistent="true"/>
+   <variable
+         name="CUST_ACCT"
+         persistent="true"/>
+   <variable name="INVOICE_NO"/>
+   <variable name="INVOICE_SELECTION"/>
+   <variable name="CUST_NAME"/>
+   <variable name="CUST_ADDR"/>
+   <variable name="CUST_CITY"/>
+   <variable name="CUST_STATE"/>
+   <variable name="CUST_ZIP"/>
+   <variable name="CUST_PHONE"/>
+   <variable name="INVOICE_ITEM_SELECTION"/>
+</variables>

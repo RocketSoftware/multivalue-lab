@@ -1,0 +1,27 @@
+body {
+    overflow: hidden;   
+}
+
+th {
+    text-align: left;
+    background-color: #efefef;
+    cursor: pointer;
+}
+
+tr.footer {
+    background-color: #efefef;
+}
+
+main {
+    margin-left: 12px;
+    margin-right:25px;
+}
+
+.center {
+    text-align: center;   
+}
+
+.delete {
+    color: red; 
+    cursor: pointer;
+}

@@ -1,0 +1,154 @@
+<html dir="LTR" xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:tool="http://www.microsoft.com/tooltip" xmlns:ndoc="urn:ndoc-preprocess">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <title>FileKey Method</title>
+    <link rel="stylesheet" type="text/css" href="ndoc.css"> </link>
+    <link rel="stylesheet" type="text/css" href="user.css"> </link>
+    <script type="text/javascript" src="ndoc.js"> </script>
+  </head>
+  <body style="display: none;">
+    <input type="hidden" id="userDataCache" class="userDataStyle" />
+    <input type="hidden" id="hiddenScrollOffset" />
+    <img id="dropDownImage" style="display:none; height:0; width:0;" src="drpdown.gif" />
+    <img id="dropDownHoverImage" style="display:none; height:0; width:0;" src="drpdown_orange.gif" />
+    <img id="collapseImage" style="display:none; height:0; width:0;" src="collapse.gif" />
+    <img id="expandImage" style="display:none; height:0; width:0;" src="exp.gif" />
+    <img id="collapseAllImage" style="display:none; height:0; width:0;" src="collall.gif" />
+    <img id="expandAllImage" style="display:none; height:0; width:0;" src="expall.gif" />
+    <img id="copyImage" style="display:none; height:0; width:0;" src="copycode.gif" />
+    <img id="copyHoverImage" style="display:none; height:0; width:0;" src="copycodeHighlight.gif" />
+    <div id="header">
+      <table width="100%" id="topTable">
+        <tr id="headerTableRow1">
+          <td align="left">
+            <span id="runningHeaderText">Rocket MVSP .NET Client API</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow2">
+          <td align="left">
+            <span id="nsrTitle">Pick.mvIndex.FileKey Method</span>
+          </td>
+        </tr>
+        <tr id="headerTableRow3">
+          <td>
+            <a id="seeAlsoSectionLink" href="#seeAlsoToggle" onclick="OpenSection(seeAlsoToggle)">See Also</a>
+            <a id="exampleSectionLink" href="#codeExampleToggle" onclick="OpenSection(codeExampleToggle)">Example</a>
+          </td>
+        </tr>
+      </table>
+      <table width="100%" id="bottomTable" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <span onclick="ExpandCollapseAll(toggleAllImage)" style="cursor:default;" onkeypress="ExpandCollapseAll_CheckKey(toggleAllImage)" tabindex="0">
+              <img ID="toggleAllImage" class="toggleAll" src="collall.gif" />
+              <label id="collapseAllLabel" for="toggleAllImage" style="display: none;">
+							Collapse All
+						</label>
+              <label id="expandAllLabel" for="toggleAllImage" style="display: none;">
+							Expand All
+						</label>
+            </span>
+            <span id="languageFilterToolTip" style="cursor:default;" onmouseover="languageFilterImage.src=dropDownHoverImage.src;" onfocusin="languageFilterImage.src=dropDownHoverImage.src;" onmouseout="languageFilterImage.src=dropDownImage.src;" onfocusout="languageFilterImage.src=dropDownImage.src;" tabindex="0">
+              <img id="languageFilterImage" src="drpdown.gif" />
+              <label id="showAllLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: All
+			</label>
+              <label id="multipleLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: Multiple
+			</label>
+              <label id="vbLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: Visual Basic
+			</label>
+              <label id="csLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: C#
+			</label>
+              <label id="cLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: C++
+			</label>
+              <label id="jsharpLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: J#
+			</label>
+              <label id="jsLabel" for="languageFilterImage" style="display: none;">
+				Language Filter: JScript
+			</label>
+            </span>
+          </td>
+        </tr>
+      </table>
+      <span style="display:none" id="languageSpan">
+        <input id="vbDeclarationCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="vbDeclarationCheckbox">
+				Visual Basic (Declaration)
+			</label>
+        <br />
+        <input id="vbUsageCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="vbUsageCheckbox">
+				Visual Basic (Usage)
+			</label>
+        <br />
+        <input id="csCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="csCheckbox">
+				C#
+			</label>
+        <br />
+        <input id="cCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="cCheckbox">
+				C++
+			</label>
+        <br />
+        <input id="jsharpCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="jsharpCheckbox">
+				J#
+			</label>
+        <br />
+        <input id="jsCheckbox" type="checkbox" name="languageFilter" onClick="SetLanguage(this)" />
+        <label class="languageFilter" for="jsCheckbox">
+				JScript
+			</label>
+        <br />
+      </span>
+    </div>
+    <div id="mainSection">
+      <div id="mainBody">
+        <div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()" />
+        <p>The FileKey statement locates an item using a B-tree index key.</p>
+        <br />
+        <b>Namespace: </b>
+        <a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP</a>
+        <br />
+        <b>Assembly: </b>RocketMVSP (in RocketMVSP.dll)
+		<br /><h1 class="heading"><span onclick="ExpandCollapse(syntaxToggle)" style="cursor:default;" onkeypress="ExpandCollapse_CheckKey(syntaxToggle)" tabindex="0"><img id="syntaxToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />Syntax</span></h1><div id="syntaxSection" class="section" name="collapseableSection"><div id="syntaxCodeBlocks" class="code"><span codeLanguage="VisualBasicDeclaration"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">Visual Basic (Declaration)</th></tr><tr><td class="syntax">Public Function FileKey( _ <br />   ByVal indexOperator As <a href="http://msdn2.microsoft.com/en-us/library/System.Char" target="_top">Char</a> _ <br />) As <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a></td></tr></table></span><span codeLanguage="CSharp"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">C#</th></tr><tr><td class="syntax">public <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">object</a> FileKey(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.Char" target="_top">char</a> indexOperator<br />)</td></tr></table></span><span codeLanguage="ManagedCPlusPlus"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">C++</th></tr><tr><td class="syntax">public:<br /> <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a> FileKey(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.Char" target="_top">wchar_t</a> indexOperator<br />) sealed </td></tr></table></span><span codeLanguage="JSharp"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">J#</th></tr><tr><td class="syntax">public <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">object</a> FileKey(<br />   <a href="http://msdn2.microsoft.com/en-us/library/System.Char" target="_top">char</a> indexOperator<br />)</td></tr></table></span><span codeLanguage="JScript"><table width="100%" cellspacing="0" cellpadding="0"><tr><th align="left">JScript</th></tr><tr><td class="syntax">public 
+				function FileKey(<br />   indexOperator : <a href="http://msdn2.microsoft.com/en-us/library/System.Char" target="_top">char</a><br />) : <a href="http://msdn2.microsoft.com/en-us/library/System.Object" target="_top">Object</a></td></tr></table></span></div><h4 class="subHeading">
+					Parameters
+				</h4><dl paramName="indexOperator"><dt><i>indexOperator</i></dt><dd /></dl><h4 class="subHeading">
+          Return Value
+        </h4><p>Nothing, but updates the indexKey and itemId properties</p></div><h1 class="heading"><span style="cursor:default;" onclick="ExpandCollapse(remarksDataToggle)" onkeypress="ExpandCollapse_CheckKey(remarksDataToggle)" tabindex="0"><img id="remarksDataToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />Remarks</span></h1><div id="remarksDataSection" class="section" name="collapseableSection"><p>An exception is generated if the client is not connected to the server.<br /> The parameter must be one of the following:<br /><table width="100%"><tr valign="top"><th align="left">Operator</th><th align="left">Description</th></tr><tr valign="top"><td>c</td><td>Compares, left-to-right, against the index key and returns the first item-ID whose index matches into item-ID. If no match is found, the next sequentially higher index and first associated item-ID are returned. If the item-ID is passed as null, then this returns the first item-ID that matches the passed index key.</td></tr><tr valign="top"><td>l</td><td>Returns the last partial key. If a nonnull item-ID is passed, then this operation is identical to the p operator. However, if a null item-ID is passed, then this function returns the highest valued key in the index that still matches the passed key.</td></tr><tr valign="top"><td>n</td><td>Returns the next index key and item-ID. If more than one item-ID exists for an index key, this returns the next item-ID. After all item-IDs for an index key have been returned, it returns the next index key and item-ID. If the item-ID is passed as null, then the first item-ID that matches the passed index key is returned.</td></tr><tr valign="top"><td>p</td><td>Returns the previous index key and item-ID. If more than one item-ID exists for an index key, the previous item-ID is returned. After the first item-ID for an index key has been returned, or if item-ID is null, it returns the previous index key and the last item-ID.</td></tr><tr valign="top"><td>r</td><td>Returns the index key and item-ID only on an exact match with the index key.</td></tr><tr valign="top"><td>v</td><td>Verifies the index. Locates the given index key and item-ID and verifies that an exact match can be found.</td></tr><tr valign="top"><td>x</td><td>Returns all item-IDs that exactly match the passed key. If no match is found, then it returns all matching IDs for the next key. If the passed item-ID is null, then the data for the passed key is returned. If the passed item-ID is nonnull, then the list for the next key is returned.</td></tr></table><br />An exception is generated when the end of the index is encountered.<br /><example xmlns=""><div class="code"><table width="100%" cellspacing="0" cellpadding="0"><tr><th> </th><th><span class="copyCode" onclick="CopyCode(this)" onkeypress="CopyCode_CheckKey(this)" onmouseover="ChangeCopyCodeIcon(this)" onfocusin="ChangeCopyCodeIcon(this)" onmouseout="ChangeCopyCodeIcon(this)" onfocusout="ChangeCopyCodeIcon(this)" tabindex="0"><img class="copyCodeImage" name="ccImage" align="absmiddle" src="copycode.gif" />Copy Code
+						</span></th></tr><tr><td colspan="2"><pre>
+ Dim M As New rocketsoftware.MVSP.Pick
+ Dim I As rocketsoftware.MVSP.Pick.mvIndex
+ Dim x As String
+    M.Connect("localhost", 9000, "DM", "")
+    M.Logto("sqldemo", 1)
+    Try
+        I = M.FileRoot("customers", "a3")
+        I.indexKey = "miami"
+        I.itemId = ""            
+        x = I.FileKey("x")
+    Catch ex As Exception
+        MsgBox(ex.ToString)
+    End Try
+</pre></td></tr></table></div></example></p></div><h1 class="heading"><span style="cursor:default;" onclick="ExpandCollapse(seeAlsoToggle)" onkeypress="ExpandCollapse_CheckKey(seeAlsoToggle)" tabindex="0"><img id="seeAlsoToggle" class="toggle" name="toggleSwitch" src="collapse.gif" />See Also</span></h1><div id="seeAlsoSection" class="section" name="collapseableSection"><a href="T_rocketsoftware_MVSP_Pick_mvIndex.html">Pick.mvIndex Class</a><br /><a href="N_rocketsoftware_MVSP.html">rocketsoftware.MVSP Namespace</a></div></div>
+      <DIV CLASS="footer">
+        <p>
+          <center>
+            <font color="red">
+              <i>
+                Syntax based on .NET Framework version 2.0.<br />
+                Documentation version 2.0.0.0.
+              </i>
+            </font>
+          </center>
+        </p>
+      </DIV><!--[if gte IE 5]><tool:tip element="languageFilterToolTip" avoidmouse="false" /><![endif]--></div>
+  </body>
+</html>

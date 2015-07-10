@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="D3cSharpNetApplication.exe" version="1.0.0.0" publicKeyToken="73670c0409b2f0c2" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="D3cSharpNetApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="D3cSharpNetApplication.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="D3cSharpNetApplication.exe" size="596928">
+      <assemblyIdentity name="D3cSharpNetApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>o/CbGU/KR6Ddu4Xd+BeMfITL2M3PYkWnlhq6Axnpkro=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RocketMVSP.dll" size="72816">
+      <assemblyIdentity name="RocketMVSP" version="1.0.2.0" publicKeyToken="037AB483EB3B9EFD" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>DhEaeW/cwku2HL7cQXVnhPvCd7+Uvq59PtyCt20Hsvg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="D3cSharpNetApplication.exe.config" size="232">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WSapqDodvRi3WFxmP+ohLF9p8UaaLEre2ZC1+PChuTA=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=ROCKET1\dgardner" issuerKeyHash="826787a04596ebf276b2c30c2831231b7d8eba01" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>IHJc8urmOa87zSxmtxP8wKRA1yHxTlVePVjxW6GrYBQ=</DigestValue></Reference></SignedInfo><SignatureValue>OyVl1CCHZ0uvBGtFUy7M9dp7StHQ7vfksZUqjIbKdsCpzSA0RGiBeCk4NJ4UjErz9aiMeO6c7cmAxJeOG87XYhTQMsaJw8+a08ay78CfJQSwjZqG275sDI4fjAcXuhAaICvCnhKE5d7NTGLsE57hY6VGUtiTtQSbzFF4r3s3y/c=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>s5/q1DBaQwhY+hea8yOLG9koG+1e8dph5zszShWY/KPhneCUsh2CgZqTJYnhJQro5lM4hWV9Cs6TPyKAvXLbFY53Awa46d2sQnD+iL25Qid7/oReXTKC9Bi16Ke8L5WjLAYolU5aYb1hGu3YfSP5zacaYtBBm3lqJlWVviBdwns=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="1460aba15bf1583d5e554ef121d740a4c0fc13b7662ccd3baf39e6eaf25c7220" Description="" Url=""><as:assemblyIdentity name="D3cSharpNetApplication.exe" version="1.0.0.0" publicKeyToken="73670c0409b2f0c2" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=ROCKET1\dgardner</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>WAJTfCTtHt0MZbImxvqZH9oQk0NZOmQCrl4Ti/3WLic=</DigestValue></Reference></SignedInfo><SignatureValue>ATKxJK07b2imGSEm1xkHqfpqG6HkQgG4ZAEyNR2biyDfKV0ovmwoTOgZbNavXiYpQqoXoYlqz/804e05w6A1LdtFoRI/PGSJx36UQPV/LHRkKihWBMumWgwVIK8MfxZ1Dms+o5Wv5gQzwpWi2WQPiR32n66K2YosI43JLaP4awM=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>s5/q1DBaQwhY+hea8yOLG9koG+1e8dph5zszShWY/KPhneCUsh2CgZqTJYnhJQro5lM4hWV9Cs6TPyKAvXLbFY53Awa46d2sQnD+iL25Qid7/oReXTKC9Bi16Ke8L5WjLAYolU5aYb1hGu3YfSP5zacaYtBBm3lqJlWVviBdwns=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQJg5K9GH24aNByrH6e6NVtzANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAAUgBPAEMASwBFAFQAMQBcAGQAZwBhAHIAZABuAGUAcjAeFw0xNTAxMTIwMDMwNThaFw0xNjAxMTIwNjMwNThaMCsxKTAnBgNVBAMeIABSAE8AQwBLAEUAVAAxAFwAZABnAGEAcgBkAG4AZQByMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzn+rUMFpDCFj6F5rzI4sb2Sgb7V7x2mHnOzNKFZj8o+Gd4JSyHYKBmpMlieElCujmUziFZX0KzpM/IoC9ctsVjncDBrjp3axCcP6IvblCJ3v+hF5dMoL0GLXop7wvlaMsBiiVTlphvWEa7dh9I/nNpxpi0EGbeWomVZW+IF3CewIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAKTAKKqtcM0Yrm/kgYPrCz9l5SgaJzU8T3g2JqM80KHtJF5eM8Kjcg1BH8TmkOReaK+VPJabe49kpud4ENKDFfSeh/15FoWatZuxXPpx08FuRIDYf8DUdLVYRsu0IqOHaEanvYlPn3Copvyl23n/yM+R0qmQrnifW4KFrXEOUlUy</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

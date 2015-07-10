@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Acme_Demo">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    
+    <link href="styles/animations.css" rel="stylesheet" type="text/css" />
+    <link href="css/xeditable.css" rel="stylesheet" type="text/css" />
+    <link href="css/loading-bar.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+
+  </head>
+  
+  <body>
+  <div class="container">
+      
+        <div>
+            <img src="IMG/acme.png" class="img-responsive" alt="Responsive image">
+        </div>   
+      
+        <div ng-view class="slide-animation"></div>        
+  </div>
+    <!-- Angular.js includes jQlite (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/ui-bootstrap.min.js"></script>
+    <script src="js/angular-encode-uri.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/loading-bar.js"></script>
+    <script src="app/app.js"></script>
+    
+      
+    <script src="app/controllers/CustListController.js"></script>
+    <script src="app/services/CustListFactory.js"></script>
+      
+    <script src="app/controllers/InvoicesListController.js"></script>
+    <script src="app/services/InvoicesListFactory.js"></script>
+      
+    <script src="app/controllers/InvoiceController.js"></script>
+    <script src="app/services/InvoiceFactory.js"></script>
+    <script src="js/xeditable.js"></script>
+      
+      
+  </body>
+</html>
