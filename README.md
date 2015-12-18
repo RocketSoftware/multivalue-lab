@@ -1,4 +1,4 @@
-Demo code from Rocket's MV Servers Lab for UniData/UniVerse/D3 and associated clients, APIs &amp; tools
+Demo code from Rocket's MV Servers Lab for UniVerse/UniData/D3 and associated clients, APIs &amp; tools
 
 ## U2
 <dl>
