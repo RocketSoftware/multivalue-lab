@@ -1,7 +1,6 @@
+Demo code from Rocket's MV Servers Lab for UniData/UniVerse/D3 and associated clients, APIs &amp; tools
+
 ## U2
-
-Demo code from Rocket's U2 Servers Lab for UniData/UniVerse and associated clients, APIs &amp; tools
-
 <dl>
 <dt>JDBC</dt>
 <dd>Examples for using the U2 JDBC Driver</dd>
