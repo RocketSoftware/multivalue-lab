@@ -1,0 +1,127 @@
+$INCLUDE INCLUDE UDO.H
+
+json= '{"id": "011", "married": false, "age": 32, "children": [{"name": "max"},{"name": "michelle"}], "grandchildren": null}'
+
+PRINT "Read ... "
+inputType = 0
+status = UDORead(json, inputType, udo)
+CALL CheckStatus(status)
+
+PRINT "Write ... "
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Get properties ..."
+status = UDOGetProperty(udo, "married", married, type)
+CALL CheckStatus(status)
+PRINT type
+*PRINT married
+
+PRINT "GC UDO false/true/null..."
+married1 = married
+PRINT "married = 0"
+married = 0
+PRINT "married1 = 0"
+married1 = 0
+PRINT "Write after GC ... "
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+status = UDOGetProperty(udo, "id", id, type)
+CALL CheckStatus(status)
+PRINT type
+PRINT id
+PRINT "GC UDO id(string)..."
+id = "112"
+PRINT "Write after GC ... "
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+status = UDOGetProperty(udo, "age", age, type)
+CALL CheckStatus(status)
+PRINT type
+PRINT age
+
+PRINT "Get an array property (children) ..."
+status = UDOGetProperty(udo, "children", children, type)
+CALL CheckStatus(status)
+PRINT type
+status = UDOWrite(children, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+PRINT "GC UDO children(array)..."
+children = 0
+PRINT "Write after GC ... "
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Change the 'children' property ..."
+status = UDOGetProperty(udo, "children", children, type)
+CALL CheckStatus(status)
+PRINT "Try to set the 'children' property with a non-standalone node..."
+status = UDOSetProperty(udo, "children", children)
+CALL CheckStatus(status)
+status = UDOClone(children,childrenClone)
+CALL CheckStatus(status)
+newvalue = "no kids"
+status = UDOSetProperty(udo, "children", newvalue)
+CALL CheckStatus(status)
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+PRINT "Print children (should still be there)"
+status = UDOWrite(children, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+PRINT "Print childrenClone "
+status = UDOWrite(childrenClone, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+PRINT "Change the children property back ..."
+status = UDOSetProperty(udo, "children", childrenClone)
+CALL CheckStatus(status)
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+
+PRINT "Clone (udoClone)... "
+status = UDOClone(udo, udoClone)
+CALL CheckStatus(status)
+
+PRINT "Use UDO as String"
+*PRINT udo
+
+PRINT "GC UDO (udo= 0)..."
+udo = 0
+PRINT "Write udo..."
+status = UDOWrite(udo, 0, jsonout)
+CALL CheckStatus(status)
+
+PRINT "Write Clone (udoClone)..."
+status = UDOWrite(udoClone, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "udoClone1 = udoClone"
+udoClone1 = udoClone
+
+PRINT "GC udoClone (udoClone = 'not a UDO anymore')"
+udoClone = "not a UDO anymore"
+PRINT "Write udoClone1 ..."
+status = UDOWrite(udoClone1, 0, jsonout)
+CALL CheckStatus(status)
+PRINT jsonout
+
+PRINT "Free udoClone1..."
+status = UDOFree(udoClone1)
+CALL CheckStatus(status)
+
+PRINT "Write udoClone ..."
+status = UDOWrite(udoClone, 0, jsonout)
+CALL CheckStatus(status)
+

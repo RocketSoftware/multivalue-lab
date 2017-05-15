@@ -1,0 +1,251 @@
+$INCLUDE INCLUDE UDO.H
+
+status = UDOSetOption(2, "COMPACT")
+CALL CheckStatus(status)
+
+DIM XML.ARR(20)
+DIM JSON.ARR(20, 20)
+DIM OUTSTRING(20)
+XMLS = 13
+
+XML.ARR(1) = '<e/>'
+XML.ARR(2) = '<e> 	</e>'
+XML.ARR(3) = '<e>true</e>'
+XML.ARR(4) = '<e>1.732</e>'
+XML.ARR(5) = '<e>null</e>'
+XML.ARR(6) = '<e>text</e>'
+XML.ARR(7) = '<e name="value" />'
+XML.ARR(8) = '<e name="value"> text</e>'
+XML.ARR(9) = '<e> <a>text1</a><b>text2</b> <a>text</a> </e>' 
+XML.ARR(10) = '<e>text3<a>text1</a> <b>text2</b>text4<a>text</a>text5</e>'
+XML.ARR(11) = '<e>1.618<a>text1</a> <b>3.141593</b>text4<a>false</a>null<a>  </a></e>'
+XML.ARR(12) = '<e>tRUe<a>text1</a> <b>text2</b>True<a>text</a>FaLse</e>'
+XML.ARR(13) = '<e>	text3 <a>	text1 </a> <b>text2</b>text4<a>text</a>text5</e>'
+
+* Default Settings
+JSON.ARR(10,1) = '{"e":""}'
+JSON.ARR(10,2) = '{"e":" \t"}'
+JSON.ARR(10,3) = '{"e":"true"}'
+JSON.ARR(10,4) = '{"e":"1.732"}'
+JSON.ARR(10,5) = '{"e":"null"}'
+JSON.ARR(10,6) = '{"e":"text"}'
+JSON.ARR(10,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(10,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(10,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(10,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(10,11) = '{"e":{"#text":["1.618","text4","null"],"a":["text1","false","  "],"b":"3.141593"}}'
+JSON.ARR(10,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(10,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+* Infer Number
+JSON.ARR(3,1) = '{"e":""}'
+JSON.ARR(3,2) = '{"e":" \t"}'
+JSON.ARR(3,3) = '{"e":"true"}'
+JSON.ARR(3,4) = '{"e":1.732000}'
+JSON.ARR(3,5) = '{"e":"null"}'
+JSON.ARR(3,6) = '{"e":"text"}'
+JSON.ARR(3,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(3,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(3,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(3,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(3,11) = '{"e":{"#text":[1.618000,"text4","null"],"a":["text1","false","  "],"b":3.141593}}'
+JSON.ARR(3,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(3,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+* Infer Boolean
+JSON.ARR(4,1) = '{"e":""}'
+JSON.ARR(4,2) = '{"e":" \t"}'
+JSON.ARR(4,3) = '{"e":true}'
+JSON.ARR(4,4) = '{"e":"1.732"}'
+JSON.ARR(4,5) = '{"e":"null"}'
+JSON.ARR(4,6) = '{"e":"text"}'
+JSON.ARR(4,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(4,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(4,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(4,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(4,11) = '{"e":{"#text":["1.618","text4","null"],"a":["text1",false,"  "],"b":"3.141593"}}'
+JSON.ARR(4,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(4,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+* Infer Null
+JSON.ARR(5,1) = '{"e":""}'
+JSON.ARR(5,2) = '{"e":" \t"}'
+JSON.ARR(5,3) = '{"e":"true"}'
+JSON.ARR(5,4) = '{"e":"1.732"}'
+JSON.ARR(5,5) = '{"e":null}'
+JSON.ARR(5,6) = '{"e":"text"}'
+JSON.ARR(5,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(5,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(5,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(5,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(5,11) = '{"e":{"#text":["1.618","text4",null],"a":["text1","false","  "],"b":"3.141593"}}'
+JSON.ARR(5,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(5,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+* Empty to Null
+JSON.ARR(6,1) = '{"e":null}'
+JSON.ARR(6,2) = '{"e":" \t"}'
+JSON.ARR(6,3) = '{"e":"true"}'
+JSON.ARR(6,4) = '{"e":"1.732"}'
+JSON.ARR(6,5) = '{"e":"null"}'
+JSON.ARR(6,6) = '{"e":"text"}'
+JSON.ARR(6,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(6,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(6,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(6,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(6,11) = '{"e":{"#text":["1.618","text4","null"],"a":["text1","false","  "],"b":"3.141593"}}'
+JSON.ARR(6,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(6,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+* Trim whitespace
+JSON.ARR(7,1) = '{"e":""}'
+JSON.ARR(7,2) = '{"e":""}'
+JSON.ARR(7,3) = '{"e":"true"}'
+JSON.ARR(7,4) = '{"e":"1.732"}'
+JSON.ARR(7,5) = '{"e":"null"}'
+JSON.ARR(7,6) = '{"e":"text"}'
+JSON.ARR(7,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(7,8) = '{"e":{"@name":"value","#text":"text"}}'
+JSON.ARR(7,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(7,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(7,11) = '{"e":{"#text":["1.618","text4","null"],"a":["text1","false",""],"b":"3.141593"}}'
+JSON.ARR(7,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(7,13) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+* Case Insensitive 
+JSON.ARR(8,1) = '{"e":""}'
+JSON.ARR(8,2) = '{"e":" \t"}'
+JSON.ARR(8,3) = '{"e":true}'
+JSON.ARR(8,4) = '{"e":"1.732"}'
+JSON.ARR(8,5) = '{"e":"null"}'
+JSON.ARR(8,6) = '{"e":"text"}'
+JSON.ARR(8,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(8,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(8,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(8,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(8,11) = '{"e":{"#text":["1.618","text4","null"],"a":["text1",false,"  "],"b":"3.141593"}}'
+JSON.ARR(8,12) = '{"e":{"#text":[true,true,false],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(8,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+* Keep Root
+JSON.ARR(9,1) = '{"e":""}'
+JSON.ARR(9,2) = '{"e":" \t"}'
+JSON.ARR(9,3) = '{"e":"true"}'
+JSON.ARR(9,4) = '{"e":"1.732"}'
+JSON.ARR(9,5) = '{"e":"null"}'
+JSON.ARR(9,6) = '{"e":"text"}'
+JSON.ARR(9,7) = '{"e":{"@name":"value"}}'
+JSON.ARR(9,8) = '{"e":{"@name":"value","#text":" text"}}'
+JSON.ARR(9,9) = '{"e":{"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(9,10) = '{"e":{"#text":["text3","text4","text5"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(9,11) = '{"e":{"#text":["1.618","text4","null"],"a":["text1","false","  "],"b":"3.141593"}}'
+JSON.ARR(9,12) = '{"e":{"#text":["tRUe","True","FaLse"],"a":["text1","text"],"b":"text2"}}'
+JSON.ARR(9,13) = '{"e":{"#text":["\ttext3 ","text4","text5"],"a":["\ttext1 ","text"],"b":"text2"}}'
+
+UINDEX = 10
+GOSUB UNITTEST
+
+UINDEX = 3
+GOSUB UNITTEST
+
+UINDEX = 4
+GOSUB UNITTEST
+
+UINDEX = 5
+GOSUB UNITTEST
+
+UINDEX = 6
+GOSUB UNITTEST
+
+UINDEX = 7
+GOSUB UNITTEST
+
+UINDEX = 8
+GOSUB UNITTEST
+
+UINDEX = 9
+GOSUB UNITTEST
+
+STOP
+
+UNITTEST:
+COUNT = 0
+SUCCESS = 0
+
+status = UDOSetOption(3, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(4, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(5, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(6, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(7, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(8, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(9, "OFF")
+CALL CheckStatus(status)
+
+BEGIN CASE
+	CASE UINDEX = "3"
+		status = UDOSetOption(3, "ON")
+		CALL CheckStatus(status)
+		MSG = 'INFERNUMBER On:'
+	CASE UINDEX = "4"
+		status = UDOSetOption(4, "ON")
+		CALL CheckStatus(status)
+		MSG = 'INFERBOOLEAN On:'
+	CASE UINDEX = "5"
+		status = UDOSetOption(5, "ON")
+		CALL CheckStatus(status)
+		MSG = 'INFERNULL On:'
+	CASE UINDEX = "6"
+		status = UDOSetOption(6, "ON")
+		CALL CheckStatus(status)
+		MSG = 'EMPTY2NULL On:'
+	CASE UINDEX = "7"
+		status = UDOSetOption(7, "ON")
+		CALL CheckStatus(status)
+		MSG = 'TRIMWHITESPACE On:'
+	CASE UINDEX = "8"
+		status = UDOSetOption(4, "ON")
+		CALL CheckStatus(status)
+		status = UDOSetOption(8, "ON")
+		CALL CheckStatus(status)
+		MSG = 'CASEINSENSITIVE & INFERBOOLEAN On:'
+	CASE UINDEX = "9"
+		status = UDOSetOption(9, "ON")
+		CALL CheckStatus(status)
+		MSG = 'KEEPROOT On:'
+	CASE UINDEX = "10"
+		MSG = 'Default Settings:'
+	CASE 1
+		DISPLAY "INVALID UNIT INDEX"
+		STOP
+END CASE
+
+LOOP
+	COUNT = COUNT + 1
+UNTIL COUNT = 14 
+	GOSUB XML2JSON
+REPEAT
+
+IF SUCCESS = XMLS
+THEN
+	DISPLAY MSG:' Success!'
+END
+ELSE
+	DISPLAY MSG:'Failures ':(XMLS-SUCCESS) 
+END
+
+RETURN
+
+XML2JSON:
+status = UDORead(XML.ARR(COUNT), UDOFORMAT_XML, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_JSON, OUTSTRING(COUNT))
+CALL CheckStatus(status)
+IF OUTSTRING(COUNT) = JSON.ARR(UINDEX, COUNT) THEN
+SUCCESS = SUCCESS +1
+END
+ELSE
+DISPLAY "From XML -> ":OUTSTRING(COUNT)
+DISPLAY "Expect JSON -> ":JSON.ARR(UINDEX, COUNT)
+END
+
+RETURN
+

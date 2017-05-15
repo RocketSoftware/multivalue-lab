@@ -1,0 +1,29 @@
+$INCLUDE INCLUDE UDO.H
+
+restOUT = ""
+
+DISPLAY "UDO"
+
+url = "http://mlb.sbnation.com/rss/section/field-stormers/index.xml"
+method = "GET"
+
+stat = setHTTPDefault("VERSION", "1.1")
+stat = createRequest(url, method, restGET)
+stat = submitRequest(restGET, 5000, "", Header, restData, httpStatus)
+
+PRINT "Response status: ":httpStatus
+*PRINT "Response header: ":Header
+*PRINT "Response Data: ":restData
+
+status = UDORead(restData, UDOFORMAT_XML, udoHandle)
+CALL CheckStatus(status)
+
+status = UDOWrite(udoHandle, UDOFORMAT_JSON, restOut)
+CALL CheckStatus(status)
+
+*PRINT stat:CHAR(10):restOut
+
+PRINT "REST RESPONSE: ":restOut
+
+STOP  
+

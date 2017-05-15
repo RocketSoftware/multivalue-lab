@@ -1,0 +1,43 @@
+$INCLUDE INCLUDE UDO.H
+
+JSONSTR = '{"myKey":null}'
+
+status = UDOSetOption(0, "ATTRIBUTE")
+CALL CheckStatus(status)
+status = UDOSetOption(1, "")
+CALL CheckStatus(status)
+status = UDOSetOption(3, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(4, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(5, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(6, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(7, "OFF")
+CALL CheckStatus(status)
+status = UDOSetOption(9, "ON")
+CALL CheckStatus(status)
+status = UDOSetOption(10, "NEWS")
+CALL CheckStatus(status)
+status = UDOSetOption(12, "")
+CALL CheckStatus(status)
+status = UDOSetOption(2, "FORMATTED")
+CALL CheckStatus(status)
+
+status = UDOSetOption(11, "OFF")
+CALL CheckStatus(status)
+status = UDORead(JSONSTR, UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_XML, OUTSTRING)
+CALL CheckStatus(status)
+DISPLAY OUTSTRING
+
+status = UDOSetOption(11, "ON")
+CALL CheckStatus(status)
+status = UDORead(JSONSTR, UDOFORMAT_JSON, udo)
+CALL CheckStatus(status)
+status = UDOWrite(udo, UDOFORMAT_XML, OUTSTRING)
+CALL CheckStatus(status)
+DISPLAY OUTSTRING
+

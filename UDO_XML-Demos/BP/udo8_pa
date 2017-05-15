@@ -1,0 +1,12 @@
+*
+* Joe Sine * 11 Sep 2013
+*
+EXECUTE 'BASIC BP udo8a_bas'
+EXECUTE 'BASIC BP udo8b_bas'
+EXECUTE 'BASIC BP udo8c_bas'
+EXECUTE 'BASIC BP udo8d_bas'
+*
+EXECUTE 'RUN BP udo8a_bas'
+EXECUTE 'RUN BP udo8b_bas'
+EXECUTE 'RUN BP udo8c_bas'
+EXECUTE 'RUN BP udo8d_bas'

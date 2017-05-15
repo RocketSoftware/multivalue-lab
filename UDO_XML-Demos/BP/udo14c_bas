@@ -1,0 +1,31 @@
+$INCLUDE INCLUDE UDO.H
+
+restOut = ""
+
+DISPLAY "UDO"
+
+url = "http://search.twitter.com/search.json?q=rocket%20software&rpp=5&include_entities=true&result_type=mixed"
+method = "GET"
+
+stat = setHTTPDefault("VERSION", "1.1")
+stat = createRequest(url, method, restGET)
+stat = submitRequest(restGET, 5000, "", Header, restData, httpStatus)
+
+PRINT "Response status: ":httpStatus
+*PRINT "Response header: ":Header
+*PRINT "Response Data: ":restData
+
+PRINT restData
+
+status = UDORead(restData, UDOFORMAT_JSON, udoHandle)
+CALL CheckStatus(status)
+
+status = UDOWrite(udoHandle, UDOFORMAT_JSON, restOut)
+CALL CheckStatus(status)
+
+*PRINT stat:CHAR(10):restOut
+
+DISPLAY "REST RESPONSE: ":restOut
+
+STOP
+
