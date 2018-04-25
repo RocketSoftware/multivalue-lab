@@ -1,0 +1,57 @@
+SUBROUTINE pyFunctionCall( theResult, pyModName, pyFuncName, theInput, cacheControl )
+*
+*****************************
+* pyFunctionCall:  Simple routine to allow the calling of a python function from a U2 DICT item.
+*****************************
+* theResult:  The result of the routine, returned in first param for Dictionary use.
+* pyModName:  The python module 
+* pyFuncName: The function to call in the pyFuncName
+* theInput:   Input parameter for the python function
+* cacheControl: Flag that states if results should be cached or regenerated.
+***
+* Example of call from dict: SUBR("pyFunctionCall", "ystockquote", "get_price", ticker, 1 )
+**
+*  import the module
+COMMON /pyCache/ pyModList, pyModInitTime, pyFuncList, pyFuncCacheName, pyFuncCacheValue
+*
+IF UNASSIGNED(pyModList) THEN
+  pyModList = ""; pyModInitTime = ""; pyFuncList = "" ; pyFuncCacheName = "" ; pyFuncCacheValue = ""
+END
+*
+LOCATE pyModName IN pyModList <1> SETTING POS   ELSE
+  pymodule = PyImport(pyModName) ; GOSUB CHECK_ERROR
+  pyModList<POS> = pyModName
+  pyModInitTime<POS> = TIMEDATE()
+END
+
+* Set up pyFuncList and pyFuncCache if needed
+IF cacheControl THEN
+  LOCATE pyFuncName IN pyFuncList <POS, 1> SETTING FPOS ELSE
+    pyFuncList<POS, FPOS> = pyFuncName
+  END
+  LOCATE theInput IN pyFuncCacheName <POS,FPOS,1> SETTING NPOS THEN
+    theResult = pyFuncCacheValue<POS, FPOS, NPOS>
+    RETURN
+  END
+END
+
+*  call the Python function
+theResult = PyCallFunction(pyModName, pyFuncName, theInput ) ; GOSUB CHECK_ERROR
+*
+IF cacheControl THEN
+  pyFuncCacheName<POS, FPOS, NPOS> = theInput
+  pyFuncCacheValue<POS, FPOS, NPOS> = theResult
+END
+
+
+RETURN
+STOP
+************************************************************************
+CHECK_ERROR: 
+IF @PYEXCEPTIONTYPE NE '' THEN
+  PRINT "EXCEPTION TYPE IS " :@PYEXCEPTIONTYPE 
+  PRINT "EXCEPTION MESSAGE IS " :@PYEXCEPTIONMSG
+  PRINT "EXCEPTIONTRACEBACK IS " :@PYEXCEPTIONTRACEBACK
+  STOP "ENDING AT EXECPTION"
+END
+RETURN
