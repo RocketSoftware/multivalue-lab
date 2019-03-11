@@ -1,0 +1,5 @@
+This is an example of accessing UniData named common variables from Python.
+
+The NCBP directory contains BASIC Programs that deal with the named common, put them in a UniData account and compile and catalog them\
+
+The namedCommon.py module in the PP directory shows how to get and set the named common, by calling the subroutines in the NCBP directory.
