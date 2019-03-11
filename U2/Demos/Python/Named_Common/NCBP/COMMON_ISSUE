@@ -1,0 +1,15 @@
+$BASICTYPE "P"
+*
+COMMON /MIKE/ FILEVAR, DATA_ARRAY(10), MY_DYN_ARRAY
+* NOTE THE NAME COMMON ABOVE DEFINES 12 VARIABLES
+* If FILEVAR is a file variable, we can not send it to python
+* the dim array is the same as having 10 variables, and those can not be file variables.
+**
+OPEN "MEMBERS" TO FILEVAR ELSE STOP "NG"
+*
+MAT DATA_ARRAY = "dim data"
+DATA_ARRAY(7) = FILEVAR
+DATA_ARRAY(5) = "1":@AM:"2":@AM:"3"
+*
+MY_DYN_ARRAY = "dynamic":@VM:"array"
+MY_DYN_ARRAY = FILEVAR
