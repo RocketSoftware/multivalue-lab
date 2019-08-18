@@ -12,6 +12,7 @@
 *          Copy VERBTIMER -> SELECT
 *          In this example, all SELECT statements will now be timed.
 *
+$OPTIONS -VAR.SELECT
 
 EQU queryStatement TO 1
 EQU queryTotalTime TO 2
@@ -52,8 +53,14 @@ IF LOGGING.ACTIVE THEN
    today = DATE()
 END
 
-* Execute the standard version of the command.
-EXECUTE STD:command
+INCOMING.LIST = @TRUE
+READLIST activeList FROM 0 ELSE INCOMING.LIST = @FALSE
+* Execute the standard version of the command, passing the active list if present.
+IF INCOMING.LIST THEN
+   EXECUTE STD:command PASSLIST activeList
+END ELSE
+   EXECUTE STD:command
+END
 
 IF LOGGING.ACTIVE THEN
    endTime = TIME()
